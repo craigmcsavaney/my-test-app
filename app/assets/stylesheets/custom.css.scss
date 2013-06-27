@@ -60,6 +60,9 @@ h1 {
   text-align: center;
 }
 
+.center h1 {
+  margin-bottom: 1vw;
+}
 
 h2 {
   font-size: 1.7em;
@@ -77,6 +80,8 @@ p {
   line-height: 1.7em;
 }
 
+/* following sections prevent responsive fonts from getting too big or too small */
+
 @media screen and (min-width: 940px) {
   h1 { font-size: 3em;
   }
@@ -85,9 +90,16 @@ p {
 }
 
 @media screen and (max-width: 500px) {
-  h1 { font-size: 1.3em;
+  h1 { font-size: 1.5em;
   }
-  h2 { font-size: .65em;
+  h2 { font-size: 1em;
+  }
+}
+
+/* following removes the 60px of body padding which pushes everything down an extra 60px at narrower screen widths*/
+
+@media screen and (max-width: 979px) {
+  body { padding-top: 0px;
   }
 }
 
@@ -134,6 +146,18 @@ footer {
     }
   }
 }
+
+/* Center align the text within the three columns below the carousel */
+    .marketing .span3 {
+      text-align: center;
+    }
+    .marketing h2 {
+      font-weight: normal;
+    }
+    .marketing .span3 p {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
 
 /* miscellaneous */
 
