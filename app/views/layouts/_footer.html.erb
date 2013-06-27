@@ -1,13 +1,21 @@
-<footer class="footer container">
-  <small>
-    <a href="http://railstutorial.org/">Rails Tutorial</a>
-    by Michael Hartl
-  </small>
-  <nav>
-    <ul>
-      <li><%= link_to "About",   about_path %></li>
-      <li><%= link_to "Contact", contact_path %></li>
-      <li><a href="http://news.railstutorial.org/">News</a></li>
-    </ul>
-  </nav>
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="span4">
+        <small>
+          <a href="http://railstutorial.org/">Rails Tutorial</a>
+          by Michael Hartl
+        </small>
+      </div>
+      <div class="span5">
+        <nav>
+          <ul>
+            <li><%= link_to "About",   about_path %></li>
+            <li><%= link_to "Contact", contact_path %></li>
+            <li><a href="http://news.railstutorial.org/">News</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
 </footer>
