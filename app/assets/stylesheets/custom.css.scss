@@ -55,6 +55,7 @@ h1 {
   font-size: 3em;
   font-size: 3.5vw;
   letter-spacing: -2px;
+  letter-spacing: -.2vw;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -64,6 +65,7 @@ h2 {
   font-size: 1.7em;
   font-size: 2vw;
   letter-spacing: -1px;
+  letter-spacing: -.1vw;
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
@@ -79,6 +81,13 @@ p {
   h1 { font-size: 3em;
   }
   h2 { font-size: 1.7em;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  h1 { font-size: 1.3em;
+  }
+  h2 { font-size: .65em;
   }
 }
 
