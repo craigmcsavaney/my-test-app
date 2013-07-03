@@ -1,7 +1,6 @@
 Myapplication::Application.routes.draw do
-  get "promotions/new"
-
-  get "merchants/new"
+  resources :merchants
+  resources :promotions
 
   root to: 'static_pages#home'
 
@@ -9,8 +8,10 @@ Myapplication::Application.routes.draw do
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
   match '/signup',  to: 'devise/registrations#new'
-  match '/new_merchant',  to: 'merchants#new'
-  match '/create_promotion',  to: 'promotions#new'
+  #match '/new_merchant',  to: 'merchants#new'
+  match '/new-merchant',  to: 'merchants#new'
+  #match '/create_promotion',  to: 'promotions#new'
+  match '/create-promotion',  to: 'promotions#new'
 
   devise_for :users
 
