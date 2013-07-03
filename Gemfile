@@ -9,6 +9,8 @@ gem 'devise'
 require 'rbconfig'
 gem 'wdm', '>= 0.1.0' if RbConfig::CONFIG['target_os'] =~ /mswin|mingw/i
 
+gem 'validates_existence', '>= 0.4'
+
 group :development do
 	gem 'mysql2'
 	gem 'guard-rspec', '1.2.1'

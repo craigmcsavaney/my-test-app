@@ -10,7 +10,7 @@ Myapplication::Application.routes.draw do
   match '/signup',  to: 'devise/registrations#new'
   #match '/new_merchant',  to: 'merchants#new'
   match '/new-merchant',  to: 'merchants#new'
-  #match '/create_promotion',  to: 'promotions#new'
+  match '/create_promotion',  to: 'promotions#new'
   match '/create-promotion',  to: 'promotions#new'
 
   devise_for :users
