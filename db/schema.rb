@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624163808) do
+ActiveRecord::Schema.define(:version => 20130702142005) do
+
+  create_table "merchants", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "promotions", :force => true do |t|
+    t.string   "content"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "merchant_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "name"
+  end
+
+  add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

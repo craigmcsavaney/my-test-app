@@ -45,6 +45,14 @@ textarea {
   }
 }
 
+.span3 {
+  width: 27.3003vw;
+}
+
+.container {
+  width: 95.0455vw;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -86,6 +94,15 @@ p {
   h1 { font-size: 3em;
   }
   h2 { font-size: 1.7em;
+  }  
+}
+
+@media screen and (min-width: 989px) {
+  .span3 {
+  width: 270px;
+  }
+  .container {
+  width: 940px;
   }
 }
 
@@ -101,6 +118,9 @@ p {
 @media screen and (max-width: 979px) {
   body { padding-top: 0px;
   }
+  .navbar-inner {
+        margin: 0px;
+      }
 }
 
 /* header */
@@ -169,7 +189,7 @@ footer {
   @include box_sizing;
 }
 
-    @media (max-width: 767px) {
+    /*@media (max-width: 767px) {
 
       .navbar-inner {
         margin: -20px;
@@ -213,4 +233,4 @@ footer {
         line-height: 1.5;
       }
 
-    }
+    }*/
