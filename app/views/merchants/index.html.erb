@@ -1,0 +1,12 @@
+<% provide(:title, 'All Merchants') %>
+<h1>All Merchants</h1>
+
+<%= will_paginate %>
+
+<div class="container">
+	<ul class="merchants">
+      	<%= render @merchants %>
+	</ul>
+</div>
+
+<%= will_paginate %>

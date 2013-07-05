@@ -26,6 +26,13 @@ describe Merchant do
     it { should_not be_valid }
   end
 
+  describe "enforce uniqueness" do
+    it "should not add a duplicate" do
+      merchant_with_same_name = @merchant.dup
+      merchant_with_same_name.should_not be_valid
+    end
+  end
+
   describe "promotion associations" do
 
     before { @merchant.save }

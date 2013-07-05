@@ -4,7 +4,7 @@ FactoryGirl.define do
 #    merchant_id "1"   
     start_date "07/01/2013"
     end_date "06/30/2014"
-    name "Test Name"
+    sequence(:name) { |n| "Test Promotion #{n}" }
     merchant
   end
 end

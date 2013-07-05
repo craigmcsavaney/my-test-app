@@ -2,9 +2,9 @@
   <div class="navbar-inner">
     <div class="container">
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
       </button>
       <%= link_to "Fancy Logo Goes Here", root_path, id: "logo" %>
       <nav>
@@ -14,6 +14,21 @@
             <li><%= link_to "Help",    help_path %></li>
             <li><%= link_to "Sign Up", new_user_registration_path  %></li>
             <li><%= link_to "About Us", about_path %></li>
+            <li id="fat-menu" class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Admin <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Create Merchant", new_merchant_path %></li>
+                <li><%= link_to "View Merchants", merchants_path %></li>
+                <li><%= link_to "Create Promotion", new_promotion_path %></li>
+                <li><%= link_to "View Promotions", '#' %></li>
+                <li class="divider"></li>
+                <li>
+                  <%= link_to "Sign out", '#' %>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </nav>

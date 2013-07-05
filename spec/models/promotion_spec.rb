@@ -22,7 +22,6 @@ describe Promotion do
   it { should respond_to(:merchant) }
   its(:merchant) { should == merchant }
 
-
   it { should be_valid }
 
   describe "when merchant_id is not present" do

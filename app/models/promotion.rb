@@ -5,5 +5,5 @@ class Promotion < ActiveRecord::Base
 
   belongs_to :merchant
 
-  # validates :merchant, :existence => true
+  validates :merchant, :presence => true
 end
