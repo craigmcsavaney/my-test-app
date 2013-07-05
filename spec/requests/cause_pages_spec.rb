@@ -4,35 +4,35 @@ describe "Cause pages" do
 
     subject { page }
 
-    # describe "index" do
-    # 	before do
-    # 		FactoryGirl.create(:cause)
-    # 		visit causes_path
-    # 	end
+    describe "index" do
+    	before do
+    		FactoryGirl.create(:cause)
+    		visit causes_path
+    	end
 
-    # 	it { should have_selector('h1', text: 'All Causes') }
-    # 	it { should have_selector('title',    text: full_title('All Causes')) }
+    	it { should have_selector('h1', text: 'All Causes') }
+    	it { should have_selector('title',    text: full_title('All Causes')) }
 
-    # 	it "should list each cause" do
-    # 		Cause.all.each do |cause|
-    # 			page.should have_selector('li', text: cause.name)
-    # 		end
-    # 	end
+    	it "should list each cause" do
+    		Cause.all.each do |cause|
+    			page.should have_selector('li', text: cause.name)
+    		end
+    	end
 
-    # 	describe "pagination" do
+    	describe "pagination" do
 
-    # 		before(:all) { 30.times { FactoryGirl.create(:cause) } }
-    # 		after(:all)  { Cause.delete_all }
+    		before(:all) { 30.times { FactoryGirl.create(:cause) } }
+    		after(:all)  { Cause.delete_all }
 
-    # 		it { should have_selector('div.pagination') }
+    		it { should have_selector('div.pagination') }
 
-    # 		it "should list each cause" do
-    # 			Cause.paginate(page: 1).each do |cause|
-    # 				page.should have_selector('li', text: cause.name)
-    # 			end
-    # 		end
-    # 	end
-    # end
+    		it "should list each cause" do
+    			Cause.paginate(page: 1).each do |cause|
+    				page.should have_selector('li', text: cause.name)
+    			end
+    		end
+    	end
+    end
 
     describe "new cause page" do
 	    before { visit new_cause_path }
