@@ -1,0 +1,12 @@
+<% provide(:title, 'All Causes') %>
+<h1>All Causes</h1>
+
+<%= will_paginate %>
+
+<div class="container">
+	<ul class="causes">
+      	<%= render @causes %>
+	</ul>
+</div>
+
+<%= will_paginate %>

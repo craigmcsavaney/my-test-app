@@ -1,6 +1,7 @@
 Myapplication::Application.routes.draw do
   resources :merchants
   resources :promotions
+  resources :causes
 
   root to: 'static_pages#home'
 
