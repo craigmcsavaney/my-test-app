@@ -1,0 +1,12 @@
+<% provide(:title, 'All Promotions') %>
+<h1>All Promotions</h1>
+
+<%= will_paginate %>
+
+<div class="container">
+	<ul class="promotions">
+      	<%= render @promotions %>
+	</ul>
+</div>
+
+<%= will_paginate %>

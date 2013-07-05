@@ -264,7 +264,7 @@ input {
 
 /* merchants index */
 
-.merchants {
+.merchants, .promotions {
   list-style: none;
   margin: 0;
   li {
@@ -275,4 +275,13 @@ input {
       border-bottom: 1px solid $grayLighter;
     }
   }
+}
+
+/* Merchant and Promotions new and edit pages */
+
+select {
+  padding: 3px;
+}
+select#promotion_start_date_1i,  select#promotion_start_date_2i, select#promotion_start_date_3i, select#promotion_end_date_1i,  select#promotion_end_date_2i, select#promotion_end_date_3i {
+  width: 110px;
 }

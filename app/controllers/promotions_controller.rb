@@ -8,7 +8,7 @@ class PromotionsController < ApplicationController
 	    if @promotion.save
 	      # Handle a successful save.
 	      flash[:success] = "New Promotion has been created"
-	      redirect_to new_promotion_path
+	      redirect_to promotions_url
 	    else
 	      render 'new'
 	    end  
@@ -35,7 +35,7 @@ class PromotionsController < ApplicationController
 
     def destroy
 	    Promotion.find(params[:id]).destroy
-	    flash[:success] = "Promotion deleted."
+	    flash[:success] = "Promotion deleted"
 	    redirect_to promotions_url
 	end
 end

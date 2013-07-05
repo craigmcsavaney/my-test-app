@@ -32,8 +32,6 @@ describe "Merchant pages" do
     			end
     		end
     	end
-
-
     end
 
     describe "new merchant page" do
@@ -72,7 +70,7 @@ describe "Merchant pages" do
 			        before { click_button submit }
 #			        let(:merchant) { Merchant.find_by_name('Example Merchant') }
 
-			        it { should have_selector('title', text: full_title('Sign up')) }
+			        it { should have_selector('title', text: full_title('All Merchants')) }
 			        it { should have_selector('div.alert.alert-success', text: 'New Merchant has been created') }
 			     end
 		    end

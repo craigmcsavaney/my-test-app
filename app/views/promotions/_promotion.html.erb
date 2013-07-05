@@ -1,0 +1,11 @@
+<li>
+	<%= link_to promotion.name, promotion %>
+	<%= link_to promotion.id, promotion %>
+	<%= link_to promotion.merchant_id, promotion %>
+	<%= link_to promotion.start_date, promotion %>
+	<%= link_to promotion.end_date, promotion %>
+	<%= link_to promotion.content, promotion %>
+	<%= link_to "edit", edit_promotion_path(promotion) %>
+	<%= link_to "delete", promotion, method: :delete,
+			data: { confirm: "You sure?" } %>
+</li>
