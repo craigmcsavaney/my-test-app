@@ -97,35 +97,30 @@ describe "Merchant pages" do
 	    describe "with invalid merchant name" do
 	    	before do
 	    		fill_in "Name",				with: " "
+	    		click_button "Save changes"
 	    	end
-        	before { click_button "Save changes" }
-
-	        	it { should have_selector('title', text: full_title('Edit Merchant')) }
-	        	it { should have_content('error') }
+        	it { should have_selector('title', text: full_title('Edit Merchant')) }
+        	it { should have_content('error') }
 	    end
 
 	    describe "with duplicate merchant name" do
 	    	before do
 	    		fill_in "Name",				with: "Merchant1"
+	    		click_button "Save changes"
 	    	end
-        	before { click_button "Save changes" }
-
-	        	it { should have_selector('title', text: full_title('Edit Merchant')) }
-	        	it { should have_content('error') }
+        	it { should have_selector('title', text: full_title('Edit Merchant')) }
+        	it { should have_content('error') }
 	    end
 
 	    describe "with valid information" do
+	    	let(:new_name)  { "Merchant3" }
 	        before do
-	        	fill_in "Name",         with: "Merchant3"
+	        	fill_in "Name",         with: new_name
+	        	click_button "Save changes"
 	        end
-
-	        describe "after editing the merchant" do
-		        before { click_button "Save changes" }
-#			        let(:merchant) { Merchant.find_by_name('Example Merchant') }
-
-		        it { should have_selector('title', text: full_title('All Merchants')) }
-		        it { should have_selector('div.alert.alert-success', text: 'Merchant updated') }
-		    end
+	        it { should have_selector('title', text: full_title('All Merchants')) }
+	        it { should have_selector('div.alert.alert-success', text: 'Merchant updated') }
+	        specify { @merchant2.reload.name.should  == new_name }
 	    end
     end
 

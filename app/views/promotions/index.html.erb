@@ -1,12 +1,10 @@
 <% provide(:title, 'All Promotions') %>
-<h1>All Promotions</h1>
-
-<%= will_paginate %>
+<h1>All Promotions (<%= @promotions.count %>)</h1>
 
 <div class="container">
-	<ul class="promotions">
+	<%= will_paginate %>
+	<ul class="class-index">
       	<%= render @promotions %>
 	</ul>
+	<%= will_paginate %>
 </div>
-
-<%= will_paginate %>

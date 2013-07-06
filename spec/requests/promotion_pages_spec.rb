@@ -126,4 +126,54 @@ describe "Promotion pages" do
 		    end
 		end
     end
+
+    describe "edit" do
+	    before do
+	    	Promotion.delete_all
+	    	@merchant1 = FactoryGirl.create(:merchant)
+    		@promotion1 = FactoryGirl.create(:promotion, merchant: @merchant1)
+    		@promotion2 = FactoryGirl.create(:promotion, merchant: @merchant1)
+	    end
+
+	    before { visit edit_promotion_path(@promotion1.id) }
+
+	    describe "page" do
+		    it { should have_selector('h1',    text: 'Edit Promotion') }
+		    it { should have_selector('title', text: full_title('Edit Promotion')) }
+		    # it { should have_css('Merchant2') }  # Can't figure out how to identify this page
+		    # # as the exact page I'm looking for, but it clearly is the correct page.
+		end
+
+	    describe "with invalid promotion name" do
+	    	before do
+	    		fill_in "Name",				with: " "
+	    		click_button "Save changes"
+	    	end
+        	it { should have_selector('title', text: full_title('Edit Promotion')) }
+        	it { should have_content('error') }
+	    end
+
+	    describe "with duplicate promotion name" do
+	    	before do
+	    		fill_in "Name",				with: @promotion2.name
+	    		click_button "Save changes"
+	    	end
+        	it { should have_selector('title', text: full_title('Edit Promotion')) }
+        	it { should have_content('error') }
+	    end
+
+	    describe "with valid information" do
+	    	let(:new_name)  { "Example Promotion3" }
+	    	let(:new_content) { "new content"}
+	        before do
+	        	fill_in "Promotion Name",	with: new_name
+	        	fill_in "Content",			with: new_content
+	        	click_button "Save changes"
+	        end
+	        it { should have_selector('title', text: full_title('All Promotions')) }
+	        it { should have_selector('div.alert.alert-success', text: 'Promotion updated') }
+	        specify { @promotion1.reload.name.should  == new_name }
+	        specify { @promotion1.reload.content.should  == new_content }
+	    end
+    end
 end

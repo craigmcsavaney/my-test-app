@@ -1,12 +1,10 @@
 <% provide(:title, 'All Merchants') %>
-<h1>All Merchants</h1>
-
-<%= will_paginate %>
+<h1>All Merchants (<%= @merchants.count %>)</h1>
 
 <div class="container">
-	<ul class="merchants">
+	<%= will_paginate %>
+	<ul class="class-index">
       	<%= render @merchants %>
 	</ul>
+	<%= will_paginate %>
 </div>
-
-<%= will_paginate %>

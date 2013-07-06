@@ -1,7 +1,7 @@
 <li>
-  <%= link_to cause.name, cause %>
-  <%= link_to cause.id, cause %>
-  <%= link_to "edit", edit_cause_path(cause) %>
+  Name: <%= link_to cause.name, cause %>
+  ID#: <%= link_to cause.id, cause %>
+  Actions: <%= link_to "edit", edit_cause_path(cause) %>
   <%= link_to "delete", cause, method: :delete,
                                   data: { confirm: "You sure?" } %>
 </li>

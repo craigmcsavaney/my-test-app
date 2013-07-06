@@ -1,0 +1,10 @@
+<% provide(:title, 'All Channels') %>
+<h1>All Channels (<%= @channels.count %>)</h1>
+
+<div class="container">
+	<%= will_paginate %>
+	<ul class="class-index">
+      	<%= render @channels %>
+	</ul>
+	<%= will_paginate %>
+</div>

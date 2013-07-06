@@ -1,7 +1,7 @@
 <li>
-  <%= link_to merchant.name, merchant %>
-  <%= link_to merchant.id, merchant %>
-  <%= link_to "edit", edit_merchant_path(merchant) %>
+  Name: <%= link_to merchant.name, merchant %>
+  ID#: <%= link_to merchant.id, merchant %>
+  Actions: <%= link_to "edit", edit_merchant_path(merchant) %>
   <%= link_to "delete", merchant, method: :delete,
                                   data: { confirm: "You sure?" } %>
 </li>
