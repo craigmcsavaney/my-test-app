@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130706161544) do
+ActiveRecord::Schema.define(:version => 20130706195215) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(:version => 20130706161544) do
   end
 
   add_index "channels", ["name"], :name => "index_channels_on_name", :unique => true
+
+  create_table "channels_promotions", :id => false, :force => true do |t|
+    t.integer "channel_id",   :null => false
+    t.integer "promotion_id", :null => false
+  end
+
+  add_index "channels_promotions", ["promotion_id", "channel_id"], :name => "index_channels_promotions_on_promotion_id_and_channel_id", :unique => true
 
   create_table "merchants", :force => true do |t|
     t.string   "name"

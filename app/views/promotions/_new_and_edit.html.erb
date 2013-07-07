@@ -19,6 +19,16 @@
 		<%= f.label :content %>
 		<%= f.text_field :content %>
 
+		<%= f.label :channel_ids, "Selected Channels" %>
+		<% for channel in Channel.find(:all) %>
+			<div>
+				<%= check_box_tag "promotion[channel_ids][]", channel.id, @promotion.channels.include?(channel) %>
+				<%= channel.name %>
+			</div>
+		<% end %>
+		<br/>
+
+
 		<%= f.submit button, class: "btn btn-large btn-primary" %>
 		<% end %>
 	</div>
