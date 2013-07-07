@@ -7,4 +7,9 @@ FactoryGirl.define do
     sequence(:name) { |n| "Test Promotion #{n}" }
     merchant
   end
+  factory :promotion_with_channels, parent: :promotion do
+  	after :create do |promotion|
+  		promotion.channels = [1,2,3].map { |i| FactoryGirl.create(:channel)}
+  	end
+  end
 end

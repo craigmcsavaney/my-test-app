@@ -19,6 +19,7 @@ class PromotionsController < ApplicationController
   end
 
   def update
+    params[:promotion][:channel_ids] ||= []
     @promotion = Promotion.find(params[:id])
     if @promotion.update_attributes(params[:promotion])
       	# Handle a successful update.

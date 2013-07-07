@@ -8,7 +8,7 @@ describe "Promotion pages" do
     	before do
     		Merchant.delete_all
     		@merchant = FactoryGirl.create(:merchant)
-    		FactoryGirl.create(:promotion, merchant: @merchant)
+    		FactoryGirl.create(:promotion_with_channels, merchant: @merchant)
     		visit promotions_path
     	end
 
@@ -26,7 +26,7 @@ describe "Promotion pages" do
     		before do
 				Merchant.delete_all
     			@merchant = FactoryGirl.create(:merchant)
-    			30.times { FactoryGirl.create(:promotion, merchant_id: @merchant.id) }
+    			30.times { FactoryGirl.create(:promotion_with_channels, merchant_id: @merchant.id) }
     			visit promotions_path
     		end
     		# after(:all)  { Promotion.delete_all }
@@ -45,11 +45,13 @@ describe "Promotion pages" do
   	describe "create promotion page" do
     	before do
     		FactoryGirl.create(:merchant, name: 'Example')
+    		10.times { FactoryGirl.create(:channel) }
 			visit create_promotion_path
 		end
 
     	it { should have_selector('h1',    text: 'Create Promotion') }
     	it { should have_selector('title', text: full_title('Create Promotion')) }
+    	it { should have_selector('label', text: 'Selected Channels') }
 
 		describe "create promotion" do
 		    let(:submit) { "Create" }
@@ -79,6 +81,7 @@ describe "Promotion pages" do
 		        	select "2014",			from: "promotion_end_date_1i"
 		        	select "July",			from: "promotion_end_date_2i"
 		        	select "31",			from: "promotion_end_date_3i"
+		        	check('promotion_channel_ids_')
 		        end
 
 		        it "should create a promotion" do

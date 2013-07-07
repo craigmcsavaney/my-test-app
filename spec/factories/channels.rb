@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :channel do 
     sequence(:name) { |n| "Test Channel #{n}" }
-    awesm_id "Test Awe.sm ID"
-    description "Test description"
+    sequence(:awesm_id) { |n| "Awe.SM ID#{n}" }
+    sequence(:description) { |n| "Test description#{n}" }
   end
 end

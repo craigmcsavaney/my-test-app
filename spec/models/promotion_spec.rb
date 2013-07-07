@@ -3,13 +3,13 @@ require 'spec_helper'
 describe Promotion do
 
   it "has a valid factory" do
-    FactoryGirl.create(:promotion).should be_valid
+    FactoryGirl.create(:promotion_with_channels).should be_valid
   end
 
   let(:merchant) { FactoryGirl.create(:merchant) }
   
   before do
-     @promotion = FactoryGirl.create(:promotion, merchant: merchant)
+     @promotion = FactoryGirl.create(:promotion_with_channels, merchant: merchant)
   end
 
   subject { @promotion }
@@ -20,6 +20,7 @@ describe Promotion do
   it { should respond_to(:merchant_id) }
   it { should respond_to(:name) }
   it { should respond_to(:merchant) }
+  it { should respond_to(:channel_ids) }
   its(:merchant) { should == merchant }
 
   it { should be_valid }
@@ -34,7 +35,7 @@ describe Promotion do
     it { should_not be_valid }
   end
 
-    describe "when name is blank" do
+  describe "when name is blank" do
     before { @promotion.name = " " }
     it { should_not be_valid }
   end
