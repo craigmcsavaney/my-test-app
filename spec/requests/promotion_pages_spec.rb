@@ -12,8 +12,8 @@ describe "Promotion pages" do
     		visit promotions_path
     	end
 
-    	it { should have_selector('h1', text: 'All Promotions') }
-    	it { should have_selector('title',    text: full_title('All Promotions')) }
+    	it { should have_h1_title('All Promotions') }
+    	it { should have_full_title('All Promotions') }
 
     	it "should list each promotion" do
     		Promotion.all.each do |promotion|
@@ -49,8 +49,8 @@ describe "Promotion pages" do
 			visit create_promotion_path
 		end
 
-    	it { should have_selector('h1',    text: 'Create Promotion') }
-    	it { should have_selector('title', text: full_title('Create Promotion')) }
+    	it { should have_h1_title('Create Promotion') }
+    	it { should have_full_title('Create Promotion') }
     	it { should have_selector('label', text: 'Selected Channels') }
 
 		describe "create promotion" do
@@ -66,8 +66,8 @@ describe "Promotion pages" do
 		        describe "after submission" do
 		        	before { click_button submit }
 
-		        	it { should have_selector('title', text: full_title('Create Promotion')) }
-		        	it { should have_content('error') }
+		        	it { should have_full_title('Create Promotion') }
+		        	it { should have_an_error_message }
 		        end
 		    end
 
@@ -91,8 +91,8 @@ describe "Promotion pages" do
 			        before { click_button submit }
 #			        let(:merchant) { Merchant.find_by_name('Example Merchant') }
 
-			        it { should have_selector('title', text: full_title('All Promotions')) }
-			        it { should have_selector('div.alert.alert-success', text: 'New Promotion has been created') }
+			        it { should have_full_title('All Promotions') }
+			        it { should have_this_success_message('New Promotion has been created') }
 			     end
 		    end
 
@@ -123,8 +123,8 @@ describe "Promotion pages" do
 		        describe "after submission" do
 		        	before { click_button submit }
 
-		        	it { should have_selector('title', text: full_title('Create Promotion')) }
-		        	it { should have_content('error') }
+		        	it { should have_full_title('Create Promotion') }
+		        	it { should have_an_error_message }
 		        end
 		    end
 		end
@@ -141,8 +141,8 @@ describe "Promotion pages" do
 	    before { visit edit_promotion_path(@promotion1.id) }
 
 	    describe "page" do
-		    it { should have_selector('h1',    text: 'Edit Promotion') }
-		    it { should have_selector('title', text: full_title('Edit Promotion')) }
+		    it { should have_h1_title('Edit Promotion') }
+		    it { should have_full_title('Edit Promotion') }
 		    # it { should have_css('Merchant2') }  # Can't figure out how to identify this page
 		    # # as the exact page I'm looking for, but it clearly is the correct page.
 		end
@@ -152,8 +152,8 @@ describe "Promotion pages" do
 	    		fill_in "Name",				with: " "
 	    		click_button "Save changes"
 	    	end
-        	it { should have_selector('title', text: full_title('Edit Promotion')) }
-        	it { should have_content('error') }
+        	it { should have_full_title('Edit Promotion') }
+        	it { should have_an_error_message }
 	    end
 
 	    describe "with duplicate promotion name" do
@@ -161,8 +161,8 @@ describe "Promotion pages" do
 	    		fill_in "Name",				with: @promotion2.name
 	    		click_button "Save changes"
 	    	end
-        	it { should have_selector('title', text: full_title('Edit Promotion')) }
-        	it { should have_content('error') }
+        	it { should have_full_title('Edit Promotion') }
+        	it { should have_an_error_message }
 	    end
 
 	    describe "with valid information" do
@@ -173,8 +173,8 @@ describe "Promotion pages" do
 	        	fill_in "Content",			with: new_content
 	        	click_button "Save changes"
 	        end
-	        it { should have_selector('title', text: full_title('All Promotions')) }
-	        it { should have_selector('div.alert.alert-success', text: 'Promotion updated') }
+	        it { should have_full_title('All Promotions') }
+	        it { should have_this_success_message('Promotion updated') }
 	        specify { @promotion1.reload.name.should  == new_name }
 	        specify { @promotion1.reload.content.should  == new_content }
 	    end

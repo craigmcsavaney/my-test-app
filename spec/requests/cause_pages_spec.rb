@@ -10,8 +10,8 @@ describe "Cause pages" do
     		visit causes_path
     	end
 
-    	it { should have_selector('h1', text: 'All Causes') }
-    	it { should have_selector('title',    text: full_title('All Causes')) }
+    	it { should have_h1_title('All Causes') }
+    	it { should have_full_title('All Causes') }
 
     	it "should list each cause" do
     		Cause.all.each do |cause|
@@ -37,8 +37,8 @@ describe "Cause pages" do
     describe "new cause page" do
 	    before { visit new_cause_path }
 
-	    it { should have_selector('h1',    text: 'Create Cause') }
-	    it { should have_selector('title', text: full_title('Create Cause')) }
+	    it { should have_h1_title('Create Cause') }
+	    it { should have_full_title('Create Cause') }
 
 		describe "create cause" do
 
@@ -53,8 +53,8 @@ describe "Cause pages" do
 		        describe "after submission" do
 		        	before { click_button submit }
 
-		        	it { should have_selector('title', text: 'Create Cause') }
-		        	it { should have_content('error') }
+		        	it { should have_full_title('Create Cause') }
+		        	it { should have_an_error_message }
 		        end
 		    end
 
@@ -70,8 +70,8 @@ describe "Cause pages" do
 			        before { click_button submit }
 #			        let(:cause) { Cause.find_by_name('Example Cause') }
 
-			        it { should have_selector('title', text: full_title('All Causes')) }
-			        it { should have_selector('div.alert.alert-success', text: 'New Cause has been created') }
+			        it { should have_full_title('All Causes') }
+			        it { should have_this_success_message('New Cause has been created') }
 			     end
 		    end
 		end
@@ -88,8 +88,8 @@ describe "Cause pages" do
 	    before { visit edit_cause_path(@cause2.id) }
 
 	    describe "page" do
-		    it { should have_selector('h1',    text: 'Edit Cause') }
-		    it { should have_selector('title', text: full_title('Edit Cause')) }
+		    it { should have_h1_title('Edit Cause') }
+		    it { should have_full_title('Edit Cause') }
 		    # it { should have_css('Cause2') }  # Can't figure out how to identify this page
 		    # # as the exact page I'm looking for, but it clearly is the correct page.
 		end
@@ -100,8 +100,8 @@ describe "Cause pages" do
 	    	end
         	before { click_button "Save changes" }
 
-	        	it { should have_selector('title', text: full_title('Edit Cause')) }
-	        	it { should have_content('error') }
+	        	it { should have_full_title('Edit Cause') }
+	        	it { should have_an_error_message }
 	    end
 
 	    describe "with duplicate cause name" do
@@ -110,21 +110,23 @@ describe "Cause pages" do
 	    	end
         	before { click_button "Save changes" }
 
-	        	it { should have_selector('title', text: full_title('Edit Cause')) }
-	        	it { should have_content('error') }
+	        	it { should have_full_title('Edit Cause') }
+	        	it { should have_an_error_message }
 	    end
 
 	    describe "with valid information" do
+	    	let(:new_name)  { "Cause3" }
 	        before do
-	        	fill_in "Name",         with: "Cause3"
+	        	fill_in "Name",         with: new_name
 	        end
 
 	        describe "after editing the cause" do
 		        before { click_button "Save changes" }
 #			        let(:cause) { Cause.find_by_name('Example Cause') }
 
-		        it { should have_selector('title', text: full_title('All Causes')) }
-		        it { should have_selector('div.alert.alert-success', text: 'Cause updated') }
+		        it { should have_full_title('All Causes') }
+		        it { should have_this_success_message('Cause updated') }
+	        	specify { @cause2.reload.name.should  == new_name }
 		    end
 	    end
     end

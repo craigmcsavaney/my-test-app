@@ -10,8 +10,8 @@ describe "Channel pages" do
     		visit channels_path
     	end
 
-    	it { should have_selector('h1', text: 'All Channels') }
-    	it { should have_selector('title',    text: full_title('All Channels')) }
+    	it { should have_h1_title('All Channels') }
+    	it { should have_full_title('All Channels') }
 
     	it "should list each channel" do
     		Channel.all.each do |channel|
@@ -41,8 +41,8 @@ describe "Channel pages" do
     describe "new channel page" do
 	    before { visit new_channel_path }
 
-	    it { should have_selector('h1',    text: 'Create Channel') }
-	    it { should have_selector('title', text: full_title('Create Channel')) }
+	    it { should have_h1_title('Create Channel') }
+	    it { should have_full_title('Create Channel') }
 
 		describe "create channel" do
 
@@ -63,8 +63,8 @@ describe "Channel pages" do
 		        describe "after submission" do
 		        	before { click_button submit }
 
-		        	it { should have_selector('title', text: 'Create Channel') }
-		        	it { should have_content('error') }
+		        	it { should have_full_title('Create Channel') }
+		        	it { should have_an_error_message }
 		        end
 		    end
 
@@ -80,8 +80,8 @@ describe "Channel pages" do
 		        describe "after submission" do
 		        	before { click_button submit }
 
-		        	it { should have_selector('title', text: 'Create Channel') }
-		        	it { should have_content('error') }
+		        	it { should have_full_title('Create Channel') }
+		        	it { should have_an_error_message }
 		        end
 		    end
 
@@ -98,8 +98,8 @@ describe "Channel pages" do
 			        before { click_button submit }
 #			        let(:channel) { Channel.find_by_name('Example Channel') }
 
-			        it { should have_selector('title', text: full_title('All Channels')) }
-			        it { should have_selector('div.alert.alert-success', text: 'New Channel has been created') }
+			        it { should have_full_title('All Channels') }
+			        it { should have_this_success_message('New Channel has been created') }
 			     end
 		    end
 		end
@@ -116,8 +116,8 @@ describe "Channel pages" do
 	    before { visit edit_channel_path(@channel2.id) }
 
 	    describe "page" do
-		    it { should have_selector('h1',    text: 'Edit Channel') }
-		    it { should have_selector('title', text: full_title('Edit Channel')) }
+		    it { should have_h1_title('Edit Channel') }
+		    it { should have_full_title('Edit Channel') }
 		    # it { should have_css('Channel2') }  # Can't figure out how to identify this page
 		    # # as the exact page I'm looking for, but it clearly is the correct page.
 		end
@@ -128,8 +128,8 @@ describe "Channel pages" do
 	    	end
         	before { click_button "Save changes" }
 
-	        	it { should have_selector('title', text: full_title('Edit Channel')) }
-	        	it { should have_content('error') }
+	        	it { should have_full_title('Edit Channel') }
+	        	it { should have_an_error_message }
 	    end
 
 	    describe "with invalid awesm_id" do
@@ -138,8 +138,8 @@ describe "Channel pages" do
 	    	end
         	before { click_button "Save changes" }
 
-	        	it { should have_selector('title', text: full_title('Edit Channel')) }
-	        	it { should have_content('error') }
+	        	it { should have_full_title('Edit Channel') }
+	        	it { should have_an_error_message }
 	    end
 
 	    describe "with duplicate channel name" do
@@ -148,22 +148,24 @@ describe "Channel pages" do
 	    	end
         	before { click_button "Save changes" }
 
-	        	it { should have_selector('title', text: full_title('Edit Channel')) }
-	        	it { should have_content('error') }
+	        	it { should have_full_title('Edit Channel') }
+	        	it { should have_an_error_message }
 	    end
 
 	    describe "with valid information" do
+	    	let(:new_name)  { "Channel3" }
+	    	let(:new_awesm_id)  { "Different Example AweSM ID" }
 	        before do
-	        	fill_in "Name",             with: "Channel3"
-	    		fill_in "Awe.SM ID",		with: "Different Example AweSM ID"
+	        	fill_in "Name",             with: new_name
+	    		fill_in "Awe.SM ID",		with: new_awesm_id
+	    		click_button "Save changes"
 	        end
 
 	        describe "after editing the channel" do
-		        before { click_button "Save changes" }
-#			        let(:channel) { Channel.find_by_name('Example Channel') }
-
-		        it { should have_selector('title', text: full_title('All Channels')) }
-		        it { should have_selector('div.alert.alert-success', text: 'Channel updated') }
+		        it { should have_full_title('All Channels') }
+		        it { should have_this_success_message('Channel updated') }
+	        	specify { @channel2.reload.name.should  == new_name }
+	        	specify { @channel2.reload.awesm_id.should  == new_awesm_id }
 		    end
 	    end
     end

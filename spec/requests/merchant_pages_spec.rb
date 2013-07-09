@@ -10,8 +10,8 @@ describe "Merchant pages" do
     		visit merchants_path
     	end
 
-    	it { should have_selector('h1', text: 'All Merchants') }
-    	it { should have_selector('title',    text: full_title('All Merchants')) }
+    	it { should have_h1_title('All Merchants') }
+    	it { should have_full_title('All Merchants') }
 
     	it "should list each merchant" do
     		Merchant.all.each do |merchant|
@@ -37,8 +37,8 @@ describe "Merchant pages" do
     describe "new merchant page" do
 	    before { visit new_merchant_path }
 
-	    it { should have_selector('h1',    text: 'Sign up') }
-	    it { should have_selector('title', text: full_title('Sign up')) }
+	    it { should have_h1_title('Sign up') }
+	    it { should have_full_title('Sign up') }
 
 		describe "create merchant" do
 
@@ -54,7 +54,7 @@ describe "Merchant pages" do
 		        	before { click_button submit }
 
 		        	it { should have_selector('title', text: 'Sign up') }
-		        	it { should have_content('error') }
+		        	it { should have_an_error_message }
 		        end
 		    end
 
@@ -70,8 +70,8 @@ describe "Merchant pages" do
 			        before { click_button submit }
 #			        let(:merchant) { Merchant.find_by_name('Example Merchant') }
 
-			        it { should have_selector('title', text: full_title('All Merchants')) }
-			        it { should have_selector('div.alert.alert-success', text: 'New Merchant has been created') }
+			        it { should have_full_title('All Merchants') }
+			        it { should have_this_success_message('New Merchant has been created') }
 			     end
 		    end
 		end
@@ -88,8 +88,8 @@ describe "Merchant pages" do
 	    before { visit edit_merchant_path(@merchant2.id) }
 
 	    describe "page" do
-		    it { should have_selector('h1',    text: 'Edit Merchant') }
-		    it { should have_selector('title', text: full_title('Edit Merchant')) }
+		    it { should have_h1_title('Edit Merchant') }
+		    it { should have_full_title('Edit Merchant') }
 		    # it { should have_css('Merchant2') }  # Can't figure out how to identify this page
 		    # # as the exact page I'm looking for, but it clearly is the correct page.
 		end
@@ -99,8 +99,8 @@ describe "Merchant pages" do
 	    		fill_in "Name",				with: " "
 	    		click_button "Save changes"
 	    	end
-        	it { should have_selector('title', text: full_title('Edit Merchant')) }
-        	it { should have_content('error') }
+        	it { should have_full_title('Edit Merchant') }
+        	it { should have_an_error_message }
 	    end
 
 	    describe "with duplicate merchant name" do
@@ -108,8 +108,8 @@ describe "Merchant pages" do
 	    		fill_in "Name",				with: "Merchant1"
 	    		click_button "Save changes"
 	    	end
-        	it { should have_selector('title', text: full_title('Edit Merchant')) }
-        	it { should have_content('error') }
+        	it { should have_full_title('Edit Merchant') }
+        	it { should have_an_error_message }
 	    end
 
 	    describe "with valid information" do
@@ -118,8 +118,8 @@ describe "Merchant pages" do
 	        	fill_in "Name",         with: new_name
 	        	click_button "Save changes"
 	        end
-	        it { should have_selector('title', text: full_title('All Merchants')) }
-	        it { should have_selector('div.alert.alert-success', text: 'Merchant updated') }
+	        it { should have_full_title('All Merchants') }
+	        it { should have_this_success_message('Merchant updated') }
 	        specify { @merchant2.reload.name.should  == new_name }
 	    end
     end

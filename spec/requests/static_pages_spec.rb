@@ -5,8 +5,8 @@ describe "StaticPages" do
   subject { page }
 
     shared_examples_for "all static pages" do
-      it { should have_selector('h1',    text: heading) }
-      it { should have_selector('title', text: full_title(page_title)) }
+      it { should have_h1_title(heading) }
+      it { should have_full_title(page_title) }
     end
 
   describe "Home page" do
@@ -43,21 +43,21 @@ describe "StaticPages" do
 
   it "should have the right links on the layout" do
     visit root_path
-    page.should have_selector 'title', text: full_title('')
+    page.should have_full_title('')
     #test header links
     click_link "About Us"
-    page.should have_selector 'title', text: full_title('About Us')
+    page.should have_full_title('About Us')
     click_link "Help"
-    page.should have_selector 'title', text: full_title('Help')
+    page.should have_full_title('Help')
     click_link "Contact"
-    page.should have_selector 'title', text: full_title('Contact')
+    page.should have_full_title('Contact')
     #click_link "Sign Up"
     #page.should have_selector 'title', text: full_title('Sign Up')
     #now test footer links not in header
     click_link "About"
-    page.should have_selector 'title', text: full_title('About Us')
+    page.should have_full_title('About Us')
     click_link "Home"
-    page.should have_selector 'title', text: full_title('')
+    page.should have_full_title('')
     #click_link "Sign up now!"
     #page.should # fill in
     #click_link "sample app"
