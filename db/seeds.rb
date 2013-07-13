@@ -22,9 +22,15 @@ end
 
 roles_list = [
   [ "SuperAdmin", "can manage all resources" ],
-  [ "UserAdmin", "can manage user-owned resources" ],
+  [ "UserAdmin", "can manage all resources owned by all users" ],
+  [ "User", "can manage only user-owned resources" ],
+
 ]
 
 roles_list.each do |name, description|
   Role.create( name: name, description: description )
 end
+
+puts 'SETTING UP DEFAULT USER LOGIN'
+user = User.create! :email => 'craigmcsavaney@gmail.com', :password => 'Panthers82', :password_confirmation => 'Panthers82', :role_ids = [1]
+puts 'New user created: ' << user.name
