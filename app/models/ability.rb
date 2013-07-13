@@ -36,18 +36,21 @@ class Ability
         elsif user.role? :user_admin
             can :manage, [Cause, Merchant, Promotion, User]
         elsif user.role? :user
+            # Merchant permissions
+            can [:index, :create], Merchant
             can [:edit, :update, :delete, :show], Merchant do |merchant|
                 merchant.users.include?(user)
             end
+            # Promotion permissions
             can [:index, :create], Promotion
             can [:edit, :update, :delete, :show], Promotion do |promotion|
                 promotion.merchant.users.include?(user)
             end
-            can [:index, :create], Promotion
+            # Cause permissions
+            can [:index, :create], Cause
             can [:edit, :update, :delete, :show], Cause do |cause|
                 cause.users.include?(user)
             end
-            can [:index, :create], Cause
         end
     end
 end
