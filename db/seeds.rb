@@ -32,5 +32,5 @@ roles_list.each do |name, description|
 end
 
 puts 'SETTING UP DEFAULT USER LOGIN'
-user = User.create! :email => 'craigmcsavaney@gmail.com', :password => 'Panthers82', :password_confirmation => 'Panthers82', :role_ids = [1]
+user = User.create! :email => 'craigmcsavaney@gmail.com', :password => 'Panthers82', :password_confirmation => 'Panthers82', :role_ids => [1]
 puts 'New user created: ' << user.name
