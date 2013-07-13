@@ -37,4 +37,16 @@ Myapplication::Application.configure do
 
   # Added by Craig based on Devise configuration guidance:
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {:address => 'localhost', :port => '1025'}
+  
+  # following is configuration to send development emails via Gmail
+  # config.action_mailer.smtp_settings = {
+  #   address:              'smtp.gmail.com',
+  #   port:                 '587',
+  #   domain:               'causebutton.com',
+  #   user_name:            'craig@causebutton.com',
+  #   password:             'USna21412',
+  #   authentication:       :login,
+  #   enable_starttls_auto: true  }
 end

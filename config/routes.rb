@@ -1,9 +1,25 @@
 Myapplication::Application.routes.draw do
+  match '/merchants/new_admin',  to: 'merchants#new_admin', :as => :new_merchant_admin 
+  match '/merchants/create_admin',  to: 'merchants#create_admin'
+  match '/merchants/index_admin',  to: 'merchants#index_admin', :as => :merchants_admin 
+  match '/merchants/:id/edit_admin',  to: 'merchants#edit_admin', :as => :edit_merchant_admin 
+  match '/merchants/:id/update_admin',  to: 'merchants#update_admin'
+
+  match '/promotions/new_admin',  to: 'promotions#new_admin', :as => :new_promotion_admin 
+  match '/promotions/create_admin',  to: 'promotions#create_admin'
+  match '/promotions/index_admin',  to: 'promotions#index_admin', :as => :promotions_admin 
+  match '/promotions/:id/edit_admin',  to: 'promotions#edit_admin', :as => :edit_promotion_admin 
+  match '/promotions/:id/update_admin',  to: 'promotions#update_admin'
+
+
+  resources :roles
+  resources :testusers
   resources :merchants
   resources :promotions
   resources :causes
   resources :channels
-
+  
+  
   root to: 'static_pages#home'
 
   match '/help',    to: 'static_pages#help'
@@ -14,8 +30,13 @@ Myapplication::Application.routes.draw do
   match '/new-merchant',  to: 'merchants#new'
   match '/create_promotion',  to: 'promotions#new'
   match '/create-promotion',  to: 'promotions#new'
+  match '/user/sign_out', to: 'devise/sessions#destroy'
+
+
 
   devise_for :users
+  resources :users, only: [:edit, :update, :index]
+
 
   # get "home/index"
 

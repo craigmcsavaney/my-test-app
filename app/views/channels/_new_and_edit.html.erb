@@ -1,19 +1,22 @@
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@channel) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
+<div class="container">
+  <div class="row">
+    <div class="span7 offset1">
+      <%= form_for(@channel) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
 
-      <%= f.label :awesm_id, "Awe.SM ID" %>
-      <%= f.text_field :awesm_id %>
+        <%= f.label :awesm_id, "Awe.SM ID" %>
+        <%= f.text_field :awesm_id %>
 
-      <%= f.label :description %>
-      <%= f.text_field :description %>
+        <%= f.label :description %>
+        <%= f.text_field :description %>
 
-      <%= f.submit button, class: "btn btn-large btn-primary" %>
-    <% end %>
+        <%= f.submit button, class: "btn btn-large btn-primary" %>
+      <% end %>
 
+    </div>
   </div>
+  <%= go_back %>
 </div>

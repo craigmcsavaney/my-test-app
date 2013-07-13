@@ -17,5 +17,14 @@ channel_list = [
 ]
 
 channel_list.each do |name, awesm_id, description|
-  Channel.create( name: name, awesm_id: awesm_id, description: description)
+  Channel.create( name: name, awesm_id: awesm_id, description: description )
+end
+
+roles_list = [
+  [ "SuperAdmin", "can manage all resources" ],
+  [ "UserAdmin", "can manage user-owned resources" ],
+]
+
+roles_list.each do |name, description|
+  Role.create( name: name, description: description )
 end

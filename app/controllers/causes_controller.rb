@@ -1,4 +1,6 @@
 class CausesController < ApplicationController
+    load_and_authorize_resource
+
   	def create
 		@cause = Cause.new(params[:cause])
 	    if @cause.save

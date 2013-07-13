@@ -1,0 +1,8 @@
+<li>
+  Name: <%= link_to role.name, role %>
+  ID#: <%= link_to role.id, role %>
+  Description: <%= link_to role.description, role %>
+  Actions: <%= link_to "edit", edit_role_path(role) %>
+  <%= link_to "delete", role, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+</li>

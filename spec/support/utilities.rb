@@ -18,6 +18,12 @@ RSpec::Matchers.define :have_this_success_message do |message|
   end
 end
 
+RSpec::Matchers.define :have_this_notice_message do |message|
+  match do |page|
+    page.should have_selector('div.alert.alert-notice', text: message) 
+  end
+end
+
 RSpec::Matchers.define :have_full_title do |title|
   match do |page|
     page.should have_selector('title', text: full_title(title)) 

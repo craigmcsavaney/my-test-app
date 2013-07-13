@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130706195215) do
+ActiveRecord::Schema.define(:version => 20130711233651) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(:version => 20130706195215) do
 
   add_index "merchants", ["name"], :name => "index_merchants_on_name", :unique => true
 
+  create_table "merchants_users", :id => false, :force => true do |t|
+    t.integer "merchant_id"
+    t.integer "user_id"
+  end
+
+  add_index "merchants_users", ["user_id", "merchant_id"], :name => "index_merchants_users_on_user_id_and_merchant_id", :unique => true
+
   create_table "promotions", :force => true do |t|
     t.string   "content"
     t.date     "start_date"
@@ -57,6 +64,28 @@ ActiveRecord::Schema.define(:version => 20130706195215) do
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
+  end
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
+  add_index "roles_users", ["user_id", "role_id"], :name => "index_roles_users_on_user_id_and_role_id", :unique => true
+
+  create_table "testusers", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "login"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

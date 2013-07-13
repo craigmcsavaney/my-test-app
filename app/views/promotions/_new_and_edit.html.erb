@@ -1,35 +1,42 @@
-<div class="row">
-	<div class="span6 offset3">
-		<%= form_for(@promotion) do |f| %>
+<div class="container">
+  <div class="row">
+    <div class="span7 offset1">
+    	<%= form_for @promotion, url: {action: action} do |f| %>
 
-		<%= render 'shared/error_messages', object: f.object %>
+			<%= render 'shared/error_messages', object: f.object %>
 
-		<%= f.label :merchant_id, "Merchant Name" %>
-		<%= select_tag 'promotion[merchant_id]', options_from_collection_for_select(Merchant.all, :id, :name) %>
+			<%= f.label :merchant_id, "Merchant Name" %>
+			<% if ["new_admin","edit_admin"].include?params[:action] %>
+					<%= select_tag 'promotion[merchant_id]', options_from_collection_for_select(Merchant.all, :id, :name) %>
+				<% else %>
+					<%= select_tag 'promotion[merchant_id]', options_from_collection_for_select(current_user.merchants, :id, :name) %>
+			<% end %>
 
-		<%= f.label :name, "Promotion Name" %>
-		<%= f.text_field :name %>
+			<%= f.label :name, "Promotion Name" %>
+			<%= f.text_field :name %>
 
-		<%= f.label :start_date, "Start Date" %>
-		<%= f.date_select :start_date %>
+			<%= f.label :start_date, "Start Date" %>
+			<%= f.date_select :start_date %>
 
-		<%= f.label :end_date, "End Date" %>
-		<%= f.date_select :end_date %>
+			<%= f.label :end_date, "End Date" %>
+			<%= f.date_select :end_date %>
 
-		<%= f.label :content %>
-		<%= f.text_field :content %>
+			<%= f.label :content %>
+			<%= f.text_field :content %>
 
-		<%= f.label :channel_ids, "Selected Channels" %>
-		<% for channel in Channel.find(:all) %>
-			<div>
-				<%= check_box_tag "promotion[channel_ids][]", channel.id, @promotion.channels.include?(channel) %>
-				<%= channel.name %>
-			</div>
-		<% end %>
-		<br/>
+			<%= f.label :channel_ids, "Selected Channels" %>
+			<% for channel in Channel.find(:all) %>
+				<div>
+					<%= check_box_tag "promotion[channel_ids][]", channel.id, @promotion.channels.include?(channel) %>
+					<%= channel.name %>
+				</div>
+			<% end %>
+			<br/>
 
 
-		<%= f.submit button, class: "btn btn-large btn-primary" %>
-		<% end %>
+			<%= f.submit button, class: "btn btn-large btn-primary" %>
+			<% end %>
+		</div>
 	</div>
+	<%= go_back %>
 </div>

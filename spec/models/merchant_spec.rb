@@ -6,13 +6,18 @@ describe Merchant do
 		FactoryGirl.create(:merchant).should be_valid
 	end
 
+  it "has a valid factory with users" do
+    FactoryGirl.create(:merchant_with_users).should be_valid
+  end
+
   before  do
-    @merchant = FactoryGirl.create(:merchant)
+    @merchant = FactoryGirl.create(:merchant_with_users)
   end
 
   subject { @merchant }
 
   it { should respond_to(:name) }
+  it { should respond_to(:user_ids) }
 
   it { should be_valid }
 

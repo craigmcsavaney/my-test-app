@@ -1,7 +1,15 @@
 <li>
-  Name: <%= link_to merchant.name, merchant %>
-  ID#: <%= link_to merchant.id, merchant %>
-  Actions: <%= link_to "edit", edit_merchant_path(merchant) %>
-  <%= link_to "delete", merchant, method: :delete,
+  	<b>Name: </b><%= link_to merchant.name, merchant %>&nbsp;&nbsp;
+  	<b>ID#: </b><%= link_to merchant.id, merchant %><br/>
+	<b>Users</b><% for user in merchant.users %>
+		<b>:&nbsp;</b><%= link_to user.email, merchant %>&nbsp;
+	<% end %><br/>  
+  	<b>Actions: </b>
+  	<% if params[:action] == "index" %>
+		  	<%= link_to "edit", edit_merchant_path(merchant) %>&nbsp;&nbsp;
+	  	<% elsif params[:action] == "index_admin" %>
+		  	<%= link_to "edit", edit_merchant_admin_path(merchant) %>&nbsp;&nbsp;
+  	<% end %>
+  	<%= link_to "delete", merchant, method: :delete,
                                   data: { confirm: "You sure?" } %>
 </li>

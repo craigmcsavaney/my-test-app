@@ -1,11 +1,19 @@
 <li>
-	Name: <%= link_to promotion.name, promotion %>
-	ID#: <%= link_to promotion.id, promotion %>
-	Merchant ID#: <%= link_to promotion.merchant_id, promotion %>
-	Start Date: <%= link_to promotion.start_date, promotion %>
-	End Date: <%= link_to promotion.end_date, promotion %>
-	Content: <%= link_to promotion.content, promotion %>
-	Actions: <%= link_to "edit", edit_promotion_path(promotion) %>
+	<b>Name: </b><%= link_to promotion.name, promotion %>&nbsp;&nbsp;
+	<b>ID#: </b><%= link_to promotion.id, promotion %>&nbsp;&nbsp;
+	<b>Merchant ID#: </b><%= link_to promotion.merchant_id, promotion %>&nbsp;&nbsp;
+	<b>Start Date: </b><%= link_to promotion.start_date, promotion %>&nbsp;&nbsp;
+	<b>End Date: </b><%= link_to promotion.end_date, promotion %>&nbsp;&nbsp;
+	<b>Content: </b><%= link_to promotion.content, promotion %><br/>
+	<b>Channels</b><% for channel in promotion.channels %>
+		<b>:&nbsp;</b><%= link_to channel.name, promotion %>&nbsp;
+	<% end %><br/>
+	<b>Actions: </b>
+  	<% if params[:action] == "index" %>
+	  	<%= link_to "edit", edit_promotion_path(promotion) %>&nbsp;&nbsp;
+  	<% elsif params[:action] == "index_admin" %>
+	  	<%= link_to "edit", edit_promotion_admin_path(promotion) %>&nbsp;&nbsp;
+  	<% end %>
 	<%= link_to "delete", promotion, method: :delete,
 			data: { confirm: "You sure?" } %>
 </li>

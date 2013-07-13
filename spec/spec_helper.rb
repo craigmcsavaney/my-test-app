@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spork'
+require 'email_spec'
 
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
@@ -117,5 +118,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+  # Added by craig based on the email_spec gem instructions:
+  config.include(EmailSpec::Helpers)
+  config.include(EmailSpec::Matchers)
 
 end

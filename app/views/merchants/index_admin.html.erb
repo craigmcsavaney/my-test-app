@@ -1,0 +1,13 @@
+<% provide(:title, 'All Merchants') %>
+<h1>All Merchants (<%= @merchants.count %>)</h1>
+
+<div class="container">
+	<%= will_paginate %>
+	<ul class="class-index">
+      	<%= render @merchants %>
+	</ul>
+	<%= will_paginate %>
+	<br/>
+	<%= link_to 'Create New Merchant as Admin', new_merchant_admin_path %><br/>
+	<%= go_back %>
+</div>

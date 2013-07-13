@@ -1,0 +1,25 @@
+<div class="container">
+  	<div class="row">
+	    <div class="span7 offset1">
+			<%= form_for(@user) do |f| %>
+
+			<%= render 'shared/error_messages', object: f.object %>
+
+			<%= f.label :email, "User Email" %>
+			<%= f.text_field :email, :readonly => true %>
+
+			<%= f.label :role_ids, "Selected Roles" %>
+			<% for role in Role.find(:all) %>
+				<div>
+					<%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role) %>
+					<%= role.name %>
+				</div>
+			<% end %>
+			<br/>
+
+			<%= f.submit button, class: "btn btn-large btn-primary" %>
+			<% end %>
+		</div>
+	</div>
+	<%= go_back %>
+</div>

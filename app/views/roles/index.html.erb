@@ -1,0 +1,14 @@
+<% provide(:title, 'All Roles') %>
+<h1>All Roles (<%= @roles.count %>)</h1>
+
+<div class="container">
+  	<%= will_paginate %>
+  	<ul class="class-index">
+        <%= render @roles %>
+  	</ul>
+  	<%= will_paginate %>
+  	<br/>
+	<%= link_to 'Create New Role', new_role_path %><br/>
+	<%= go_back %>
+</div>
+

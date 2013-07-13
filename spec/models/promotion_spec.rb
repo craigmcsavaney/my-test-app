@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Promotion do
 
   it "has a valid factory" do
+    FactoryGirl.create(:promotion).should be_valid
+  end
+  
+  it "has a valid factory with channels" do
     FactoryGirl.create(:promotion_with_channels).should be_valid
   end
 
