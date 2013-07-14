@@ -77,4 +77,11 @@ class PromotionsController < ApplicationController
     flash[:success] = "Promotion deleted"
     redirect_to promotions_url
   end
+
+  def destroy_admin
+    Promotion.find(params[:id]).destroy
+    flash[:success] = "Promotion deleted"
+    redirect_to promotions_admin_url
+  end
+
 end

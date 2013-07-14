@@ -80,4 +80,11 @@ class MerchantsController < ApplicationController
     flash[:success] = "Merchant deleted"
     redirect_to merchants_url
 	end
+
+  def destroy_admin
+    Merchant.find(params[:id]).destroy
+    flash[:success] = "Merchant deleted"
+    redirect_to merchants_admin_url
+  end
+
 end

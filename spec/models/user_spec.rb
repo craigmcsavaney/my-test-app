@@ -6,6 +6,10 @@ describe User do
 		FactoryGirl.create(:user).should be_valid
 	end
 
+  it "has a valid factory" do
+    FactoryGirl.create(:user_with_roles).should be_valid
+  end
+  
   before  do
     @user = FactoryGirl.create(:user)
   end

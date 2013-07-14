@@ -1,9 +1,10 @@
 <li>
-  Name: <%= link_to channel.name, channel %>
-  ID#: <%= link_to channel.id, channel %>
-  Awe.SM ID: <%= link_to channel.awesm_id, channel %>
-  Description: <%= link_to channel.description, channel %>
-  Actions: <%= link_to "edit", edit_channel_path(channel) %>
-  <%= link_to "delete", channel, method: :delete,
+	<% @editpath = edit_channel_path(channel) %>
+  	<b>Name: </b><%= link_to channel.name, @editpath %>
+  	<b>ID#: </b><%= link_to channel.id, @editpath %>
+  	<b>Awe.SM ID: </b><%= link_to channel.awesm_id, @editpath %>
+  	<b>Description: </b><%= link_to channel.description, @editpath %><br/>
+  	<b>Actions: </b><%= link_to "edit", @editpath %>&nbsp;&nbsp;
+  	<%= link_to "delete", channel, method: :delete,
                                   data: { confirm: "You sure?" } %>
 </li>

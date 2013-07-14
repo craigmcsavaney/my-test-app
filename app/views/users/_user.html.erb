@@ -1,7 +1,8 @@
 <li>
-  	Name: <%= link_to user.email, user %>
-	Roles: <% for role in user.roles %>
-		<%= link_to role.name, user %>
-	<% end %>
-  	Actions: <%= link_to "edit", edit_user_path(user) %>
+	<% @editpath = edit_user_path(user) %><br/>
+  	<b>Name: </b><%= link_to user.email, @editpath %><br/>
+	<b>Roles: </b><% for role in user.roles %>
+		<%= link_to role.name, @editpath %>
+	<% end %><br/>
+  	<b>Actions: </b><%= link_to "edit", @editpath %>
 </li>

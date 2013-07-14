@@ -37,8 +37,8 @@ describe "Merchant pages" do
     describe "new merchant page" do
 	    before { visit new_merchant_path }
 
-	    it { should have_h1_title('Sign up') }
-	    it { should have_full_title('Sign up') }
+	    it { should have_h1_title('New Merchant') }
+	    it { should have_full_title('New Merchant') }
 
 		describe "create merchant" do
 
@@ -53,7 +53,7 @@ describe "Merchant pages" do
 		        describe "after submission" do
 		        	before { click_button submit }
 
-		        	it { should have_selector('title', text: 'Sign up') }
+		        	it { should have_selector('title', text: 'New Merchant') }
 		        	it { should have_an_error_message }
 		        end
 		    end

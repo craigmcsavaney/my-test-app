@@ -1,19 +1,22 @@
 <li>
-	<b>Name: </b><%= link_to promotion.name, promotion %>&nbsp;&nbsp;
-	<b>ID#: </b><%= link_to promotion.id, promotion %>&nbsp;&nbsp;
-	<b>Merchant ID#: </b><%= link_to promotion.merchant_id, promotion %>&nbsp;&nbsp;
-	<b>Start Date: </b><%= link_to promotion.start_date, promotion %>&nbsp;&nbsp;
-	<b>End Date: </b><%= link_to promotion.end_date, promotion %>&nbsp;&nbsp;
-	<b>Content: </b><%= link_to promotion.content, promotion %><br/>
+	<% if params[:action] == "index" %>
+		<% @editpath = edit_promotion_path(promotion) %>
+		<% @deletepath = promotion %>
+  	<% elsif params[:action] == "index_admin" %>
+		<% @editpath = edit_promotion_admin_path(promotion) %>
+		<% @deletepath = destroy_promotion_admin_path(promotion) %>
+	<% end %>
+	<b>Name: </b><%= link_to promotion.name, @editpath %>&nbsp;&nbsp;
+	<b>ID#: </b><%= link_to promotion.id, @editpath %>&nbsp;&nbsp;
+	<b>Merchant ID#: </b><%= link_to promotion.merchant_id, @editpath %>&nbsp;&nbsp;
+	<b>Start Date: </b><%= link_to promotion.start_date, @editpath %>&nbsp;&nbsp;
+	<b>End Date: </b><%= link_to promotion.end_date, @editpath %>&nbsp;&nbsp;
+	<b>Content: </b><%= link_to promotion.content, @editpath %><br/>
 	<b>Channels</b><% for channel in promotion.channels %>
-		<b>:&nbsp;</b><%= link_to channel.name, promotion %>&nbsp;
+		<b>:&nbsp;</b><%= link_to channel.name, @editpath %>&nbsp;
 	<% end %><br/>
 	<b>Actions: </b>
-  	<% if params[:action] == "index" %>
-	  	<%= link_to "edit", edit_promotion_path(promotion) %>&nbsp;&nbsp;
-  	<% elsif params[:action] == "index_admin" %>
-	  	<%= link_to "edit", edit_promotion_admin_path(promotion) %>&nbsp;&nbsp;
-  	<% end %>
-	<%= link_to "delete", promotion, method: :delete,
-			data: { confirm: "You sure?" } %>
+	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
+		<%= link_to "delete", @deletepath, method: :delete,
+                                  data: { confirm: "You sure?" } %>
 </li>

@@ -29,21 +29,47 @@
                         <a tabindex="-1" href="#">My Merchants</a>
                         <ul class="dropdown-menu">
                           <li><%= link_to_if(can?(:create, Merchant), "Create A Merchant", new_merchant_path) {} %></li>
-                          <li><%= link_to_if((current_user.merchants.any?) && can?(:index, Merchant), "View Merchants (#{current_user.merchants.count})", merchants_path) {} %></li>
+                          <% if !current_user.merchants.any? %>
+                              <li class="disabled">
+                            <% else %>
+                              <li>
+                            <% end %> 
+                          <%= link_to_if(can?(:index, Merchant), "View Merchants (#{current_user.merchants.count})", merchants_path) {} %></li>
                         </ul>
                       </li>
                     <% end %>
-                    <% if (can?(:show, Promotion) && current_user.merchants.any?) %>
+                    <% if (can?(:show, Promotion)) %>
                       <li class="dropdown-submenu">
                         <a tabindex="-1" href="#">My Promotions</a>
                         <ul class="dropdown-menu">
-                          <li><%= link_to_if(can?(:create, Promotion), "Create A Promotion", new_promotion_path) {} %></li>
-                          <li><%= link_to_if((Promotion.exists?(merchant_id: current_user.merchants)) && can?(:index, Promotion), "View Promotions (#{Promotion.where(merchant_id: current_user.merchants).count})", promotions_path) {} %></li>
+                          <% if !current_user.merchants.any? %>
+                              <li class="disabled">
+                            <% else %>
+                              <li>
+                          <% end %> 
+                          <%= link_to_if(can?(:create, Promotion), "Create A Promotion", new_promotion_path) {} %></li>
+                          <% if !Promotion.exists?(merchant_id: current_user.merchants) %>
+                              <li class="disabled">
+                            <% else %>
+                              <li>
+                          <% end %>
+                          <%= link_to_if(can?(:index, Promotion), "View Promotions (#{Promotion.where(merchant_id: current_user.merchants).count})", promotions_path) {} %></li>
                         </ul>
                       </li>
                     <% end %>
                     <% if (can?(:show, Cause)) %>
-                      <li><%= link_to "View My Causes", causes_path %></li>
+                      <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">My Causes</a>
+                        <ul class="dropdown-menu">
+                          <li><%= link_to_if(can?(:create, Cause), "Create A Cause", new_cause_path) {} %></li>
+                          <% if !current_user.causes.any? %>
+                              <li class="disabled">
+                            <% else %>
+                              <li>
+                          <% end %> 
+                          <%= link_to_if(can?(:index, Cause), "View Causes (#{current_user.causes.count})", causes_path) {} %></li>
+                        </ul>
+                      </li>
                     <% end %>
                     <li><%= link_to "See the Good I've Done", "#" %></li>
                     <li class="divider"></li>
@@ -75,8 +101,8 @@
                   <li class="dropdown-submenu">
                     <a tabindex="-1" href="#">Causes</a>
                     <ul class="dropdown-menu">
-                      <li><%= link_to "Create Cause", new_cause_path %></li>
-                      <li><%= link_to "View Causes (#{Cause.count})", causes_path %></li>
+                      <li><%= link_to "Create Cause", new_cause_admin_path %></li>
+                      <li><%= link_to "View Causes (#{Cause.count})", causes_admin_path %></li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">

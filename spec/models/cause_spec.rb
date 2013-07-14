@@ -6,13 +6,18 @@ describe Cause do
 		FactoryGirl.create(:cause).should be_valid
 	end
 
+  it "has a valid factory with users" do
+    FactoryGirl.create(:cause_with_users).should be_valid
+  end
+  
   before  do
-    @cause = FactoryGirl.create(:cause)
+    @cause = FactoryGirl.create(:cause_with_users)
   end
 
   subject { @cause }
 
   it { should respond_to(:name) }
+  it { should respond_to(:user_ids) }
 
   it { should be_valid }
 

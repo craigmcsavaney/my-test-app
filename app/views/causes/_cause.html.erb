@@ -1,7 +1,18 @@
 <li>
-  Name: <%= link_to cause.name, cause %>
-  ID#: <%= link_to cause.id, cause %>
-  Actions: <%= link_to "edit", edit_cause_path(cause) %>
-  <%= link_to "delete", cause, method: :delete,
+	<% if params[:action] == "index" %>
+		<% @editpath = edit_cause_path(cause) %>
+		<% @deletepath = cause %>
+  	<% elsif params[:action] == "index_admin" %>
+		<% @editpath = edit_cause_admin_path(cause) %>
+		<% @deletepath = destroy_cause_admin_path(cause) %>
+	<% end %>
+  	<b>Name: </b><%= link_to cause.name, @editpath %>&nbsp;&nbsp;
+	<b>ID#: </b><%= link_to cause.id, @editpath %><br/>
+	<b>Users</b><% for user in cause.users %>
+	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;
+	<% end %><br/>  
+	<b>Actions: </b>
+	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
+		<%= link_to "delete", @deletepath, method: :delete,
                                   data: { confirm: "You sure?" } %>
 </li>

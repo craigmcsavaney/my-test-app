@@ -4,13 +4,21 @@ Myapplication::Application.routes.draw do
   match '/merchants/index_admin',  to: 'merchants#index_admin', :as => :merchants_admin 
   match '/merchants/:id/edit_admin',  to: 'merchants#edit_admin', :as => :edit_merchant_admin 
   match '/merchants/:id/update_admin',  to: 'merchants#update_admin'
+  match '/merchants/:id/destroy_admin',  to: 'merchants#destroy_admin', :as => :destroy_merchant_admin
 
   match '/promotions/new_admin',  to: 'promotions#new_admin', :as => :new_promotion_admin 
   match '/promotions/create_admin',  to: 'promotions#create_admin'
   match '/promotions/index_admin',  to: 'promotions#index_admin', :as => :promotions_admin 
   match '/promotions/:id/edit_admin',  to: 'promotions#edit_admin', :as => :edit_promotion_admin 
   match '/promotions/:id/update_admin',  to: 'promotions#update_admin'
+  match '/promotions/:id/destroy_admin',  to: 'promotions#destroy_admin', :as => :destroy_promotion_admin
 
+  match '/causes/new_admin',  to: 'causes#new_admin', :as => :new_cause_admin 
+  match '/causes/create_admin',  to: 'causes#create_admin'
+  match '/causes/index_admin',  to: 'causes#index_admin', :as => :causes_admin 
+  match '/causes/:id/edit_admin',  to: 'causes#edit_admin', :as => :edit_cause_admin 
+  match '/causes/:id/update_admin',  to: 'causes#update_admin'
+  match '/causes/:id/destroy_admin',  to: 'causes#destroy_admin', :as => :destroy_cause_admin
 
   resources :roles
   resources :testusers

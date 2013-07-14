@@ -3,8 +3,14 @@ require 'spec_helper'
 describe Role do
 
 	it "has a valid factory" do
+    Role.delete_all
 		FactoryGirl.create(:role).should be_valid
 	end
+
+  it "has a valid role for logged in user" do
+    Role.delete_all
+    FactoryGirl.create(:role, name: 'User', description: 'Logged In User').should be_valid
+  end
 
   before  do
     @role = FactoryGirl.create(:role)

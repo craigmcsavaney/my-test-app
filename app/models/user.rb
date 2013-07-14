@@ -28,6 +28,7 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :merchants
+  has_and_belongs_to_many :causes
 
   before_save :setup_role
 
@@ -40,13 +41,13 @@ class User < ActiveRecord::Base
          :timeoutable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :role_ids, :merchant_ids
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :role_ids, :merchant_ids, :cause_ids
   # attr_accessible :title, :body
 
   # Default role is "User"
   def setup_role 
     if self.role_ids.empty?     
-      self.role_ids = [3] 
+      self.role_ids = [Role.find_by_name("User").id] 
     end
   end
   

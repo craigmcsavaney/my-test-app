@@ -153,14 +153,13 @@ describe "User pages" do
     	end
     end
 
-    describe "edit" do
+    describe "edit page" do
 	    before do
 	    	User.delete_all
     		@user1 = FactoryGirl.create(:user_with_roles)
     		@user2 = FactoryGirl.create(:user_with_roles)
+	    	visit edit_user_path(@user1.id)
 	    end
-
-	    before { visit edit_user_path(@user1.id) }
 
 	    describe "page" do
 		    it { should have_h1_title('Edit User') }

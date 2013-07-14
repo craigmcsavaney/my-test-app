@@ -1,15 +1,18 @@
 <li>
-  	<b>Name: </b><%= link_to merchant.name, merchant %>&nbsp;&nbsp;
-  	<b>ID#: </b><%= link_to merchant.id, merchant %><br/>
+	<% if params[:action] == "index" %>
+		<% @editpath = edit_merchant_path(merchant) %>
+		<% @deletepath = merchant %>
+  	<% elsif params[:action] == "index_admin" %>
+		<% @editpath = edit_merchant_admin_path(merchant) %>
+		<% @deletepath = destroy_merchant_admin_path(merchant) %>
+	<% end %>
+	<b>Name: </b><%= link_to merchant.name, @editpath %>&nbsp;&nbsp;
+	<b>ID#: </b><%= link_to merchant.id, @editpath %><br/>
 	<b>Users</b><% for user in merchant.users %>
-		<b>:&nbsp;</b><%= link_to user.email, merchant %>&nbsp;
+	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;
 	<% end %><br/>  
-  	<b>Actions: </b>
-  	<% if params[:action] == "index" %>
-		  	<%= link_to "edit", edit_merchant_path(merchant) %>&nbsp;&nbsp;
-	  	<% elsif params[:action] == "index_admin" %>
-		  	<%= link_to "edit", edit_merchant_admin_path(merchant) %>&nbsp;&nbsp;
-  	<% end %>
-  	<%= link_to "delete", merchant, method: :delete,
+	<b>Actions: </b>
+	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
+		<%= link_to "delete", @deletepath, method: :delete,
                                   data: { confirm: "You sure?" } %>
 </li>
