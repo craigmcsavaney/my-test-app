@@ -1,10 +1,13 @@
 Myapplication::Application.routes.draw do
+
+
   match '/merchants/new_admin',  to: 'merchants#new_admin', :as => :new_merchant_admin 
   match '/merchants/create_admin',  to: 'merchants#create_admin'
   match '/merchants/index_admin',  to: 'merchants#index_admin', :as => :merchants_admin 
   match '/merchants/:id/edit_admin',  to: 'merchants#edit_admin', :as => :edit_merchant_admin 
   match '/merchants/:id/update_admin',  to: 'merchants#update_admin'
   match '/merchants/:id/destroy_admin',  to: 'merchants#destroy_admin', :as => :destroy_merchant_admin
+  match '/merchants/:id/current',  to: 'merchants#current', :as => :current_promotion
 
   match '/promotions/new_admin',  to: 'promotions#new_admin', :as => :new_promotion_admin 
   match '/promotions/create_admin',  to: 'promotions#create_admin'
@@ -12,6 +15,9 @@ Myapplication::Application.routes.draw do
   match '/promotions/:id/edit_admin',  to: 'promotions#edit_admin', :as => :edit_promotion_admin 
   match '/promotions/:id/update_admin',  to: 'promotions#update_admin'
   match '/promotions/:id/destroy_admin',  to: 'promotions#destroy_admin', :as => :destroy_promotion_admin
+  match '/promotions/:id/duplicate',  to: 'promotions#duplicate', :as => :duplicate_promotion
+  match '/promotions/:id/duplicate_admin',  to: 'promotions#duplicate_admin', :as => :duplicate_promotion_admin
+  match '/promotions/:merchant_id/current',  to: 'promotions#current', :as => :current_promotion
 
   match '/causes/new_admin',  to: 'causes#new_admin', :as => :new_cause_admin 
   match '/causes/create_admin',  to: 'causes#create_admin'
@@ -20,13 +26,15 @@ Myapplication::Application.routes.draw do
   match '/causes/:id/update_admin',  to: 'causes#update_admin'
   match '/causes/:id/destroy_admin',  to: 'causes#destroy_admin', :as => :destroy_cause_admin
 
+  match '/promotions/serve/:merchant_id',  to: 'promotions#serve', :as => :serve_promotion
+
   resources :roles
-  resources :testusers
   resources :merchants
   resources :promotions
   resources :causes
   resources :channels
-  
+  resources :types
+ 
   
   root to: 'static_pages#home'
 

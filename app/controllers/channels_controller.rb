@@ -22,6 +22,7 @@ class ChannelsController < ApplicationController
 
   def update
   	@channel = Channel.find(params[:id])
+    @channel.updated_by = current_user
   	if @channel.update_attributes(params[:channel])
     		# Handle a successful update.
       	flash[:success] = "Channel updated"

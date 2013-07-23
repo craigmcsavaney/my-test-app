@@ -1,4 +1,8 @@
 <li>
+	<% @a = "" %>
+	<% if merchant.website? %>
+		<% @a = merchant.website %>
+	<% end %>
 	<% if params[:action] == "index" %>
 		<% @editpath = edit_merchant_path(merchant) %>
 		<% @deletepath = merchant %>
@@ -7,11 +11,13 @@
 		<% @deletepath = destroy_merchant_admin_path(merchant) %>
 	<% end %>
 	<b>Name: </b><%= link_to merchant.name, @editpath %>&nbsp;&nbsp;
-	<b>ID#: </b><%= link_to merchant.id, @editpath %><br/>
+	<b>ID#: </b><%= link_to merchant.id, @editpath %>&nbsp;&nbsp;
+	<b>Website URL: </b><%= link_to @a, @editpath %><br/>
 	<b>Users</b><% for user in merchant.users %>
 	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;
 	<% end %><br/>  
 	<b>Actions: </b>
+		<%= link_to 'Show Current Promotion', current_promotion_path(merchant) %>&nbsp;&nbsp;
 	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
 		<%= link_to "delete", @deletepath, method: :delete,
                                   data: { confirm: "You sure?" } %>

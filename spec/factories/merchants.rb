@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :merchant do 
     sequence(:name) { |n| "Test Merchant #{n}" }
+    website "http://www.example.com"
   end
   factory :merchant_with_users, parent: :merchant do
   	after :create do |merchant|

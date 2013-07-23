@@ -7,7 +7,8 @@ gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'cancan'
-
+gem 'vestal_versions', :git => 'git://github.com/laserlemon/vestal_versions'
+gem 'amoeba', '2.0.0'
 gem 'devise'
 
 #added following require and gem for Guard compatibility with wdm

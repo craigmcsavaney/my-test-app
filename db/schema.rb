@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130713203240) do
+ActiveRecord::Schema.define(:version => 20130722165425) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.boolean  "deleted"
   end
 
   add_index "causes", ["name"], :name => "index_causes_on_name", :unique => true
@@ -34,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20130713203240) do
     t.datetime "updated_at",  :null => false
     t.string   "awesm_id"
     t.string   "description"
+    t.boolean  "deleted"
   end
 
   add_index "channels", ["name"], :name => "index_channels_on_name", :unique => true
@@ -49,6 +51,9 @@ ActiveRecord::Schema.define(:version => 20130713203240) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "website"
+    t.string   "logo_link"
+    t.boolean  "deleted"
   end
 
   add_index "merchants", ["name"], :name => "index_merchants_on_name", :unique => true
@@ -65,9 +70,18 @@ ActiveRecord::Schema.define(:version => 20130713203240) do
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "merchant_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.string   "name"
+    t.integer  "cause_id"
+    t.integer  "merchant_pct"
+    t.integer  "supporter_pct"
+    t.integer  "buyer_pct"
+    t.string   "landing_page"
+    t.boolean  "deleted"
+    t.decimal  "uid",           :precision => 16, :scale => 6
+    t.integer  "priority"
+    t.boolean  "disabled"
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"
@@ -77,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20130713203240) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "description"
+    t.boolean  "deleted"
   end
 
   create_table "roles_users", :id => false, :force => true do |t|
@@ -86,12 +101,10 @@ ActiveRecord::Schema.define(:version => 20130713203240) do
 
   add_index "roles_users", ["user_id", "role_id"], :name => "index_roles_users_on_user_id_and_role_id", :unique => true
 
-  create_table "testusers", :force => true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "login"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "serves", :force => true do |t|
+    t.integer  "promotion_id", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -115,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20130713203240) do
     t.string   "authentication_token"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.boolean  "deleted"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -122,5 +136,26 @@ ActiveRecord::Schema.define(:version => 20130713203240) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "versions", :force => true do |t|
+    t.integer  "versioned_id"
+    t.string   "versioned_type"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "user_name"
+    t.text     "modifications"
+    t.integer  "number"
+    t.integer  "reverted_from"
+    t.string   "tag"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "versions", ["created_at"], :name => "index_versions_on_created_at"
+  add_index "versions", ["number"], :name => "index_versions_on_number"
+  add_index "versions", ["tag"], :name => "index_versions_on_tag"
+  add_index "versions", ["user_id", "user_type"], :name => "index_versions_on_user_id_and_user_type"
+  add_index "versions", ["user_name"], :name => "index_versions_on_user_name"
+  add_index "versions", ["versioned_id", "versioned_type"], :name => "index_versions_on_versioned_id_and_versioned_type"
 
 end

@@ -1,7 +1,10 @@
 class Channel < ActiveRecord::Base
-  attr_accessible :name, :awesm_id, :description, :promotion_id
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
-  validates :awesm_id, presence: true
+	include NotDeleteable
+	versioned
 
-  has_and_belongs_to_many :promotions
+  	attr_accessible :name, :awesm_id, :description, :promotion_id
+  	validates :name, presence: true, uniqueness: { case_sensitive: false }
+  	validates :awesm_id, presence: true
+
+  	has_and_belongs_to_many :promotions
 end

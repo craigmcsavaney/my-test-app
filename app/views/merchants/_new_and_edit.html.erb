@@ -4,8 +4,11 @@
  		    <%= form_for @merchant, url: {action: action} do |f| %>
 		      	<%= render 'shared/error_messages', object: f.object %>
 
-		      	<%= f.label :name %>
+		      	<%= f.label :name, "Please enter your business name" %>
 		      	<%= f.text_field :name %>
+
+		      	<%= f.label :website, "Please enter your website address" %>
+		      	<%= f.url_field :website, placeholder: "Must start with 'http://' or 'https://'" %>
 
   				<% if ["new_admin","edit_admin"].include?params[:action] %>
 					<%= f.label :user_ids, "Selected Users for this merchant" %>

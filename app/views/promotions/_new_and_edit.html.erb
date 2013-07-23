@@ -4,38 +4,70 @@
     	<%= form_for @promotion, url: {action: action} do |f| %>
 
 			<%= render 'shared/error_messages', object: f.object %>
+			<%= render 'served', object: f.object %>
+
+			<% if @promotion.serves.any? %>
+					<% @served = true %>
+				<% else %>
+					<% @served = false %>
+			<% end %>
 
 			<%= f.label :merchant_id, "Merchant Name" %>
 			<% if ["new_admin","edit_admin"].include?params[:action] %>
-					<%= select_tag 'promotion[merchant_id]', options_from_collection_for_select(Merchant.all, :id, :name) %>
+					<%= select_tag 'promotion[merchant_id]', options_from_collection_for_select(Merchant.all, :id, :name, @promotion.merchant_id) %>
 				<% else %>
-					<%= select_tag 'promotion[merchant_id]', options_from_collection_for_select(current_user.merchants, :id, :name) %>
+					<%= select_tag 'promotion[merchant_id]', options_from_collection_for_select(current_user.merchants, :id, :name, @promotion.merchant_id), readonly: @served %>
 			<% end %>
 
 			<%= f.label :name, "Promotion Name" %>
-			<%= f.text_field :name %>
+			<%= f.text_field :name, readonly: @served %>
 
 			<%= f.label :start_date, "Start Date" %>
 			<%= f.date_select :start_date %>
 
-			<%= f.label :end_date, "End Date" %>
-			<%= f.date_select :end_date %>
+			<%= f.label :end_date, "End Date (leave this blank for at least one of  your promotions!)" %>
+			<%= f.date_select :end_date, include_blank: true %>
+			
+		    <%= f.label :priority, "Priority (determines sort order of multiple promotions).  Can be blank or a whole number between 0 and 100.  Higher numbered promotions have priority over lower numbered promotions." %>
+			<%= f.text_field :priority %>
 
 			<%= f.label :content %>
-			<%= f.text_field :content %>
+			<%= f.text_field :content, readonly: @served %>
+
+	      	<%= f.label :landing_page, "Please enter your landing page address (default is your Merchant website)" %>
+	      	<%= f.url_field :landing_page, readonly: @served %>
+
+			<%= f.label :cause_id, "Preferred Cause (optional)" %>
+			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), include_blank: true, readonly: @served %>
+
+		    <%= f.label :merchant_pct, "Merchant-directed Contribution (Percent)" %>
+			<%= f.text_field :merchant_pct, readonly: @served %>
+
+			<%= f.label :supporter_pct, "Supporter-directed Contribution (Percent)" %>
+			<%= f.text_field :supporter_pct, readonly: @served %>
+
+			<%= f.label :buyer_pct, "Buyer-directed Contribution (Percent)" %>
+			<%= f.text_field :buyer_pct, readonly: @served %>
 
 			<%= f.label :channel_ids, "Selected Channels" %>
 			<% for channel in Channel.find(:all) %>
 				<div>
-					<%= check_box_tag "promotion[channel_ids][]", channel.id, @promotion.channels.include?(channel) %>
+					<% if ["new","new_admin"].include?params[:action] %>
+							<%= check_box_tag "promotion[channel_ids][]", channel.id, true, readonly: @served %>
+						<% else %>
+							<%= check_box_tag "promotion[channel_ids][]", channel.id, @promotion.channels.include?(channel), readonly: @served %>
+					<% end %>
 					<%= channel.name %>
 				</div>
 			<% end %>
 			<br/>
-
+			
+			<%= f.label :disabled, "Disabled?" %>
+			<%= f.check_box :disabled %>
+			<br/><br/>
 
 			<%= f.submit button, class: "btn btn-large btn-primary" %>
-			<% end %>
+		<% end %>
 		</div>
 	</div>
 	<%= go_back %>

@@ -26,6 +26,9 @@
 #
 
 class User < ActiveRecord::Base
+  include NotDeleteable
+  versioned
+
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :merchants
   has_and_belongs_to_many :causes
@@ -45,6 +48,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
 
   # Default role is "User"
+  
   def setup_role 
     if self.role_ids.empty?     
       self.role_ids = [Role.find_by_name("User").id] 

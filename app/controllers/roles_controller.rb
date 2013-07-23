@@ -36,6 +36,7 @@ class RolesController < ApplicationController
   # PUT /roles/1
   def update
     @role = Role.find(params[:id])
+    @role.updated_by = current_user
     if @role.update_attributes(params[:role])
         # Handle a successful update.
         flash[:success] = "Role updated"

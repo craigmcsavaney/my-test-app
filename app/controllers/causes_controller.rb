@@ -45,6 +45,7 @@ class CausesController < ApplicationController
 
   def update
   	@cause = Cause.find(params[:id])
+    @cause.updated_by = current_user
   	if @cause.update_attributes(params[:cause])
     		# Handle a successful update.
       	flash[:success] = "Cause updated"
@@ -56,6 +57,7 @@ class CausesController < ApplicationController
 
   def update_admin
     @cause = Cause.find(params[:id])
+    @cause.updated_by = current_user
     if @cause.update_attributes(params[:cause])
         # Handle a successful update.
         flash[:success] = "Cause updated"

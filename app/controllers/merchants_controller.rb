@@ -45,7 +45,8 @@ class MerchantsController < ApplicationController
   end
 
   def update
-  	@merchant = Merchant.find(params[:id])
+    @merchant = Merchant.find(params[:id])
+    @merchant.updated_by = current_user
   	if @merchant.update_attributes(params[:merchant])
   		# Handle a successful update.
     	flash[:success] = "Merchant updated"
@@ -57,6 +58,7 @@ class MerchantsController < ApplicationController
 
   def update_admin
     @merchant = Merchant.find(params[:id])
+    @merchant.updated_by = current_user
     if @merchant.update_attributes(params[:merchant])
       # Handle a successful update.
       flash[:success] = "Merchant updated"
@@ -85,6 +87,22 @@ class MerchantsController < ApplicationController
     Merchant.find(params[:id]).destroy
     flash[:success] = "Merchant deleted"
     redirect_to merchants_admin_url
+  end
+
+  def current
+    merchant = Merchant.find(params[:id])
+    check_date = Date.today
+    @current = Current.get_current_promotion(check_date,merchant)
+    if @current[:promotion] != nil
+        # Current promotion successfully identified
+        @promotion = @current[:promotion]
+        flash[:success] = @current[:message]
+        render 'promotions/current'
+      else
+        # No current promotion found
+        flash[:failure] = @current[:message]
+        redirect_to merchants_url
+    end    
   end
 
 end

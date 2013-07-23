@@ -1,22 +1,83 @@
 <li>
-	<% if params[:action] == "index" %>
+	<% @a= @b= @c= @d= @e= @f= @g= "" %>
+	<% if promotion.merchant_pct? %>
+		<% @a = promotion.merchant_pct %>
+	<% end %>
+	<% if promotion.cause_id? %>
+		<% @b = promotion.cause.name %>
+	<% end %>
+	<% if promotion.supporter_pct? %>
+		<% @c = promotion.supporter_pct %>
+	<% end %>
+	<% if promotion.buyer_pct? %>
+		<% @d = promotion.buyer_pct %>
+	<% end %>
+	<% if promotion.priority? %>
+		<% @e = promotion.priority %>
+	<% end %>
+	<% if !promotion.end_date.nil? %>
+		<% @f = promotion.end_date %>
+	<% end %>
+	<% if promotion.serves.none? %>
+		<% @g = "0" %>
+		<% else %>
+		<% @g = promotion.serves.count %>
+	<% end %>
+	<% if promotion.disabled? %>
+		<% @h = "Yes" %>
+		<% else %>
+		<% @h = "no" %>
+	<% end %>
+	<% if params[:action] == "current" %>
 		<% @editpath = edit_promotion_path(promotion) %>
 		<% @deletepath = promotion %>
+		<% @duplicatepath = duplicate_promotion_path(promotion) %>
+	<%  elsif params[:action] == "pcurrent" %>
+		<% @editpath = edit_promotion_path(promotion) %>
+		<% @deletepath = promotion %>
+		<% @duplicatepath = duplicate_promotion_path(promotion) %>
   	<% elsif params[:action] == "index_admin" %>
 		<% @editpath = edit_promotion_admin_path(promotion) %>
 		<% @deletepath = destroy_promotion_admin_path(promotion) %>
+		<% @duplicatepath = duplicate_promotion_admin_path(promotion) %>
+  	<% elsif params[:action] == "duplicate_admin" %>
+		<% @editpath = edit_promotion_admin_path(promotion) %>
+		<% @deletepath = destroy_promotion_admin_path(promotion) %>
+		<% @duplicatepath = duplicate_promotion_admin_path(promotion) %>
+	<% else %>
+		<% @editpath = edit_promotion_path(promotion) %>
+		<% @deletepath = promotion %>
+		<% @duplicatepath = duplicate_promotion_path(promotion) %>
 	<% end %>
-	<b>Name: </b><%= link_to promotion.name, @editpath %>&nbsp;&nbsp;
+	<b>Promotion Name: </b><%= link_to promotion.name, @editpath %>&nbsp;&nbsp;
+	<b>Merchant Name: </b><%= link_to promotion.merchant.name, @editpath %><br/>
 	<b>ID#: </b><%= link_to promotion.id, @editpath %>&nbsp;&nbsp;
-	<b>Merchant ID#: </b><%= link_to promotion.merchant_id, @editpath %>&nbsp;&nbsp;
-	<b>Start Date: </b><%= link_to promotion.start_date, @editpath %>&nbsp;&nbsp;
-	<b>End Date: </b><%= link_to promotion.end_date, @editpath %>&nbsp;&nbsp;
+	<b>UID: </b><%= link_to promotion.uid, @editpath %><br/>
 	<b>Content: </b><%= link_to promotion.content, @editpath %><br/>
+	<b>Merchant Pct: </b><%= link_to @a, @editpath %>&nbsp;&nbsp;
+	<b>Supporter Pct: </b><%= link_to @c, @editpath %>&nbsp;&nbsp;
+	<b>Buyer Pct: </b><%= link_to @d, @editpath %><br/>
+	<b>Preferred Cause: </b><%= link_to @b, @editpath %><br/>
 	<b>Channels</b><% for channel in promotion.channels %>
 		<b>:&nbsp;</b><%= link_to channel.name, @editpath %>&nbsp;
 	<% end %><br/>
+	<b>Start Date: </b><%= link_to promotion.start_date, @editpath %>&nbsp;&nbsp;
+	<b>End Date: </b><%= link_to @f, @editpath %>&nbsp;&nbsp;
+	<b>Priority: </b><%= link_to @e, @editpath %>&nbsp;&nbsp;
+	<b>Disabled: </b><%= link_to @h, @editpath %><br/>
+	<div class="row"><div class="span2"><b>Times Served?   :&nbsp;&nbsp;</b><%= @g %></div>
+		<div class="span7">
+			<% if promotion.serves.any? %>
+				This promotion has already been served to guests on your website - only the start date, end date, priority, and disabled status can be edited now.  To make any additional changes, you must first create a copy of this promotion by clicking the 'duplicate' link below.  Then you can change anything on the duplicated promotion.
+			<% end %>
+		</div>
+	</div>
 	<b>Actions: </b>
 	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
-		<%= link_to "delete", @deletepath, method: :delete,
+	  	<%= link_to "duplicate", @duplicatepath %>&nbsp;&nbsp;
+	  	<% if promotion.serves.none? %>
+				<%= link_to "delete", @deletepath, method: :delete,
                                   data: { confirm: "You sure?" } %>
+        <% end %>
+
 </li>
