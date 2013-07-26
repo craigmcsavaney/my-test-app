@@ -1,0 +1,13 @@
+<% provide(:title, 'All Shares') %>
+<h1>All Shares (<%= @shares.count %>)</h1>
+
+<div class="container">
+	<%= will_paginate %>
+	<ul class="class-index">
+      	<%= render @shares %>
+	</ul>
+	<%= will_paginate %>
+	<br/>
+	<%= link_to 'Create New Share', new_share_path %><br/>
+	<%= go_back %>
+</div>

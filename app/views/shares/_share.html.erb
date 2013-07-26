@@ -1,0 +1,14 @@
+<li>
+	<% @editpath = edit_share_path(share) %>
+  	<b><%= :id %>: </b><%= link_to share.id, @editpath %><br/>
+  	<b><%= :serve_id %>: </b><%= link_to share.serve_id, @editpath %><br/>
+  	<b><%= :channel_id %>: </b><%= link_to share.channel_id, @editpath %><br/>
+    <b><%= :link_id %>: </b><%= link_to share.link_id, @editpath %><br/>
+    <b><%= :confirmed %>: </b><%= link_to share.confirmed, @editpath %><br/>
+  	<b><%= :created_at %>: </b><%= link_to share.created_at, @editpath %><br/>
+  	<b><%= :updated_at %>: </b><%= link_to share.updated_at, @editpath %><br/>
+	<br/>
+  	<b>Actions: </b><%= link_to "edit", @editpath %>&nbsp;&nbsp;
+  	<%= link_to "delete", share, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+</li>

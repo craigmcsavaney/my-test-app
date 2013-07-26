@@ -34,6 +34,9 @@ Myapplication::Application.routes.draw do
   resources :causes
   resources :channels
   resources :types
+  resources :settings
+  resources :serves
+  resources :shares
  
   
   root to: 'static_pages#home'

@@ -31,11 +31,14 @@
 		    <%= f.label :priority, "Priority (determines sort order of multiple promotions).  Can be blank or a whole number between 0 and 100.  Higher numbered promotions have priority over lower numbered promotions." %>
 			<%= f.text_field :priority %>
 
+			<%= f.label :p_banner_1, "Banner" %>
+			<%= f.text_field :p_banner_1, readonly: true, placeholder: "this will be filled automatically based on your promotion configuration" %>
+
 			<%= f.label :content %>
 			<%= f.text_field :content, readonly: @served %>
 
 	      	<%= f.label :landing_page, "Please enter your landing page address (default is your Merchant website)" %>
-	      	<%= f.url_field :landing_page, readonly: @served %>
+	      	<%= f.url_field :landing_page, readonly: @served, placeholder: "this is a mandatory entry" %>
 
 			<%= f.label :cause_id, "Preferred Cause (optional)" %>
 			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), include_blank: true, readonly: @served %>

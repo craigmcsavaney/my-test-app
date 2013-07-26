@@ -28,15 +28,7 @@
 		<% else %>
 		<% @h = "no" %>
 	<% end %>
-	<% if params[:action] == "current" %>
-		<% @editpath = edit_promotion_path(promotion) %>
-		<% @deletepath = promotion %>
-		<% @duplicatepath = duplicate_promotion_path(promotion) %>
-	<%  elsif params[:action] == "pcurrent" %>
-		<% @editpath = edit_promotion_path(promotion) %>
-		<% @deletepath = promotion %>
-		<% @duplicatepath = duplicate_promotion_path(promotion) %>
-  	<% elsif params[:action] == "index_admin" %>
+  	<% if params[:action] == "index_admin" %>
 		<% @editpath = edit_promotion_admin_path(promotion) %>
 		<% @deletepath = destroy_promotion_admin_path(promotion) %>
 		<% @duplicatepath = duplicate_promotion_admin_path(promotion) %>
@@ -51,6 +43,7 @@
 	<% end %>
 	<b>Promotion Name: </b><%= link_to promotion.name, @editpath %>&nbsp;&nbsp;
 	<b>Merchant Name: </b><%= link_to promotion.merchant.name, @editpath %><br/>
+	<b>Promotion banner: </b><%= promotion.p_banner_1 %><br/>
 	<b>ID#: </b><%= link_to promotion.id, @editpath %>&nbsp;&nbsp;
 	<b>UID: </b><%= link_to promotion.uid, @editpath %><br/>
 	<b>Content: </b><%= link_to promotion.content, @editpath %><br/>

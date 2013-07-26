@@ -1,0 +1,19 @@
+<li>
+	<% @editpath = edit_setting_path(setting) %>
+  	<b><%= :p_banner_1 %>: </b><%= link_to setting.p_banner_1, @editpath %><br/>
+  	<b><%= :facebook_default_msg %>: </b><%= link_to setting.facebook_default_msg, @editpath %><br/>
+  	<b><%= :facebook_link_label %>: </b><%= link_to setting.facebook_link_label, @editpath %><br/>
+  	<b><%= :facebook_caption %>: </b><%= link_to setting.facebook_caption, @editpath %><br/>
+  	<b><%= :banner_template_1 %>: </b><%= link_to setting.banner_template_1, @editpath %><br/>
+  	<b><%= :banner_template_2 %>: </b><%= link_to setting.banner_template_2, @editpath %><br/>
+  	<b><%= :banner_template_3 %>: </b><%= link_to setting.banner_template_3, @editpath %><br/>
+  	<b><%= :banner_template_4 %>: </b><%= link_to setting.banner_template_4, @editpath %><br/>
+  	<b><%= :banner_template_5 %>: </b><%= link_to setting.banner_template_5, @editpath %><br/>
+  	<b><%= :banner_template_6 %>: </b><%= link_to setting.banner_template_6, @editpath %><br/>
+  	<b><%= :banner_template_7 %>: </b><%= link_to setting.banner_template_7, @editpath %><br/>
+  	<b><%= :banner_template_8 %>: </b><%= link_to setting.banner_template_8, @editpath %><br/>
+  	<br/>
+  	<b>Actions: </b><%= link_to "edit", @editpath %>&nbsp;&nbsp;
+  	<%= link_to "delete", setting, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+</li>

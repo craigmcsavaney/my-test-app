@@ -7,4 +7,5 @@ class Channel < ActiveRecord::Base
   	validates :awesm_id, presence: true
 
   	has_and_belongs_to_many :promotions
+  	has_many :shares
 end

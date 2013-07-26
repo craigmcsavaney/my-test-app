@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130723193220) do
+ActiveRecord::Schema.define(:version => 20130726001742) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20130723193220) do
     t.decimal  "uid",           :precision => 16, :scale => 6
     t.integer  "priority"
     t.boolean  "disabled"
+    t.string   "p_banner_1"
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"
@@ -105,7 +106,39 @@ ActiveRecord::Schema.define(:version => 20130723193220) do
     t.integer  "promotion_id", :null => false
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.boolean  "deleted"
+    t.string   "email"
   end
+
+  create_table "settings", :force => true do |t|
+    t.string   "p_banner_1"
+    t.string   "facebook_default_msg"
+    t.string   "facebook_link_label"
+    t.string   "facebook_caption"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.string   "banner_template_1"
+    t.string   "banner_template_2"
+    t.string   "banner_template_3"
+    t.string   "banner_template_4"
+    t.string   "banner_template_5"
+    t.string   "banner_template_6"
+    t.string   "banner_template_7"
+    t.string   "banner_template_8"
+    t.boolean  "deleted"
+  end
+
+  create_table "shares", :force => true do |t|
+    t.integer  "serve_id",   :null => false
+    t.integer  "channel_id", :null => false
+    t.string   "link_id",    :null => false
+    t.boolean  "confirmed"
+    t.boolean  "deleted"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "shares", ["link_id"], :name => "index_shares_on_link_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

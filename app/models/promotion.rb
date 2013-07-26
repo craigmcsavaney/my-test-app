@@ -2,9 +2,14 @@ class Promotion < ActiveRecord::Base
   include NotDeleteable
     versioned
 
-    after_validation :check_for_disallowed_updates_to_served_promotions
+    after_validation :check_for_disallowed_updates_to_served_promotions, :get_banners
     before_update :check_content_change 
     before_save :check_content_change
+
+    def get_banners
+        self.p_banner_1 = Banner.get_banner(self)
+    end
+
 
     def check_for_disallowed_updates_to_served_promotions
       if self.serves.any? and (self.name_changed? || self.merchant_id_changed? || self.content_changed? || self.merchant_pct_changed? || self.supporter_pct_changed? || self.buyer_pct_changed? || self.cause_id_changed?)
@@ -34,7 +39,7 @@ class Promotion < ActiveRecord::Base
         self.uid = Time.now.utc.to_f
     end
 
-  	attr_accessible :content, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled
+  	attr_accessible :content, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :p_banner_1
 
     before_validation :replace_nils
     before_save :replace_nils

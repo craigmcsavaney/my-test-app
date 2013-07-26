@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="span7 offset1">
+      <%= form_for(@serve) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :id %>
+        <%= f.text_field :id, readonly: true %>
+
+        <%= f.label :promotion_id %>
+        <%= select_tag 'serve[promotion_id]', options_from_collection_for_select(Promotion.all, :id, :name, @serve.promotion_id) %>
+
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+
+        <%= f.submit button, class: "btn btn-large btn-primary" %>
+      <% end %>
+
+    </div>
+  </div>
+  <%= go_back %>
+</div>

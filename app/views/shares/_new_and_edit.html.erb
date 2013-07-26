@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="span7 offset1">
+      <%= form_for(@share) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :id %>
+        <%= f.text_field :id, readonly: true %>
+
+        <%= f.label :serve_id %>
+        <%= select_tag 'share[serve_id]', options_from_collection_for_select(Serve.all, :id, :id, @share.serve_id) %>
+
+        <%= f.label :channel_id %>
+        <%= select_tag 'share[channel_id]', options_from_collection_for_select(Channel.all, :id, :name, @share.channel_id) %>
+
+        <%= f.label :link_id %>
+        <%= f.text_field :link_id %>
+
+        <%= f.label :confirmed, "Share Confirmed?" %>
+        <%= f.check_box :confirmed %>
+        <br/><br/>
+
+        <%= f.submit button, class: "btn btn-large btn-primary" %>
+      <% end %>
+
+    </div>
+  </div>
+  <%= go_back %>
+</div>

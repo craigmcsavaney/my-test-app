@@ -113,6 +113,27 @@
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Settings</a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to "Create Setting", new_setting_path %></li>
+                      <li><%= link_to "View Settings (#{Setting.count})", settings_path %></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Serves</a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to "Create Serve", new_serve_path %></li>
+                      <li><%= link_to "View Serves (#{Serve.count})", serves_path %></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Shares</a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to "Create Share", new_share_path %></li>
+                      <li><%= link_to "View Shares (#{Share.count})", shares_path %></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
                     <a tabindex="-1" href="#">Roles</a>
                     <ul class="dropdown-menu">
                       <li><%= link_to "Create Role", new_role_path %></li>

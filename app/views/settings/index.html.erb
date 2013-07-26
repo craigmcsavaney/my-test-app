@@ -1,0 +1,13 @@
+<% provide(:title, 'All Settings') %>
+<h1>All Settings (<%= @settings.count %>)</h1>
+
+<div class="container">
+	<%= will_paginate %>
+	<ul class="class-index">
+      	<%= render @settings %>
+	</ul>
+	<%= will_paginate %>
+	<br/>
+	<%= link_to 'Create New Setting', new_setting_path %><br/>
+	<%= go_back %>
+</div>

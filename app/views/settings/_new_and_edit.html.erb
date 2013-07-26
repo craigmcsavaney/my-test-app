@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <div class="span7 offset1">
+      <%= form_for(@setting) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :p_banner_1 %>
+        <%= f.text_field :p_banner_1 %>
+
+        <%= f.label :facebook_default_msg %>
+        <%= f.text_field :facebook_default_msg %>
+
+        <%= f.label :facebook_link_label %>
+        <%= f.text_field :facebook_link_label %>
+
+        <%= f.label :facebook_caption %>
+        <%= f.text_field :facebook_caption %>
+
+        <h2>Banner Templates</h2>
+        <b>Use _merchant_name_, _merchant_pct_, _supporter_pct_, _buyer_pct_, and _cause_ for substitutions</b>
+        <br/><br/>
+
+        <%= f.label :banner_template_1, "banner_template_1: all zeros - not possible"  %>
+        <%= f.text_field :banner_template_1 %>
+
+        <%= f.label :banner_template_2, "banner_template_2: Merchant:0, Supporter:0, Buyer:>0" %>
+        <%= f.text_field :banner_template_2 %>
+
+        <%= f.label :banner_template_3, "banner_template_3: Merchant:0, Supporter:>0, Buyer:0" %>
+        <%= f.text_field :banner_template_3 %>
+
+        <%= f.label :banner_template_4, "banner_template_4: Merchant:0, Supporter:>0, Buyer:>0" %>
+        <%= f.text_field :banner_template_4 %>
+
+        <%= f.label :banner_template_5, "banner_template_5: Merchant:>0, Supporter:0, Buyer:0" %>
+        <%= f.text_field :banner_template_5 %>
+
+        <%= f.label :banner_template_6, "banner_template_6: Merchant:>0, Supporter:0, Buyer:>0" %>
+        <%= f.text_field :banner_template_6 %>
+
+        <%= f.label :banner_template_7, "banner_template_7: Merchant:>0, Supporter:>0, Buyer:0" %>
+        <%= f.text_field :banner_template_7 %>
+
+        <%= f.label :banner_template_8, "banner_template_8: Merchant:>0, Supporter:>0, Buyer:>0" %>
+        <%= f.text_field :banner_template_8 %>
+
+        <%= f.submit button, class: "btn btn-large btn-primary" %>
+      <% end %>
+
+    </div>
+  </div>
+  <%= go_back %>
+</div>
