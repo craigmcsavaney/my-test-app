@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/james2m/seedbank.git
+  revision: c7a272751336f0d17103028f45b88eac62cbedd7
+  specs:
+    seedbank (0.3.0.pre2)
+
+GIT
   remote: git://github.com/laserlemon/vestal_versions
   revision: c7aa512666b22e1a47b4fb36bb1679cb847a532e
   specs:
@@ -259,6 +265,7 @@ DEPENDENCIES
   rb-notifu (= 0.0.4)
   rspec-rails (= 2.11.0)
   sass-rails (= 3.2.5)
+  seedbank!
   spork (= 0.9.2)
   uglifier (= 1.2.3)
   vestal_versions!

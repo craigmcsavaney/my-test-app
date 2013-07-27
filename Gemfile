@@ -10,6 +10,7 @@ gem 'cancan'
 gem 'vestal_versions', :git => 'git://github.com/laserlemon/vestal_versions'
 gem 'amoeba', '2.0.0'
 gem 'devise'
+gem 'seedbank', github: 'james2m/seedbank'
 
 #added following require and gem for Guard compatibility with wdm
 require 'rbconfig'
