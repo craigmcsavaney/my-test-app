@@ -6,7 +6,7 @@ class Serve < ActiveRecord::Base
 
 	after_commit :create_purchase_share, on: :create
 
-	belongs_to :promotion #, counter_cache: true
+	belongs_to :promotion, counter_cache: true
 	belongs_to :share
 	has_many :shares
 	validates :promotion, presence: true

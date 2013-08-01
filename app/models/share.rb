@@ -4,7 +4,7 @@ class Share < ActiveRecord::Base
 	versioned
 
 	attr_accessible :serve_id, :channel_id, :link_id, :confirmed, :cause_id
-	belongs_to :serve #, counter_cache: true
+	belongs_to :serve, counter_cache: true
 	belongs_to :channel
   belongs_to :cause
   has_many :serves
