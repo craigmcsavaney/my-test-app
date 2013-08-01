@@ -1,0 +1,2 @@
+collection @channels
+attributes :name

@@ -13,6 +13,9 @@
         <%= f.label :channel_id %>
         <%= select_tag 'share[channel_id]', options_from_collection_for_select(Channel.all, :id, :name, @share.channel_id) %>
 
+        <%= f.label :cause_id %>
+        <%= select_tag 'share[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @share.cause_id ), include_blank: true %>
+
         <%= f.label :link_id %>
         <%= f.text_field :link_id %>
 

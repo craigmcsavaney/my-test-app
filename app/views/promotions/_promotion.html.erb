@@ -1,5 +1,5 @@
 <li>
-	<% @a= @b= @c= @d= @e= @f= @g= "" %>
+	<% @a= @b= @c= @d= @e= @f= "" %>
 	<% if promotion.merchant_pct? %>
 		<% @a = promotion.merchant_pct %>
 	<% end %>
@@ -18,16 +18,18 @@
 	<% if !promotion.end_date.nil? %>
 		<% @f = promotion.end_date %>
 	<% end %>
-	<% if promotion.serves.none? %>
+	<% if promotion.serves.where("viewed = ?", true).none? %>
 		<% @g = "0" %>
 		<% else %>
-		<% @g = promotion.serves.count %>
+		<% @g = promotion.serves.where("viewed = ?", true).count %>
 	<% end %>
 	<% if promotion.disabled? %>
 		<% @h = "Yes" %>
 		<% else %>
 		<% @h = "no" %>
 	<% end %>
+	<% @i = 0 %>
+	<% promotion.serves.each{|s| @i += s.shares.size} %>
   	<% if params[:action] == "index_admin" %>
 		<% @editpath = edit_promotion_admin_path(promotion) %>
 		<% @deletepath = destroy_promotion_admin_path(promotion) %>
@@ -58,17 +60,29 @@
 	<b>End Date: </b><%= link_to @f, @editpath %>&nbsp;&nbsp;
 	<b>Priority: </b><%= link_to @e, @editpath %>&nbsp;&nbsp;
 	<b>Disabled: </b><%= link_to @h, @editpath %><br/>
-	<div class="row"><div class="span2"><b>Times Served?   :&nbsp;&nbsp;</b><%= @g %></div>
+	<% @current = Current.get_current_promotion(Date.today,promotion.merchant) %>
+    <% @current_promotion = @current[:promotion] %>
+	<% if @current_promotion.id == promotion.id %>
+		<b>This is the current promotion for this merchant</b><br/>
+	<% else %>
+		This is not the current promotion for this merchant.  See promotion #<%= @current_promotion.id %><br/>
+	<% end %>	
+	<div class="row">
+		<div class="span2">
+				<b>Times Viewed?   :&nbsp;&nbsp;</b><%= @g %>
+				<br/>
+				<b>Times Shared?   :&nbsp;&nbsp;</b><%= @i %>
+		</div>
 		<div class="span7">
-			<% if promotion.serves.any? %>
-				This promotion has already been served to guests on your website - only the start date, end date, priority, and disabled status can be edited now.  To make any additional changes, you must first create a copy of this promotion by clicking the 'duplicate' link below.  Then you can change anything on the duplicated promotion.
+			<% if promotion.serves.where("viewed = ?", true).any? %>
+				This promotion has already been viewed by guests on your website - only the start date, end date, priority, and disabled status can be edited now.  To make any additional changes, you must first create a copy of this promotion by clicking the 'duplicate' link below.  Then you can change anything on the duplicated promotion.
 			<% end %>
 		</div>
 	</div>
 	<b>Actions: </b>
 	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
 	  	<%= link_to "duplicate", @duplicatepath %>&nbsp;&nbsp;
-	  	<% if promotion.serves.none? %>
+	  	<% if promotion.serves.where("viewed = ?", true).none? %>
 				<%= link_to "delete", @deletepath, method: :delete,
                                   data: { confirm: "You sure?" } %>
         <% end %>

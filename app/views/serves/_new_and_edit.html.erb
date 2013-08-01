@@ -13,6 +13,9 @@
         <%= f.label :email %>
         <%= f.text_field :email %>
 
+        <%= f.label :share_id %>
+        <%= select_tag 'serve[share_id]', options_from_collection_for_select(Share.all, :id, :id, @serve.share_id ), include_blank: true %>
+
         <%= f.submit button, class: "btn btn-large btn-primary" %>
       <% end %>
 

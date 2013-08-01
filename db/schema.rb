@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130726001742) do
+ActiveRecord::Schema.define(:version => 20130801140025) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -49,11 +49,12 @@ ActiveRecord::Schema.define(:version => 20130726001742) do
 
   create_table "merchants", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "website"
     t.string   "logo_link"
     t.boolean  "deleted"
+    t.integer  "promotions_count", :default => 0
   end
 
   add_index "merchants", ["name"], :name => "index_merchants_on_name", :unique => true
@@ -70,8 +71,8 @@ ActiveRecord::Schema.define(:version => 20130726001742) do
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "merchant_id"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
     t.string   "name"
     t.integer  "cause_id"
     t.integer  "merchant_pct"
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20130726001742) do
     t.integer  "priority"
     t.boolean  "disabled"
     t.string   "p_banner_1"
+    t.integer  "serves_count",                                 :default => 0
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"
@@ -103,11 +105,14 @@ ActiveRecord::Schema.define(:version => 20130726001742) do
   add_index "roles_users", ["user_id", "role_id"], :name => "index_roles_users_on_user_id_and_role_id", :unique => true
 
   create_table "serves", :force => true do |t|
-    t.integer  "promotion_id", :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "promotion_id",                :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.boolean  "deleted"
     t.string   "email"
+    t.integer  "share_id"
+    t.boolean  "viewed"
+    t.integer  "shares_count", :default => 0
   end
 
   create_table "settings", :force => true do |t|
@@ -136,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20130726001742) do
     t.boolean  "deleted"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "cause_id"
   end
 
   add_index "shares", ["link_id"], :name => "index_shares_on_link_id", :unique => true

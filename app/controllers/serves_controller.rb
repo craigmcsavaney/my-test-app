@@ -20,6 +20,10 @@ class ServesController < ApplicationController
   	@serve = Serve.find(params[:id])
   end
 
+  def show
+    @serve = Serve.find(params[:id])
+  end
+
   def update
   	@serve = Serve.find(params[:id])
     @serve.updated_by = current_user
@@ -41,4 +45,28 @@ class ServesController < ApplicationController
     flash[:success] = "Serve deleted"
     redirect_to serves_url
 	end
+
+  def serve
+    # accepts Merchant id as input
+    # Get merchant's current promotion
+    merchant = Merchant.find(params[:merchant_id])
+    check_date = Date.today
+    @current = Current.get_current_promotion(check_date,merchant)
+    if @current[:promotion] != nil
+        # Current promotion successfully identified
+        @promotion = @current[:promotion]
+        flash[:success] = @current[:message]
+        @serve = Serve.create(promotion_id: @promotion.id)
+        respond_to do |format|
+          format.html { render 'serve' }
+          format.json { render json: @serve }
+        end
+    # record serve event in Serve
+      else
+        # No current promotion found
+        flash[:failure] = @current[:message]
+        redirect_to merchants_url
+    end    
+  end
+
 end

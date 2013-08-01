@@ -4,9 +4,9 @@
     	<%= form_for @promotion, url: {action: action} do |f| %>
 
 			<%= render 'shared/error_messages', object: f.object %>
-			<%= render 'served', object: f.object %>
+			<%= render 'viewed', object: f.object %>
 
-			<% if @promotion.serves.any? %>
+			<% if @promotion.serves.where("viewed = ?", true).any? %>
 					<% @served = true %>
 				<% else %>
 					<% @served = false %>

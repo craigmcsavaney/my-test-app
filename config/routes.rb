@@ -1,5 +1,6 @@
 Myapplication::Application.routes.draw do
 
+  match '/api/:merchant_id', to: 'api#serve', :as => :api_serve, format: 'json'
 
   match '/merchants/new_admin',  to: 'merchants#new_admin', :as => :new_merchant_admin 
   match '/merchants/create_admin',  to: 'merchants#create_admin'
@@ -28,6 +29,8 @@ Myapplication::Application.routes.draw do
 
   match '/promotions/serve/:merchant_id',  to: 'promotions#serve', :as => :serve_promotion
 
+  match '/serves/serve/:merchant_id',  to: 'serves#serve', :as => :serve_serve
+
   resources :roles
   resources :merchants
   resources :promotions
@@ -37,7 +40,6 @@ Myapplication::Application.routes.draw do
   resources :settings
   resources :serves
   resources :shares
- 
   
   root to: 'static_pages#home'
 

@@ -10,6 +10,8 @@ class Merchant < ActiveRecord::Base
   	validates :website, url: true
 
   	has_many :promotions, dependent: :destroy
+  	has_many :serves, through: :promotions
+  	has_many :shares, through: :serves
 
   	delegate :user_id, to: :promotion
 

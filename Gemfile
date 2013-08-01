@@ -6,11 +6,13 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
-gem 'cancan'
+gem 'cancan', '1.6.10'
 gem 'vestal_versions', :git => 'git://github.com/laserlemon/vestal_versions'
 gem 'amoeba', '2.0.0'
-gem 'devise'
+gem 'devise', '2.2.4'
 gem 'seedbank', github: 'james2m/seedbank'
+gem 'rabl', '0.8.6'
+gem 'oj', '2.1.4'
 
 #added following require and gem for Guard compatibility with wdm
 require 'rbconfig'
@@ -18,7 +20,7 @@ gem 'wdm', '>= 0.1.0' if RbConfig::CONFIG['target_os'] =~ /mswin|mingw/i
 
 
 group :development do
-	gem 'mysql2'
+	gem 'mysql2', '0.3.11'
 	gem 'guard-rspec', '1.2.1'
   gem 'annotate', '2.5.0'
 end

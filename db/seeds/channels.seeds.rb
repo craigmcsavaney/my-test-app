@@ -14,6 +14,7 @@ channel_list = [
   [ "Tumbler", "tumblr-link", "" ],
   [ "Twitter", "twitter", "Share via standard Twitter tweet" ],
   [ "Google Plus", "googleplus", "Share via Google+" ],
+  [ "Purchase", "n/a", "Creates a link to track purchases by an incented buyer" ],
 ]
 
 puts 'Preparing to create seed Channels'

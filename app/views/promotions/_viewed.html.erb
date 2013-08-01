@@ -1,0 +1,5 @@
+<% if object.serves.where("viewed = ?", true).any? %>
+  <div class="alert alert-error">
+    This promotion has already been viewed by guests on your website - only the start date, end date, priority, and disabled status can be edited now.  To make any additional changes, you must first create a copy of this promotion by going to the 'My Promotions' page and duplicating the promotion.  Then you can change anything on the duplicated promotion.
+  </div>
+<% end %>

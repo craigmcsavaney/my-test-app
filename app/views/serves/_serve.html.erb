@@ -1,8 +1,15 @@
 <li>
+  <% if serve.viewed? %>
+    <% @a = "Yes" %>
+    <% else %>
+    <% @a = "no" %>
+  <% end %>
 	<% @editpath = edit_serve_path(serve) %>
   	<b><%= :id %>: </b><%= link_to serve.id, @editpath %><br/>
   	<b><%= :promotion_id %>: </b><%= link_to serve.promotion_id, @editpath %><br/>
-  	<b><%= :email %>: </b><%= link_to serve.email, @editpath %><br/>
+    <b><%= :name %>: </b><%= link_to serve.promotion.name, @editpath %><br/>
+    <b><%= :email %>: </b><%= link_to serve.email, @editpath %><br/>
+    <b><%= :viewed %> </b><%= link_to @a, @editpath %><br/>
   	<b><%= :created_at %>: </b><%= link_to serve.created_at, @editpath %><br/>
   	<b><%= :updated_at %>: </b><%= link_to serve.updated_at, @editpath %><br/>
 	<br/>

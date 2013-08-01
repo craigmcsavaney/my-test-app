@@ -57,7 +57,7 @@ class Banner < ActiveRecord::Base
 	  		banner = banner.gsub(/_buyer_pct_/, promotion.buyer_pct.to_s)
   		end
 
-  		if banner.include? "_cause_"
+  		if banner.include? "_cause_" and promotion.cause != nil
 	  		banner = banner.gsub(/_cause_/, promotion.cause.name)
   		end
 
