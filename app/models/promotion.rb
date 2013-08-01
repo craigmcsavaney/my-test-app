@@ -4,7 +4,7 @@ class Promotion < ActiveRecord::Base
 
     attr_accessible :content, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :p_banner_1
 
-    belongs_to :merchant, counter_cache: true
+    belongs_to :merchant #, counter_cache: true
     has_and_belongs_to_many :channels,
       before_add: :habtm_update_uid,
       before_remove: :habtm_update_uid
