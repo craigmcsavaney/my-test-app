@@ -156,6 +156,7 @@ class ApiController < ApplicationController
             render 'api/errors/unrecognized_case'
             return
 	end
+    @serve = Serve.first
     render 'serve'
   end
 
@@ -223,7 +224,7 @@ class ApiController < ApplicationController
         @serve.update_attributes(current_cause_id: params[:cause_id])
         # if cause changed from most recent, return new paths for email and purchase
     end
-    
+
   	# render success message
   end
 
