@@ -156,7 +156,7 @@ class ApiController < ApplicationController
             render 'api/errors/unrecognized_case'
             return
 	end
-    @serve = Serve.first
+    puts @serve.id
     render 'serve'
   end
 

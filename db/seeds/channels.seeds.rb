@@ -9,7 +9,7 @@ channel_list = [
   [ "Email", "email", "Shared via email." ],
   [ "Facebook", "facebook", "" ],
   [ "Pinterest", "pinterest", "" ],
-  [ "LinkedIn", "linkedin", "" ],
+  [ "Linkedin", "linkedin", "" ],
   [ "Twitter", "twitter", "Share via standard Twitter tweet" ],
   [ "Purchase", "purchase", "Creates a link to track purchases by an incented buyer" ],
 ]
