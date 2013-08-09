@@ -34,7 +34,7 @@ module Api
 
             # first, verify that a callback parameter was passed
             if params[:callback].nil?
-                render 'api/errors/missing_callback'
+                render 'api/v1/api/errors/missing_callback'
                 return
             end
 
@@ -42,7 +42,7 @@ module Api
             if Merchant.merchant_valid?(params[:merchant_id])
                     merchant = Merchant.find_by_uid(params[:merchant_id])
                 else
-                    render 'api/errors/merchant_invalid'
+                    render 'api/v1/api/errors/merchant_invalid'
                     return
             end
 
@@ -53,7 +53,7 @@ module Api
             @current = Current.get_current_promotion(check_date,merchant)
             if @current[:promotion] == nil
                 # No current promotion found
-                render 'api/errors/no_valid_promotion'
+                render 'api/v1/api/errors/no_valid_promotion'
                 return
             end
 
@@ -155,7 +155,7 @@ module Api
                         @serve = Serve.find(params[:serve_id])
                     end
                 else
-                    render 'api/errors/unrecognized_case'
+                    render 'api/v1/api/errors/unrecognized_case'
                     return
         	end
             puts @serve.id
@@ -166,7 +166,7 @@ module Api
             # inputs: merchant_id, session_id, callback
             # first, verify that a callback parameter was passed
             if params[:callback].nil?
-                render 'api/errors/missing_callback'
+                render 'api/v1/api/errors/missing_callback'
                 return
             end
 
@@ -174,7 +174,7 @@ module Api
             if Merchant.merchant_valid?(params[:merchant_id])
                     merchant = Merchant.find_by_uid(params[:merchant_id])
                 else
-                    render 'api/errors/merchant_invalid'
+                    render 'api/v1/api/errors/merchant_invalid'
                     return
             end
 
@@ -186,7 +186,7 @@ module Api
                     render 'success'
                     return
                 else
-                    render 'api/errors/session_invalid'
+                    render 'api/v1/api/errors/session_invalid'
                     return
             end
           end
@@ -196,7 +196,7 @@ module Api
           	# if session_id is blank, render error message
             # first, verify that a callback parameter was passed
             if params[:callback].nil?
-                render 'api/errors/missing_callback'
+                render 'api/v1/api/errors/missing_callback'
                 return
             end
 
@@ -204,7 +204,7 @@ module Api
             if Merchant.merchant_valid?(params[:merchant_id])
                     merchant = Merchant.find_by_uid(params[:merchant_id])
                 else
-                    render 'api/errors/merchant_invalid'
+                    render 'api/v1/api/errors/merchant_invalid'
                     return
             end
 
@@ -214,7 +214,7 @@ module Api
             if Serve.session_valid?(params[:session_id],merchant)
                     @serve = Serve.find_by_session_id(params[:session_id])
                 else
-                    render 'api/errors/session_invalid'
+                    render 'api/v1/api/errors/session_invalid'
                     return
             end
           	# add or update email
