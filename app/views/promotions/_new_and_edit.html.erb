@@ -31,14 +31,14 @@
 		    <%= f.label :priority, "Priority (determines sort order of multiple promotions).  Can be blank or a whole number between 0 and 100.  Higher numbered promotions have priority over lower numbered promotions." %>
 			<%= f.text_field :priority %>
 
-			<%= f.label :p_banner_1, "Banner" %>
-			<%= f.text_field :p_banner_1, readonly: true, placeholder: "this will be filled automatically based on your promotion configuration" %>
+			<%= f.label :banner, "Banner" %>
+			<%= f.text_field :banner, readonly: true, placeholder: "this will be filled automatically based on your promotion configuration" %>
 
 			<%= f.label :content %>
 			<%= f.text_field :content, readonly: @served %>
 
-	      	<%= f.label :landing_page, "Please enter your landing page address (default is your Merchant website)" %>
-	      	<%= f.url_field :landing_page, readonly: @served, placeholder: "this is a mandatory entry" %>
+	      	<%= f.label :landing_page, "Please enter your landing page address for this promotion" %>
+	      	<%= f.url_field :landing_page, readonly: @served, placeholder: "this will be automatically set to the merchant's website if left blank" %>
 
 			<%= f.label :cause_id, "Preferred Cause (optional)" %>
 			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), include_blank: true, readonly: @served %>
@@ -65,6 +65,24 @@
 			<% end %>
 			<br/>
 			
+		    <%= f.label :fb_msg, "Facebook Message" %>
+			<%= f.text_field :fb_msg, readonly: @served %>
+
+		    <%= f.label :fb_link_label, "Facebook Link Label" %>
+			<%= f.text_field :fb_link_label %>
+
+		    <%= f.label :fb_caption, "Facebook Caption" %>
+			<%= f.text_field :fb_caption %>
+
+		    <%= f.label :fb_redirect_url, "Facebook Redirect URL" %>
+			<%= f.text_field :fb_redirect_url, readonly: true %>
+
+		    <%= f.label :fb_thumb_url, "Facebook Thumbnail Image URL" %>
+			<%= f.text_field :fb_thumb_url %>
+
+			<%= f.label :disable_msg_editing, "Disable User Message Editing?" %>
+			<%= f.check_box :disable_msg_editing %>
+		
 			<%= f.label :disabled, "Disabled?" %>
 			<%= f.check_box :disabled %>
 			<br/><br/>

@@ -1,6 +1,9 @@
 Myapplication::Application.routes.draw do
 
-  match '/api/:merchant_id', to: 'api#serve', :as => :api_serve, format: 'json'
+  match '/api/serve/:merchant_id', to: 'api#serve', :as => :api_serve, format: 'json'
+  match '/api/view/:merchant_id', to: 'api#view', :as => :api_view, format: 'json'
+  #match '/api/serve/:merchant_id', to: 'api#serve', :as => :api_serve, format: 'json'
+  #match '/api/serve/:merchant_id', to: 'api#serve', :as => :api_serve, format: 'json'
 
   match '/merchants/new_admin',  to: 'merchants#new_admin', :as => :new_merchant_admin 
   match '/merchants/create_admin',  to: 'merchants#create_admin'

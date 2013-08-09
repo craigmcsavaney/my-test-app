@@ -4,7 +4,7 @@ class Merchant < ActiveRecord::Base
 	
 	has_and_belongs_to_many :users
 
-  	attr_accessible :name, :user_ids, :website
+  	attr_accessible :name, :user_ids, :website, :deleted
 
   	validates :name, presence: true, uniqueness: { case_sensitive: false }
   	validates :website, url: true
@@ -15,5 +15,11 @@ class Merchant < ActiveRecord::Base
 
   	delegate :user_id, to: :promotion
 
+  def self.not_exists?(id)
+      self.find(id)
+      false
+    rescue
+      true
+  end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130801140025) do
+ActiveRecord::Schema.define(:version => 20130808001459) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -67,24 +67,36 @@ ActiveRecord::Schema.define(:version => 20130801140025) do
   add_index "merchants_users", ["user_id", "merchant_id"], :name => "index_merchants_users_on_user_id_and_merchant_id", :unique => true
 
   create_table "promotions", :force => true do |t|
-    t.string   "content"
+    t.string   "content",                                            :default => ""
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "merchant_id"
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
-    t.string   "name"
+    t.datetime "created_at",                                                         :null => false
+    t.datetime "updated_at",                                                         :null => false
+    t.string   "name",                                               :default => ""
     t.integer  "cause_id"
     t.integer  "merchant_pct"
     t.integer  "supporter_pct"
     t.integer  "buyer_pct"
-    t.string   "landing_page"
+    t.string   "landing_page",                                       :default => ""
     t.boolean  "deleted"
-    t.decimal  "uid",           :precision => 16, :scale => 6
+    t.decimal  "uid",                 :precision => 16, :scale => 6
     t.integer  "priority"
     t.boolean  "disabled"
-    t.string   "p_banner_1"
-    t.integer  "serves_count",                                 :default => 0
+    t.string   "banner",                                             :default => ""
+    t.integer  "serves_count",                                       :default => 0
+    t.string   "fb_msg",                                             :default => ""
+    t.string   "fb_link_label",                                      :default => ""
+    t.string   "fb_caption",                                         :default => ""
+    t.string   "fb_redirect_url",                                    :default => ""
+    t.string   "fb_thumb_url",                                       :default => ""
+    t.boolean  "disable_msg_editing"
+    t.string   "tw_msg",                                             :default => ""
+    t.string   "pin_msg",                                            :default => ""
+    t.string   "pin_image_url",                                      :default => ""
+    t.string   "pin_def_board",                                      :default => ""
+    t.string   "pin_thumb_url",                                      :default => ""
+    t.string   "li_msg",                                             :default => ""
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"
@@ -105,23 +117,21 @@ ActiveRecord::Schema.define(:version => 20130801140025) do
   add_index "roles_users", ["user_id", "role_id"], :name => "index_roles_users_on_user_id_and_role_id", :unique => true
 
   create_table "serves", :force => true do |t|
-    t.integer  "promotion_id",                :null => false
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.integer  "promotion_id",                          :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.boolean  "deleted"
     t.string   "email"
-    t.integer  "share_id"
-    t.boolean  "viewed"
-    t.integer  "shares_count", :default => 0
+    t.integer  "referring_share_id"
+    t.boolean  "viewed",             :default => false
+    t.integer  "shares_count",       :default => 0
+    t.string   "session_id"
+    t.integer  "current_cause_id"
   end
 
   create_table "settings", :force => true do |t|
-    t.string   "p_banner_1"
-    t.string   "facebook_default_msg"
-    t.string   "facebook_link_label"
-    t.string   "facebook_caption"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.string   "banner_template_1"
     t.string   "banner_template_2"
     t.string   "banner_template_3"
@@ -131,16 +141,34 @@ ActiveRecord::Schema.define(:version => 20130801140025) do
     t.string   "banner_template_7"
     t.string   "banner_template_8"
     t.boolean  "deleted"
+    t.string   "fb_link_label"
+    t.string   "fb_caption"
+    t.string   "fb_redirect_url"
+    t.string   "fb_thumb_url"
+    t.string   "fb_msg_1"
+    t.string   "fb_msg_2"
+    t.string   "fb_msg_3"
+    t.string   "fb_msg_4"
+    t.string   "fb_msg_5"
+    t.string   "fb_msg_6"
+    t.string   "fb_msg_7"
+    t.string   "fb_msg_8"
+    t.string   "tw_msg"
+    t.string   "pin_msg"
+    t.string   "pin_image_url"
+    t.string   "pin_def_board"
+    t.string   "pin_thumb_url"
+    t.string   "li_msg"
   end
 
   create_table "shares", :force => true do |t|
-    t.integer  "serve_id",   :null => false
-    t.integer  "channel_id", :null => false
-    t.string   "link_id",    :null => false
-    t.boolean  "confirmed"
+    t.integer  "serve_id",                      :null => false
+    t.integer  "channel_id",                    :null => false
+    t.string   "link_id",                       :null => false
+    t.boolean  "confirmed",  :default => false
     t.boolean  "deleted"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "cause_id"
   end
 

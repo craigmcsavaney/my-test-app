@@ -2,7 +2,7 @@ class Promotion < ActiveRecord::Base
   include NotDeleteable
     versioned
 
-    attr_accessible :content, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :p_banner_1
+    attr_accessible :content, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :banner, :fb_msg, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, :disable_msg_editing, :tw_msg, :pin_msg, :pin_image_url, :pin_def_board, :pin_thumb_url, :li_msg, :deleted
 
     belongs_to :merchant, counter_cache: true
     has_and_belongs_to_many :channels,
@@ -12,24 +12,69 @@ class Promotion < ActiveRecord::Base
     has_many :serves
     has_many :shares, through: :serves
 
-    before_validation :replace_nils
+    before_validation :replace_nils, :get_landing_page, :ensure_channel_attributes_present
 
     validates :merchant_id, presence: true
     validates :merchant, :presence => true
     validates :name, presence: true
-    validates :cause, :presence => {message: ":: Please pick a cause for your merchant-directed contribution"}, :unless => lambda { self.merchant_pct == 0 }
+    validates :cause, :presence => {message: ":: Please pick your default preferred cause for this promotion"} #, :unless => lambda { self.merchant_pct == 0 }
     validates :merchant_pct, :presence => true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
     validates :supporter_pct, :presence => true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
     validates :buyer_pct, :presence => true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100} 
-    validate :excessive_contribution, :missing_contribution
     validates :landing_page, url: true
     validates :priority, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100} 
+    validates :fb_link_label, presence: true
+    validates :fb_caption, presence: true
+    validates :fb_redirect_url, presence: true
+    validates :fb_thumb_url, presence: true
     validate :channel_ids, :channel_count, on: :update
+    validate :excessive_contribution, :missing_contribution, :prevent_deletion_of_viewed_promotions
 
     after_validation :check_for_disallowed_updates_to_served_promotions, :get_banners, :replace_nils
     before_update :check_content_change
     before_save :check_content_change
     after_commit :ensure_purchase_channel_enabled, :if => :persisted?
+
+    private
+    def ensure_channel_attributes_present
+      if self.fb_link_label == ""
+        self.fb_link_label = Setting.first.fb_link_label
+      end
+      if self.fb_caption == ""
+        self.fb_caption = Setting.first.fb_caption
+      end
+      if self.fb_redirect_url == ""
+        self.fb_redirect_url = Setting.first.fb_redirect_url
+      end
+      if self.fb_thumb_url == ""
+        self.fb_thumb_url = Setting.first.fb_thumb_url
+      end
+      if self.tw_msg == ""
+        self.tw_msg = Setting.first.tw_msg
+      end
+      if self.pin_msg == ""
+        self.pin_msg = Setting.first.pin_msg
+      end
+      if self.pin_image_url == ""
+        self.pin_image_url = Setting.first.pin_image_url
+      end
+      if self.pin_def_board == ""
+        self.pin_def_board = Setting.first.pin_def_board
+      end
+      if self.pin_thumb_url == ""
+        self.pin_thumb_url = Setting.first.pin_thumb_url
+      end
+      if self.li_msg == ""
+        self.li_msg = Setting.first.li_msg
+      end
+    end
+
+    private
+    def get_landing_page
+      if self.landing_page == ""
+        self.landing_page = Merchant.find(self.merchant).website
+      end
+    end
 
     def ensure_purchase_channel_enabled
       if !self.channels.where("name = ?", "Purchase").exists?
@@ -40,7 +85,7 @@ class Promotion < ActiveRecord::Base
     end
 
     def get_banners
-        self.p_banner_1 = Banner.get_banner(self)
+        self.banner = Banner.get_banner(self)
     end
 
     def check_for_disallowed_updates_to_served_promotions
@@ -71,20 +116,16 @@ class Promotion < ActiveRecord::Base
         self.uid = Time.now.utc.to_f
     end
 
-
-
     amoeba do
       enable
       exclude_field :serves
       prepend :name => "Copy of "
     end
 
-    def destroy
-      if self.serves.where("viewed = ?", true).any?
-        errors.add(:name, "You cannot delete a promotion that has been served to website guests.  Consider disabling and hiding the promotion.") unless self.serves.count == 0
-        false
-        else
-          super
+    private
+    def prevent_deletion_of_viewed_promotions
+      if self.serves.where("viewed = ?", true).any? && self.deleted_changed?
+        errors.add(:promotion_already_viewed, " :: You cannot delete a promotion that has been viewed by website guests.  Instead, consider disabling and hiding the promotion.")
       end
     end
 

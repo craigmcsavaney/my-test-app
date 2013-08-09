@@ -13,8 +13,24 @@
         <%= f.label :email %>
         <%= f.text_field :email %>
 
-        <%= f.label :share_id %>
-        <%= select_tag 'serve[share_id]', options_from_collection_for_select(Share.all, :id, :id, @serve.share_id ), include_blank: true %>
+        <%= f.label :referring_share_id, "Referring Share ID" %>
+        <%= select_tag 'serve[referring_share_id]', options_from_collection_for_select(Share.all, :id, :id, @serve.referring_share_id ), include_blank: true %>
+
+        <%= f.label :viewed, "Viewed?" %>
+        <%= f.check_box :viewed %>
+
+        <br/><br/>
+        <%= f.label :shares_count, "Shares Count: " %><%= @serve.shares_count %>
+        <br/><br/>
+
+        <%= f.label :session_id %>
+        <%= f.text_field :session_id, readonly: true %>
+
+        <%= f.label :current_cause_id, "Current Cause ID" %>
+        <%= select_tag 'serve[current_cause_id]', options_from_collection_for_select(Cause.all, :id, :id, @serve.current_cause_id ) %>
+
+
+        <br/><br/>
 
         <%= f.submit button, class: "btn btn-large btn-primary" %>
       <% end %>

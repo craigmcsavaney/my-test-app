@@ -26,7 +26,7 @@ class SettingsController < ApplicationController
   	if @setting.update_attributes(params[:setting])
     		# Handle a successful update.
       	flash[:success] = "Setting updated"
-    		redirect_to settings_url
+    		redirect_to edit_setting_url(@setting)
     else
 			render 'edit'
     end

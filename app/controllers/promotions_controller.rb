@@ -3,6 +3,10 @@ class PromotionsController < ApplicationController
   
   def new
     @promotion = Promotion.new
+    @promotion.fb_link_label = Setting.first.fb_link_label
+    @promotion.fb_caption = Setting.first.fb_caption
+    @promotion.fb_redirect_url = Setting.first.fb_redirect_url
+    @promotion.fb_thumb_url = Setting.first.fb_thumb_url
   end
 
   def new_admin
@@ -113,7 +117,7 @@ class PromotionsController < ApplicationController
         flash[:success] = "Promotion deleted"
         redirect_to promotions_url
       else
-        flash[:failure] = "The promotion was not deleted"
+        flash[:failure] = @promotion.errors.full_messages.first
         redirect_to promotions_url
     end
   end

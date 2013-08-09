@@ -115,8 +115,7 @@
                   <li class="dropdown-submenu">
                     <a tabindex="-1" href="#">Settings</a>
                     <ul class="dropdown-menu">
-                      <li><%= link_to "Create Setting", new_setting_path %></li>
-                      <li><%= link_to "View Settings (#{Setting.count})", settings_path %></li>
+                      <li><%= link_to "Edit Settings", edit_setting_path(Setting.first) %></li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">

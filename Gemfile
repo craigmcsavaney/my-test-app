@@ -13,6 +13,7 @@ gem 'devise', '2.2.4'
 gem 'seedbank', github: 'james2m/seedbank'
 gem 'rabl', '0.8.6'
 gem 'oj', '2.1.4'
+gem 'awesm', '0.1.10'
 
 #added following require and gem for Guard compatibility with wdm
 require 'rbconfig'

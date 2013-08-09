@@ -4,19 +4,7 @@
       <%= form_for(@setting) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
 
-        <%= f.label :p_banner_1 %>
-        <%= f.text_field :p_banner_1 %>
-
-        <%= f.label :facebook_default_msg %>
-        <%= f.text_field :facebook_default_msg %>
-
-        <%= f.label :facebook_link_label %>
-        <%= f.text_field :facebook_link_label %>
-
-        <%= f.label :facebook_caption %>
-        <%= f.text_field :facebook_caption %>
-
-        <h2>Banner Templates</h2>
+        <h2>Widget Main Banner Templates</h2>
         <b>Use _merchant_name_, _merchant_pct_, _supporter_pct_, _buyer_pct_, and _cause_ for substitutions</b>
         <br/><br/>
 
@@ -43,6 +31,72 @@
 
         <%= f.label :banner_template_8, "banner_template_8: Merchant:>0, Supporter:>0, Buyer:>0" %>
         <%= f.text_field :banner_template_8 %>
+
+        <h2>Facebook Share Message Templates</h2>
+        <b>Use _merchant_name_, _merchant_pct_, _supporter_pct_, _buyer_pct_, and _cause_ for substitutions</b>
+        <br/><br/>
+
+        <%= f.label :fb_msg_1, "fb_msg_1: all zeros - not possible"  %>
+        <%= f.text_field :fb_msg_1 %>
+
+        <%= f.label :fb_msg_2, "fb_msg_2: Merchant:0, Supporter:0, Buyer:>0" %>
+        <%= f.text_field :fb_msg_2 %>
+
+        <%= f.label :fb_msg_3, "fb_msg_3: Merchant:0, Supporter:>0, Buyer:0" %>
+        <%= f.text_field :fb_msg_3 %>
+
+        <%= f.label :fb_msg_4, "fb_msg_4: Merchant:0, Supporter:>0, Buyer:>0" %>
+        <%= f.text_field :fb_msg_4 %>
+
+        <%= f.label :fb_msg_5, "fb_msg_5: Merchant:>0, Supporter:0, Buyer:0" %>
+        <%= f.text_field :fb_msg_5 %>
+
+        <%= f.label :fb_msg_6, "fb_msg_6: Merchant:>0, Supporter:0, Buyer:>0" %>
+        <%= f.text_field :fb_msg_6 %>
+
+        <%= f.label :fb_msg_7, "fb_msg_7: Merchant:>0, Supporter:>0, Buyer:0" %>
+        <%= f.text_field :fb_msg_7 %>
+
+        <%= f.label :fb_msg_8, "fb_msg_8: Merchant:>0, Supporter:>0, Buyer:>0" %>
+        <%= f.text_field :fb_msg_8 %>
+
+        <h2>Facebook Share Defaults</h2>
+
+        <%= f.label :fb_link_label %>
+        <%= f.text_field :fb_link_label %>
+
+        <%= f.label :fb_caption %>
+        <%= f.text_field :fb_caption %>
+
+        <%= f.label :fb_redirect_url %>
+        <%= f.text_field :fb_redirect_url %>
+
+        <%= f.label :fb_thumb_url %>
+        <%= f.text_field :fb_thumb_url %>
+
+        <h2>Twitter Share Defaults</h2>
+
+        <%= f.label :tw_msg %>
+        <%= f.text_field :tw_msg %>
+
+        <h2>Pinterest Share Defaults</h2>
+
+        <%= f.label :pin_msg %>
+        <%= f.text_field :pin_msg %>
+
+        <%= f.label :pin_image_url %>
+        <%= f.text_field :pin_image_url %>
+
+        <%= f.label :pin_def_board %>
+        <%= f.text_field :pin_def_board %>
+
+        <%= f.label :pin_thumb_url %>
+        <%= f.text_field :pin_thumb_url %>
+
+        <h2>LinkedIn Share Defaults</h2>
+
+        <%= f.label :li_msg %>
+        <%= f.text_field :li_msg %>
 
         <%= f.submit button, class: "btn btn-large btn-primary" %>
       <% end %>

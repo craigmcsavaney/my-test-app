@@ -7,14 +7,11 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 channel_list = [
   [ "Email", "email", "Shared via email." ],
-  [ "Facebook Share", "facebook-share", "" ],
-  [ "Facebook Post", "facebook-post", "" ],
-  [ "Facebook Send", "facebook-send", "" ],
-  [ "LinkedIn", "linkedin-share", "" ],
-  [ "Tumbler", "tumblr-link", "" ],
+  [ "Facebook", "facebook", "" ],
+  [ "Pinterest", "pinterest", "" ],
+  [ "LinkedIn", "linkedin", "" ],
   [ "Twitter", "twitter", "Share via standard Twitter tweet" ],
-  [ "Google Plus", "googleplus", "Share via Google+" ],
-  [ "Purchase", "n/a", "Creates a link to track purchases by an incented buyer" ],
+  [ "Purchase", "purchase", "Creates a link to track purchases by an incented buyer" ],
 ]
 
 puts 'Preparing to create seed Channels'

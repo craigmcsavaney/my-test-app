@@ -4,12 +4,23 @@
     <% else %>
     <% @a = "no" %>
   <% end %>
+  <% @b= @c= "" %>
+  <% if serve.email? %>
+    <% @b = serve.email %>
+  <% end %>
+  <% if serve.session_id? %>
+    <% @c = serve.session_id %>
+  <% end %>
 	<% @editpath = edit_serve_path(serve) %>
   	<b><%= :id %>: </b><%= link_to serve.id, @editpath %><br/>
   	<b><%= :promotion_id %>: </b><%= link_to serve.promotion_id, @editpath %><br/>
     <b><%= :name %>: </b><%= link_to serve.promotion.name, @editpath %><br/>
-    <b><%= :email %>: </b><%= link_to serve.email, @editpath %><br/>
-    <b><%= :viewed %> </b><%= link_to @a, @editpath %><br/>
+    <b><%= :email %>: </b><%= link_to @b, @editpath %><br/>
+    <b><%= :viewed %>: </b><%= link_to @a, @editpath %><br/>
+    <b><%= :session_id %>: </b><%= link_to @c, @editpath %><br/>
+    <b><%= :shares_count %>: </b><%= link_to serve.shares_count, @editpath %><br/>
+    <b><%= :current_cause_id %>: </b><%= link_to serve.current_cause_id, @editpath %><br/>
+    <b><%= :referring_share_id %>: </b><%= link_to serve.referring_share_id, @editpath %><br/>
   	<b><%= :created_at %>: </b><%= link_to serve.created_at, @editpath %><br/>
   	<b><%= :updated_at %>: </b><%= link_to serve.updated_at, @editpath %><br/>
 	<br/>
