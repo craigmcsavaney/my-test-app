@@ -13,25 +13,25 @@ end
 
 node do |promotion|
 	if promotion.channel_ids.include?(Channel.find_by_name('Facebook').id)
- 	{:facebook => partial("api/facebook", :object => promotion) }
+ 	{:facebook => partial("api/v1/api/facebook", :object => promotion) }
  	end
 end
 
 node do |promotion|
 	if promotion.channel_ids.include?(Channel.find_by_name('Twitter').id)
- 	{:twitter => partial("api/twitter", :object => promotion) }
+ 	{:twitter => partial("api/v1/api/twitter", :object => promotion) }
  	end
 end
 
 node do |promotion|
 	if promotion.channel_ids.include?(Channel.find_by_name('Pinterest').id)
- 	{:pinterest => partial("api/pinterest", :object => promotion) }
+ 	{:pinterest => partial("api/v1/api/pinterest", :object => promotion) }
  	end
 end
 
 node do |promotion|
 	if promotion.channel_ids.include?(Channel.find_by_name('Linkedin').id)
- 	{:linkedin => partial("api/linkedin", :object => promotion) }
+ 	{:linkedin => partial("api/v1/api/linkedin", :object => promotion) }
  	end
 end
 

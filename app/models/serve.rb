@@ -32,8 +32,10 @@ class Serve < ActiveRecord::Base
   end
 
   def self.new_session_id
-    session_id = SecureRandom.hex(8)
-    return session_id
+    loop do
+      session_id = SecureRandom.urlsafe_base64()
+      break session_id unless Serve.where(session_id: session_id).exists?
+    end
   end
 
   def self.not_exists?(id)
@@ -46,7 +48,7 @@ class Serve < ActiveRecord::Base
   def self.session_valid?(session_id,merchant)
     if session_id == nil
       false
-    elsif session_id.length != 16
+    elsif session_id == ""
       false
     elsif self.find_by_session_id(session_id) == nil
       false

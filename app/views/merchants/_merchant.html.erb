@@ -10,8 +10,9 @@
 		<% @editpath = edit_merchant_admin_path(merchant) %>
 		<% @deletepath = destroy_merchant_admin_path(merchant) %>
 	<% end %>
-	<b>Name: </b><%= link_to merchant.name, @editpath %>&nbsp;&nbsp;
 	<b>ID#: </b><%= link_to merchant.id, @editpath %>&nbsp;&nbsp;
+	<b>Name: </b><%= link_to merchant.name, @editpath %><br/>
+	<b>UID: </b><%= link_to merchant.uid, @editpath %><br/>
 	<b>Website URL: </b><%= link_to @a, @editpath %><br/>
 	<b>Users</b><% for user in merchant.users %>
 	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;

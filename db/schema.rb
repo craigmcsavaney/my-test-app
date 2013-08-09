@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808001459) do
+ActiveRecord::Schema.define(:version => 20130809130743) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -55,9 +55,11 @@ ActiveRecord::Schema.define(:version => 20130808001459) do
     t.string   "logo_link"
     t.boolean  "deleted"
     t.integer  "promotions_count", :default => 0
+    t.string   "uid"
   end
 
   add_index "merchants", ["name"], :name => "index_merchants_on_name", :unique => true
+  add_index "merchants", ["uid"], :name => "index_merchants_on_uid", :unique => true
 
   create_table "merchants_users", :id => false, :force => true do |t|
     t.integer "merchant_id"

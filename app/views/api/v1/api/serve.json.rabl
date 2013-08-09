@@ -3,11 +3,11 @@ attributes :id => :serve_id
 attributes :email, :cause_id, :session_id, :current_cause_id
 
 node do |serve|
- { :merchant => partial("api/merchant", :object => serve.promotion.merchant) }
+ { :merchant => partial("api/v1/api/merchant", :object => serve.promotion.merchant) }
 end
 
 node do |serve|
- { :share_links => partial("api/share_links", :object => serve) }
+ { :share_links => partial("api/v1/api/share_links", :object => serve) }
 end
 
 node :display_order do |serve|
@@ -15,7 +15,7 @@ node :display_order do |serve|
 end
 
 node do |serve|
- { :promotion => partial("api/promotions", :object => serve.promotion) }
+ { :promotion => partial("api/v1/api/promotions", :object => serve.promotion) }
 end
 
 # Unused Stuff:

@@ -37,11 +37,11 @@ class ApiController < ApplicationController
     end
 
     # next, check to ensure that the merchant_id is valid and if so, get the merchant
-    if Merchant.not_exists?(params[:merchant_id])
+    if Merchant.merchant_valid?(params[:merchant_id])
+            merchant = Merchant.find_by_uid(params[:merchant_id])
+        else
             render 'api/errors/merchant_invalid'
             return
-        else
-            merchant = Merchant.find(params[:merchant_id])
     end
 
     # Set the check_date to today.  Used to search for valid promotions
@@ -169,11 +169,11 @@ class ApiController < ApplicationController
     end
 
     # next, check to ensure that the merchant_id is valid and if so, get the merchant
-    if Merchant.not_exists?(params[:merchant_id])
+    if Merchant.merchant_valid?(params[:merchant_id])
+            merchant = Merchant.find_by_uid(params[:merchant_id])
+        else
             render 'api/errors/merchant_invalid'
             return
-        else
-            merchant = Merchant.find(params[:merchant_id])
     end
 
     # next, check to see if a valid session_id (one that is associated with
@@ -199,11 +199,11 @@ class ApiController < ApplicationController
     end
 
     # next, check to ensure that the merchant_id is valid and if so, get the merchant
-    if Merchant.not_exists?(params[:merchant_id])
+    if Merchant.merchant_valid?(params[:merchant_id])
+            merchant = Merchant.find_by_uid(params[:merchant_id])
+        else
             render 'api/errors/merchant_invalid'
             return
-        else
-            merchant = Merchant.find(params[:merchant_id])
     end
 
     # next, check to see if a valid session_id (one that is associated with
