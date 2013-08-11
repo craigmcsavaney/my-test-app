@@ -3,6 +3,7 @@ Myapplication::Application.routes.draw do
     namespace :v1 do
       match 'serve/:merchant_id', to: 'api#serve', :as => :serve, format: 'json'
       match 'view/:merchant_id', to: 'api#view', :as => :view, format: 'json'
+      match 'update/:merchant_id', to: 'api#update', :as => :update, format: 'json'
     end
   end
 

@@ -53,15 +53,39 @@ class Share < ActiveRecord::Base
     end
   end
 
-  def self.create_shares(serve)
-    # If a Purchase share link does not exist for this serve_id, create one
-#    if !serve.shares.where("channel_id = ?",Channel.find_by_name('Purchase').id).exists?
-    landing_page = serve.promotion.landing_page
-    channels = serve.promotion.channels.pluck(:name)
-    channels.each do |channel|
-      path = Awesome.get_new_link_path(channel,landing_page)
-      Share.create(serve_id: serve.id, channel_id: Channel.find_by_name(channel).id, link_id: path)
+  def self.path_valid_for_this_serve?(path,serve)
+    # the path is not valid for the given serve if the path is nil, the path is null (or blank), the path does not exist for any share, the serve associated with the path is different than the serve passed in, or the path is associated with an already confirmed share (meaning that a new share and new path have already been created).
+    if path == nil
+      false
+    elsif path == ""
+      false
+    elsif self.find_by_link_id(path) == nil
+      false
+    elsif
+      self.find_by_link_id(path).serve != serve
+        false
+    elsif 
+      self.find_by_link_id(path).confirmed?
+        false
+    else
+      true
     end
+  end
+
+
+  def self.create_all_shares(serve)
+    # Create a new set of shares for a serve when a serve is created.
+    serve.promotion.channels.each do |channel|
+      self.create_share(serve,channel)
+    end
+  end
+
+  def self.create_share(serve,channel)
+    # create a share for the given serve and channel
+    landing_page = serve.promotion.landing_page
+    path = Awesome.get_new_link_path(channel.name,landing_page)
+#    path = SecureRandom.urlsafe_base64(4)  # use this only for offline testing
+    Share.create(serve_id: serve.id, channel_id: channel.id, link_id: path)
   end
 
 end

@@ -9,4 +9,11 @@ class Cause < ActiveRecord::Base
   	has_many :promotions
   	has_many :shares
   	has_many :serves
+
+  	def self.not_exists?(id)
+  		self.find(id)
+  		false
+		rescue
+  		true
+	end
 end
