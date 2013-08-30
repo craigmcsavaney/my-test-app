@@ -19,7 +19,7 @@
 		<% @f = promotion.end_date %>
 	<% end %>
 	<% if promotion.serves.where("viewed = ?", true).none? %>
-		<% @g = "0" %>
+		<% @g = 0 %>
 		<% else %>
 		<% @g = promotion.serves.where("viewed = ?", true).count %>
 	<% end %>
@@ -73,7 +73,9 @@
 	<b>Disabled: </b><%= link_to @h, @editpath %><br/>
 	<% @current = Current.get_current_promotion(Date.today,promotion.merchant) %>
     <% @current_promotion = @current[:promotion] %>
-	<% if @current_promotion.id == promotion.id %>
+    <% if @current[:promotion].nil? %>
+    	<%= @current[:message] %>
+	<% elsif @current_promotion.id == promotion.id %>
 		<b>This is the current promotion for this merchant</b><br/>
 	<% else %>
 		This is not the current promotion for this merchant.  See promotion #<%= @current_promotion.id %><br/>
@@ -93,7 +95,9 @@
 	<b>Actions: </b>
 	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
 	  	<%= link_to "duplicate", @duplicatepath %>&nbsp;&nbsp;
+	  		<% if @g == 0 %>
 				<%= link_to "delete", @deletepath, method: :delete,
                                   data: { confirm: "You sure?" } %>
+            <% end %>
 
 </li>

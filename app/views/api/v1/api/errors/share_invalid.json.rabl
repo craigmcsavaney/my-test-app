@@ -1,5 +1,5 @@
 object false
 
-node :status do 
-		"error: share path invalid"
+node :error do 
+		"share path invalid"
 end

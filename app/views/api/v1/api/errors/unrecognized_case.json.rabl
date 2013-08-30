@@ -1,5 +1,5 @@
 object false
 
-node :status do 
-		"error: unrecognized case"
+node :error do 
+		"unrecognized case"
 end

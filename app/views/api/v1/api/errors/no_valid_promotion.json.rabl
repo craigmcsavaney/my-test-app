@@ -1,5 +1,5 @@
 object false
 
-node :status do 
-		"error: no valid promotion to serve"
+node :error do 
+		"no valid promotion to serve"
 end

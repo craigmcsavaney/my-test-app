@@ -1,5 +1,5 @@
 object false
 
-node :status do 
-		"error: merchant missing or invalid"
+node :error do 
+		"merchant missing or invalid"
 end

@@ -1,5 +1,5 @@
 object false
 
-node :status do 
-		"error: cause invalid"
+node :error do 
+		"cause invalid"
 end

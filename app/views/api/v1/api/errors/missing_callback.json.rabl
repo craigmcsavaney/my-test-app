@@ -1,5 +1,5 @@
 object false
 
-node :status do 
-		"error: missing callback"
+node :error do 
+		"missing callback"
 end
