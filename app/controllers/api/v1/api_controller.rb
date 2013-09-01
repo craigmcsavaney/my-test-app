@@ -245,6 +245,40 @@ module Api
                 render 'update'
             end
 
+            def causes
+                # # inputs: merchant_id, session_id, callback
+                # # first, verify that a callback parameter was passed
+                # if params[:callback].nil?
+                #     render 'api/v1/api/errors/missing_callback'
+                #     return
+                # end
+
+                # # next, check to ensure that the merchant_id is valid and if so, get the merchant
+                # if Merchant.merchant_valid?(params[:merchant_id])
+                #         merchant = Merchant.find_by_uid(params[:merchant_id])
+                #     else
+                #         render 'api/v1/api/errors/merchant_invalid'
+                #         return
+                # end
+
+                # # next, check to see if a valid session_id (one that is associated with
+                # # the current merchant) was passed in.  If so, mark the serve as viewed.  If not,
+                # # return a session_invalid error message
+                # if Serve.session_valid?(params[:session_id],merchant)
+                #         Serve.find_by_session_id(params[:session_id]).update_attributes(viewed: true)
+                #         render 'success'
+                #         return
+                #     else
+                #         render 'api/v1/api/errors/session_invalid'
+                #         return
+                # end
+                # render 'api/v1/api/errors/unrecognized_case'
+                @causes = Cause.all
+                render 'causes'
+                return
+            end
+
+
         end
     end
 end
