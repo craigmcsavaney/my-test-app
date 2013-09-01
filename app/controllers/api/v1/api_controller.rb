@@ -278,6 +278,25 @@ module Api
                 return
             end
 
+            def causes1
+                if params[:term]
+                    #@causes = Cause.where{ ( (name =~ my{"%#{params[:term]}%"})) }
+                    @causes = Cause.all
+                    @causes1 = @causes.paginate(:page => params[:page], :per_page => params[:page_limit])
+                end
+                render 'causes'
+                return
+                # respond_to do |format|  
+                #     format.html
+                #     format.json { 
+                #       render :json => {
+                #         :users => @user,
+                #         :total => @users.count,
+                #         :links => { :self => @user.current_page , :next => @user.next_page}
+                #     } 
+                #   }
+                # end
+            end
 
         end
     end

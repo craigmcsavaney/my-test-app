@@ -1,3 +1,3 @@
 collection @causes
-attributes :name, :id
+attributes :name, :uid
 
