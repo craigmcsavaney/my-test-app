@@ -246,20 +246,20 @@ module Api
             end
 
             def causes
-                # # inputs: merchant_id, session_id, callback
-                # # first, verify that a callback parameter was passed
-                # if params[:callback].nil?
-                #     render 'api/v1/api/errors/missing_callback'
-                #     return
-                # end
+                # inputs: merchant_id, session_id, callback
+                # first, verify that a callback parameter was passed
+                if params[:callback].nil?
+                    render 'api/v1/api/errors/missing_callback'
+                    return
+                end
 
-                # # next, check to ensure that the merchant_id is valid and if so, get the merchant
-                # if Merchant.merchant_valid?(params[:merchant_id])
-                #         merchant = Merchant.find_by_uid(params[:merchant_id])
-                #     else
-                #         render 'api/v1/api/errors/merchant_invalid'
-                #         return
-                # end
+                # next, check to ensure that the merchant_id is valid and if so, get the merchant
+                if Merchant.merchant_valid?(params[:merchant_id])
+                        merchant = Merchant.find_by_uid(params[:merchant_id])
+                    else
+                        render 'api/v1/api/errors/merchant_invalid'
+                        return
+                end
 
                 # # next, check to see if a valid session_id (one that is associated with
                 # # the current merchant) was passed in.  If so, mark the serve as viewed.  If not,
@@ -276,26 +276,6 @@ module Api
                 @causes = Cause.all
                 render 'causes'
                 return
-            end
-
-            def causes1
-                if params[:term]
-                    #@causes = Cause.where{ ( (name =~ my{"%#{params[:term]}%"})) }
-                    @causes = Cause.all
-                    @causes1 = @causes.paginate(:page => params[:page], :per_page => params[:page_limit])
-                end
-                render 'causes'
-                return
-                # respond_to do |format|  
-                #     format.html
-                #     format.json { 
-                #       render :json => {
-                #         :users => @user,
-                #         :total => @users.count,
-                #         :links => { :self => @user.current_page , :next => @user.next_page}
-                #     } 
-                #   }
-                # end
             end
 
         end

@@ -7,6 +7,7 @@ class Cause < ActiveRecord::Base
     before_validation :generate_uid
 
   	validates :name, presence: true, uniqueness: { case_sensitive: false }
+    validates :uid, presence: true, uniqueness: { case_sensitive: true }
 
   	has_and_belongs_to_many :users
   	has_many :promotions
