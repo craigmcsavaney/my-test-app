@@ -7,7 +7,7 @@ class Serve < ActiveRecord::Base
 
   belongs_to :promotion, counter_cache: true
   belongs_to :share, foreign_key: "referring_share_id"
-  belongs_to :cause
+  belongs_to :cause, foreign_key: "current_cause_id"
   has_many :shares
 
 	validates :promotion, presence: true
@@ -19,26 +19,26 @@ class Serve < ActiveRecord::Base
 
   before_save :get_session_id
 
-  def self.cause_changed?(serve,new_cause)
+  def self.cause_changed?(serve,new_cause_uid)
     # check to see if a cause was passed in (non-nil) and if it is different from
     # the current cause value.
     case
       # check to see if both the old current cause and the new cause are nil or blank
-      when (serve.current_cause_id.nil? or serve.current_cause_id == "") && (new_cause.nil? or new_cause == "")
+      when (serve.current_cause_id.nil? or serve.current_cause_id == "") && (new_cause_uid.nil? or new_cause_uid == "")
         @cause_changed = false
         @cause = serve.current_cause_id
       # check to see if the new current cause is a valid cause
-      when Cause.not_exists?(new_cause)
+      when !Cause.cause_valid?(new_cause_uid)
         @cause_changed = false
         @cause = serve.current_cause_id
       # check to see if the new current cause is the same as the old current cause
-      when serve.current_cause_id.to_s == new_cause 
+      when serve.cause.uid == new_cause_uid 
         @cause_changed = false
         @cause = serve.current_cause_id
       # since both are not blank or nil and they are not the same, they must be different
       else
         @cause_changed = true
-        @cause = new_cause
+        @cause = Cause.where("uid = ?", new_cause_uid).first.id
     end
     return {cause_changed: @cause_changed, cause: @cause}
   end
@@ -72,7 +72,7 @@ class Serve < ActiveRecord::Base
     # now, mark this share as confirmed
     @share.update_attributes(confirmed: true, cause_id: serve.current_cause_id)
     # now, get a new share for this channel
-    Share.create_share(serve,channel)
+    # Share.create_share(serve,channel)
   end
 
   def get_current_cause

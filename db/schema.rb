@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130901221857) do
+ActiveRecord::Schema.define(:version => 20130904001006) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20130901221857) do
   end
 
   add_index "causes", ["name"], :name => "index_causes_on_name", :unique => true
+  add_index "causes", ["uid"], :name => "index_causes_on_uid", :unique => true
 
   create_table "causes_users", :id => false, :force => true do |t|
     t.integer "cause_id"

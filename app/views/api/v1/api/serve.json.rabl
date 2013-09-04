@@ -1,6 +1,10 @@
 object @serve
 attributes :id => :serve_id
-attributes :email, :cause_id, :session_id, :current_cause_id
+attributes :email, :session_id
+
+node :current_cause_id do |serve|
+	serve.cause.uid
+end	
 
 node do |serve|
  { :merchant => partial("api/v1/api/merchant", :object => serve.promotion.merchant) }

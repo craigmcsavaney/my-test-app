@@ -5,7 +5,8 @@ module Api
                 # This is the main api method that serves all the intial widget load information.
                 # This call accepts the following inputs: merchant_id, callback, [session_id], 
                 # [serve_id], and [path].  merchant_id and callback are required on all calls 
-                # and an error message will be returned if either is missing.
+                # and an error message will be returned if either is missing.  Remember that 
+                # the merchant_id is a uid.
 
                 # If a session_id is available (stored in the CB session cookie), it should be
                 # passed in as it will significantly speed up processing of the api request.
@@ -163,7 +164,8 @@ module Api
             end
 
             def view
-                # inputs: merchant_id, session_id, callback
+                # inputs: merchant_id, session_id, callback.  Remember that merchant_id is a uid.
+
                 # first, verify that a callback parameter was passed
                 if params[:callback].nil?
                     render 'api/v1/api/errors/missing_callback'
@@ -195,6 +197,7 @@ module Api
 
             def update
                 # inputs: merchant_id, session_id, callback, [path], [cause_id], [email]
+                # remember that the merchant_id and cause_id are both uid's
 
                 # first, verify that a callback parameter was passed
                 if params[:callback].nil?
@@ -221,23 +224,29 @@ module Api
                 # next, check to see if an email was passed in and if it is different than the email in the current serve record.  If it is different, set the @email[:email_changed] flag to true and set the @email[:email] variable to the new email address.  Otherwise, set the flag to false and the email variable to the current value of the email
                 @email = Serve.email_changed?(@serve,params[:email])
 
-                # check to see if a cause was passed in (non-nil) and if it is differnt from the current cause value.  If it is valid and different, set the @cause[:cause__changed] flag to true and the @cause[:cause] variable to the new cause.  Otherwise, set the flat to false and the cause variable to the current cause id value.
+                # check to see if a cause was passed in (non-nil) and if it is different from the current cause value.  If it is valid and different, set the @cause[:cause_changed] flag to true and the @cause[:cause] variable to the new cause.  Otherwise, set the flag to false and the cause variable to the current cause id value.  Remember that the cause_id being passed in is a uid but the cause being returned is an object.
                 @cause = Serve.cause_changed?(@serve,params[:cause_id])
 
                 # if either the current cause or the email has changed, update the current serve. Also, since the email and purchase paths associated with the old cause and email may have been distributed, mark these as confirmed and create new paths for these channels.
                 if @cause[:cause_changed] or @email[:email_changed]
-                    @serve.update_attributes(email: @email[:email], current_cause_id: @cause[:cause])
-                    # if cause changed from most recent, return new paths for email and purchase
+                    # first, mark the Email and Purchase shares for this serve as confirmed:
                     Serve.post_to_channel(@serve,Channel.find_by_name('Email'))
                     Serve.post_to_channel(@serve,Channel.find_by_name('Purchase'))
+                    # next, update the Serve attributes to reflect the new email, current_cause_id,
+                    # or both
+                    @serve.update_attributes(email: @email[:email], current_cause_id: @cause[:cause])
+                    # finally, create new shares for the email and purchase channels that
+                    Share.create_share(@serve,Channel.find_by_name('Email'))
+                    Share.create_share(@serve,Channel.find_by_name('Purchase'))
                 end
 
                 # next, check to see if a valid share path (one that is associated with the current serve) was passed in.  
                 if Share.path_valid_for_this_serve?(params[:path],@serve)
                     # the path is valid, so get the current share
                     @share = Share.find_by_link_id(params[:path])
-                    # Now, mark the posted channel as confirmed and create a new path for this channel
+                    # Now, mark the posted channel as confirmed, then create a new path for this channel
                     Serve.post_to_channel(@serve,@share.channel)
+                    Share.create_share(@serve,@share.channel)
                 end
 
                 # Get the current Serve and render it to the update template
@@ -246,7 +255,8 @@ module Api
             end
 
             def causes
-                # inputs: merchant_id, session_id, callback
+                # inputs: merchant_id, session_id, callback. Remember that merchant_id is a uid.
+
                 # first, verify that a callback parameter was passed
                 if params[:callback].nil?
                     render 'api/v1/api/errors/missing_callback'
