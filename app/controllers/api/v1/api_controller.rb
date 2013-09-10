@@ -2,36 +2,17 @@ module Api
     module V1
         class ApiController < ApplicationController
             def serve
-                # This is the main api method that serves all the intial widget load information.
-                # This call accepts the following inputs: merchant_id, callback, [session_id], 
-                # [serve_id], and [path].  merchant_id and callback are required on all calls 
-                # and an error message will be returned if either is missing.  Remember that 
-                # the merchant_id is a uid.
+                # This is the main api method that serves all the intial widget load information. This call accepts the following inputs: merchant_id, callback, [session_id], [serve_id], and [path].  merchant_id and callback are required on all calls and an error message will be returned if either is missing.  Remember that the merchant_id is a uid.
 
-                # If a session_id is available (stored in the CB session cookie), it should be
-                # passed in as it will significantly speed up processing of the api request.
+                # If a session_id is available (stored in the CB session cookie), it should be passed in as it will significantly speed up processing of the api request.
 
-                # If a serve_id is available (stored in the CB permanent cookie), it should be
-                # passed in so any user-supplied data (email, cause, etc.) can be returned.
+                # If a serve_id is available (stored in the CB permanent cookie), it should be passed in so any user-supplied data (email, cause, etc.) can be returned.
 
-                # If a path value can be obtained from the referring url, it should be passed in
-                # so we can determine who referred this visitor and if they are being referred 
-                # by a new referrer.  The path value should never be obtained from the awe.sm
-                # cookie as the cookie may or may not contain the path from the current 
-                # referring url, depending on execution timing of the CB scripts and the awe.sm
-                # script that updates the cookie.
+                # If a path value can be obtained from the referring url, it should be passed in so we can determine who referred this visitor and if they are being referred by a new referrer.  The path value is always obtained from the referring url and not from a cookie.
 
-                # Also, the path is checked against share paths for the current serve_id to 
-                # determine if the user referred themselves back to the same site using
-                # one of their own share links.  If so, we don't treat this as a new
-                # referral.
+                # Also, the path is checked against share paths for the current serve_id to determine if the user referred themselves back to the same site using one of their own share links.  If so, we don't treat this as a new referral.
 
-                # The json response will always include a value for the purchase path, 
-                # identified as pur_path.  This value must always be used to update the
-                # path value in the awe.sm cookie.  The json will also contain a session_id,
-                # which should be written to a CB session cookie, and a serve_id, which should
-                # be written to the permanent CB cookie.
-
+                # The json response will always include a value for the purchase path, identified as pur_path.  This value must always be used to update the path value in the awe.sm cookie.  The json will also contain a session_id, which should be written to a CB session cookie, and a serve_id, which should be written to the permanent CB cookie.
 
                 # first, verify that a callback parameter was passed
                 if params[:callback].nil?
@@ -50,6 +31,13 @@ module Api
                 # Set the check_date to today.  Used to search for valid promotions
                 check_date = Date.today
 
+                # next, check to see if a valid session_id (one that is associated with the current merchant) was passed in.  If so, serve the promotion associated with this session_id.
+                if Serve.session_valid?(params[:session_id],merchant)
+                    @serve = Serve.find_by_session_id(params[:session_id])
+                    render 'serve'
+                    return
+                end
+
                 # Get merchant's current promotion. If no valid promotion exists, return an error
                 @current = Current.get_current_promotion(check_date,merchant)
                 if @current[:promotion] == nil
@@ -58,18 +46,7 @@ module Api
                     return
                 end
 
-                # next, check to see if a valid session_id (one that is associated with
-                # the current merchant) was passed in.  If so, serve the promotion associated
-                # with this session_id
-                if Serve.session_valid?(params[:session_id],merchant)
-                    @serve = Serve.find_by_session_id(params[:session_id])
-                    render 'serve'
-                    return
-                end
-
-                # Since we made it to this point, this must be a new session, and a valid current
-                # promotion has been successfully identified.  Now set the promotion variable
-                # equal to the current promotion:
+                # Since we made it to this point, this must be a new session, and a valid current promotion has been successfully identified.  Now set the promotion variable equal to the current promotion:
                 @promotion = @current[:promotion]
                 # Check to see if valid serve_id and path were passed in.
             	serve_valid = !Serve.not_exists?(params[:serve_id])
@@ -81,12 +58,7 @@ module Api
                         promotion_same = false
                 end
 
-                # Once a visitor has clicked the cause button and we have created a serve and
-                # shares for them, it's possible that they may click one of the share links to 
-                # test it out.  In this case, they will appear to be coming from a new referring
-                # url.  We need to check the url and see if it's associated with any of the shares 
-                # of the current serve.  If it is, we need to ignore it by treating it as
-                # an invalid path.
+                # Once a visitor has clicked the cause button and we have created a serve and shares for them, it's possible that they may click one of the share links to test it out.  In this case, they will appear to be coming from a new referring url.  We need to check the url and see if it's associated with any of the shares of the current serve.  If it is, we need to ignore it by treating it as an invalid path.
                 if serve_valid && path_valid && Serve.find(params[:serve_id]).shares.pluck(:link_id).include?(params[:path])
                         path_valid = false
                 end
