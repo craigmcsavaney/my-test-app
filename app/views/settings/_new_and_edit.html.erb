@@ -98,6 +98,11 @@
         <%= f.label :li_msg %>
         <%= f.text_field :li_msg %>
 
+        <h2>Other Defaults</h2>
+
+        <%= f.label :cookie_life, "Cookie life (in days, whole numbers only)" %>
+        <%= f.text_field :cookie_life %>
+
         <%= f.submit button, class: "btn btn-large btn-primary" %>
       <% end %>
 

@@ -35,7 +35,8 @@ puts 'Preparing to create seed Settings'
       pin_image_url:"http://www.example.com",
       pin_def_board:"pinterest default board",
       pin_thumb_url:"http://www.example.com",
-      li_msg: "linkedin sample message"   
+      li_msg: "linkedin sample message",
+      cookie_life: "30"   
       )
       puts 'All seed Settings found or created'
    else

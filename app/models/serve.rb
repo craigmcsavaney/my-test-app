@@ -3,7 +3,7 @@ class Serve < ActiveRecord::Base
   include NotDeleteable
 	versioned
 
-	attr_accessible :promotion_id, :email, :referring_share_id, :viewed, :session_id, :current_cause_id, :id
+	attr_accessible :promotion_id, :email, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :parent_path
 
   belongs_to :promotion, counter_cache: true
   belongs_to :share, foreign_key: "referring_share_id"

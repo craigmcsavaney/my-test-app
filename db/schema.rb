@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904001006) do
+ActiveRecord::Schema.define(:version => 20130911120952) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20130904001006) do
     t.integer  "shares_count",       :default => 0
     t.string   "session_id"
     t.integer  "current_cause_id"
+    t.string   "parent_path"
   end
 
   create_table "settings", :force => true do |t|
@@ -163,6 +164,7 @@ ActiveRecord::Schema.define(:version => 20130904001006) do
     t.string   "pin_def_board"
     t.string   "pin_thumb_url"
     t.string   "li_msg"
+    t.integer  "cookie_life"
   end
 
   create_table "shares", :force => true do |t|
