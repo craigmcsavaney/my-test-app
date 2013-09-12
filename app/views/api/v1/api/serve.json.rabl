@@ -10,10 +10,6 @@ node :cookie_life do |serve|
 	Setting.first.cookie_life
 end
 
-node :purchase_path do 
-		"a1b2c"
-end
-
 node do |serve|
  { :merchant => partial("api/v1/api/merchant", :object => serve.promotion.merchant) }
 end
