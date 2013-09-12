@@ -92,11 +92,34 @@ module Api
                 end
 
                 # Now determine if the referring path has changed for valid serves and valid paths
-                if serve_valid && path_valid && Serve.find(params[:serve_id]).share.link_id == params[:path]
-                        path_same = true
-                else
+                # First, check to see if the current serve and path are valid.  If either is invalid, mark the path_same as false.
+                if serve_valid && path_valid
+                        case 
+                            
+                            # First, check to see if the current serve came from an awesm referral link.  If not, path_same should always be false
+                            when Serve.find(params[:serve_id]).share.nil?
+                                path_same = false
+                            
+                            # Next, check to see if the current serve referring path is equal to the referring path for the new serve request.
+                            when Serve.find(params[:serve_id]).share.link_id == params[:path]
+                                path_same = true
+
+                            # Finally, the current serve had a valid referral path which is different from the referring path for the new serve request.
+                                path_same = false
+
+                        end
+
+                    else
+
                         path_same = false
+
                 end
+
+                # if serve_valid && path_valid && Serve.find(params[:serve_id]).share.link_id == params[:path]
+                #         path_same = true
+                # else
+                #         path_same = false
+                # end
 
                 # Now, using the serve, path, and promotion variables set above,
                 # examine the different cases and take appropriate actions to find, create,
@@ -117,21 +140,19 @@ module Api
                         # now, create the new serve
                         @serve = Serve.create(promotion_id: @promotion.id, referring_share_id: @referring_share.id)
 
-                    # Third case, when the serve is valid and the current promotion hasn't changed
+                    # Third case, when the serve is valid (implied, as the not valid cases are handled above) and the current promotion hasn't changed
                     # but either the path is invalid or is the same as the stored referring path
-                    when serve_valid && promotion_same && (!path_valid || path_same)
+                    when promotion_same && (!path_valid || path_same)
                         # we're just going to serve up the old promotion here, but with a new session_id
                         session_id = Serve.new_session_id
                         Serve.find(params[:serve_id]).update_attributes(session_id: session_id)
                         @serve = Serve.find(params[:serve_id]) # reload the old serve with the new session_id
 
-                    # Fourth case, when the serve is valid but the incoming path is new (and valid)
+                    # Fourth case, when the serve is valid (implied, as the not valid cases are handled above) but the incoming path is new (and valid)
                     # This means the visitor is returning to the same site, but was referred here
                     # by someone new.
-                    when serve_valid && path_valid && !path_same
-                        # We're going to create a new serve for this visitor and copy over the
-                        # cause and email info from the previous serve if possible.  Also, if the
-                        # previous serve wasn't viewed, we'll delete it and all its shares.
+                    when path_valid && !path_same
+                        # We're going to create a new serve for this visitor using the new path information (which exists because the path is valid) and copy over the cause and email info from the previous serve if possible.  TO DO: if the previous serve wasn't viewed, we'll delete it and all its shares.
                         @old = Serve.find(params[:serve_id])
                         @referring_share = Share.find_by_link_id(params[:path])
                         @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id)
@@ -140,8 +161,8 @@ module Api
                             # delete the old serve and its associated shares
                         #end
 
-                    # Fifth case, when the serve is valid, the promotion has changed, and the path is either invalid or is the same as the stored referring path
-                    when serve_valid && !promotion_same && (!path_valid || path_same)
+                    # Fifth case, when the serve is valid (implied, as the not valid cases are handled above), the promotion has changed, and the path is either invalid or is the same as the stored referring path
+                    when !promotion_same && (!path_valid || path_same)
                         # This is basically the case where the promotion has changed, so if the
                         # serve hasn't been viewed yet, we'll just update it with the new promotion
                         # and a new session_id.
