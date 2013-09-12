@@ -1,6 +1,6 @@
 object @serve
 attributes :id => :serve_id
-attributes :email, :session_id, :created_at
+attributes :email, :session_id, :created_at, :viewed
 
 node :current_cause_id do |serve|
 	serve.cause.uid
