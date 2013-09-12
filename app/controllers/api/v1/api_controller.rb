@@ -66,8 +66,6 @@ module Api
                     render 'serve'
                     return
                 end
-                        render 'success'
-                        return
 
                 # Since we made it to this point, this must be a new session, and a valid current
                 # promotion has been successfully identified.  Now set the promotion variable
@@ -79,6 +77,8 @@ module Api
                 # Now determine if the current promotion is the same as the old promotion
                 if serve_valid && Serve.find(params[:serve_id]).promotion_id == @promotion.id
                         promotion_same = true
+                        render 'success'
+                        return
                     else
                         promotion_same = false
                 end
