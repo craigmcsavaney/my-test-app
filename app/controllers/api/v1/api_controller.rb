@@ -143,6 +143,8 @@ module Api
                     # Third case, when the serve is valid (implied, as the not valid cases are handled above) and the current promotion hasn't changed
                     # but either the path is invalid or is the same as the stored referring path
                     when promotion_same && (!path_valid || path_same)
+                        render 'success'
+                        return
                         # we're just going to serve up the old promotion here, but with a new session_id
                         session_id = Serve.new_session_id
                         Serve.find(params[:serve_id]).update_attributes(session_id: session_id)
