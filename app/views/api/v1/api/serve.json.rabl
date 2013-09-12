@@ -18,9 +18,9 @@ node do |serve|
  { :merchant => partial("api/v1/api/merchant", :object => serve.promotion.merchant) }
 end
 
-#node do |serve|
-# { :share_links => partial("api/v1/api/share_links", :object => serve) }
-#end
+node do |serve|
+ { :share_links => partial("api/v1/api/share_links", :object => serve) }
+end
 
 node :display_order do |serve|
 	serve.promotion.channels.order('name').pluck(:name)
