@@ -89,8 +89,6 @@ module Api
                 # an invalid path.
                 if serve_valid && path_valid && Serve.find(params[:serve_id]).shares.pluck(:link_id).include?(params[:path])
                         path_valid = false
-                        render 'success'
-                        return
                 end
 
                 # Now determine if the referring path has changed for valid serves and valid paths
