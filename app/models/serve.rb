@@ -3,12 +3,14 @@ class Serve < ActiveRecord::Base
   include NotDeleteable
 	versioned
 
-	attr_accessible :promotion_id, :email, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :parent_path
+	attr_accessible :promotion_id, :email, :referring_share_id, :viewed, :session_id, :current_cause_id, :id
 
   belongs_to :promotion, counter_cache: true
   belongs_to :share, foreign_key: "referring_share_id"
   belongs_to :cause, foreign_key: "current_cause_id"
   has_many :shares
+  has_many :sales, through: :shares
+  delegate :merchant, :to => :promotion, :allow_nil => true
 
 	validates :promotion, presence: true
 	validates :promotion_id, presence: true
@@ -128,5 +130,8 @@ class Serve < ActiveRecord::Base
     end
   end
 
+  def self.shared?(serve)
+    serve.shares.where("confirmed = ? and channel_id <> ?", true, Channel.find_by_name("Purchase")).count > 0
+  end
 
 end

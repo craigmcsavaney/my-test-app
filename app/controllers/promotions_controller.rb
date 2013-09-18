@@ -1,5 +1,5 @@
 class PromotionsController < ApplicationController
-  load_and_authorize_resource :except => :serve
+  load_and_authorize_resource
   
   def new
     @promotion = Promotion.new
@@ -131,29 +131,6 @@ class PromotionsController < ApplicationController
         flash[:failure] = "The promotion was not deleted"
         redirect_to promotions_admin_url
     end
-  end
-
-  def serve
-    # accepts Merchant id as input
-    # Get merchant's current promotion
-    merchant = Merchant.find(params[:merchant_id])
-    check_date = Date.today
-    @current = Current.get_current_promotion(check_date,merchant)
-    if @current[:promotion] != nil
-        # Current promotion successfully identified
-        @promotion = @current[:promotion]
-        flash[:success] = @current[:message]
-        respond_to do |format|
-          format.html { render 'current' }
-          format.json { render json: @promotion }
-        end
-    # record serve event in Serve
-    Serve.create(promotion_id: @promotion.id)
-      else
-        # No current promotion found
-        flash[:failure] = @current[:message]
-        redirect_to merchants_url
-    end    
   end
 
   def current

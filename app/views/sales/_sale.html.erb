@@ -1,0 +1,13 @@
+<li>
+	<% @editpath = edit_sale_path(sale) %>
+  	<b><%= :id %>: </b><%= link_to sale.id, @editpath %><br/>
+  	<b><%= :share_id %>: </b><%= link_to sale.share_id, @editpath %><br/>
+  	<b><%= :amount %>: </b><%= link_to sale.amount, @editpath %><br/>
+    <b><%= :transaction_id %>: </b><%= link_to sale.transaction_id, @editpath %><br/>
+  	<b><%= :created_at %>: </b><%= link_to sale.created_at, @editpath %><br/>
+  	<b><%= :updated_at %>: </b><%= link_to sale.updated_at, @editpath %><br/>
+	<br/>
+  	<b>Actions: </b><%= link_to "edit", @editpath %>&nbsp;&nbsp;
+  	<%= link_to "delete", sale, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+</li>

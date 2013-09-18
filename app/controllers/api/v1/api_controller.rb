@@ -248,20 +248,19 @@ module Api
                 # check to see if a cause was passed in (non-nil) and if it is different from the current cause value.  If it is valid and different, set the @cause[:cause_changed] flag to true and the @cause[:cause] variable to the new cause.  Otherwise, set the flag to false and the cause variable to the current cause id value.  Remember that the cause_id being passed in is a uid but the cause being returned is an object.
                 @cause = Serve.cause_changed?(@serve,params[:cause_id])
 
-                # if either the current cause or the email has changed, update the current serve. Also, since the email and purchase paths associated with the old cause and email may have been distributed, mark these as confirmed and create new paths for these channels.
+                # if either the current cause or the email has changed, update the current serve. Also, since the purchase path associated with the old cause and email may have been used already, mark it as confirmed and create a new paths for this channels.
                 if @cause[:cause_changed] or @email[:email_changed]
-                    # first, mark the Email and Purchase shares for this serve as confirmed:
-                    Serve.post_to_channel(@serve,Channel.find_by_name('Email'))
+                    # first, mark the Purchase share for this serve as confirmed:
+                    #Serve.post_to_channel(@serve,Channel.find_by_name('Email'))
                     Serve.post_to_channel(@serve,Channel.find_by_name('Purchase'))
-                    # next, update the Serve attributes to reflect the new email, current_cause_id,
-                    # or both
+                    # next, update the Serve attributes to reflect the new email, current_cause_id, or both
                     @serve.update_attributes(email: @email[:email], current_cause_id: @cause[:cause])
-                    # finally, create new shares for the email and purchase channels that
-                    Share.create_share(@serve,Channel.find_by_name('Email'))
+                    # finally, create a new share for the purchase channel
+                    #Share.create_share(@serve,Channel.find_by_name('Email'))
                     Share.create_share(@serve,Channel.find_by_name('Purchase'))
                 end
 
-                # next, check to see if a valid share path (one that is associated with the current serve) was passed in.  
+                # next, check to see if a valid share path (one that is associated with the current serve) was passed in.  Note that if the share associated with the path has already been confirmed, the path will not be valid.  Not sure if this is necessary  - may be better to ignore whether the share is confirmed and create a new share anyhow.
                 if Share.path_valid_for_this_serve?(params[:path],@serve)
                     # the path is valid, so get the current share
                     @share = Share.find_by_link_id(params[:path])
@@ -309,6 +308,47 @@ module Api
                 return
             end
 
+            def sale
+                # inputs: merchant_id, path, callback, amount, [transaction_id]. Remember that merchant_id is a uid.
+
+                # first, verify that a callback parameter was passed
+                if params[:callback].nil?
+                    render 'api/v1/api/errors/missing_callback'
+                    return
+                end
+
+                # next, check to ensure that the merchant_id is valid and if so, get the merchant
+                if Merchant.merchant_valid?(params[:merchant_id])
+                        merchant = Merchant.find_by_uid(params[:merchant_id])
+                    else
+                        render 'api/v1/api/errors/merchant_invalid'
+                        return
+                end
+
+                # next, check to ensure that the amount is numeric and does not include more than two digits after the decimal
+                if !Sale.is_a_number?(params[:amount])
+                        render 'api/v1/api/errors/amount_non-numeric'
+                        return
+                    elsif !Sale.only_dollars_and_cents(params[:amount].to_f)
+                        render 'api/v1/api/errors/amount_invalid'
+                        return
+                end
+
+                # next, check to see if a valid share path (one that is associated with the current merchant) was passed in.  
+                if Share.path_valid_for_this_merchant?(params[:path],merchant)
+                    # the path is valid, so get the current share
+                    share = Share.find_by_link_id(params[:path])
+                    # Now, mark the posted channel as confirmed, then create a new path for this channel
+                    Sale.create(share_id: share.id, amount: params[:amount].to_f, transaction_id: params[:transaction_id]);
+                    #Serve.post_to_channel(@serve,@share.channel)
+                    #Share.create_share(@serve,@share.channel)
+                else
+                    render 'api/v1/api/errors/path_invalid'
+                end
+
+                render 'success'
+                return
+            end
         end
     end
 end

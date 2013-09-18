@@ -1,0 +1,13 @@
+<% provide(:title, 'All Sales') %>
+<h1>All Sales (<%= @sales.count %>)</h1>
+
+<div class="container">
+	<%= will_paginate %>
+	<ul class="class-index">
+      	<%= render @sales %>
+	</ul>
+	<%= will_paginate %>
+	<br/>
+	<%= link_to 'Create New Sale', new_sale_path %><br/>
+	<%= go_back %>
+</div>

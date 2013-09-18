@@ -1,0 +1,16 @@
+<li>
+	<% @editpath = edit_donation_path(donation) %>
+  	<b><%= :id %>: </b><%= link_to donation.id, @editpath %><br/>
+  	<b><%= :sale_id %>: </b><%= link_to donation.sale_id, @editpath %><br/>
+    <b><%= :merchant_id %>: </b><%= link_to donation.merchant_id, @editpath %><br/>
+    <b><%= :cause_id %>: </b><%= link_to donation.cause_id, @editpath %><br/>
+  	<b><%= :amount %>: </b><%= link_to donation.amount, @editpath %><br/>
+    <b><%= :chosen_by %>: </b><%= link_to donation.chosen_by, @editpath %><br/>
+    <b><%= :choosers_email %>: </b><%= link_to donation.choosers_email, @editpath %><br/>
+  	<b><%= :created_at %>: </b><%= link_to donation.created_at, @editpath %><br/>
+  	<b><%= :updated_at %>: </b><%= link_to donation.updated_at, @editpath %><br/>
+	<br/>
+  	<b>Actions: </b><%= link_to "edit", @editpath %>&nbsp;&nbsp;
+  	<%= link_to "delete", donation, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+</li>

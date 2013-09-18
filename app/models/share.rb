@@ -10,6 +10,9 @@ class Share < ActiveRecord::Base
 	belongs_to :channel
   belongs_to :cause
   has_many :serves
+  has_many :sales
+  delegate :promotion, :to => :serve, :allow_nil => true
+
 
 	validates :serve, presence: true
 	validates :channel, presence: true
@@ -72,6 +75,22 @@ class Share < ActiveRecord::Base
     end
   end
 
+  def self.path_valid_for_this_merchant?(path,merchant)
+    # the path is not valid for the given merchant if the path is nil, the path is null (or blank), the path does not exist for any share, or the merchant associated with the path is different than the merchant passed in.
+    if path == nil
+      false
+    elsif path == ""
+      false
+    elsif self.find_by_link_id(path) == nil
+      false
+    elsif
+      self.find_by_link_id(path).serve.merchant != merchant
+        false
+    else
+      true
+    end
+  end
+
 
   def self.create_all_shares(serve)
     # Create a new set of shares for a serve when a serve is created.
@@ -87,5 +106,16 @@ class Share < ActiveRecord::Base
 #    path = SecureRandom.urlsafe_base64(4)  # use this only for offline testing
     Share.create(serve_id: serve.id, channel_id: channel.id, link_id: path)
   end
+
+  def self.get_cause(share)
+    if !share.cause.nil?
+      cause = share.cause
+    elsif !share.serve.cause.nil?
+      cause = share.serve.cause
+    else
+      cause = share.promotion.cause
+    end
+  end
+
 
 end

@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="span7 offset1">
+      <%= form_for(@sale) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :id %>
+        <%= f.text_field :id, readonly: true %>
+
+        <%= f.label :share_id %>
+        <%= select_tag 'sale[share_id]', options_from_collection_for_select(Share.all, :id, :id, @sale.share_id) %>
+
+        <%= f.label :amount %>
+        <%= f.text_field :amount %>
+
+        <%= f.label :transaction_id, 'Transaction ID' %>
+        <%= f.text_field :transaction_id %>
+        <br/><br/>
+
+        <%= f.submit button, class: "btn btn-large btn-primary" %>
+      <% end %>
+
+    </div>
+  </div>
+  <%= go_back %>
+</div>

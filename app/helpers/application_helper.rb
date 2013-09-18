@@ -14,4 +14,5 @@ module ApplicationHelper
   def go_back
     link_to '<i class="icon-arrow-left"></i> Go Back'.html_safe, :back
   end
+
 end

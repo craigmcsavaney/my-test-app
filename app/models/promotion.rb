@@ -11,6 +11,7 @@ class Promotion < ActiveRecord::Base
     belongs_to :cause
     has_many :serves
     has_many :shares, through: :serves
+    #has_many :sales, through: :shares
 
     before_validation :replace_nils, :get_landing_page, :ensure_channel_attributes_present
 

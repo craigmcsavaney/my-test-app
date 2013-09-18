@@ -6,4 +6,9 @@ class TestMailer < ActionMailer::Base
     @url  = 'http://causebutton.com/login'
     mail(to: @user.email, subject: 'Welcome to My Awesome Site')
   end
+
+  def welcome_email2
+    mail(to: 'craig@causebutton.com', subject: 'Welcome to My Awesome Site')
+  end
+
 end

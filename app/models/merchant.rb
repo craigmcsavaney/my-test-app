@@ -12,7 +12,8 @@ class Merchant < ActiveRecord::Base
 
   	has_many :promotions, dependent: :destroy
   	has_many :serves, through: :promotions
-  	has_many :shares, through: :serves
+  	#has_many :shares, through: :serves
+    #has_many :sales, through: :shares
 
   	delegate :user_id, to: :promotion
 

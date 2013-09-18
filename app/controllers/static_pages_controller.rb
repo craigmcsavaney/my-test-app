@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
   end
 
   def about
+  	#TestMailer.welcome_email2.deliver
   end
 
   def contact

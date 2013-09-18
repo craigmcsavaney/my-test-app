@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130911120952) do
+ActiveRecord::Schema.define(:version => 20130916174315) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -48,6 +48,18 @@ ActiveRecord::Schema.define(:version => 20130911120952) do
   end
 
   add_index "channels_promotions", ["promotion_id", "channel_id"], :name => "index_channels_promotions_on_promotion_id_and_channel_id", :unique => true
+
+  create_table "donations", :force => true do |t|
+    t.integer  "sale_id",                        :null => false
+    t.integer  "merchant_id",                    :null => false
+    t.integer  "cause_id",                       :null => false
+    t.string   "chosen_by",                      :null => false
+    t.integer  "amount_cents",   :default => 0,  :null => false
+    t.string   "choosers_email", :default => ""
+    t.boolean  "deleted"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
 
   create_table "merchants", :force => true do |t|
     t.string   "name"
@@ -120,6 +132,15 @@ ActiveRecord::Schema.define(:version => 20130911120952) do
 
   add_index "roles_users", ["user_id", "role_id"], :name => "index_roles_users_on_user_id_and_role_id", :unique => true
 
+  create_table "sales", :force => true do |t|
+    t.integer  "share_id",                      :null => false
+    t.integer  "amount_cents",   :default => 0, :null => false
+    t.string   "transaction_id"
+    t.boolean  "deleted"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
   create_table "serves", :force => true do |t|
     t.integer  "promotion_id",                          :null => false
     t.datetime "created_at",                            :null => false
@@ -131,7 +152,6 @@ ActiveRecord::Schema.define(:version => 20130911120952) do
     t.integer  "shares_count",       :default => 0
     t.string   "session_id"
     t.integer  "current_cause_id"
-    t.string   "parent_path"
   end
 
   create_table "settings", :force => true do |t|
@@ -168,14 +188,15 @@ ActiveRecord::Schema.define(:version => 20130911120952) do
   end
 
   create_table "shares", :force => true do |t|
-    t.integer  "serve_id",                      :null => false
-    t.integer  "channel_id",                    :null => false
-    t.string   "link_id",                       :null => false
-    t.boolean  "confirmed",  :default => false
+    t.integer  "serve_id",                       :null => false
+    t.integer  "channel_id",                     :null => false
+    t.string   "link_id",                        :null => false
+    t.boolean  "confirmed",   :default => false
     t.boolean  "deleted"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "cause_id"
+    t.integer  "sales_count", :default => 0
   end
 
   add_index "shares", ["link_id"], :name => "index_shares_on_link_id", :unique => true
