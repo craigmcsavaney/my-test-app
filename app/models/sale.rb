@@ -4,7 +4,7 @@ class Sale < ActiveRecord::Base
 
 	attr_accessible :amount, :transaction_id, :deleted, :share_id
 
-  	belongs_to :share#, counter_cache: true
+  	belongs_to :share, counter_cache: true
   	delegate :serve, :to => :share, :allow_nil => true
 
 	monetize :amount_cents, 
