@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130916174315) do
+ActiveRecord::Schema.define(:version => 20130919183508) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -133,12 +133,14 @@ ActiveRecord::Schema.define(:version => 20130916174315) do
   add_index "roles_users", ["user_id", "role_id"], :name => "index_roles_users_on_user_id_and_role_id", :unique => true
 
   create_table "sales", :force => true do |t|
-    t.integer  "share_id",                      :null => false
-    t.integer  "amount_cents",   :default => 0, :null => false
+    t.integer  "share_id",                          :null => false
+    t.integer  "amount_cents",       :default => 0, :null => false
     t.string   "transaction_id"
     t.boolean  "deleted"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.integer  "supporter_share_id"
+    t.integer  "buyer_share_id"
   end
 
   create_table "serves", :force => true do |t|

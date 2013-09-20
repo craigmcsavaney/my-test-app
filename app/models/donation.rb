@@ -19,4 +19,23 @@ class Donation < ActiveRecord::Base
   	monetize :amount_cents, 
 		:numericality => { :greater_than_or_equal_to => 0 }
 
+	after_commit :send_donation_email, on: :create
+
+	private
+	def send_donation_email
+		if self.choosers_email != "" && !self.choosers_email.nil?
+			DonationMailer.donation_email(self,self.choosers_email).deliver
+		elsif self.chosen_by = "merchant"
+			if !self.sale.buyer.nil? && self.sale.buyer.serve.email != "" && !self.sale.buyer.serve.email.nil?
+				DonationMailer.donation_email(self,self.sale.buyer.serve.email).deliver
+			end
+
+			if !self.sale.supporter.nil? && self.sale.supporter.serve.email != "" && !self.sale.supporter.serve.email.nil?
+				DonationMailer.donation_email(self,self.sale.supporter.serve.email).deliver
+			end
+		end
+			
+	end
+
+
 end

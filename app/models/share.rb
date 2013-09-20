@@ -107,6 +107,7 @@ class Share < ActiveRecord::Base
     Share.create(serve_id: serve.id, channel_id: channel.id, link_id: path)
   end
 
+  # get_cause finds the cause asociated with an input share by checking for the presence of a cause_id first at the share (which will be present if the share was confirmed), then at the serve (which could have been updated by a CB Widget viewer), then at the promotion level (which will be the merchant's preferred cause for this promotion.)
   def self.get_cause(share)
     if !share.cause.nil?
       cause = share.cause
