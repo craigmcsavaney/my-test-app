@@ -13,9 +13,20 @@ node :content do
                                     to your friends on our behalf and we will make a donation of 5% of all purchases</p>
 		<form id="cbw-widget-form" class="form-horizontal form-small">
 			<div id="cbw-cause-select-ctrl-grp" class="control-group">
-				<label class="control-label" for="input-cause-sel">Select Cause</label>
+				<label class="control-label" for="input-cause-sel">Select A Cause</label>
 				<div class="controls">
 					<select id="cbw-cause-select" class="cbw-select2"/>
+				</div>
+			</div>
+        	<div id="cbw-email-ctl-grp" class="control-group">
+				<label class="control-label" for="cbw-input-email">E-Mail</label>
+				<div class="controls">
+					<input id="cbw-email-input" type="text" placeholder="E-Mail (optional)">
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<p id="cbw-email-hint">Enter your email to receive updates on how much you have helped raise for your cause!</p>
 				</div>
 			</div>
 			<div class="control-group">
@@ -26,17 +37,6 @@ node :content do
 				<label class="control-label" for="cbw-share-msg">Share Message</label>
 				<div class="controls">
 					<textarea id="cbw-share-msg" rows="3" placeholder="Enter Text To Share"></textarea>
-				</div>
-			</div>
-        	<div id="cbw-email-ctl-grp" class="control-group">
-				<label class="control-label" for="cbw-input-email">E-Mail</label>
-				<div class="controls">
-					<input id="cbw-email-input" type="text" placeholder="E-Mail">
-				</div>
-			</div>
-			<div class="control-group">
-				<div class="controls">
-					<p id="cbw-email-hint">Enter your email to receive updates on how much you have helped raise for your cause!</p>
 				</div>
 			</div>
 			<div class="control-group" style="margin-top: 10px;">
