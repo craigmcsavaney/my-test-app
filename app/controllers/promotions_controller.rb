@@ -104,11 +104,11 @@ class PromotionsController < ApplicationController
 
   def index
     @user = current_user
-    @promotions = Promotion.where(merchant_id: @user.merchants).paginate(page: params[:page])
+    @promotions = Promotion.where(merchant_id: @user.merchants).order('id asc').paginate(page: params[:page])
   end
 
   def index_admin
-    @promotions = Promotion.paginate(page: params[:page])
+    @promotions = Promotion.order('id asc').paginate(page: params[:page])
   end
 
   def destroy

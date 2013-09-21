@@ -33,7 +33,7 @@ class SalesController < ApplicationController
 	end
 
   def index
-  	@sales = Sale.paginate(page: params[:page])
+  	@sales = Sale.order('id asc').paginate(page: params[:page])
   end
 
   def destroy

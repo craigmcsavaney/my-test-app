@@ -69,11 +69,11 @@ class CausesController < ApplicationController
 
   def index
     @user = current_user
-  	@causes = @user.causes.paginate(page: params[:page])
+  	@causes = @user.causes.order('name asc').paginate(page: params[:page])
   end
 
   def index_admin
-    @causes = Cause.paginate(page: params[:page])
+    @causes = Cause.order('name asc').paginate(page: params[:page])
   end
 
   def destroy

@@ -70,11 +70,11 @@ class MerchantsController < ApplicationController
 
   def index
     @user = current_user
-  	@merchants = @user.merchants.paginate(page: params[:page])
+  	@merchants = @user.merchants.order('id asc').paginate(page: params[:page])
   end
 
   def index_admin
-    @merchants = Merchant.paginate(page: params[:page])
+    @merchants = Merchant.order('id asc').paginate(page: params[:page])
   end
 
   def destroy

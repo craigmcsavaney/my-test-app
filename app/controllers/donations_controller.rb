@@ -33,7 +33,7 @@ class DonationsController < ApplicationController
 	end
 
   def index
-  	@donations = Donation.paginate(page: params[:page])
+  	@donations = Donation.order('id asc').paginate(page: params[:page])
   end
 
   def destroy

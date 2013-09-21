@@ -37,7 +37,7 @@ class ServesController < ApplicationController
 	end
 
   def index
-  	@serves = Serve.paginate(page: params[:page])
+  	@serves = Serve.order('id asc').paginate(page: params[:page])
   end
 
   def destroy

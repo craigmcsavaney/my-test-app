@@ -33,7 +33,7 @@ class ChannelsController < ApplicationController
 	end
 
   def index
-  	@channels = Channel.paginate(page: params[:page])
+  	@channels = Channel.order('name asc').paginate(page: params[:page])
   end
 
   def destroy

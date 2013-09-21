@@ -33,7 +33,7 @@ class SharesController < ApplicationController
 	end
 
   def index
-  	@shares = Share.paginate(page: params[:page])
+  	@shares = Share.order('id asc').paginate(page: params[:page])
   end
 
   def destroy
