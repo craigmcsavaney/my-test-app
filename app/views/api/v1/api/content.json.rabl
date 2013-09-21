@@ -3,7 +3,7 @@ object false
 node :content do
 	
 '<a id="cbw-main-btn" class="btn btn-success" href="#">
-	<i class="icon-heart icon-white"></i>
+	<i class="icon-facebook icon-white"></i>
 	Support Your Cause!
 </a>
 <div id="cbw-widget" style="display:none;">
