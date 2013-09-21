@@ -6,7 +6,7 @@ node :content do
 	<i class="icon-heart icon-white"></i>
 	Support Your Cause!
 </a>
-<div id="cbw-widget" style="display:none; top: 50%; left: 50%; margin-top: -225px; margin-left: -225px;">
+<div id="cbw-widget" style="display:none;">
 	<div id="cbw-heading">Cause Button</div>
 	<div id="cbw-body-normal">
 		<p id="cbw-promo-text">Thanks for clicking on the Cause Button! Simply choose a cause and post a message \
@@ -22,12 +22,12 @@ node :content do
             	<label for="cbw-channels" class="control-label">Share Method</label>
             	<div id="cbw-channels" class="controls"/>
             </div>			
-            <div id="cbw-share-msg-ctrl-grp" class="control-group">
-            	<label for="cbw-share-msg" class="control-label">Share Message</label>
-            	<div class="controls">
-                	<textarea id="cbw-share-msg" rows="3" placeholder="Enter Text to Share" style="display: none"/>
-            	</div>
-        	</div>
+            <div id="cbw-share-msg-ctrl-grp" class="control-group" style="display: none;">
+				<label class="control-label" for="cbw-share-msg">Share Message</label>
+				<div class="controls">
+					<textarea id="cbw-share-msg" rows="3" placeholder="Enter Text To Share"></textarea>
+				</div>
+			</div>
         	<div id="cbw-email-ctl-grp" class="control-group">
 				<label class="control-label" for="cbw-input-email">E-Mail</label>
 				<div class="controls">
