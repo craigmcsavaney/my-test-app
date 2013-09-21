@@ -349,6 +349,12 @@ module Api
                 render 'success'
                 return
             end
+
+            def content
+                render 'content'
+                return
+            end
+            
         end
     end
 end

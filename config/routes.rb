@@ -6,6 +6,7 @@ Myapplication::Application.routes.draw do
       match 'update/:merchant_id', to: 'api#update', :as => :update, format: 'json'
       match 'causes/:merchant_id', to: 'api#causes', :as => :causes, format: 'json'
       match 'sale/:merchant_id', to: 'api#sale', :as => :sale, format: 'json'
+      match 'content', to: 'api#content', :as => :content, format: 'json'
     end
   end
 
