@@ -41,7 +41,7 @@
 	      	<%= f.url_field :landing_page, readonly: @served, placeholder: "this will be automatically set to the merchant's website if left blank" %>
 
 			<%= f.label :cause_id, "Preferred Cause (optional)" %>
-			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), include_blank: true, readonly: @served %>
+			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), include_blank: true, readonly: @served, id: "promotions" %>
 
 		    <%= f.label :merchant_pct, "Merchant-directed Contribution (Percent)" %>
 			<%= f.text_field :merchant_pct, readonly: @served %>

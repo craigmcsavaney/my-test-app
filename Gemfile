@@ -15,6 +15,7 @@ gem 'rabl', '0.8.6'
 gem 'oj', '2.1.4'
 gem 'awesm', '0.1.10'
 gem 'money-rails', '0.8.1'
+gem "select2-rails", "~> 3.5.0"
 
 #added following require and gem for Guard compatibility with wdm
 require 'rbconfig'

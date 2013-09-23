@@ -2,3 +2,13 @@
 <h1>Create Promotion</h1>
 
 <%= render 'new_and_edit', :button => "Create", :action => "create" %>
+
+<% content_for :js do %>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('select#promotions').select2({
+		placeholder: "Choose a cause"
+	});
+})
+</script>
+<% end %>

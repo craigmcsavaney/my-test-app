@@ -38,12 +38,17 @@ node :content do
 				<div class="controls">
 					<textarea id="cbw-share-msg" rows="3" placeholder="Enter Text To Share"></textarea>
 				</div>
-			</div>
-			<div class="control-group" style="margin-top: 10px;">
 				<div class="controls">
 					<a id="cbw-close-button" class="btn" href="#" style="margin-left: 25px;">Close</a>
 					<a id="cbw-post-button" class="disabled btn btn-primary" href="#" style="margin-left: 55px;">Post</a>
 				</div>
+			</div>
+			<!-- <div class="control-group" style="margin-top: 10px;">
+				<div class="controls">
+					<a id="cbw-close-button" class="btn" href="#" style="margin-left: 25px;">Close</a>
+					<a id="cbw-post-button" class="disabled btn btn-primary" href="#" style="margin-left: 55px;">Post</a>
+				</div>
+				-->
 			</div>
 		</form>          
     </div>
