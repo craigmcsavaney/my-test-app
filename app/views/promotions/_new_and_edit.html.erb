@@ -93,3 +93,11 @@
 	</div>
 	<%= go_back %>
 </div>
+
+<% content_for :js do %>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('select#promotions').select2();
+});
+</script>
+<% end %>
