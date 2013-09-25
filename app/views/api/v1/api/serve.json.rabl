@@ -19,11 +19,15 @@ node do |serve|
 end
 
 node :display_order do |serve|
-	serve.promotion.channels.order('name').pluck(:name)
+	serve.promotion.channels.where("name <> ?","Email").order('name').pluck(:name)
 end
 
 node do |serve|
  { :promotion => partial("api/v1/api/promotions", :object => serve.promotion) }
+end
+
+node do |serve|
+ { :channels => partial("api/v1/api/channels", :object => serve.promotion) }
 end
 
 # Unused Stuff:

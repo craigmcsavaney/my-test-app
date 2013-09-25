@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 channel_list = [
-  [ "Email", "email", "Shared via email." ],
+  [ "GooglePlus", "googleplus", "" ],
   [ "Facebook", "facebook", "" ],
   [ "Pinterest", "pinterest", "" ],
   [ "Linkedin", "linkedin", "" ],

@@ -12,11 +12,11 @@ node :fb_path do |serve|
 	end
 end	
 
-node :em_path do |serve|
-	if serve.promotion.channel_ids.include?(Channel.find_by_name('Email').id)
-		serve.shares.where("channel_id = ? and confirmed = ?",Channel.find_by_name('Email').id,false).first.link_id
-	end
-end
+#node :em_path do |serve|
+#	if serve.promotion.channel_ids.include?(Channel.find_by_name('Email').id)
+#		serve.shares.where("channel_id = ? and confirmed = ?",Channel.find_by_name('Email').id,false).first.link_id
+#	end
+#end
 
 node :li_path do |serve|
 	if serve.promotion.channel_ids.include?(Channel.find_by_name('Linkedin').id)
