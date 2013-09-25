@@ -2,7 +2,7 @@ class Promotion < ActiveRecord::Base
   include NotDeleteable
     versioned
 
-    attr_accessible :content, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :banner, :fb_msg, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, :disable_msg_editing, :tw_msg, :pin_msg, :pin_image_url, :pin_def_board, :pin_thumb_url, :li_msg, :deleted
+    attr_accessible :description, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :banner, :banner_template, :facebook_msg, :facebook_msg_template, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, :disable_msg_editing, :twitter_msg, :twitter_msg_template, :pinterest_msg, :pinterest_msg_template, :pin_image_url, :pin_def_board, :pin_thumb_url, :linkedin_msg, :linkedin_msg_template, :deleted, :email_subject, :email_subject_template, :email_body, :email_body_template, :googleplus_msg, :googleplus_msg_template
 
     belongs_to :merchant, counter_cache: true
     has_and_belongs_to_many :channels,
@@ -31,7 +31,7 @@ class Promotion < ActiveRecord::Base
     validate :channel_ids, :channel_count, on: :update
     validate :excessive_contribution, :missing_contribution, :prevent_deletion_of_viewed_promotions
 
-    after_validation :check_for_disallowed_updates_to_served_promotions, :get_banners, :replace_nils
+    after_validation :check_for_disallowed_updates_to_served_promotions, :get_templates, :replace_nils, :replace_variables
     before_update :check_content_change
     before_save :check_content_change
     after_commit :ensure_purchase_channel_enabled, :if => :persisted?
@@ -50,12 +50,6 @@ class Promotion < ActiveRecord::Base
       if self.fb_thumb_url == ""
         self.fb_thumb_url = Setting.first.fb_thumb_url
       end
-      if self.tw_msg == ""
-        self.tw_msg = Setting.first.tw_msg
-      end
-      if self.pin_msg == ""
-        self.pin_msg = Setting.first.pin_msg
-      end
       if self.pin_image_url == ""
         self.pin_image_url = Setting.first.pin_image_url
       end
@@ -64,9 +58,6 @@ class Promotion < ActiveRecord::Base
       end
       if self.pin_thumb_url == ""
         self.pin_thumb_url = Setting.first.pin_thumb_url
-      end
-      if self.li_msg == ""
-        self.li_msg = Setting.first.li_msg
       end
     end
 
@@ -85,15 +76,65 @@ class Promotion < ActiveRecord::Base
       end
     end
 
-    def get_banners
-        self.banner = Banner.get_banner(self)
+    def get_templates
+      if self.banner_template == ""
+        self.banner_template = Template.get_banner_template(self)
+      end
+      if self.facebook_msg_template == ""
+        self.facebook_msg_template = Template.get_facebook_msg_template(self)
+      end
+      if self.twitter_msg_template == ""
+        self.twitter_msg_template = Setting.first.twitter_msg_template
+      end
+      if self.linkedin_msg_template == ""
+        self.linkedin_msg_template = Setting.first.linkedin_msg_template
+      end
+      if self.pinterest_msg_template == ""
+        self.pinterest_msg_template = Setting.first.pinterest_msg_template
+      end
+      if self.googleplus_msg_template == ""
+        self.googleplus_msg_template = Setting.first.googleplus_msg_template
+      end
+      if self.email_subject_template == ""
+        self.email_subject_template = Setting.first.email_subject_template
+      end
+      if self.email_body_template == ""
+        self.email_body_template = Setting.first.email_body_template
+      end
+    end
+
+    def replace_variables
+      variables_changed = self.supporter_pct_changed? or self.buyer_pct_changed? or self.merchant_id_changed? or self.cause_id_changed? or self.merchant_pct_changed?
+      if self.banner_template_changed? or variables_changed
+        self.banner = Template.replace_template_variables(self.banner_template,self)
+      end
+      if self.facebook_msg_template_changed? or variables_changed
+        self.facebook_msg = Template.replace_template_variables(self.facebook_msg_template,self)
+      end
+      if self.twitter_msg_template_changed? or variables_changed
+        self.twitter_msg = Template.replace_template_variables(self.twitter_msg_template,self)
+      end
+      if self.linkedin_msg_template_changed? or variables_changed
+        self.linkedin_msg = Template.replace_template_variables(self.linkedin_msg_template,self)
+      end
+      if self.pinterest_msg_template_changed? or variables_changed
+        self.pinterest_msg = Template.replace_template_variables(self.pinterest_msg_template,self)
+      end
+      if self.googleplus_msg_template_changed? or variables_changed
+        self.googleplus_msg = Template.replace_template_variables(self.googleplus_msg_template,self)
+      end
+      if self.email_subject_template_changed? or variables_changed
+        self.email_subject = Template.replace_template_variables(self.email_subject_template,self)
+      end
+      if self.email_body_template_changed? or variables_changed
+        self.email_body = Template.replace_template_variables(self.email_body_template,self)
+      end
     end
 
     def check_for_disallowed_updates_to_served_promotions
-      if self.serves.where("viewed = ?", true).any? and (self.name_changed? || self.merchant_id_changed? || self.content_changed? || self.merchant_pct_changed? || self.supporter_pct_changed? || self.buyer_pct_changed? || self.cause_id_changed?)
+      if self.serves.where("viewed = ?", true).any? and (self.name_changed? || self.merchant_id_changed? || self.merchant_pct_changed? || self.supporter_pct_changed? || self.buyer_pct_changed? || self.cause_id_changed?)
         self.name = self.name_was
         self.merchant_id = self.merchant_id_was
-        self.content = self.content_was
         self.merchant_pct = self.merchant_pct_was
         self.supporter_pct = self.supporter_pct_was
         self.buyer_pct = self.buyer_pct_was
@@ -102,7 +143,7 @@ class Promotion < ActiveRecord::Base
     end
 
     def check_content_change
-      if self.start_date_changed? || self.end_date_changed? || self.name_changed? || self.merchant_id_changed? || self.content_changed? || self.merchant_pct_changed? || self.supporter_pct_changed? || self.buyer_pct_changed? || self.cause_id_changed?
+      if self.start_date_changed? || self.end_date_changed? || self.name_changed? || self.merchant_id_changed? || self.merchant_pct_changed? || self.supporter_pct_changed? || self.buyer_pct_changed? || self.cause_id_changed?
         update_uid
       end
     end

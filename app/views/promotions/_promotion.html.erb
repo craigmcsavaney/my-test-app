@@ -50,10 +50,11 @@
 	<% end %>
 	<b>Promotion Name: </b><%= link_to promotion.name, @editpath %>&nbsp;&nbsp;
 	<b>Merchant Name: </b><%= link_to promotion.merchant.name, @editpath %><br/>
-	<b>Promotion banner: </b><%= promotion.banner %><br/>
+	<b>Promotion Banner Template: </b><%= promotion.banner_template %><br/>
+	<b>Promotion Banner: </b><%= promotion.banner %><br/>
 	<b>ID#: </b><%= link_to promotion.id, @editpath %>&nbsp;&nbsp;
 	<b>UID: </b><%= link_to promotion.uid, @editpath %><br/>
-	<b>Content: </b><%= link_to promotion.content, @editpath %><br/>
+	<b>Description: </b><%= link_to promotion.description, @editpath %><br/>
 	<b>Merchant Pct: </b><%= link_to @a, @editpath %>&nbsp;&nbsp;
 	<b>Supporter Pct: </b><%= link_to @c, @editpath %>&nbsp;&nbsp;
 	<b>Buyer Pct: </b><%= link_to @d, @editpath %><br/>
@@ -61,12 +62,28 @@
 	<b>Channels</b><% for channel in promotion.channels %>
 		<b>:&nbsp;</b><%= link_to channel.name, @editpath %>&nbsp;
 	<% end %><br/>
-	<b>Facebook Message </b><%= link_to promotion.fb_msg, @editpath %><br/>
+	<b>User Message Editing Disabled?: </b><%= link_to @j, @editpath %><br/>
+	<b>Facebook Message Template </b><%= link_to promotion.facebook_msg_template, @editpath %><br/>
+	<b>Facebook Message </b><%= link_to promotion.facebook_msg, @editpath %><br/>
 	<b>Facebook Link Label </b><%= link_to promotion.fb_link_label, @editpath %>&nbsp;&nbsp;
 	<b>Facebook Caption </b><%= link_to promotion.fb_caption, @editpath %><br/>
 	<b>Facebook Redirect URL </b><%= link_to promotion.fb_redirect_url, @editpath %><br/>
 	<b>Facebook Thumbnail URL </b><%= link_to promotion.fb_thumb_url, @editpath %><br/>
-	<b>User Message Editing Disabled?: </b><%= link_to @j, @editpath %><br/>
+	<b>Pinterest Message Template </b><%= link_to promotion.pinterest_msg_template, @editpath %><br/>
+	<b>Pinterest Message </b><%= link_to promotion.pinterest_msg, @editpath %><br/>
+	<b>Pinterest Default Board </b><%= link_to promotion.pin_def_board, @editpath %><br/>
+	<b>Pinterest Image URL </b><%= link_to promotion.pin_image_url, @editpath %><br/>
+	<b>Pinterest Thumbnail URL </b><%= link_to promotion.pin_thumb_url, @editpath %><br/>
+	<b>Twitter Message Template </b><%= link_to promotion.twitter_msg_template, @editpath %><br/>
+	<b>Twitter Message </b><%= link_to promotion.twitter_msg, @editpath %><br/>
+	<b>Linkedin Message Template </b><%= link_to promotion.linkedin_msg_template, @editpath %><br/>
+	<b>LinkedIn Message </b><%= link_to promotion.linkedin_msg, @editpath %><br/>
+	<b>GooglePlus Message Template </b><%= link_to promotion.googleplus_msg_template, @editpath %><br/>
+	<b>GooglePlus Message </b><%= link_to promotion.googleplus_msg, @editpath %><br/>
+	<b>Email Subject Template </b><%= link_to promotion.email_subject_template, @editpath %><br/>
+	<b>Email Subject </b><%= link_to promotion.email_subject, @editpath %><br/>
+	<b>Email Body Template </b><%= link_to promotion.email_body_template, @editpath %><br/>
+	<b>Email Body </b><%= link_to promotion.email_body, @editpath %><br/>
 	<b>Start Date: </b><%= link_to promotion.start_date, @editpath %>&nbsp;&nbsp;
 	<b>End Date: </b><%= link_to @f, @editpath %>&nbsp;&nbsp;
 	<b>Priority: </b><%= link_to @e, @editpath %>&nbsp;&nbsp;

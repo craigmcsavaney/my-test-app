@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130919183508) do
+ActiveRecord::Schema.define(:version => 20130924202203) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -83,36 +83,47 @@ ActiveRecord::Schema.define(:version => 20130919183508) do
   add_index "merchants_users", ["user_id", "merchant_id"], :name => "index_merchants_users_on_user_id_and_merchant_id", :unique => true
 
   create_table "promotions", :force => true do |t|
-    t.string   "content",                                            :default => ""
+    t.string   "description",                                            :default => ""
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "merchant_id"
-    t.datetime "created_at",                                                         :null => false
-    t.datetime "updated_at",                                                         :null => false
-    t.string   "name",                                               :default => ""
+    t.datetime "created_at",                                                             :null => false
+    t.datetime "updated_at",                                                             :null => false
+    t.string   "name",                                                   :default => ""
     t.integer  "cause_id"
     t.integer  "merchant_pct"
     t.integer  "supporter_pct"
     t.integer  "buyer_pct"
-    t.string   "landing_page",                                       :default => ""
+    t.string   "landing_page",                                           :default => ""
     t.boolean  "deleted"
-    t.decimal  "uid",                 :precision => 16, :scale => 6
+    t.decimal  "uid",                     :precision => 16, :scale => 6
     t.integer  "priority"
     t.boolean  "disabled"
-    t.string   "banner",                                             :default => ""
-    t.integer  "serves_count",                                       :default => 0
-    t.string   "fb_msg",                                             :default => ""
-    t.string   "fb_link_label",                                      :default => ""
-    t.string   "fb_caption",                                         :default => ""
-    t.string   "fb_redirect_url",                                    :default => ""
-    t.string   "fb_thumb_url",                                       :default => ""
+    t.string   "banner",                                                 :default => ""
+    t.integer  "serves_count",                                           :default => 0
+    t.string   "facebook_msg",                                           :default => ""
+    t.string   "fb_link_label",                                          :default => ""
+    t.string   "fb_caption",                                             :default => ""
+    t.string   "fb_redirect_url",                                        :default => ""
+    t.string   "fb_thumb_url",                                           :default => ""
     t.boolean  "disable_msg_editing"
-    t.string   "tw_msg",                                             :default => ""
-    t.string   "pin_msg",                                            :default => ""
-    t.string   "pin_image_url",                                      :default => ""
-    t.string   "pin_def_board",                                      :default => ""
-    t.string   "pin_thumb_url",                                      :default => ""
-    t.string   "li_msg",                                             :default => ""
+    t.string   "twitter_msg",                                            :default => ""
+    t.string   "pinterest_msg",                                          :default => ""
+    t.string   "pin_image_url",                                          :default => ""
+    t.string   "pin_def_board",                                          :default => ""
+    t.string   "pin_thumb_url",                                          :default => ""
+    t.string   "linkedin_msg",                                           :default => ""
+    t.string   "facebook_msg_template",                                  :default => ""
+    t.string   "twitter_msg_template",                                   :default => ""
+    t.string   "pinterest_msg_template",                                 :default => ""
+    t.string   "linkedin_msg_template",                                  :default => ""
+    t.string   "email_subject_template",                                 :default => ""
+    t.string   "email_body_template",                                    :default => ""
+    t.string   "email_subject",                                          :default => ""
+    t.string   "email_body",                                             :default => ""
+    t.string   "googleplus_msg_template",                                :default => ""
+    t.string   "googleplus_msg",                                         :default => ""
+    t.string   "banner_template",                                        :default => ""
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"
@@ -157,8 +168,8 @@ ActiveRecord::Schema.define(:version => 20130919183508) do
   end
 
   create_table "settings", :force => true do |t|
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.string   "banner_template_1"
     t.string   "banner_template_2"
     t.string   "banner_template_3"
@@ -172,21 +183,24 @@ ActiveRecord::Schema.define(:version => 20130919183508) do
     t.string   "fb_caption"
     t.string   "fb_redirect_url"
     t.string   "fb_thumb_url"
-    t.string   "fb_msg_1"
-    t.string   "fb_msg_2"
-    t.string   "fb_msg_3"
-    t.string   "fb_msg_4"
-    t.string   "fb_msg_5"
-    t.string   "fb_msg_6"
-    t.string   "fb_msg_7"
-    t.string   "fb_msg_8"
-    t.string   "tw_msg"
-    t.string   "pin_msg"
+    t.string   "fb_msg_template_1"
+    t.string   "fb_msg_template_2"
+    t.string   "fb_msg_template_3"
+    t.string   "fb_msg_template_4"
+    t.string   "fb_msg_template_5"
+    t.string   "fb_msg_template_6"
+    t.string   "fb_msg_template_7"
+    t.string   "fb_msg_template_8"
+    t.string   "twitter_msg_template"
+    t.string   "pinterest_msg_template"
     t.string   "pin_image_url"
     t.string   "pin_def_board"
     t.string   "pin_thumb_url"
-    t.string   "li_msg"
+    t.string   "linkedin_msg_template"
     t.integer  "cookie_life"
+    t.string   "email_subject_template"
+    t.string   "email_body_template"
+    t.string   "googleplus_msg_template"
   end
 
   create_table "shares", :force => true do |t|

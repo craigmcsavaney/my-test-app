@@ -19,8 +19,19 @@
 					<%= select_tag 'promotion[merchant_id]', options_from_collection_for_select(current_user.merchants, :id, :name, @promotion.merchant_id), readonly: @served %>
 			<% end %>
 
-			<%= f.label :name, "Promotion Name" %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span2"><%= f.label :name, "Promotion Name" %></div>
+					<div class="span5">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">For your internal reference only.  You can name your promotion anything you want, but promotion names have to be unique. </p>
+			</div>
 			<%= f.text_field :name, readonly: @served %>
+			
+			<%= f.label :description, "Promotion Description (for your internal use)." %>
+			<%= f.text_area :description, rows: 2 %>
 
 			<%= f.label :start_date, "Start Date" %>
 			<%= f.date_select :start_date %>
@@ -28,31 +39,108 @@
 			<%= f.label :end_date, "End Date (leave this blank for at least one of  your promotions!)" %>
 			<%= f.date_select :end_date, include_blank: true %>
 			
-		    <%= f.label :priority, "Priority (determines sort order of multiple promotions).  Can be blank or a whole number between 0 and 100.  Higher numbered promotions have priority over lower numbered promotions." %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span2"><%= f.label :priority %></div>
+					<div class="span5">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">Priority determines the sort order of multiple promotions.  Priority can be blank or a whole number between 0 and 100.  Higher numbered promotions have priority over lower numbered promotions. </p>
+			</div>
 			<%= f.text_field :priority %>
 
-			<%= f.label :banner, "Banner" %>
-			<%= f.text_field :banner, readonly: true, placeholder: "this will be filled automatically based on your promotion configuration" %>
-
-			<%= f.label :content %>
-			<%= f.text_field :content, readonly: @served %>
-
-	      	<%= f.label :landing_page, "Please enter your landing page address for this promotion" %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span2"><%= f.label :landing_page %></div>
+					<div class="span5">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">This is the page that visitors will reach when they click on a CauseButton link shared by one of your supporters.  The default landing page is the page listed in the profile for this merchant. </p>
+			</div>
 	      	<%= f.url_field :landing_page, readonly: @served, placeholder: "this will be automatically set to the merchant's website if left blank" %>
 
-			<%= f.label :cause_id, "Preferred Cause (optional)" %>
-			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), include_blank: true, readonly: @served, id: "promotions" %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span2"><%= f.label :cause_id, "Preferred Cause" %></div>
+					<div class="span5">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">You must choose a preferred cause for each promotion.  This is the cause that will benefit from your merchant-directed contributions (if any), and it's the cause that will receive any supporter-directed and buyer-directed contributions that cannot (for any reason) be donated to the cause of their choice. </p>
+			</div>
+			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), readonly: @served, id: "promotions" %>
 
-		    <%= f.label :merchant_pct, "Merchant-directed Contribution (Percent)" %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span4"><%= f.label :merchant_pct, "Merchant-directed Contribution (Percent)" %></div>
+					<div class="span3">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">This is the amount... </p>
+			</div>
 			<%= f.text_field :merchant_pct, readonly: @served %>
 
-			<%= f.label :supporter_pct, "Supporter-directed Contribution (Percent)" %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span4"><%= f.label :supporter_pct, "Supporter-directed Contribution (Percent)" %></div>
+					<div class="span3">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">This is the amount... </p>
+			</div>
 			<%= f.text_field :supporter_pct, readonly: @served %>
 
-			<%= f.label :buyer_pct, "Buyer-directed Contribution (Percent)" %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span4"><%= f.label :buyer_pct, "Buyer-directed Contribution (Percent)" %></div>
+					<div class="span3">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">This is the amount... </p>
+			</div>
 			<%= f.text_field :buyer_pct, readonly: @served %>
 
-			<%= f.label :channel_ids, "Selected Channels" %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span2"><%= f.label :banner, "CauseButton Banner" %></div>
+					<div class="span5">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">The CauseButton Banner appears at the top of the CauseButton Widget and tells your visitors about your promotion.  To change the CauseButton Banner, edit and save the Banner Template below.  This banner will be updated automatically. </p>
+			</div>
+			<%= f.text_area :banner, readonly: true, rows: 2, placeholder: "this will be filled automatically based on your promotion configuration" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span2"><%= f.label :banner_template, "Banner Template" %></div>
+					<div class="span5"><a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">You can edit this Banner Template and when you save your changes to this promotion the Banner above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
+				{{merchant}} => merchant's name<br/>
+				{{merchant_pct}} => merchant's contribution percent<br/>
+				{{merchant_cause}} => merchant's preferred cause<br/>
+				{{supporter_pct}} => supporter's contribution percent<br/>
+				{{buyer_pct}} => buyer's contribution percent
+				</p>
+			</div>
+			<%= f.text_area :banner_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span2"><%= f.label :channel_ids, "Selected Channels" %></div>
+					<div class="span5">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">These are the social media channels into which your CauseButton supporters will be able to promote you and your products.  The CauseButton share dialogs will only be available to your visitors for the channels checked below.  </p>
+			</div>
 			<% for channel in Channel.find(:all) %>
 				<div>
 					<% if ["new","new_admin"].include?params[:action] %>
@@ -65,9 +153,44 @@
 			<% end %>
 			<br/>
 			
-		    <%= f.label :fb_msg, "Facebook Message" %>
-			<%= f.text_field :fb_msg, readonly: @served %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span2"><%= f.label :facebook_msg, "Facebook Message" %></div>
+					<div class="span5">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">The Facebook Message appears in the Facebook Share dialog and will be displayed on the Facebook timelines of the supporters who promote you on Facebook.  You can choose whether to give your supporters the ability to edit this message below.  To change the Facebook Message, edit and save the Facebook Message Template below.  This message will be updated automatically.  </p>
+			</div>
+			<%= f.text_area :facebook_msg, readonly: true, rows: 2, placeholder: "this will be filled automatically based on your promotion configuration" %>
 
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :facebook_msg_template, "Facebook Message Template" %></div>
+					<div class="span4"><a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">You can edit this Facebook message template and when you save your changes to this promotion the Facebook Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
+				{{merchant}} => merchant's name<br/>
+				{{merchant_pct}} => merchant's contribution percent<br/>
+				{{merchant_cause}} => merchant's preferred cause<br/>
+				{{supporter_pct}} => supporter's contribution percent<br/>
+				{{buyer_pct}} => buyer's contribution percent
+				</p>
+			</div>
+			<%= f.text_area :facebook_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :disable_msg_editing, "Disable Facebook Message Editing?" %></div>
+					<div class="span1"><%= f.check_box :disable_msg_editing %></div>
+					<div class="span3">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">add stuff here  </p>
+			</div>
+		
 		    <%= f.label :fb_link_label, "Facebook Link Label" %>
 			<%= f.text_field :fb_link_label %>
 
@@ -80,9 +203,168 @@
 		    <%= f.label :fb_thumb_url, "Facebook Thumbnail Image URL" %>
 			<%= f.text_field :fb_thumb_url %>
 
-			<%= f.label :disable_msg_editing, "Disable User Message Editing?" %>
-			<%= f.check_box :disable_msg_editing %>
-		
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :twitter_msg, "Twitter Message" %></div>
+					<div class="span4">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">stuff here  </p>
+			</div>
+			<%= f.text_area :twitter_msg, readonly: true, rows: 2, placeholder: "this will be filled automatically based on your promotion configuration" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :twitter_msg_template, "Twitter Message Template" %></div>
+					<div class="span4"><a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">You can edit this Twitter Message template and when you save your changes to this promotion the Twitter Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
+				{{merchant}} => merchant's name<br/>
+				{{merchant_pct}} => merchant's contribution percent<br/>
+				{{merchant_cause}} => merchant's preferred cause<br/>
+				{{supporter_pct}} => supporter's contribution percent<br/>
+				{{buyer_pct}} => buyer's contribution percent
+				</p>
+			</div>
+			<%= f.text_area :twitter_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :pinterest_msg, "Pinterest Message" %></div>
+					<div class="span4">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">stuff here  </p>
+			</div>
+			<%= f.text_area :pinterest_msg, readonly: true, rows: 2, placeholder: "this will be filled automatically based on your promotion configuration" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :pinterest_msg_template, "Pinterest Message Template" %></div>
+					<div class="span4"><a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">You can edit this Pinterest message template and when you save your changes to this promotion the Pinterest Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
+				{{merchant}} => merchant's name<br/>
+				{{merchant_pct}} => merchant's contribution percent<br/>
+				{{merchant_cause}} => merchant's preferred cause<br/>
+				{{supporter_pct}} => supporter's contribution percent<br/>
+				{{buyer_pct}} => buyer's contribution percent
+				</p>
+			</div>
+			<%= f.text_area :pinterest_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :linkedin_msg, "LinkedIn Message" %></div>
+					<div class="span4">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">stuff here.  </p>
+			</div>
+			<%= f.text_area :linkedin_msg, readonly: true, rows: 2, placeholder: "this will be filled automatically based on your promotion configuration" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :linkedin_msg_template, "LinkedIn Message Template" %></div>
+					<div class="span4"><a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">You can edit this LinkedIn message template and when you save your changes to this promotion the LinkedIn Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
+				{{merchant}} => merchant's name<br/>
+				{{merchant_pct}} => merchant's contribution percent<br/>
+				{{merchant_cause}} => merchant's preferred cause<br/>
+				{{supporter_pct}} => supporter's contribution percent<br/>
+				{{buyer_pct}} => buyer's contribution percent
+				</p>
+			</div>
+			<%= f.text_area :linkedin_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :googleplus_msg, "GooglePlus Message" %></div>
+					<div class="span4">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">stuff here  </p>
+			</div>
+			<%= f.text_area :googleplus_msg, readonly: true, rows: 2, placeholder: "this will be filled automatically based on your promotion configuration" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :googleplus_msg_template, "GooglePlus Message Template" %></div>
+					<div class="span4"><a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">You can edit this GooglePlus message template and when you save your changes to this promotion the GooglePlus Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
+				{{merchant}} => merchant's name<br/>
+				{{merchant_pct}} => merchant's contribution percent<br/>
+				{{merchant_cause}} => merchant's preferred cause<br/>
+				{{supporter_pct}} => supporter's contribution percent<br/>
+				{{buyer_pct}} => buyer's contribution percent
+				</p>
+			</div>
+			<%= f.text_area :googleplus_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :email_subject, "Email Subject" %></div>
+					<div class="span4">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">stuff here  </p>
+			</div>
+			<%= f.text_area :email_subject, readonly: true, rows: 2, placeholder: "this will be filled automatically based on your promotion configuration" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :email_subject_template, "Email Subject Template" %></div>
+					<div class="span4"><a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">You can edit this Email subject template and when you save your changes to this promotion the Email Subject above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
+				{{merchant}} => merchant's name<br/>
+				{{merchant_pct}} => merchant's contribution percent<br/>
+				{{merchant_cause}} => merchant's preferred cause<br/>
+				{{supporter_pct}} => supporter's contribution percent<br/>
+				{{buyer_pct}} => buyer's contribution percent
+				</p>
+			</div>
+			<%= f.text_area :email_subject_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :email_body, "Email Body" %></div>
+					<div class="span4">
+						<a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">stuff here  </p>
+			</div>
+			<%= f.text_area :email_body, readonly: true, rows: 2, placeholder: "this will be filled automatically based on your promotion configuration" %>
+
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span3"><%= f.label :email_body_template, "Email Body Template" %></div>
+					<div class="span4"><a class="btn-small" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">You can edit this Email Body template and when you save your changes to this promotion the Email Body above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
+				{{merchant}} => merchant's name<br/>
+				{{merchant_pct}} => merchant's contribution percent<br/>
+				{{merchant_cause}} => merchant's preferred cause<br/>
+				{{supporter_pct}} => supporter's contribution percent<br/>
+				{{buyer_pct}} => buyer's contribution percent
+				</p>
+			</div>
+			<%= f.text_area :email_body_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
+
 			<%= f.label :disabled, "Disabled?" %>
 			<%= f.check_box :disabled %>
 			<br/><br/>
@@ -98,6 +380,16 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('select#promotions').select2();
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.row .btn-small').on('click', function(e) {
+	    e.preventDefault();
+	    var $this = $(this);
+	    var $collapse = $this.closest('.collapse-group').find('.collapse');
+	    $collapse.collapse('toggle');
+	});
 });
 </script>
 <% end %>

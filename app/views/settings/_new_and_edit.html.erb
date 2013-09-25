@@ -5,7 +5,7 @@
         <%= render 'shared/error_messages', object: f.object %>
 
         <h2>Widget Main Banner Templates</h2>
-        <b>Use _merchant_name_, _merchant_pct_, _supporter_pct_, _buyer_pct_, and _cause_ for substitutions</b>
+        <b>Use {{merchant}}, {{merchant_pct}}, {{supporter_pct}}, {{buyer_pct}}, and {{merchant_cause}} for substitutions.</b>
         <br/><br/>
 
         <%= f.label :banner_template_1, "banner_template_1: all zeros - not possible"  %>
@@ -33,32 +33,32 @@
         <%= f.text_field :banner_template_8 %>
 
         <h2>Facebook Share Message Templates</h2>
-        <b>Use _merchant_name_, _merchant_pct_, _supporter_pct_, _buyer_pct_, and _cause_ for substitutions</b>
+        <b>Use {{merchant}}, {{merchant_pct}}, {{supporter_pct}}, {{buyer_pct}}, {{merchant_cause}}, and {{supporter_cause}} for substitutions.  Note that substitutions for {{supporter_cause}} happen in the widget after the supporter chooses the cause of their choice.</b>
         <br/><br/>
 
-        <%= f.label :fb_msg_1, "fb_msg_1: all zeros - not possible"  %>
-        <%= f.text_field :fb_msg_1 %>
+        <%= f.label :fb_msg_template_1, "fb_msg_template_1: all zeros - not possible"  %>
+        <%= f.text_field :fb_msg_template_1 %>
 
-        <%= f.label :fb_msg_2, "fb_msg_2: Merchant:0, Supporter:0, Buyer:>0" %>
-        <%= f.text_field :fb_msg_2 %>
+        <%= f.label :fb_msg_template_2, "fb_msg_template_2: Merchant:0, Supporter:0, Buyer:>0" %>
+        <%= f.text_field :fb_msg_template_2 %>
 
-        <%= f.label :fb_msg_3, "fb_msg_3: Merchant:0, Supporter:>0, Buyer:0" %>
-        <%= f.text_field :fb_msg_3 %>
+        <%= f.label :fb_msg_template_3, "fb_msg_template_3: Merchant:0, Supporter:>0, Buyer:0" %>
+        <%= f.text_field :fb_msg_template_3 %>
 
-        <%= f.label :fb_msg_4, "fb_msg_4: Merchant:0, Supporter:>0, Buyer:>0" %>
-        <%= f.text_field :fb_msg_4 %>
+        <%= f.label :fb_msg_template_4, "fb_msg_template_4: Merchant:0, Supporter:>0, Buyer:>0" %>
+        <%= f.text_field :fb_msg_template_4 %>
 
-        <%= f.label :fb_msg_5, "fb_msg_5: Merchant:>0, Supporter:0, Buyer:0" %>
-        <%= f.text_field :fb_msg_5 %>
+        <%= f.label :fb_msg_template_5, "fb_msg_template_5: Merchant:>0, Supporter:0, Buyer:0" %>
+        <%= f.text_field :fb_msg_template_5 %>
 
-        <%= f.label :fb_msg_6, "fb_msg_6: Merchant:>0, Supporter:0, Buyer:>0" %>
-        <%= f.text_field :fb_msg_6 %>
+        <%= f.label :fb_msg_template_6, "fb_msg_template_6: Merchant:>0, Supporter:0, Buyer:>0" %>
+        <%= f.text_field :fb_msg_template_6 %>
 
-        <%= f.label :fb_msg_7, "fb_msg_7: Merchant:>0, Supporter:>0, Buyer:0" %>
-        <%= f.text_field :fb_msg_7 %>
+        <%= f.label :fb_msg_template_7, "fb_msg_template_7: Merchant:>0, Supporter:>0, Buyer:0" %>
+        <%= f.text_field :fb_msg_template_7 %>
 
-        <%= f.label :fb_msg_8, "fb_msg_8: Merchant:>0, Supporter:>0, Buyer:>0" %>
-        <%= f.text_field :fb_msg_8 %>
+        <%= f.label :fb_msg_template_8, "fb_msg_template_8: Merchant:>0, Supporter:>0, Buyer:>0" %>
+        <%= f.text_field :fb_msg_template_8 %>
 
         <h2>Facebook Share Defaults</h2>
 
@@ -74,15 +74,21 @@
         <%= f.label :fb_thumb_url %>
         <%= f.text_field :fb_thumb_url %>
 
-        <h2>Twitter Share Defaults</h2>
+        <h2>Twitter Message Template</h2>
+        <b>Use {{merchant}}, {{merchant_pct}}, {{supporter_pct}}, {{buyer_pct}}, {{merchant_cause}}, and {{supporter_cause}} for substitutions.  Note that substitutions for {{supporter_cause}} happen in the widget after the supporter chooses the cause of their choice.</b>
+        <br/><br/>
 
-        <%= f.label :tw_msg %>
-        <%= f.text_field :tw_msg %>
+        <%= f.label :twitter_msg_template %>
+        <%= f.text_field :twitter_msg_template %>
+
+        <h2>Pinterest Message Template</h2>
+        <b>Use {{merchant}}, {{merchant_pct}}, {{supporter_pct}}, {{buyer_pct}}, {{merchant_cause}}, and {{supporter_cause}} for substitutions.  Note that substitutions for {{supporter_cause}} happen in the widget after the supporter chooses the cause of their choice.</b>
+        <br/><br/>
+
+        <%= f.label :pinterest_msg_template %>
+        <%= f.text_field :pinterest_msg_template %>
 
         <h2>Pinterest Share Defaults</h2>
-
-        <%= f.label :pin_msg %>
-        <%= f.text_field :pin_msg %>
 
         <%= f.label :pin_image_url %>
         <%= f.text_field :pin_image_url %>
@@ -93,10 +99,29 @@
         <%= f.label :pin_thumb_url %>
         <%= f.text_field :pin_thumb_url %>
 
-        <h2>LinkedIn Share Defaults</h2>
+        <h2>LinkedIn Message Template</h2>
+        <b>Use {{merchant}}, {{merchant_pct}}, {{supporter_pct}}, {{buyer_pct}}, {{merchant_cause}}, and {{supporter_cause}} for substitutions.  Note that substitutions for {{supporter_cause}} happen in the widget after the supporter chooses the cause of their choice.</b>
+        <br/><br/>
 
-        <%= f.label :li_msg %>
-        <%= f.text_field :li_msg %>
+        <%= f.label :linkedin_msg_template %>
+        <%= f.text_field :linkedin_msg_template %>
+
+        <h2>GooglePlus Message Template</h2>
+        <b>Use {{merchant}}, {{merchant_pct}}, {{supporter_pct}}, {{buyer_pct}}, {{merchant_cause}}, and {{supporter_cause}} for substitutions.  Note that substitutions for {{supporter_cause}} happen in the widget after the supporter chooses the cause of their choice.</b>
+        <br/><br/>
+
+        <%= f.label :googleplus_msg_template %>
+        <%= f.text_field :googleplus_msg_template %>
+
+        <h2>Email Message Template</h2>
+        <b>Use {{merchant}}, {{merchant_pct}}, {{supporter_pct}}, {{buyer_pct}}, {{merchant_cause}}, and {{supporter_cause}} for substitutions.  Note that substitutions for {{supporter_cause}} happen in the widget after the supporter chooses the cause of their choice.</b>
+        <br/><br/>
+
+        <%= f.label :email_subject_template %>
+        <%= f.text_field :email_subject_template %>
+
+        <%= f.label :email_body_template %>
+        <%= f.text_area :email_body_template, rows: 5 %>
 
         <h2>Other Defaults</h2>
 
