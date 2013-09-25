@@ -1,3 +1,3 @@
 object @promotion
 
-attributes :li_msg
+attributes :linkedin_msg => :li_msg

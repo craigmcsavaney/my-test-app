@@ -1,4 +1,4 @@
 object @promotion
 
-attributes :tw_msg
+attributes :twitter_msg => :tw_msg
 
