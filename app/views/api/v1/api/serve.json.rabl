@@ -15,7 +15,7 @@ node do |serve|
 end
 
 node do |serve|
- { :share_links => partial("api/v1/api/share_links", :object => serve) }
+ { :paths => partial("api/v1/api/share_links", :object => serve) }
 end
 
 node :display_order do |serve|
