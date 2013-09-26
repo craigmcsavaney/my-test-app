@@ -35,3 +35,9 @@ node :twitter do |serve|
 		serve.shares.where("channel_id = ? and confirmed = ?",Channel.find_by_name('Twitter').id,false).first.link_id
 	end
 end
+
+node :googleplus do |serve|
+	if serve.promotion.channel_ids.include?(Channel.find_by_name('GooglePlus').id)
+		serve.shares.where("channel_id = ? and confirmed = ?",Channel.find_by_name('GooglePlus').id,false).first.link_id
+	end
+end
