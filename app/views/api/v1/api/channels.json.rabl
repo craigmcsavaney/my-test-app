@@ -24,6 +24,12 @@ node do |promotion|
  	end
 end
 
+node do |promotion|
+	if promotion.channel_ids.include?(Channel.find_by_name('GooglePlus').id)
+ 	{:googleplus => partial("api/v1/api/googleplus", :object => promotion) }
+ 	end
+end
+
 #node do |promotion|
 #	if promotion.channel_ids.include?(Channel.find_by_name('Email').id)
 # 	{:email => partial("api/v1/api/email", :object => promotion) }
