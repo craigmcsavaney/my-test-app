@@ -5,7 +5,7 @@ node :elem_id do
 end
 
 node :default do 
-		"default-msg"
+		"msg"
 end
 
 node :def_type do 
