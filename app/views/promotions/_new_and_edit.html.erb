@@ -141,7 +141,7 @@
 				</div>
 				<p class="collapse">These are the social media channels into which your CauseButton supporters will be able to promote you and your products.  The CauseButton share dialogs will only be available to your visitors for the channels checked below.  </p>
 			</div>
-			<% for channel in Channel.find(:all) %>
+ 			<% for channel in Channel.where("visible = ? and active = ?", true, true) %>
 				<div>
 					<% if ["new","new_admin"].include?params[:action] %>
 							<%= check_box_tag "promotion[channel_ids][]", channel.id, true, readonly: @served %>
@@ -380,6 +380,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('select#promotions').select2();
+</script>
+<script type="text/javascript">
 	$('.row .btn-small').on('click', function(e) {
 	    e.preventDefault();
 	    var $this = $(this);

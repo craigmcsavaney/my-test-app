@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130924202203) do
+ActiveRecord::Schema.define(:version => 20130927041730) do
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -33,11 +33,13 @@ ActiveRecord::Schema.define(:version => 20130924202203) do
 
   create_table "channels", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "awesm_id"
     t.string   "description"
     t.boolean  "deleted"
+    t.boolean  "visible",     :default => true
+    t.boolean  "active",      :default => true
   end
 
   add_index "channels", ["name"], :name => "index_channels_on_name", :unique => true

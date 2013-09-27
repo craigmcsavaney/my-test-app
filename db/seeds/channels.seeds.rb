@@ -6,18 +6,18 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 channel_list = [
-  [ "GooglePlus", "googleplus", "" ],
-  [ "Facebook", "facebook", "" ],
-  [ "Pinterest", "pinterest", "" ],
-  [ "Linkedin", "linkedin", "" ],
-  [ "Twitter", "twitter", "Share via standard Twitter tweet" ],
-  [ "Purchase", "purchase", "Creates a link to track purchases by an incented buyer" ],
+  [ "GooglePlus", "googleplus", "", true, true ],
+  [ "Facebook", "facebook", "", true, true ],
+  [ "Pinterest", "pinterest", "", true, true ],
+  [ "Linkedin", "linkedin", "", true, true ],
+  [ "Twitter", "twitter", "Share via standard Twitter tweet", true, true ],
+  [ "Purchase", "purchase", "Creates a link to track purchases by an incented buyer", false, true ],
 ]
 
 puts 'Preparing to create seed Channels'
 
-channel_list.each do |name, awesm_id, description|
-  Channel.find_or_create_by_name(name, awesm_id: awesm_id, description: description )
+channel_list.each do |name, awesm_id, description, visible, active|
+  Channel.find_or_create_by_name(name, awesm_id: awesm_id, description: description, visible: visible, active: active )
 end
 
 puts 'All seed Channels found or created'
