@@ -2,7 +2,10 @@ object false
 
 node :content do
 	
-'<div id="cbw-btn"></div>
+'<a id="cbw-main-btn" class="btn btn-success" href="#">
+	<i class="icon-heart icon-white"></i>
+	Support Your Cause!
+</a>
 <div id="cbw-widget" style="display:none;">
 	<div id="cbw-heading">Cause Button</div>
 	<div id="cbw-body-normal">
