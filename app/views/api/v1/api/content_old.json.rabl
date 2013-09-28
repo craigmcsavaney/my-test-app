@@ -7,7 +7,10 @@ node :content do
 	Support Your Cause!
 </a>
 <div id="cbw-widget" style="display:none;">
-	<div id="cbw-heading">Cause Button</div>
+	<div id="cbw-heading">
+		Cause Button
+		<button type="button" class="close" id="cbw-close-button" aria-hidden="true">&times;</button>
+	</div>
 	<div id="cbw-body-normal">
 		<p id="cbw-promo-text">Thanks for clicking on the Cause Button! Simply choose a cause and post a message \
                                     to your friends on our behalf and we will make a donation of 5% of all purchases</p>
