@@ -46,7 +46,7 @@
 						<a class="btn-small" href="#">more &raquo;</a>
 					</div>
 				</div>
-				<p class="collapse">Priority determines the sort order of multiple promotions.  Priority can be blank or a whole number between 0 and 100.  Higher numbered promotions have priority over lower numbered promotions. </p>
+				<div class="collapse"><p>Priority determines the sort order of multiple promotions.  Priority can be blank or a whole number between 0 and 100.  Higher numbered promotions have priority over lower numbered promotions. </p></div>
 			</div>
 			<%= f.text_field :priority %>
 
@@ -377,17 +377,19 @@
 </div>
 
 <% content_for :js do %>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('select#promotions').select2();
-</script>
-<script type="text/javascript">
-	$('.row .btn-small').on('click', function(e) {
-	    e.preventDefault();
-	    var $this = $(this);
-	    var $collapse = $this.closest('.collapse-group').find('.collapse');
-	    $collapse.collapse('toggle');
-	});
-});
-</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('select#promotions').select2();
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.row .btn-small').on('click', function(e) {
+			    e.preventDefault();
+			    var $this = $(this);
+			    var $collapse = $this.closest('.collapse-group').find('.collapse');
+			    $collapse.collapse('toggle');
+			});
+		});
+	</script>
 <% end %>

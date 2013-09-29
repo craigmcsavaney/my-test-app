@@ -77,10 +77,10 @@ class Promotion < ActiveRecord::Base
     end
 
     def get_templates
-      if self.banner_template == ""
+      if self.banner_template == "" || self.supporter_pct_changed? || self.buyer_pct_changed? || self.merchant_pct_changed?
         self.banner_template = Template.get_banner_template(self)
       end
-      if self.facebook_msg_template == ""
+      if self.facebook_msg_template == "" || self.supporter_pct_changed? || self.buyer_pct_changed? || self.merchant_pct_changed?
         self.facebook_msg_template = Template.get_facebook_msg_template(self)
       end
       if self.twitter_msg_template == ""
@@ -104,29 +104,29 @@ class Promotion < ActiveRecord::Base
     end
 
     def replace_variables
-      variables_changed = self.supporter_pct_changed? or self.buyer_pct_changed? or self.merchant_id_changed? or self.cause_id_changed? or self.merchant_pct_changed?
+      variables_changed = self.supporter_pct_changed? || self.buyer_pct_changed? || self.merchant_id_changed? || self.cause_id_changed? || self.merchant_pct_changed?
       if self.banner_template_changed? or variables_changed
         self.banner = Template.replace_template_variables(self.banner_template,self)
       end
-      if self.facebook_msg_template_changed? or variables_changed
+      if self.facebook_msg_template_changed? || variables_changed
         self.facebook_msg = Template.replace_template_variables(self.facebook_msg_template,self)
       end
-      if self.twitter_msg_template_changed? or variables_changed
+      if self.twitter_msg_template_changed? || variables_changed
         self.twitter_msg = Template.replace_template_variables(self.twitter_msg_template,self)
       end
-      if self.linkedin_msg_template_changed? or variables_changed
+      if self.linkedin_msg_template_changed? || variables_changed
         self.linkedin_msg = Template.replace_template_variables(self.linkedin_msg_template,self)
       end
-      if self.pinterest_msg_template_changed? or variables_changed
+      if self.pinterest_msg_template_changed? || variables_changed
         self.pinterest_msg = Template.replace_template_variables(self.pinterest_msg_template,self)
       end
-      if self.googleplus_msg_template_changed? or variables_changed
+      if self.googleplus_msg_template_changed? || variables_changed
         self.googleplus_msg = Template.replace_template_variables(self.googleplus_msg_template,self)
       end
-      if self.email_subject_template_changed? or variables_changed
+      if self.email_subject_template_changed? || variables_changed
         self.email_subject = Template.replace_template_variables(self.email_subject_template,self)
       end
-      if self.email_body_template_changed? or variables_changed
+      if self.email_body_template_changed? || variables_changed
         self.email_body = Template.replace_template_variables(self.email_body_template,self)
       end
     end
