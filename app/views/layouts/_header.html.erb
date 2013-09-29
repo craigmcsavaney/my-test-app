@@ -113,6 +113,20 @@
                     </ul>
                   </li>
                   <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Button Types</a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to "Create Button Type", new_button_type_path %></li>
+                      <li><%= link_to "View Button Types (#{ButtonType.count})", button_types_path %></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Buttons</a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to "Create Button", new_button_path %></li>
+                      <li><%= link_to "View Buttons (#{Button.count})", buttons_path %></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
                     <a tabindex="-1" href="#">Settings</a>
                     <ul class="dropdown-menu">
                       <li><%= link_to "Edit Settings", edit_setting_path(Setting.first) %></li>

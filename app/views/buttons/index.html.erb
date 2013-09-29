@@ -1,0 +1,13 @@
+<% provide(:title, 'All Buttons') %>
+<h1>All Buttons (<%= @buttons.count %>)</h1>
+
+<div class="container">
+	<%= will_paginate %>
+	<ul class="class-index">
+      	<%= render @buttons %>
+	</ul>
+	<%= will_paginate %>
+	<br/>
+	<%= link_to 'Create New Button', new_button_path %><br/>
+	<%= go_back %>
+</div>

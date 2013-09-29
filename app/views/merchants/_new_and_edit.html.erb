@@ -19,8 +19,18 @@
 						</div>
 					<% end %>
 				<% end %>
-
 				<br/>
+
+		        <%= f.label :button_id, "Default Button Style (optional)" %>
+		        <%= select_tag 'merchant[button_id]', options_from_collection_for_select(Button.all, :id, :name, @merchant.button_id), prompt: "skip this now (choose button style when creating promotions)" %>
+
+		      	<%= f.label :uid, "Unique Identifier (UID)" %>
+		      	<%= f.text_field :uid, readonly: true, placeholder: "this will be assigned automatically" %>
+
+		      	<%= f.label :logo_link, "Link to your logo (optional)" %>
+		      	<%= f.url_field :logo_link, placeholder: "Must start with 'http://' or 'https://'" %>
+
+		      	<br/><br/>
 
 		      	<%= f.submit button, class: "btn btn-large btn-primary" %>
 		    <% end %>

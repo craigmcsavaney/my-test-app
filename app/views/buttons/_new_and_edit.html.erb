@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="span7 offset1">
+      <%= form_for(@button) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+
+        <%= f.label :description %>
+        <%= f.text_field :description %>
+
+        <%= f.label :button_type_id, "Button Type" %>
+        <%= select_tag 'button[button_type_id]', options_from_collection_for_select(ButtonType.all, :id, :name, @button.button_type_id) %>
+
+        <%= f.label :html, "HTML to be inserted in the CauseButton Widget" %>
+        <%= f.text_field :html %><br/><br/>
+
+        <%= f.label :display_order %>
+        <%= f.text_field :display_order %><br/><br/>
+
+        <%= f.label :filename %>
+        <%= f.text_field :filename %><br/><br/>
+
+        <%= f.submit button, class: "btn btn-large btn-primary" %>
+      <% end %>
+
+    </div>
+  </div>
+  <%= go_back %>
+</div>

@@ -4,7 +4,7 @@ class Merchant < ActiveRecord::Base
 	
 	has_and_belongs_to_many :users
 
-  	attr_accessible :name, :user_ids, :website, :deleted
+  	attr_accessible :name, :user_ids, :website, :button_id, :logo_link, :uid, :deleted
 
   	validates :name, presence: true, uniqueness: { case_sensitive: false }
   	validates :website, url: true
@@ -12,12 +12,17 @@ class Merchant < ActiveRecord::Base
 
   	has_many :promotions, dependent: :destroy
   	has_many :serves, through: :promotions
+    belongs_to :button
   	#has_many :shares, through: :serves
     #has_many :sales, through: :shares
 
   	delegate :user_id, to: :promotion
 
     before_validation :generate_uid
+
+    validates :button, presence: true
+    validates :button_id, presence: true
+
 
   def self.not_exists?(id)
       self.find(id)

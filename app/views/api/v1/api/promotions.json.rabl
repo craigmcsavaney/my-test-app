@@ -1,7 +1,10 @@
 object @promotion
 attributes :name, :id, :banner
 attributes :cause_id => :default_cause
-#attributes :fb_msg, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, if: lambda { |m| m.channel_ids.include?(Channel.find_by_name('Facebook').id) } 
+
+node :button_html do |promotion|
+	promotion.button.html
+end
 
 node :cause_selector do |promotion|
 	if promotion.supporter_pct > 0 or promotion.buyer_pct > 0
@@ -10,6 +13,8 @@ node :cause_selector do |promotion|
 	false
 	end
 end
+
+#attributes :fb_msg, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, if: lambda { |m| m.channel_ids.include?(Channel.find_by_name('Facebook').id) } 
 
 #node do |promotion|
 #	if promotion.channel_ids.include?(Channel.find_by_name('Facebook').id)

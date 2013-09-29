@@ -1,0 +1,9 @@
+<li>
+	<% @editpath = edit_button_type_path(button_type) %>
+  	<b>Name: </b><%= link_to button_type.name, @editpath %>
+  	<b>ID#: </b><%= link_to button_type.id, @editpath %>
+  	<b>Description: </b><%= link_to button_type.description, @editpath %><br/>
+  	<b>Actions: </b><%= link_to "edit", @editpath %>&nbsp;&nbsp;
+  	<%= link_to "delete", button_type, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+</li>

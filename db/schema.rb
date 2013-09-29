@@ -11,7 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130927041730) do
+ActiveRecord::Schema.define(:version => 20130929145804) do
+
+  create_table "button_types", :force => true do |t|
+    t.string   "name",                           :null => false
+    t.string   "description", :default => ""
+    t.boolean  "deleted",     :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  create_table "buttons", :force => true do |t|
+    t.string   "name",           :default => ""
+    t.string   "description",    :default => ""
+    t.integer  "button_type_id",                    :null => false
+    t.integer  "display_order",  :default => 0,     :null => false
+    t.string   "filename",       :default => ""
+    t.boolean  "deleted",        :default => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.string   "html",           :default => ""
+  end
 
   create_table "causes", :force => true do |t|
     t.string   "name"
@@ -72,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20130927041730) do
     t.boolean  "deleted"
     t.integer  "promotions_count", :default => 0
     t.string   "uid"
+    t.integer  "button_id"
   end
 
   add_index "merchants", ["name"], :name => "index_merchants_on_name", :unique => true
@@ -126,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20130927041730) do
     t.string   "googleplus_msg_template",                                :default => ""
     t.string   "googleplus_msg",                                         :default => ""
     t.string   "banner_template",                                        :default => ""
+    t.integer  "button_id",                                                              :null => false
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"

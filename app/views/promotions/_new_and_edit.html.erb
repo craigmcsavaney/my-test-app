@@ -72,6 +72,9 @@
 			</div>
 			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), readonly: @served, id: "promotions" %>
 
+	        <%= f.label :button_id, "Button Style For This Promotion" %>
+	        <%= select_tag 'promotion[button_id]', options_from_collection_for_select(Button.all, :id, :name, @promotion.button_id), prompt: "use the default selection for this merchant" %>
+
 			<div class="collapse-group">
 				<div class="row">
 					<div class="span4"><%= f.label :merchant_pct, "Merchant-directed Contribution (Percent)" %></div>
@@ -123,11 +126,11 @@
 					</div>
 				</div>
 				<p class="collapse">You can edit this Banner Template and when you save your changes to this promotion the Banner above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
-				{{merchant}} => merchant's name<br/>
-				{{merchant_pct}} => merchant's contribution percent<br/>
-				{{merchant_cause}} => merchant's preferred cause<br/>
-				{{supporter_pct}} => supporter's contribution percent<br/>
-				{{buyer_pct}} => buyer's contribution percent
+				&nbsp;&nbsp;&nbsp;{{merchant}} => merchant's name<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_pct}} => merchant's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_cause}} => merchant's preferred cause<br/>
+				&nbsp;&nbsp;&nbsp;{{supporter_pct}} => supporter's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{buyer_pct}} => buyer's contribution percent
 				</p>
 			</div>
 			<%= f.text_area :banner_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
@@ -171,11 +174,11 @@
 					</div>
 				</div>
 				<p class="collapse">You can edit this Facebook message template and when you save your changes to this promotion the Facebook Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
-				{{merchant}} => merchant's name<br/>
-				{{merchant_pct}} => merchant's contribution percent<br/>
-				{{merchant_cause}} => merchant's preferred cause<br/>
-				{{supporter_pct}} => supporter's contribution percent<br/>
-				{{buyer_pct}} => buyer's contribution percent
+				&nbsp;&nbsp;&nbsp;{{merchant}} => merchant's name<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_pct}} => merchant's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_cause}} => merchant's preferred cause<br/>
+				&nbsp;&nbsp;&nbsp;{{supporter_pct}} => supporter's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{buyer_pct}} => buyer's contribution percent
 				</p>
 			</div>
 			<%= f.text_area :facebook_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
@@ -221,11 +224,11 @@
 					</div>
 				</div>
 				<p class="collapse">You can edit this Twitter Message template and when you save your changes to this promotion the Twitter Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
-				{{merchant}} => merchant's name<br/>
-				{{merchant_pct}} => merchant's contribution percent<br/>
-				{{merchant_cause}} => merchant's preferred cause<br/>
-				{{supporter_pct}} => supporter's contribution percent<br/>
-				{{buyer_pct}} => buyer's contribution percent
+				&nbsp;&nbsp;&nbsp;{{merchant}} => merchant's name<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_pct}} => merchant's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_cause}} => merchant's preferred cause<br/>
+				&nbsp;&nbsp;&nbsp;{{supporter_pct}} => supporter's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{buyer_pct}} => buyer's contribution percent
 				</p>
 			</div>
 			<%= f.text_area :twitter_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
@@ -248,11 +251,11 @@
 					</div>
 				</div>
 				<p class="collapse">You can edit this Pinterest message template and when you save your changes to this promotion the Pinterest Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
-				{{merchant}} => merchant's name<br/>
-				{{merchant_pct}} => merchant's contribution percent<br/>
-				{{merchant_cause}} => merchant's preferred cause<br/>
-				{{supporter_pct}} => supporter's contribution percent<br/>
-				{{buyer_pct}} => buyer's contribution percent
+				&nbsp;&nbsp;&nbsp;{{merchant}} => merchant's name<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_pct}} => merchant's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_cause}} => merchant's preferred cause<br/>
+				&nbsp;&nbsp;&nbsp;{{supporter_pct}} => supporter's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{buyer_pct}} => buyer's contribution percent
 				</p>
 			</div>
 			<%= f.text_area :pinterest_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
@@ -275,11 +278,11 @@
 					</div>
 				</div>
 				<p class="collapse">You can edit this LinkedIn message template and when you save your changes to this promotion the LinkedIn Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
-				{{merchant}} => merchant's name<br/>
-				{{merchant_pct}} => merchant's contribution percent<br/>
-				{{merchant_cause}} => merchant's preferred cause<br/>
-				{{supporter_pct}} => supporter's contribution percent<br/>
-				{{buyer_pct}} => buyer's contribution percent
+				&nbsp;&nbsp;&nbsp;{{merchant}} => merchant's name<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_pct}} => merchant's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_cause}} => merchant's preferred cause<br/>
+				&nbsp;&nbsp;&nbsp;{{supporter_pct}} => supporter's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{buyer_pct}} => buyer's contribution percent
 				</p>
 			</div>
 			<%= f.text_area :linkedin_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
@@ -302,11 +305,11 @@
 					</div>
 				</div>
 				<p class="collapse">You can edit this GooglePlus message template and when you save your changes to this promotion the GooglePlus Message above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
-				{{merchant}} => merchant's name<br/>
-				{{merchant_pct}} => merchant's contribution percent<br/>
-				{{merchant_cause}} => merchant's preferred cause<br/>
-				{{supporter_pct}} => supporter's contribution percent<br/>
-				{{buyer_pct}} => buyer's contribution percent
+				&nbsp;&nbsp;&nbsp;{{merchant}} => merchant's name<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_pct}} => merchant's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_cause}} => merchant's preferred cause<br/>
+				&nbsp;&nbsp;&nbsp;{{supporter_pct}} => supporter's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{buyer_pct}} => buyer's contribution percent
 				</p>
 			</div>
 			<%= f.text_area :googleplus_msg_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
@@ -329,11 +332,11 @@
 					</div>
 				</div>
 				<p class="collapse">You can edit this Email subject template and when you save your changes to this promotion the Email Subject above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
-				{{merchant}} => merchant's name<br/>
-				{{merchant_pct}} => merchant's contribution percent<br/>
-				{{merchant_cause}} => merchant's preferred cause<br/>
-				{{supporter_pct}} => supporter's contribution percent<br/>
-				{{buyer_pct}} => buyer's contribution percent
+				&nbsp;&nbsp;&nbsp;{{merchant}} => merchant's name<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_pct}} => merchant's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_cause}} => merchant's preferred cause<br/>
+				&nbsp;&nbsp;&nbsp;{{supporter_pct}} => supporter's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{buyer_pct}} => buyer's contribution percent
 				</p>
 			</div>
 			<%= f.text_area :email_subject_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>
@@ -356,11 +359,11 @@
 					</div>
 				</div>
 				<p class="collapse">You can edit this Email Body template and when you save your changes to this promotion the Email Body above will automatically reflect your changes.  If you delete the contents of this box and click save changes, the default template will automatically be reloaded.  You can insert the following tokens and they will be automatically replaced by actual values:<br/>
-				{{merchant}} => merchant's name<br/>
-				{{merchant_pct}} => merchant's contribution percent<br/>
-				{{merchant_cause}} => merchant's preferred cause<br/>
-				{{supporter_pct}} => supporter's contribution percent<br/>
-				{{buyer_pct}} => buyer's contribution percent
+				&nbsp;&nbsp;&nbsp;{{merchant}} => merchant's name<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_pct}} => merchant's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{merchant_cause}} => merchant's preferred cause<br/>
+				&nbsp;&nbsp;&nbsp;{{supporter_pct}} => supporter's contribution percent<br/>
+				&nbsp;&nbsp;&nbsp;{{buyer_pct}} => buyer's contribution percent
 				</p>
 			</div>
 			<%= f.text_area :email_body_template, readonly: @served, rows: 2, placeholder: "this will be refilled with the correct default template when you click save changes" %>

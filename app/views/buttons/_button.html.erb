@@ -1,0 +1,13 @@
+<li>
+	<% @editpath = edit_button_path(button) %>
+  	<b>Name: </b><%= link_to button.name, @editpath %><br/>
+  	<b>ID#: </b><%= link_to button.id, @editpath %><br/>
+  	<b>Description: </b><%= link_to button.description, @editpath %><br/>
+  	<b>Button Type: </b><%= link_to button.button_type.name, @editpath %><br/>
+    <b>HTML: </b><%= link_to button.html, @editpath %><br/>
+  	<b>Display Order: </b><%= link_to button.display_order, @editpath %><br/>
+    <b>Filename: </b><%= link_to button.filename, @editpath %><br/>
+  	<b>Actions: </b><%= link_to "edit", @editpath %>&nbsp;&nbsp;
+  	<%= link_to "delete", button, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+</li>

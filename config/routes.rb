@@ -51,6 +51,8 @@ Myapplication::Application.routes.draw do
   resources :shares
   resources :sales
   resources :donations
+  resources :button_types
+  resources :buttons
   
   root to: 'static_pages#home'
 

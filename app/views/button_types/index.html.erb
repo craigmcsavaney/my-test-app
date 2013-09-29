@@ -1,0 +1,13 @@
+<% provide(:title, 'All Button Types') %>
+<h1>All Button Types (<%= @button_types.count %>)</h1>
+
+<div class="container">
+	<%= will_paginate %>
+	<ul class="class-index">
+      	<%= render @button_types %>
+	</ul>
+	<%= will_paginate %>
+	<br/>
+	<%= link_to 'Create New Button Type', new_button_type_path %><br/>
+	<%= go_back %>
+</div>
