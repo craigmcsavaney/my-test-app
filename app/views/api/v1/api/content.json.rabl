@@ -35,8 +35,8 @@ node :content do
 	            	<div id="cbw-channels" class="controls"/>
 	            </div>			
 	            <div id="cbw-share-msg-ctrl-grp" class="control-group" style="display: none;">
-					<label class="control-label" for="cbw-share-msg">Share Message
-						<a id="cbw-post-link" class="post-link" href="#" style="margin-right: 55px;"continue</a>
+					<label class="control-label" for="cbw-share-msg">Share Message<br/><br/>
+						<a id="cbw-post-link" class="post-link" href="#" style="margin-right: 55px;">continue</a>
 						<a href="#">exit</a>
 					</label>
 					<div class="controls">
