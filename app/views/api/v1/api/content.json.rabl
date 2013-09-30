@@ -35,14 +35,17 @@ node :content do
 	            	<div id="cbw-channels" class="controls"/>
 	            </div>			
 	            <div id="cbw-share-msg-ctrl-grp" class="control-group" style="display: none;">
-					<label class="control-label" for="cbw-share-msg">Share Message</label>
+					<label class="control-label" for="cbw-share-msg">Share Message
+						<a id="cbw-post-link" class="post-link" href="#" style="margin-right: 55px;"continue</a>
+						<a href="#">exit</a>
+					</label>
 					<div class="controls">
 						<textarea id="cbw-share-msg" rows="3" placeholder="Enter Text To Share"></textarea>
 					</div>
-					<div class="controls">
+					<!-- <div class="controls">
 						<a id="cbw-close-button" class="btn" href="#" style="margin-left: 25px;">Close</a>
 						<a id="cbw-post-button" class="disabled btn btn-primary" href="#" style="margin-left: 55px;">Post</a>
-					</div>
+					</div> -->
 				</div>
 				<!-- <div class="control-group" style="margin-top: 10px;">
 					<div class="controls">
