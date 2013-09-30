@@ -31,7 +31,7 @@ node :content do
 					</div>
 				</div>
 				<div class="control-group">
-	            	<label for="cbw-channels" class="control-label">Share Method</label>
+	            	<label for="cbw-channels" class="control-label">Preview & Edit</label>
 	            	<div id="cbw-channels" class="controls"/>
 	            </div>			
 	            <div id="cbw-share-msg-ctrl-grp" class="control-group" style="display: none;">
