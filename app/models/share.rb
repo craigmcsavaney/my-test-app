@@ -99,8 +99,16 @@ class Share < ActiveRecord::Base
     end
   end
 
-  def self.create_share(serve,channel,cause)
-    # create a share for the given serve and channel. Include the cause if it's passed in.
+  def self.create_share(serve,channel)
+    # create a share for the given serve and channel.
+    landing_page = serve.promotion.landing_page
+    path = Awesome.get_new_link_path(channel.name,landing_page)
+#    path = SecureRandom.urlsafe_base64(4)  # use this only for offline testing
+    Share.create(serve_id: serve.id, channel_id: channel.id, link_id: path)
+  end
+
+  def self.create_purchase_share(serve,channel,cause)
+    # create a share for the given serve, channel and cause.
     landing_page = serve.promotion.landing_page
     path = Awesome.get_new_link_path(channel.name,landing_page)
 #    path = SecureRandom.urlsafe_base64(4)  # use this only for offline testing

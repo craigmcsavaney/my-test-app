@@ -257,7 +257,7 @@ module Api
                     @serve.update_attributes(email: @email[:email], current_cause_id: @cause[:cause])
                     # finally, create a new share for the purchase channel
                     #Share.create_share(@serve,Channel.find_by_name('Email'))
-                    Share.create_share(@serve,Channel.find_by_name('Purchase'),@cause[:cause])
+                    Share.create_purchase_share(@serve,Channel.find_by_name('Purchase'),@cause[:cause])
                 end
 
                 # next, check to see if a valid share path (one that is associated with the current serve) was passed in.  Note that if the share associated with the path has already been confirmed, the path will not be valid.  Not sure if this is necessary  - may be better to ignore whether the share is confirmed and create a new share anyhow.
