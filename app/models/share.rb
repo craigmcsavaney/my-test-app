@@ -99,12 +99,12 @@ class Share < ActiveRecord::Base
     end
   end
 
-  def self.create_share(serve,channel)
-    # create a share for the given serve and channel
+  def self.create_share(serve,channel,cause)
+    # create a share for the given serve and channel. Include the cause if it's passed in.
     landing_page = serve.promotion.landing_page
     path = Awesome.get_new_link_path(channel.name,landing_page)
 #    path = SecureRandom.urlsafe_base64(4)  # use this only for offline testing
-    Share.create(serve_id: serve.id, channel_id: channel.id, link_id: path)
+    Share.create(serve_id: serve.id, channel_id: channel.id, link_id: path, cause_id: cause.id)
   end
 
   # get_cause finds the cause asociated with an input share by checking for the presence of a cause_id first at the share (which will be present if the share was confirmed), then at the serve (which could have been updated by a CB Widget viewer), then at the promotion level (which will be the merchant's preferred cause for this promotion.)

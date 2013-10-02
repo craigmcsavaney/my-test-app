@@ -71,10 +71,13 @@ class Serve < ActiveRecord::Base
     # get the not confirmed share as there may be multiple confirmed shares but should
     # only be one not confirmed share per channel per serve
     @share = serve.shares.where("channel_id = ? and confirmed = ?",channel.id,false).first
-    # now, mark this share as confirmed
-    @share.update_attributes(confirmed: true, cause_id: serve.current_cause_id)
-    # now, get a new share for this channel
-    # Share.create_share(serve,channel)
+    # now, mark this share as confirmed.  First, determine if this is a purchase share or not.  If it is, do not update the current_cause_id as the current cause will be added to the new purchase share that will be created later.  However, if this is a non-purchase share, update it with the current_cause_id.
+    if channel.name == "Purchase"
+        cause = ""
+      else
+        cause = serve.current_cause_id
+    end
+    @share.update_attributes(confirmed: true, cause_id: cause)
   end
 
   def get_current_cause
