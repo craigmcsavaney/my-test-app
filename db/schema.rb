@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130929222356) do
+ActiveRecord::Schema.define(:version => 20131003005738) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20130929222356) do
     t.boolean  "deleted"
     t.boolean  "visible",     :default => true
     t.boolean  "active",      :default => true
+    t.string   "url_prefix",  :default => ""
   end
 
   add_index "channels", ["name"], :name => "index_channels_on_name", :unique => true
