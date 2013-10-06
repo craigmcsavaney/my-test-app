@@ -1,0 +1,18 @@
+<% provide(:title, 'All Donations') %>
+<h1>All Donations (<%= @donations.count %>)</h1>
+
+<div class="container">
+	<%= will_paginate %>
+	<div class="row">
+	<div class="span3">Merchant</div>
+	<div class="span3">Cause</div>
+	<div class="span2">Date</div>
+	<div class="span1">Donation Amount</div>
+	</div>
+	<ul class="class-index">
+      	<%= render @donations %>
+	</ul>
+	<%= will_paginate %>
+	<br/>
+	<%= go_back %>
+</div>

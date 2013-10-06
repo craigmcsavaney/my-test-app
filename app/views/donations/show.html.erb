@@ -1,0 +1,15 @@
+<% provide(:title, 'Show Donation') %>
+<h1>Show Donation</h1>
+
+<div class="container">
+	<ul class="class-index">
+		<%= render 'show_donation' %>
+	</ul>
+	<br/>
+	<% if ["show_admin"].include?params[:action] %>
+			<%= link_to 'All Donations Summary', donations_admin_path %><br/>
+		<% else %>
+			<%= link_to 'All Donations Summary', donations_path %><br/>
+	<% end %>
+	<%= go_back %>
+</div>
