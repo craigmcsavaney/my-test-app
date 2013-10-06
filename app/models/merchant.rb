@@ -20,10 +20,6 @@ class Merchant < ActiveRecord::Base
 
     before_validation :generate_uid
 
-    #validates :button, presence: true
-    #validates :button_id, presence: true
-
-
   def self.not_exists?(id)
       self.find(id)
       false
@@ -33,9 +29,11 @@ class Merchant < ActiveRecord::Base
 
   protected
   def generate_uid
-    self.uid = loop do
-      uid = SecureRandom.urlsafe_base64(nil, false)
-      break uid unless Merchant.where(uid: uid).exists?
+    if self.uid.nil? || self.uid == ""
+      self.uid = loop do
+        uid = SecureRandom.urlsafe_base64(nil, false)
+        break uid unless Merchant.where(uid: uid).exists?
+      end
     end
   end
 
