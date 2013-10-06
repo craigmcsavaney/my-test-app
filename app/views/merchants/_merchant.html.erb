@@ -1,36 +1,12 @@
 <li>
-	<% @a= @b= @c= "" %>
-	<% if merchant.website? %>
-		<% @a = merchant.website %>
-	<% end %>
-	<% if merchant.website? %>
-		<% @b = merchant.website %>
-	<% end %>
-	<% if merchant.button.nil? %>
-			<% @c = "none chosen" %>
+	<% if ["index_admin"].include?params[:action] %>
+			<% @showpath = merchant_admin_path(merchant) %>
 		<% else %>
-			<% @c = merchant.button.name %>
+			<% @showpath = merchant_path(merchant) %>
 	<% end %>
-	<% if params[:action] == "index" %>
-		<% @editpath = edit_merchant_path(merchant) %>
-		<% @deletepath = merchant %>
-  	<% elsif params[:action] == "index_admin" %>
-		<% @editpath = edit_merchant_admin_path(merchant) %>
-		<% @deletepath = destroy_merchant_admin_path(merchant) %>
-	<% end %>
-	<b>ID#: </b><%= link_to merchant.id, @editpath %>&nbsp;&nbsp;
-	<b>Name: </b><%= link_to merchant.name, @editpath %><br/>
-	<b>UID: </b><%= link_to merchant.uid, @editpath %><br/>
-	<b>Website URL: </b><%= link_to @a, @editpath %><br/>
-	<b>Link to Logo: </b><%= link_to @b, @editpath %><br/>
-	<b>Default Button Style: </b><%= link_to @c, @editpath %><br/>
-	<b>Users</b><% for user in merchant.users %>
-	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;
-	<% end %><br/>  
-	<b>Actions: </b>
-		<%= link_to 'Show Current Promotion', current_promotion_path(merchant) %>&nbsp;&nbsp;
-		<%= link_to 'Show All Promotions', promotions_path %>&nbsp;&nbsp;
-	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
-		<%= link_to "delete", @deletepath, method: :delete,
-                                  data: { confirm: "You sure?" } %>
+	<div class="row">
+	<div class="span3"><%= link_to merchant.name, @showpath %></div>
+	<div class="span3"><%= link_to merchant.website, @showpath %></div>
+	<div class="span3"><%= link_to merchant.button.name, @showpath %></div>
+	</div>
 </li>

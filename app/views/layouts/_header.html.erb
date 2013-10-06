@@ -71,7 +71,7 @@
                         </ul>
                       </li>
                     <% end %>
-                    <li><%= link_to "See the Good I've Done", "#" %></li>
+                    <li><%= link_to_if(can?(:index, Donation), "Donations I Caused", donations_path) {} %></li>
                     <li class="divider"></li>
                     <li><%= link_to "Settings", edit_user_registration_path(current_user) %></li>
                     <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
@@ -156,7 +156,7 @@
                   <li class="dropdown-submenu">
                     <a tabindex="-1" href="#">Donations</a>
                     <ul class="dropdown-menu">
-                      <li><%= link_to "View Donations (#{Donation.count})", donations_path %></li>
+                      <li><%= link_to "View Donations (#{Donation.count})", donations_admin_path %></li>
                     </ul>
                   </li>
                   <li class="dropdown-submenu">

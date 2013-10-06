@@ -22,6 +22,7 @@ Myapplication::Application.routes.draw do
   match '/merchants/:id/update_admin',  to: 'merchants#update_admin'
   match '/merchants/:id/destroy_admin',  to: 'merchants#destroy_admin', :as => :destroy_merchant_admin
   match '/merchants/:id/current',  to: 'merchants#current', :as => :current_promotion
+  match '/merchants/show_admin/:id',  to: 'merchants#show_admin', :as => :merchant_admin 
 
   match '/promotions/new_admin',  to: 'promotions#new_admin', :as => :new_promotion_admin 
   match '/promotions/create_admin',  to: 'promotions#create_admin'
@@ -39,6 +40,9 @@ Myapplication::Application.routes.draw do
   match '/causes/:id/edit_admin',  to: 'causes#edit_admin', :as => :edit_cause_admin 
   match '/causes/:id/update_admin',  to: 'causes#update_admin'
   match '/causes/:id/destroy_admin',  to: 'causes#destroy_admin', :as => :destroy_cause_admin
+
+  match '/donations/index_admin',  to: 'donations#index_admin', :as => :donations_admin 
+  match '/donations/show_admin/:id',  to: 'donations#show_admin', :as => :donation_admin 
 
   resources :roles
   resources :merchants
@@ -68,7 +72,7 @@ Myapplication::Application.routes.draw do
 
 
 
-  devise_for :users
+  devise_for :users #, :controllers => { :invitations => "invitations" }
   resources :users, only: [:edit, :update, :index]
 
 

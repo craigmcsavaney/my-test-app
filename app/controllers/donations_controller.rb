@@ -32,8 +32,21 @@ class DonationsController < ApplicationController
     end
 	end
 
+  def show
+    @donation = Donation.find(params[:id])
+  end
+
+  def show_admin
+    @donation = Donation.find(params[:id])
+  end
+
   def index
-  	@donations = Donation.order('id asc').paginate(page: params[:page])
+    @user = current_user
+  	@donations = Donation.where("choosers_email = ?",@user.email).order('created_at desc').paginate(page: params[:page])
+  end
+
+  def index_admin
+    @donations = Donation.order('created_at desc').paginate(page: params[:page])
   end
 
   def destroy

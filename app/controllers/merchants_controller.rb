@@ -77,6 +77,14 @@ class MerchantsController < ApplicationController
     @merchants = Merchant.order('id asc').paginate(page: params[:page])
   end
 
+  def show
+    @merchant = Merchant.find(params[:id])
+  end
+
+  def show_admin
+    @merchant = Merchant.find(params[:id])
+  end
+
   def destroy
     Merchant.find(params[:id]).destroy
     flash[:success] = "Merchant deleted"
