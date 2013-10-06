@@ -7,7 +7,7 @@ node :content do
 	<div id="cbw-widget" style="display:none;">
 		<div id="cbw-heading">
 			CauseButton
-			<button type="button" class="close" aria-hidden="true">&times;</button>
+			<button type="button" id="cbw-close-button" aria-hidden="true">&times;</button>
 		</div>
 		<div id="cbw-body-normal">
 			<p id="cbw-promo-text">Thanks for clicking on the Cause Button! Simply choose a cause and post a message \
@@ -23,7 +23,7 @@ node :content do
 					<label class="control-label" for="cbw-input-email">E-Mail</label>
 					<div class="controls">
 						<input id="cbw-email-input" type="text" placeholder="E-Mail (optional)">
-						<p id="cbw-email-input-error-message" style="display:none;">Please correct email<p>
+						<p id="cbw-email-input-error-message" style="display:none;" class="error">Please correct email<p>
 					</div>
 				</div>
 				<div class="control-group">
