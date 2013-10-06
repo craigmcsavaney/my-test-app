@@ -7,7 +7,7 @@ node :content do
 	<div id="cbw-widget" style="display:none;">
 		<div id="cbw-heading">
 			CauseButton
-			<button type="button" id="cbw-close-button" aria-hidden="true">&times;</button>
+			<button type="button" class="close" aria-hidden="true">&times;</button>
 		</div>
 		<div id="cbw-body-normal">
 			<p id="cbw-promo-text">Thanks for clicking on the Cause Button! Simply choose a cause and post a message \
