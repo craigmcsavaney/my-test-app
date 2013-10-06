@@ -20,8 +20,8 @@ class Merchant < ActiveRecord::Base
 
     before_validation :generate_uid
 
-    validates :button, presence: true
-    validates :button_id, presence: true
+    #validates :button, presence: true
+    #validates :button_id, presence: true
 
 
   def self.not_exists?(id)

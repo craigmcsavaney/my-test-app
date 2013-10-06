@@ -4,9 +4,13 @@
 		<% else %>
 			<% @showpath = merchant_path(merchant) %>
 	<% end %>
+	<% @a= "none chosen" %>
+	<% if !merchant.button.nil? %>
+		<% @a = merchant.button.name %>
+	<% end %>
 	<div class="row">
-	<div class="span3"><%= link_to merchant.name, @showpath %></div>
-	<div class="span3"><%= link_to merchant.website, @showpath %></div>
-	<div class="span3"><%= link_to merchant.button.name, @showpath %></div>
+		<div class="span3"><%= link_to merchant.name, @showpath %></div>
+		<div class="span3"><%= link_to merchant.website, @showpath %></div>
+		<div class="span3"><%= link_to @a, @showpath %></div>
 	</div>
 </li>
