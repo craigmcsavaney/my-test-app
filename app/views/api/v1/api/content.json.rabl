@@ -7,6 +7,10 @@ node :content do
 	<div id="cbw-widget" style="display:none;">
 		<div id="cbw-heading">
 			CauseButton
+			<span id="cbw-welcome-user-message" style="display:none;">Welcome&nbsp;
+				<span id="cbw-user-name"></span>
+				<a id="cbw-user-name-change">&nbsp(change)</a>
+			</span>
 			<button type="button" class="close" aria-hidden="true">&times;</button>
 		</div>
 		<div id="cbw-body-normal">
