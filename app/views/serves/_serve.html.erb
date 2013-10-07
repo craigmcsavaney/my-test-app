@@ -11,11 +11,19 @@
   <% if serve.session_id? %>
     <% @c = serve.session_id %>
   <% end %>
+  <% if serve.user_id.nil? %>
+      <% @d = @e = "" %>
+      <% else %>
+      <% @d = serve.user_id %>
+      <% @e = serve.user.email %>
+  <% end %>
 	<% @editpath = edit_serve_path(serve) %>
   	<b><%= :id %>: </b><%= link_to serve.id, @editpath %><br/>
   	<b><%= :promotion_id %>: </b><%= link_to serve.promotion_id, @editpath %><br/>
     <b><%= :name %>: </b><%= link_to serve.promotion.name, @editpath %><br/>
     <b><%= :email %>: </b><%= link_to @b, @editpath %><br/>
+    <b><%= :user_id %>: </b><%= link_to @d, @editpath %>&nbsp;&nbsp;
+    <b>User Email: </b><%= link_to @e, @editpath %><br/>
     <b><%= :viewed %>: </b><%= link_to @a, @editpath %><br/>
     <b><%= :session_id %>: </b><%= link_to @c, @editpath %><br/>
     <b><%= :shares_count %>: </b><%= link_to serve.shares_count, @editpath %><br/>

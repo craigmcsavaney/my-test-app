@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131006143724) do
+ActiveRecord::Schema.define(:version => 20131007125741) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(:version => 20131006143724) do
     t.integer  "shares_count",       :default => 0
     t.string   "session_id"
     t.integer  "current_cause_id"
+    t.integer  "user_id"
   end
 
   create_table "settings", :force => true do |t|

@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :merchants
   has_and_belongs_to_many :causes
+  has_many :serves
 
   before_save :setup_role
 
@@ -58,5 +59,13 @@ class User < ActiveRecord::Base
   def role?(role)
       return !!self.roles.find_by_name(role.to_s.camelize)
   end 
+
+  def self.GetUserID(user)
+    if self.find_by_email(user).nil?
+      self.invite!(email: user)
+    end
+    return self.find_by_email(user).id
+  end
+
 
 end

@@ -3,11 +3,12 @@ class Serve < ActiveRecord::Base
   include NotDeleteable
 	versioned
 
-	attr_accessible :promotion_id, :email, :referring_share_id, :viewed, :session_id, :current_cause_id, :id
+	attr_accessible :promotion_id, :email, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :user_id
 
   belongs_to :promotion, counter_cache: true
   belongs_to :share, foreign_key: "referring_share_id"
   belongs_to :cause, foreign_key: "current_cause_id"
+  belongs_to :user
   has_many :shares
   has_many :sales, through: :shares
   delegate :merchant, :to => :promotion, :allow_nil => true
@@ -64,6 +65,27 @@ class Serve < ActiveRecord::Base
             @email = new_email
     end
     return {email_changed: @email_changed, email: @email}
+  end
+
+  def self.user_changed?(serve,new_email)
+    # Check to see if an email was passed in and if it is different than the email 
+    # associated with the user in the current serve record.  If it is different, set the 
+    # user_changed flag to true and set the user_id variable to the new user_id.
+    case
+        # check to see if both the old user and the new user are nil or blank
+        when (serve.user.nil? or serve.user.email == "") && (new_email.nil? or new_email == "")
+            @user_changed = false
+            @user_id = nil
+        # check to see if the new user is the same as the old user
+        when !serve.user.nil? && serve.user.email == new_email #params[:email]
+            @user_changed = false
+            @user_id = serve.user_id
+        # since a new email is present and either there is no current user associated with the serve or it is a user with a different email than the new email, update the serve with the new user.  The GetUserID will create a new user for this email if needed or will find and return the user.id of the existing user for this email address.
+        else
+            @user_changed = true
+            @user_id = User.GetUserID(new_email)
+    end
+    return {user_changed: @user_changed, user_id: @user_id}
   end
 
   def self.post_to_channel(serve,channel)
