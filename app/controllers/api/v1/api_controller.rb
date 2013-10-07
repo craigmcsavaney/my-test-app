@@ -87,15 +87,15 @@ module Api
                         promotion_same = false
                 end
 
-                # Now check the causebutton.com user cookie and if it exists, set the variable user to the value of the
-                # cookie, which will be the email address of the user.
-                # for testing: cookies.permanent.signed[:user] = "craigmcsavaney@yahoo.com"
-                user = ""
-                user_id = nil
-                if cookies.signed[:user] and cookies.signed[:user] != ""
-                    user = cookies.signed[:user]
-                    user_id = User.GetUserID(user)
-                end
+                # # Now check the causebutton.com user cookie and if it exists, set the variable user to the value of the
+                # # cookie, which will be the email address of the user.
+                # # for testing: cookies.permanent.signed[:user] = "craigmcsavaney@yahoo.com"
+                # user = ""
+                # user_id = nil
+                # if cookies.signed[:user] and cookies.signed[:user] != ""
+                #     user = cookies.signed[:user]
+                #     user_id = User.GetUserID(user)
+                # end
 
                 # Once a visitor has clicked the cause button and we have created a serve and
                 # shares for them, it's possible that they may click one of the share links to 
@@ -145,7 +145,8 @@ module Api
                     # existing records.  Typically, this is a first time, non-referred visitor 
                     when !serve_valid && !path_valid
                         # create a new serve using the current promotion
-                        @serve = Serve.create(promotion_id: @promotion.id, user_id: user_id)
+                        # @serve = Serve.create(promotion_id: @promotion.id, user_id: user_id)
+                        @serve = Serve.create(promotion_id: @promotion.id)
 
                     # Second case, when serve_id is invalid and path is valid.
                     # Typically, this is a first time, referred visitor 
@@ -154,7 +155,8 @@ module Api
                         # first, get the share associated with the referring path
                         @referring_share = Share.find_by_link_id(params[:path])
                         # now, create the new serve
-                        @serve = Serve.create(promotion_id: @promotion.id, referring_share_id: @referring_share.id, user_id: user_id)
+                        # @serve = Serve.create(promotion_id: @promotion.id, referring_share_id: @referring_share.id, user_id: user_id)
+                        @serve = Serve.create(promotion_id: @promotion.id, referring_share_id: @referring_share.id)
 
                     # Third case, when the serve is valid (implied, as the not valid cases are handled above) and the current promotion hasn't changed
                     # but either the path is invalid or is the same as the stored referring path
@@ -171,7 +173,8 @@ module Api
                         # We're going to create a new serve for this visitor using the new path information (which exists because the path is valid) and copy over the cause and email info from the previous serve if possible.  TO DO: if the previous serve wasn't viewed, we'll delete it and all its shares.
                         @old = Serve.find(params[:serve_id])
                         @referring_share = Share.find_by_link_id(params[:path])
-                        @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
+                        # @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
+                        @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id)
 
                         #if !@old.viewed?
                             # delete the old serve and its associated shares
@@ -186,7 +189,8 @@ module Api
                         # cause, email, user_id, and referring_share info if possible.
                         @old = Serve.find(params[:serve_id])
                         if @old.viewed?
-                            @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @old.referring_share_id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
+                            # @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @old.referring_share_id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
+                            @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @old.referring_share_id, current_cause_id: @old.current_cause_id)
                         else
                             session_id = Serve.new_session_id
                             Serve.find(params[:serve_id]).update_attributes(promotion_id: @promotion.id, session_id: session_id)
