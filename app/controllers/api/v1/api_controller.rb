@@ -89,7 +89,7 @@ module Api
 
                 # # Now check the causebutton.com user cookie and if it exists, set the variable user to the value of the
                 # # cookie, which will be the email address of the user.
-                # # for testing: cookies.permanent.signed[:user] = "craigmcsavaney@yahoo.com"
+                cookies.permanent.signed[:user] = "craigmcsavaney@yahoo.com"
                 # user = ""
                 # user_id = nil
                 # if cookies.signed[:user] and cookies.signed[:user] != ""
