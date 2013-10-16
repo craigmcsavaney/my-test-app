@@ -76,16 +76,25 @@ class Serve < ActiveRecord::Base
         when (serve.user.nil? or serve.user.email == "") && (new_email.nil? or new_email == "")
             @user_changed = false
             @user_id = nil
+            @type = nil
         # check to see if the new user is the same as the old user
         when !serve.user.nil? && serve.user.email == new_email #params[:email]
             @user_changed = false
             @user_id = serve.user_id
-        # since a new email is present and either there is no current user associated with the serve or it is a user with a different email than the new email, update the serve with the new user.  The GetUserID will create a new user for this email if needed or will find and return the user.id of the existing user for this email address.
+            @type = nil
+        # check to see if there is a user associated with the current serve but the new email is blank or nil.  If this is the case, the new user should be nil.
+        when !serve.user.nil? && (new_email.nil? or new_email == "")
+            @user_changed = true
+            @user_id = nil
+            @type = "new"
+        # since a new email is present and either there is no current user associated with the serve or it is a user with a different email than the new email, update the serve with the new user.  The GetUserID will create a new user for this email if needed or will find and return the user.id of the existing user for this email address.  The GetUserID method also returns type: "new" when it creates a new user.  This must be passed back to the API controller to set the user cookie to the new user email value.
         else
             @user_changed = true
-            @user_id = User.GetUserID(new_email)
+            @user = User.GetUserID(new_email)
+            @user_id = @user[:user_id]
+            @type = @user[:type]
     end
-    return {user_changed: @user_changed, user_id: @user_id}
+    return {user_changed: @user_changed, user_id: @user_id, type: @type}
   end
 
   def self.post_to_channel(serve,channel)

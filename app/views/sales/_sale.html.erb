@@ -2,6 +2,8 @@
 	<% @editpath = edit_sale_path(sale) %>
   	<b><%= :id %>: </b><%= link_to sale.id, @editpath %><br/>
   	<b><%= :share_id %>: </b><%= link_to sale.share_id, @editpath %><br/>
+    <b><%= :supporter_share_id %>: </b><%= link_to sale.supporter_share_id, @editpath %><br/>
+    <b><%= :buyer_share_id %>: </b><%= link_to sale.buyer_share_id, @editpath %><br/>
   	<b><%= :amount %>: </b><%= link_to sale.amount, @editpath %><br/>
     <b><%= :transaction_id %>: </b><%= link_to sale.transaction_id, @editpath %><br/>
   	<b><%= :created_at %>: </b><%= link_to sale.created_at, @editpath %><br/>

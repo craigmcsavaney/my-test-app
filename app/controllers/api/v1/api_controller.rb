@@ -87,14 +87,19 @@ module Api
                         promotion_same = false
                 end
 
-                # Now check the causebutton.com user cookie and if it exists, set the variable user to the value of the
-                # cookie, which will be the email address of the user.
+                # Now check the causebutton.com user cookie and if it exists, set the variable 
+                # user to the value of the cookie, which will be the email address of the user.
                 # cookies.permanent.signed[:user] = "craigmcsavaney@yahoo.com"
                 user = ""
                 user_id = nil
                 if cookies.signed[:user] and cookies.signed[:user] != ""
                     user = cookies.signed[:user]
-                    user_id = User.GetUserID(user)
+                    @user = User.GetUserID(user)
+                    user_id = @user[:user_id]
+                    # the following should never happen.  If a valid user is read from a cookie and passed to the GetUserID method, it should always find a valid user in the User table.  If it doesn't, a new user will be created and the :type variable will be set to "new"
+                    if @user[:type] == "new"
+                        cookies.permanent.signed[:user] = user
+                    end
                 end
 
                 # Once a visitor has clicked the cause button and we have created a serve and
@@ -267,6 +272,9 @@ module Api
 
                 # next, check to see if an email was passed in and if it is different than the email associated with the user in the current serve record.  If it is different, set the @user[:user_changed] flag to true and set the @user[:user_id] variable to the new user_id.  Otherwise, set the flag to false and the user_id variable to the current value of the serve user_id.
                 @user = Serve.user_changed?(@serve,params[:email])
+                if @user[:type] == "new"
+                    cookies.permanent.signed[:user] = params[:email]
+                end
 
                 # check to see if a cause was passed in (non-nil) and if it is different from the current cause value.  If it is valid and different, set the @cause[:cause_changed] flag to true and the @cause[:cause] variable to the new cause.  Otherwise, set the flag to false and the cause variable to the current cause id value.  Remember that the cause_id being passed in is a uid but the cause being returned is an object.
                 @cause = Serve.cause_changed?(@serve,params[:cause_id])

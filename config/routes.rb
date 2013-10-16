@@ -72,7 +72,7 @@ Myapplication::Application.routes.draw do
 
 
 
-  devise_for :users #, :controllers => { :invitations => "invitations" }
+  devise_for :users
   resources :users, only: [:edit, :update, :index]
 
 

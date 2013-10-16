@@ -79,6 +79,16 @@ class Sale < ActiveRecord::Base
 	# create_all_donations runs immediately after the sale commit and relies on the sale.buyer and sale.supporter values set just before the commit.  This method creates donations for all three contribution types, but only for those that have non-zero contribution percentages.
 	private
 	def create_all_donations
+		if self.supporter.nil?
+				supporter_id = nil
+			else
+				supporter_id = self.supporter.serve.user_id
+		end
+		if self.buyer.nil?
+				buyer_id = nil
+			else
+				buyer_id = self.buyer.serve.user_id
+		end
 		if self.serve.promotion.merchant_pct > 0
 			Donation.create(
 				sale_id: self.id,
@@ -86,6 +96,8 @@ class Sale < ActiveRecord::Base
 				cause_id: self.serve.promotion.cause_id,
 				chosen_by: "merchant",
 				amount_cents: (self.amount_cents * ((self.serve.promotion.merchant_pct).to_f/100)).round,
+				supporter_id: supporter_id,
+				buyer_id: buyer_id
 				)
 		end
 
@@ -96,7 +108,8 @@ class Sale < ActiveRecord::Base
 				cause_id: Share.get_cause(self.buyer).id,
 				chosen_by: "buyer",
 				amount_cents: (self.amount_cents * ((self.buyer.promotion.buyer_pct).to_f/100)).round,
-				choosers_email: self.buyer.serve.email
+				choosers_email: self.buyer.serve.email,
+				chooser_id: buyer_id
 				)
 		end
 
@@ -108,7 +121,8 @@ class Sale < ActiveRecord::Base
 				cause_id: Share.get_cause(self.supporter).id,
 				chosen_by: "supporter",
 				amount_cents: (self.amount_cents * ((self.supporter.promotion.supporter_pct).to_f/100)).round,
-				choosers_email: self.supporter.serve.email
+				choosers_email: self.supporter.serve.email,
+				chooser_id: supporter_id
 				)
 
 		end

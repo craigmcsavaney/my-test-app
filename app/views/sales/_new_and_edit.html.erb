@@ -10,6 +10,12 @@
         <%= f.label :share_id %>
         <%= select_tag 'sale[share_id]', options_from_collection_for_select(Share.all, :id, :id, @sale.share_id) %>
 
+        <%= f.label :supporter_share_id, "Supporter Share ID, determined by the Share" %>
+        <%= f.text_field :supporter_share_id, readonly: true %>
+
+        <%= f.label :buyer_share_id, "Buyer Share ID, determined by the Share" %>
+        <%= f.text_field :buyer_share_id, readonly: true %>
+
         <%= f.label :amount %>
         <%= f.text_field :amount %>
 

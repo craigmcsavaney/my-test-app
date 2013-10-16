@@ -2,12 +2,15 @@ class Donation < ActiveRecord::Base
   	include NotDeleteable
 	versioned
     
-    attr_accessible :sale_id, :merchant_id, :cause_id, :chosen_by, :amount, :amount_cents, :choosers_email
+    attr_accessible :sale_id, :merchant_id, :cause_id, :chosen_by, :amount, :amount_cents, :choosers_email, :chooser_id, :supporter_id, :buyer_id
 
-  	belongs_to :sale  #, counter_cache: true
+  	belongs_to :sale
   	delegate :share, :to => :sale, :allow_nil => true
   	belongs_to :merchant
   	belongs_to :cause
+  	belongs_to :chooser, class_name: "User", foreign_key: "chooser_id" 
+  	belongs_to :supporter, class_name: "User", foreign_key: "supporter_id" 
+  	belongs_to :buyer, class_name: "User", foreign_key: "buyer_id" 
 
   	validates :sale, presence: true
 	validates :sale_id, presence: true

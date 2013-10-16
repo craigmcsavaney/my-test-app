@@ -33,19 +33,20 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :merchants
   has_and_belongs_to_many :causes
   has_many :serves
+  has_many :donations
 
   before_save :setup_role
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :invitable, :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :token_authenticatable, :confirmable, :lockable,
-         :timeoutable
+         :timeoutable, :invitable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :role_ids, :merchant_ids, :cause_ids
+  attr_accessible :email, :encrypted_password, :remember_me, :role_ids, :merchant_ids, :cause_ids, :password, :password_confirmation
   # attr_accessible :title, :body
 
   # Default role is "User"
@@ -60,11 +61,16 @@ class User < ActiveRecord::Base
       return !!self.roles.find_by_name(role.to_s.camelize)
   end 
 
+  # This is called from the API serve and update methods.  The input should be an email address, and the function returns a user id.  If the input email does not match any emails in the User table, a new user is created by Devise-Invitable and an invitation is sent to the email address with a confirmation link.  Then the permanent user cookie is updated with the new email address.  If the email address already exists in the User table, the id of the user record is returned.
   def self.GetUserID(user)
+    @type = ""
+    @user_id = nil
     if self.find_by_email(user).nil?
       self.invite!(email: user)
+      @type = "new"
     end
-    return self.find_by_email(user).id
+    @user_id = self.find_by_email(user).id
+    return {user_id: @user_id, type: @type}
   end
 
 

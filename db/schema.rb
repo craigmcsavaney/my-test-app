@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131007125741) do
+ActiveRecord::Schema.define(:version => 20131016184500) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -82,6 +82,9 @@ ActiveRecord::Schema.define(:version => 20131007125741) do
     t.boolean  "deleted"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.integer  "chooser_id"
+    t.integer  "supporter_id"
+    t.integer  "buyer_id"
   end
 
   create_table "merchants", :force => true do |t|
@@ -271,6 +274,7 @@ ActiveRecord::Schema.define(:version => 20131007125741) do
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.datetime "invitation_created_at"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
