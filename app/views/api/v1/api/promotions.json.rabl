@@ -1,5 +1,5 @@
 object @promotion
-attributes :name, :id, :banner
+attributes :name, :id, :banner, :landing_page
 attributes :cause_id => :default_cause
 
 node :button_html do |promotion|

@@ -39,6 +39,9 @@ module Api
                 # which should be written to a CB session cookie, and a serve_id, which should
                 # be written to the permanent CB cookie.
 
+                # test of devise rememberable follows:
+                # User.find(1).remember_me!
+
                 # first, verify that a callback parameter was passed
                 if params[:callback].nil?
                     render 'api/v1/api/errors/missing_callback'
