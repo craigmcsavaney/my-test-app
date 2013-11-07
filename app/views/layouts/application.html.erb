@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%= stylesheet_link_tag    "application", media: "all" %>
 	<%= javascript_include_tag "application" %>
-	<%= javascript_include_tag params[:controller] if Myapplication::Application.assets.find_asset("#{params[:controller]}.js") %>
+	<%= javascript_include_tag controller_name if Myapplication::Application.assets.find_asset("#{controller_name}.js") %>
 	<%= yield :js %>
 	<%= csrf_meta_tags %>
 	<%= render 'layouts/shim' %>
