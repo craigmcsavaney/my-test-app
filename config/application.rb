@@ -29,7 +29,7 @@ module Myapplication
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
+    config.time_zone = 'Mountain Time (US & Canada)'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
@@ -60,5 +60,10 @@ module Myapplication
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # From Heroku, guidance on fixing asset compile error in production: 
+    # "While precompiling assets, in Rails 3.x, you can prevent initializing your application and
+    # connecting to the database by ensuring that the following line is in your config/application.rb:"
+    config.assets.initialize_on_precompile = false
   end
 end
