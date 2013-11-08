@@ -90,8 +90,8 @@ function CBSale(amount,transaction_id) {
 
     var scripts = [
         {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
-        {"name": "Bootstrap", "src": URLPrefix + "../bootstrap/js/bootstrap.min.js"},
-        {"name": "Select2", "src": URLPrefix + "../select2/select2.js"},
+        {"name": "Bootstrap", "src": URLPrefix + "../widget/bootstrap.min.js"},
+        {"name": "Select2", "src": URLPrefix + "../widget/select2.js"},
     ];
 
     // Set the ScriptsCounter to 0.  This is incremented as the scripts are loaded
