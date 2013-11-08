@@ -15,4 +15,8 @@ module ApplicationHelper
     link_to '<i class="icon-arrow-left"></i> Go Back'.html_safe, :back
   end
 
+  def javascript(*files)
+    content_for(:head) { javascript_include_tag(*files) }
+  end
+
 end
