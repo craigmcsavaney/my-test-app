@@ -869,26 +869,28 @@ function CBSale(amount,transaction_id) {
 
                 var move_up = 0, move_left = 0;
 
-                if (widget_right > win_width) {
+                $("#cbw-widget").css("top", ((win_hgt-widget_hgt)/2);
 
-                    move_left = (widget_right - win_width);
-                    $("#cbw-widget").css("margin-left", -(move_left + 15));
-                
-                } else {
-                
-                    $("#cbw-widget").css("margin-left", 0);
-                }
+                // if (widget_right > win_width) {
 
-                if (widget_bottom > win_hgt) {
-
-                    move_up = (widget_bottom - win_hgt);
-
-                    $("#cbw-widget").css("margin-top", -(move_up + 15));
+                //     move_left = (widget_right - win_width);
+                //     $("#cbw-widget").css("margin-left", -(move_left + 15));
                 
-                } else {
+                // } else {
                 
-                    $("#cbw-widget").css("margin-top", "5px");
-                }
+                //     $("#cbw-widget").css("margin-left", 0);
+                // }
+
+                // if (widget_bottom > win_hgt) {
+
+                //     move_up = (widget_bottom - win_hgt);
+
+                //     $("#cbw-widget").css("margin-top", -(move_up + 15));
+                
+                // } else {
+                
+                //     $("#cbw-widget").css("margin-top", "5px");
+                // }
             }
         }
 

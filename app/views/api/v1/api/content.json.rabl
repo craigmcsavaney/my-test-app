@@ -4,7 +4,7 @@ node :content do
 	
 '<div class="cbw">
 	<div id="cbw-btn"></div>
-	<div id="cbw-widget" style="display:none;">
+	<div id="cbw-widget" style="display:none;" class="box_shadow">
 		<div id="cbw-heading">
 			CauseButton
 			<span id="cbw-welcome-user-message" style="display:none;">Welcome&nbsp;
