@@ -6,7 +6,7 @@ node :content do
 	<div id="cbw-btn"></div>
 	<div id="cbw-widget" style="display:none;" class="box_shadow">
 		<div id="cbw-heading">
-			CauseButton
+			<div id="cbw-heading-logo"></div>
 			<span id="cbw-welcome-user-message" style="display:none;">Welcome&nbsp;
 				<span id="cbw-user-name"></span>
 				<a id="cbw-user-name-change">&nbsp(change)</a>
@@ -31,7 +31,7 @@ node :content do
 						<p id="cbw-email-input-error-message" style="display:none;" class="error">Please correct email<p>
 					</div>
 				</div>
-				<div class="control-group">
+				<div id="cbw-channels-grp" class="control-group">
 	            	<label for="cbw-channels" class="control-label">Preview & Edit</label>
 	            	<div id="cbw-channels" class="controls"/>
 	            </div>			

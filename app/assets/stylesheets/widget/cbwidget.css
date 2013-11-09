@@ -102,6 +102,7 @@ select {
 	margin: 0 10px 0 0;
 	color: #ffffff;
 	opacity: 100;
+	font-weight: normal;
 }
 
 #cbw-welcome-user-message {
@@ -159,4 +160,8 @@ select {
 
 #cbw-channels-grp .control-label {
 	margin-bottom: 0;
+}
+
+#cbw-heading-logo {
+	background-image: url('cb-white-ltblue-15x123.png');
 }
