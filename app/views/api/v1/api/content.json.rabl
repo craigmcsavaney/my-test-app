@@ -48,10 +48,10 @@ node :content do
 						<a id="cbw-post-button" class="disabled btn btn-primary" href="#" style="margin-left: 55px;">Post</a>
 					</div> -->
 				</div>
-				<div class="control-group" id="cbw-links">
-    				<span style="font-size:10px;" id="cbw-links-terms">learn more</span>
-				</div>
 			</form>          
+			<div id="cbw-links">
+    			<span style="font-size:10px;" id="cbw-links-terms">learn more</span>
+			</div>
 	    </div>
 	</div>
 </div>'
