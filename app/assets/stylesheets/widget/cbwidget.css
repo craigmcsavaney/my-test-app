@@ -1,15 +1,12 @@
 #cbw-widget {
-	width: 450px;
+	width: 400px;
 	height: auto;
 	border: 1px solid #003399;
-	background-color: white;
+	background-color: 0E76BC;
 	border-radius: 6px;
-	padding: 5px;
-	margin-top: 5px;
 	position: fixed;
 	top: 400px;
 	right: 1px;
-	margin-left: 0;
 }
 
 .form-small .control-group {
@@ -128,4 +125,23 @@ select {
 
 .cbw .control-label {
 	color: #0E76BC;
+	width: 100px;
+}
+
+.cbw .controls {
+	margin-left: 110px;
+}
+
+.cbw .control-group {
+	margin-bottom: 0;
+}
+
+.cbw form {
+	margin-bottom: 0;
+}
+
+#cbw-body-normal {
+	background-color: #ffffff;
+	border-radius: 0 0 6px 6px;
+	padding: 5px;
 }
