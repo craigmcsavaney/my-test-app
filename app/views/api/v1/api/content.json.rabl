@@ -6,7 +6,7 @@ node :content do
 	<div id="cbw-btn"></div>
 	<div id="cbw-widget" style="display:none;" class="box_shadow">
 		<div id="cbw-heading">
-			<div id="cbw-heading-logo"></div>
+			<div id="cbw-heading-logo"><span style="color:#ffffff;">cause</span><span style="color:#25AAE1;">button</span></div>
 			<span id="cbw-welcome-user-message" style="display:none;">Welcome&nbsp;
 				<span id="cbw-user-name"></span>
 				<a id="cbw-user-name-change">&nbsp(change)</a>
