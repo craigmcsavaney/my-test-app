@@ -24,7 +24,7 @@
 }
 
 .form-small input[type='text'] {
-	width: 90%;
+	width: 93%;
 }
 
 .form-small textarea {
@@ -34,14 +34,13 @@
 }
 
 .cbw-select2 {
-	width: 90%;
+	width: 98%;
 }
 
 #cbw-heading {
 	background-color: #0E76BC;
 	font-size: 14px;
 	padding-left: 5px;
-	margin-bottom: 5px;
 	height: 23px;
 	padding-top: 5px;
 	font-weight: bold;
@@ -51,6 +50,7 @@
 
 .cbw-channel-toggle {
 	margin-right: 5px;
+	cursor: pointer;
 }
 
 #cbw-share-msg-ctrl-grp textarea {
@@ -120,6 +120,10 @@ select {
 	margin-bottom: 3px;
 } 
 
+#cbw-links-terms {
+	cursor: pointer;
+}
+
 .cbw .box_shadow {
   -webkit-box-shadow: 0px 0px 10px 3px #666666; /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
           box-shadow: 0px 0px 10px 3px #666666; /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
@@ -128,6 +132,7 @@ select {
 #cbw-body-normal .control-label {
 	color: #0E76BC;
 	width: 100px;
+	cursor: default;
 }
 
 #cbw-body-normal .controls {
