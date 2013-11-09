@@ -52,9 +52,6 @@ node :content do
 						<a id="cbw-post-button" class="disabled btn btn-primary" href="#" style="margin-left: 55px;">Post</a>
 					</div> -->
 				</div>
-				<div id="cbw-links" class="control-group">
-	            	<a id="cbw-terms-link" style="font-size:8px;" href="#">terms</a>
-	            </div>			
 			</form>          
 	    </div>
 	</div>
