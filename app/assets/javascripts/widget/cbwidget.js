@@ -869,7 +869,7 @@ function CBSale(amount,transaction_id) {
 
                 var move_up = 0, move_left = 0;
 
-                $("#cbw-widget").css("top", ((win_hgt-widget_hgt)/2);
+                $("#cbw-widget").css("top", ((win_hgt-widget_hgt)/2));
 
                 // if (widget_right > win_width) {
 
