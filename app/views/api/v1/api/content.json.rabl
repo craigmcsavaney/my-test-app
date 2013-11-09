@@ -53,7 +53,7 @@ node :content do
 					</div> -->
 				</div>
 				<div id="cbw-links" class="control-group">
-	            	<span id="cbw-terms-link" style="font-size:8px;">terms</span>
+	            	<a id="cbw-terms-link" style="font-size:8px;" href="#">terms</a>
 	            </div>			
 			</form>          
 	    </div>
