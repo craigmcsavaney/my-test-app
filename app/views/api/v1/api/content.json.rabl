@@ -26,7 +26,7 @@ node :content do
 	        	<div id="cbw-email-ctl-grp" class="control-group">
 					<label class="control-label" for="cbw-input-email">E-Mail</label>
 					<div class="controls">
-						<input id="cbw-email-input" type="text" placeholder="E-Mail (it's optional. really.)">
+						<input id="cbw-email-input" type="text" placeholder="E-Mail (zoptional)">
 						<p id="cbw-email-input-error-message" style="display:none;" class="error">Please correct email<p>
 					</div>
 				</div>
