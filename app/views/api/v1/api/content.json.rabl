@@ -26,7 +26,7 @@ node :content do
 	        	<div id="cbw-email-ctl-grp" class="control-group">
 					<label class="control-label" for="cbw-input-email">E-Mail</label>
 					<div class="controls">
-						<input id="cbw-email-input" type="text" placeholder="E-Mail (optional)">
+						<input id="cbw-email-input" type="text" placeholder="E-Mail (it's optional. really.)">
 						<p id="cbw-email-input-error-message" style="display:none;" class="error">Please correct email<p>
 					</div>
 				</div>
@@ -52,6 +52,9 @@ node :content do
 						<a id="cbw-post-button" class="disabled btn btn-primary" href="#" style="margin-left: 55px;">Post</a>
 					</div> -->
 				</div>
+				<div id="cbw-links" class="control-group">
+	            	<span id="cbw-terms-link" style="font-size:8px;">terms</span>
+	            </div>			
 			</form>          
 	    </div>
 	</div>
