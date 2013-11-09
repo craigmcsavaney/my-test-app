@@ -847,25 +847,28 @@ function CBSale(amount,transaction_id) {
 
         function RepositionWidget() {
 
+            var widget_width = $("#cbw-widget").width();
+            var widget_hgt = $("#cbw-widget").height();
+
+            var win_hgt = $(window).height();
+            var win_width = $(window).width();
+
+            var widget_left = $("#cbw-widget").position().left;
+            var widget_top = $("#cbw-widget").position().top;
+            var widget_bottom = widget_top + widget_hgt;
+            var widget_right = widget_left + widget_width;
+
             if (WidgetPosition == "center") {
 
-                $("#cbw-widget").css('top', '50%');
-                $("#cbw-widget").css('left', '50%');
-                $("#cbw-widget").css('margin-top', '-225px');
-                $("#cbw-widget").css('margin-left', '-225px');
+                $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                // $("#cbw-widget").css('top', '50%');
+                // $("#cbw-widget").css('left', '50%');
+                // $("#cbw-widget").css('margin-top', '-225px');
+                // $("#cbw-widget").css('margin-left', '-225px');
 
             } else {
 
-                var win_hgt = $(window).height();
-                var win_width = $(window).width();
-
-                var widget_width = $("#cbw-widget").width();
-                var widget_hgt = $("#cbw-widget").height();
-
-                var widget_left = $("#cbw-widget").position().left;
-                var widget_top = $("#cbw-widget").position().top;
-                var widget_bottom = widget_top + widget_hgt;
-                var widget_right = widget_left + widget_width;
 
                 var move_up = 0, move_left = 0;
 
