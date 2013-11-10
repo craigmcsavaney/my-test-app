@@ -52,7 +52,10 @@ node :content do
 				</div>
 			</form>          
 			<div id="cbw-links">
-    			<span id="cbw-links-terms">learn more</span>
+    			<span id="cbw-links-terms-toggle">show more</span>
+			</div>
+			<div id="cbw-links-terms" style="display:none;" >
+    			lots and lots and lots of terms go here
 			</div>
 	    </div>
 	</div>

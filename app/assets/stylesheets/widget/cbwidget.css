@@ -118,10 +118,10 @@ select {
 	line-height: 10px;
 	margin-bottom: 3px;
 	color: #666666;
-	font-size: 8px;
+	font-size: 8pt;
 } 
 
-#cbw-links-terms {
+#cbw-links-terms-toggle {
 	cursor: pointer;
 }
 

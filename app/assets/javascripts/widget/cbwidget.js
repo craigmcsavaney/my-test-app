@@ -1185,6 +1185,26 @@ function CBSale(amount,transaction_id) {
 
         });
 
+        $(document).on('click', '#cbw-links-terms-toggle', function() {
+
+            var display = $("#cbw-links-terms").css('display');
+
+            $("#cbw-links-terms").toggle();
+
+            if (display == "none") {
+
+                $("#cbw-links-terms-toggle").val("show less"); 
+
+            } else {
+
+                $("#cbw-links-terms-toggle").val("show more");
+
+            }
+
+            RepositionWidget();
+
+        });
+
         /* --------------------------------------------------------
          * Channel Selection Icon Click Handler (Toggle)
          * --------------------------------------------------------
