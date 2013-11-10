@@ -1193,11 +1193,11 @@ function CBSale(amount,transaction_id) {
 
             if (display == "none") {
 
-                $("#cbw-links-terms-toggle").val("show less"); 
+                $("#cbw-links-terms-toggle").html("show less"); 
 
             } else {
 
-                $("#cbw-links-terms-toggle").val("show more");
+                $("#cbw-links-terms-toggle").html("show more");
 
             }
 
