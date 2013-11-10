@@ -6,12 +6,14 @@ node :content do
 	<div id="cbw-btn"></div>
 	<div id="cbw-widget" style="display:none;" class="box_shadow">
 		<div id="cbw-heading">
-			<div id="cbw-heading-logo"><span style="color:#ffffff;">cause</span><span style="color:#25AAE1;">button</span></div>
+			<div id="cbw-heading-logo">
+				<img id="cbw-heading-logo-img" src="https://morning-savannah-7661.herokuapp.com/assets/widget/cb-white-ltblue-15x123.svg">
+			</div>
 			<span id="cbw-welcome-user-message" style="display:none;">Welcome&nbsp;
 				<span id="cbw-user-name"></span>
 				<a id="cbw-user-name-change">&nbsp(change)</a>
 			</span>
-			<button type="button" class="close" aria-hidden="true">&times;</button>
+			<button type="button" class="close" aria-hidden="true" id="cbw-heading-close">&times;</button>
 		</div>
 		<div id="cbw-body-normal">
 			<p id="cbw-promo-text">Thanks for clicking on the Cause Button! Simply choose a cause and post a message \

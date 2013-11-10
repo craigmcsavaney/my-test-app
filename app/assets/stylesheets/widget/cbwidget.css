@@ -39,11 +39,9 @@
 
 #cbw-heading {
 	background-color: #0E76BC;
-	font-size: 14px;
-	padding-left: 5px;
-	height: 23px;
-	padding-top: 6px;
-	font-weight: bold;
+	padding-left: 4px;
+	height: 31px;
+	padding-top: 4px;
 	border-radius: 6px 6px 0px 0px;
 	border-bottom: 1px solid #003399;
 }
@@ -164,13 +162,15 @@ select {
 
 #cbw-heading-logo {
 	display: inline;
-	border: 2px solid #ffffff;
-	border-radius: 5px;
-	font-size: 150%;
-	letter-spacing: 1px;
-	padding: 0 4px;
 }
 
 #cbw-heading-close {
 	float: right;
+}
+
+#cbw-heading-logo-img {
+    border: 1px solid #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    height: 20px;
+    padding: 3px 5px;
 }
