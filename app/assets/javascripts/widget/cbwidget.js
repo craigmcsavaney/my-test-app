@@ -260,6 +260,7 @@ function CBSale(amount,transaction_id) {
 
         if (!WidgetPosition || WidgetPosition != "center") 
             WidgetPosition = "drop-from-button";
+        alert(WidgetPosition);
 
         // Get the cbw-url-target value from the div on the parent web page.  If the value is "local" then target links will be constructed using the link to this page when sharing into channels.  If the value is blank or "global", then target links will be constructed using the target url for this promotion from the serve json.
         URLTarget = div.attr("cbw-url-target");
