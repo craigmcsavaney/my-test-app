@@ -858,42 +858,89 @@ function CBSale(amount,transaction_id) {
             var widget_bottom = widget_top + widget_hgt;
             var widget_right = widget_left + widget_width;
 
-            if (WidgetPosition == "center") {
+            switch (WidgetPosition) {
 
-                $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                $("#cbw-widget").css('left', ((win_width-widget_width)/2));
-                // $("#cbw-widget").css('top', '50%');
-                // $("#cbw-widget").css('left', '50%');
-                // $("#cbw-widget").css('margin-top', '-225px');
-                // $("#cbw-widget").css('margin-left', '-225px');
+                case 'top-left':
 
-            } else {
+                    $("#cbw-widget").css('top', '1px');
+                    $("#cbw-widget").css('left', '1px');
+
+                case 'top-center':
+
+                    $("#cbw-widget").css('top', '1px');
+                    $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+
+                case 'top-right':
+
+                    $("#cbw-widget").css('top', '1px');
+                    $("#cbw-widget").css('right', '1px');
+
+                case 'left-center':
+
+                    $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                    $("#cbw-widget").css('left', '1px');
+
+                case 'center':
+
+                    $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                    $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                    // $("#cbw-widget").css('top', '50%');
+                    // $("#cbw-widget").css('left', '50%');
+                    // $("#cbw-widget").css('margin-top', '-225px');
+                    // $("#cbw-widget").css('margin-left', '-225px');
+
+                case 'right-center':
+
+                    $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                    $("#cbw-widget").css('right', '1px');
+
+                case 'bottom-left':
+
+                    $("#cbw-widget").css('bottom', '1px');
+                    $("#cbw-widget").css('left', '1px');
+
+                case 'bottom-center':
+
+                    $("#cbw-widget").css('bottom', '1px');
+                    $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+
+                case 'bottom-right':
+
+                    $("#cbw-widget").css('bottom', '1px');
+                    $("#cbw-widget").css('right', '1px');
+
+                default:
+
+                    // right-center:
+
+                    $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                    $("#cbw-widget").css('right', '1px');                
 
 
-                var move_up = 0, move_left = 0;
+                    // var move_up = 0, move_left = 0;
 
-                $("#cbw-widget").css("top", ((win_hgt-widget_hgt)/2));
+                    // $("#cbw-widget").css("top", ((win_hgt-widget_hgt)/2));
 
-                // if (widget_right > win_width) {
+                    // if (widget_right > win_width) {
 
-                //     move_left = (widget_right - win_width);
-                //     $("#cbw-widget").css("margin-left", -(move_left + 15));
-                
-                // } else {
-                
-                //     $("#cbw-widget").css("margin-left", 0);
-                // }
+                    //     move_left = (widget_right - win_width);
+                    //     $("#cbw-widget").css("margin-left", -(move_left + 15));
+                    
+                    // } else {
+                    
+                    //     $("#cbw-widget").css("margin-left", 0);
+                    // }
 
-                // if (widget_bottom > win_hgt) {
+                    // if (widget_bottom > win_hgt) {
 
-                //     move_up = (widget_bottom - win_hgt);
+                    //     move_up = (widget_bottom - win_hgt);
 
-                //     $("#cbw-widget").css("margin-top", -(move_up + 15));
-                
-                // } else {
-                
-                //     $("#cbw-widget").css("margin-top", "5px");
-                // }
+                    //     $("#cbw-widget").css("margin-top", -(move_up + 15));
+                    
+                    // } else {
+                    
+                    //     $("#cbw-widget").css("margin-top", "5px");
+                    // }
             }
         }
 
