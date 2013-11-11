@@ -258,10 +258,6 @@ function CBSale(amount,transaction_id) {
         // Get the widget position value from the div on the parent web page
         WidgetPosition = div.attr("cbw-position");
 
-        if (!WidgetPosition || WidgetPosition != "center") 
-            WidgetPosition = "drop-from-button";
-        alert(WidgetPosition);
-
         // Get the cbw-url-target value from the div on the parent web page.  If the value is "local" then target links will be constructed using the link to this page when sharing into channels.  If the value is blank or "global", then target links will be constructed using the target url for this promotion from the serve json.
         URLTarget = div.attr("cbw-url-target");
 
@@ -858,6 +854,20 @@ function CBSale(amount,transaction_id) {
             var widget_top = $("#cbw-widget").position().top;
             var widget_bottom = widget_top + widget_hgt;
             var widget_right = widget_left + widget_width;
+
+            var widget_position_valid = false;
+
+            var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-right","bottom-center","bottom-right"];
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] === WidgetPosition) {
+                    widget_position_valid = true;
+                }
+            }
+
+            if (!widget_position_valid) {
+                WidgetPostition = "right-center";
+                // need to change this to be the default widget location passed in with the serve data.
+            }
 
             switch (WidgetPosition) {
 
