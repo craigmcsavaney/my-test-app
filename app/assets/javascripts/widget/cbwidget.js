@@ -856,12 +856,10 @@ function CBSale(amount,transaction_id) {
             var widget_right = widget_left + widget_width;
 
             var widget_position_valid = false;
-            alert(WidgetPosition);
             var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
             for (var i = 0; i < arr.length; i++) {
                 if (arr[i] === WidgetPosition) {
                     widget_position_valid = true;
-                    alert(widget_position_valid);
                 }
             }
 
@@ -869,7 +867,6 @@ function CBSale(amount,transaction_id) {
                 WidgetPostition = "right-center";
                 // need to change this to be the default widget location passed in with the serve data.
             }
-            alert(WidgetPosition);
 
             switch (WidgetPosition) {
 
@@ -877,21 +874,25 @@ function CBSale(amount,transaction_id) {
 
                     $("#cbw-widget").css('top', '1px');
                     $("#cbw-widget").css('left', '1px');
+                    break;
 
                 case 'top-center':
 
                     $("#cbw-widget").css('top', '1px');
                     $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                    break;
 
                 case 'top-right':
 
                     $("#cbw-widget").css('top', '1px');
                     $("#cbw-widget").css('right', '1px');
+                    break;
 
                 case 'left-center':
 
                     $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
                     $("#cbw-widget").css('left', '1px');
+                    break;
 
                 case 'center':
 
@@ -901,34 +902,39 @@ function CBSale(amount,transaction_id) {
                     // $("#cbw-widget").css('left', '50%');
                     // $("#cbw-widget").css('margin-top', '-225px');
                     // $("#cbw-widget").css('margin-left', '-225px');
+                    break;
 
                 case 'right-center':
 
                     $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
                     $("#cbw-widget").css('right', '1px');
+                    break;
 
                 case 'bottom-left':
 
                     $("#cbw-widget").css('bottom', '1px');
                     $("#cbw-widget").css('left', '1px');
+                    break;
 
                 case 'bottom-center':
 
                     $("#cbw-widget").css('bottom', '1px');
                     $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                    break;
 
                 case 'bottom-right':
 
                     $("#cbw-widget").css('bottom', '1px');
                     $("#cbw-widget").css('right', '1px');
+                    break;
 
                 default:
-
-                    // right-center:
+                    // set to right-center position.  This should never happen as it requires
+                    // both an invalid widget-position value from the merchant web page and
+                    // an invalid widget position value from the serve data.
 
                     $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                    $("#cbw-widget").css('right', '1px');                
-
+                    $("#cbw-widget").css('right', '1px');   
 
                     // var move_up = 0, move_left = 0;
 
