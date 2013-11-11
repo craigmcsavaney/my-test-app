@@ -856,11 +856,12 @@ function CBSale(amount,transaction_id) {
             var widget_right = widget_left + widget_width;
 
             var widget_position_valid = false;
-
-            var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-right","bottom-center","bottom-right"];
+            alert(WidgetPosition);
+            var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
             for (var i = 0; i < arr.length; i++) {
                 if (arr[i] === WidgetPosition) {
                     widget_position_valid = true;
+                    alert(widget_position_valid);
                 }
             }
 
@@ -868,6 +869,7 @@ function CBSale(amount,transaction_id) {
                 WidgetPostition = "right-center";
                 // need to change this to be the default widget location passed in with the serve data.
             }
+            alert(WidgetPosition);
 
             switch (WidgetPosition) {
 
