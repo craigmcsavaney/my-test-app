@@ -32,7 +32,6 @@ node :content do
 					</div>
 				</div>
 	        	<div id="cbw-email-ctl-grp" class="control-group" style="display:none;">
-					<label class="control-label" for="cbw-input-email">E-Mail</label>
 					<div class="controls">
 						<input id="cbw-email-input" type="text" placeholder="enter your email address">
 						<p id="cbw-email-input-error-message" style="display:none;" class="error">Please correct email</p>

@@ -1240,7 +1240,7 @@ function CBSale(amount,transaction_id) {
             //    RegisterWidgetView(CBServeUrlBase, CBMerchantID);
             //}
 
-            RepositionWidget();
+            //RepositionWidget();
 
         });        $(window).resize(function() {
 
