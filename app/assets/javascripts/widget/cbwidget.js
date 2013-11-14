@@ -1235,6 +1235,8 @@ function CBSale(amount,transaction_id) {
 
                 $("#cbw-email-input").val('');
 
+                $("#cbw-email-ctl-grp").removeClass('error');
+
             }
 
             var display = $("#cbw-email-ctl-grp").css('display');
