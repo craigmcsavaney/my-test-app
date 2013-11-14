@@ -1231,6 +1231,12 @@ function CBSale(amount,transaction_id) {
 
         $(document).on('change', '#cbw-email-checkbox', function() {
 
+            if ($("#cbw-email-ctl-grp").hasClass('error')) {
+
+                $("#cbw-email-input").val('');
+
+            }
+
             var display = $("#cbw-email-ctl-grp").css('display');
 
             $("#cbw-email-ctl-grp").toggle();
