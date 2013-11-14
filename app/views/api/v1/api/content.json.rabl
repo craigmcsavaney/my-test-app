@@ -35,7 +35,6 @@ node :content do
 					<label class="control-label" for="cbw-input-email">E-Mail</label>
 					<div class="controls">
 						<input id="cbw-email-input" type="text" placeholder="enter your email address">
-						<!-- <p id="cbw-email-hint">Enter your email to receive updates on how much you have helped raise for your cause!</p> -->
 						<p id="cbw-email-input-error-message" style="display:none;" class="error">Please correct email<p>
 					</div>
 				</div>
