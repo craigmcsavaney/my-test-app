@@ -25,11 +25,17 @@ node :content do
 						<select id="cbw-cause-select" class="cbw-select2"/>
 					</div>
 				</div>
-	        	<div id="cbw-email-ctl-grp" class="control-group">
+				<div class="control-group" id="cbw-email-checkbox-ctl-grp">
+					<label style="text-align: center; display: block; padding-top: 0px;" class="control-label" for="cbw-input-email-checkbox"><input type="checkbox"></label>
+					<div class="controls">
+						<p style="margin-top: 3px;" id="cbw-email-checkbox-text">Tell me when I've caused a donation!</p>
+					</div>
+				</div>
+	        	<div id="cbw-email-ctl-grp" class="control-group" style="display:none;">
 					<label class="control-label" for="cbw-input-email">E-Mail</label>
 					<div class="controls">
-						<input id="cbw-email-input" type="text" placeholder="E-Mail (optional)">
-						<p id="cbw-email-hint">Enter your email to receive updates on how much you have helped raise for your cause!</p>
+						<input id="cbw-email-input" type="text" placeholder="enter your email address">
+						<!-- <p id="cbw-email-hint">Enter your email to receive updates on how much you have helped raise for your cause!</p> -->
 						<p id="cbw-email-input-error-message" style="display:none;" class="error">Please correct email<p>
 					</div>
 				</div>

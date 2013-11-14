@@ -5,6 +5,7 @@
 	background-color: #0E76BC;
 	border-radius: 6px;
 	position: fixed;
+	z-index: 9999;
 }
 
 .form-small .control-group {
@@ -174,4 +175,22 @@ select {
     border-radius: 5px 5px 5px 5px;
     height: 20px;
     padding: 3px 5px;
+}
+
+#cbw-main-btn {
+	cursor: pointer;
+}
+
+#cbw-email-checkbox-ctl-grp {
+	margin-bottom:0;
+}
+
+#cbw-email-checkbox-text {
+	margin-top: 3px;
+}
+
+#cbw-input-email-checkbox {
+    display: block;
+    padding-top: 0;
+    text-align: center;
 }
