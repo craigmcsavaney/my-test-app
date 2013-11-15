@@ -447,7 +447,7 @@ function CBSale(amount,transaction_id) {
 
             // add the cause button html to the cbw html.  
 
-            $("#cbw-btn").append(ServeData.promotion.button_html);
+            $(".cbw-btn").append(ServeData.promotion.button_html);
 
             // Populate the promotion text dictated by the server
 
