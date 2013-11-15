@@ -3,7 +3,6 @@ object false
 node :content do
 	
 '<div class="cbw">
-	<div class="cbw-btn"></div>
 	<div id="cbw-widget" style="display:none;" class="box_shadow">
 		<div id="cbw-heading">
 			<div id="cbw-heading-logo">
