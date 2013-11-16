@@ -4,8 +4,8 @@
 	<% if merchant.website? %>
 		<% @a = merchant.website %>
 	<% end %>
-	<% if merchant.website? %>
-		<% @b = merchant.website %>
+	<% if merchant.logo_link? %>
+		<% @b = merchant.logo_link %>
 	<% end %>
 	<% if merchant.button.nil? %>
 			<% @c = "none chosen" %>
