@@ -456,7 +456,7 @@ function CBSale(amount,transaction_id) {
 
             // Populate the active channels for current merchant/promotion
 
-            var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='chn_icons/icon-{0}-off.png'/>"
+            var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='https://morning-savannah-7661.herokuapp.com/assets/widget/chn_icons/icon-{0}-off.png'/>"
 
             var channel_div = $("#cbw-channels");
 
