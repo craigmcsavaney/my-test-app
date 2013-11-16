@@ -76,6 +76,7 @@ function CBSale(amount,transaction_id) {
         }
     }
 
+    // following gets to the /assets/widget/ directory
     URLPrefix  = script_url.substring(0,script_url.lastIndexOf("/") + 1);
 
     CBMerchantID = document.getElementById("cb-widget-replace").getAttribute("cbw-merchant-id");
@@ -90,8 +91,8 @@ function CBSale(amount,transaction_id) {
 
     var scripts = [
         {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
-        {"name": "Bootstrap", "src": URLPrefix + "../widget/bootstrap.min.js"},
-        {"name": "Select2", "src": URLPrefix + "../widget/select2.js"},
+        {"name": "Bootstrap", "src": URLPrefix + "bootstrap.min.js"},
+        {"name": "Select2", "src": URLPrefix + "select2.js"},
     ];
 
     // Set the ScriptsCounter to 0.  This is incremented as the scripts are loaded
@@ -455,7 +456,7 @@ function CBSale(amount,transaction_id) {
 
             // Populate the active channels for current merchant/promotion
 
-            var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='../img/chn_icons/icon-{0}-off.png'/>"
+            var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='chn_icons/icon-{0}-off.png'/>"
 
             var channel_div = $("#cbw-channels");
 
