@@ -1230,11 +1230,17 @@ function CBSale(amount,transaction_id) {
 
         });
 
-        $(document).on('hover', '.cbw-channel-toggle', function() {
+        $(document).on('mouseover', '.cbw-channel-toggle', function() {
 
             //var display = $("#cbw-widget").css('display');
 
-            $("#cbw-twitter").toggle();
+            if (this).attr('src').indexOf('-off.png') >= 0) {
+
+                $(this).attr('src').replace('-off.png','-on.png');
+
+            }
+
+            //$("#cbw-twitter").toggle();
 
             // if (display == "none") {
 
