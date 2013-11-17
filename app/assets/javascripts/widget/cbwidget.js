@@ -1230,6 +1230,21 @@ function CBSale(amount,transaction_id) {
 
         });
 
+        $(document).on('hover', '.cbw-channel-toggle', function() {
+
+            //var display = $("#cbw-widget").css('display');
+
+            $("#cbw-twitter").toggle();
+
+            // if (display == "none") {
+
+            //     RegisterWidgetView(CBServeUrlBase, CBMerchantID);
+            // }
+
+            // RepositionWidget();
+
+        });
+
         $(document).on('change', '#cbw-email-checkbox', function() {
 
             if ($("#cbw-email-ctl-grp").hasClass('error')) {
