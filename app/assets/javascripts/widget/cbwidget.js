@@ -1232,26 +1232,22 @@ function CBSale(amount,transaction_id) {
 
         $(document).on('mouseenter', '.cbw-channel-toggle', function() {
 
-            alert($(this).attr('src'));
-
-            alert($(this).attr('src').indexOf('-off.png'));
-
             if ($(this).attr('src').indexOf('-off.png') >= 0) {
 
-                $(this).attr('src').replace('-off.png','-over.png');
-
-                alert($(this).attr('src'));
+                var src = $(this).attr('src').replace('-off.png','-over.png');
+                
+                $(this).attr('src', src);
 
             }
         });
 
         $(document).on('mouseleave', '.cbw-channel-toggle', function() {
 
-            alert("mouseleave");
-
             if ($(this).attr('src').indexOf('-over.png') >= 0) {
 
-                $(this).attr('src').replace('-over.png','-off.png');
+                var src = $(this).attr('src').replace('-over.png','-off.png');
+                
+                $(this).attr('src', src);
 
             }
         });
