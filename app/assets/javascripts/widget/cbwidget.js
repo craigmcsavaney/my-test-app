@@ -1230,26 +1230,43 @@ function CBSale(amount,transaction_id) {
 
         });
 
-        $(document).on('mouseover', '.cbw-channel-toggle', function() {
+        $(document).on({
+            mouseenter: function () {
+                if ($(this).attr('src').indexOf('-off.png') >= 0) {
 
-            //var display = $("#cbw-widget").css('display');
+                    $(this).attr('src').replace('-off.png','-over.png');
 
-            if ($(this).attr('src').indexOf('-off.png') >= 0) {
+                }
+            },
+            mouseleave: function () {
+                if ($(this).attr('src').indexOf('-over.png') >= 0) {
 
-                $(this).attr('src').replace('-off.png','-on.png');
+                    $(this).attr('src').replace('-over.png','-off.png');
 
+                }
             }
+        }, ".cbw-channel-toggle"); //pass the element as an argument to .on
 
-            //$("#cbw-twitter").toggle();
+        // $(document).on('mouseover', '.cbw-channel-toggle', function() {
 
-            // if (display == "none") {
+        //     //var display = $("#cbw-widget").css('display');
 
-            //     RegisterWidgetView(CBServeUrlBase, CBMerchantID);
-            // }
+        //     if ($(this).attr('src').indexOf('-off.png') >= 0) {
 
-            // RepositionWidget();
+        //         $(this).attr('src').replace('-off.png','-on.png');
 
-        });
+        //     }
+
+        //     //$("#cbw-twitter").toggle();
+
+        //     // if (display == "none") {
+
+        //     //     RegisterWidgetView(CBServeUrlBase, CBMerchantID);
+        //     // }
+
+        //     // RepositionWidget();
+
+        // });
 
         $(document).on('change', '#cbw-email-checkbox', function() {
 
