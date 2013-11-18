@@ -1234,7 +1234,7 @@ function CBSale(amount,transaction_id) {
 
             //var display = $("#cbw-widget").css('display');
 
-            if $(this).attr('src').indexOf('-off.png') >= 0) {
+            if ($(this).attr('src').indexOf('-off.png') >= 0) {
 
                 $(this).attr('src').replace('-off.png','-on.png');
 
