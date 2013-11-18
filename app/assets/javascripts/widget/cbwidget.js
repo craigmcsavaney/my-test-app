@@ -979,7 +979,24 @@ function CBSale(amount,transaction_id) {
 
         function OpenChannel() {
 
-            new_img = SelectedChannel.attr('src').replace('-off.png','-on.png');
+            var new_img;
+
+            if (SelectedChannel.attr('src').indexOf('-off.png') >= 0) {
+                // if the current image is the -off image, replace it with the -on image
+
+                new_img = SelectedChannel.attr('src').replace('-off.png','-on.png');
+
+            } else if (SelectedChannel.attr('src').indexOf('-over.png') >= 0) {
+                //  if the current image is the -over image, replace it with the -on image
+
+                new_img = SelectedChannel.attr('src').replace('-over.png','-on.png');
+
+            } else {
+                // if the current image is neither the -off nor the -over image, do nothing
+
+                new_img = SelectedChannel.attr('src');
+
+            }
 
             SelectedChannel.attr('src', new_img);   
 
