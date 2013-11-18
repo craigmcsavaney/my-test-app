@@ -1232,11 +1232,15 @@ function CBSale(amount,transaction_id) {
 
         $(document).on('mouseenter', '.cbw-channel-toggle', function() {
 
-            alert("mouseenter");
+            alert($(this).attr('src'));
+
+            alert($(this).attr('src').indexOf('-off.png'));
 
             if ($(this).attr('src').indexOf('-off.png') >= 0) {
 
                 $(this).attr('src').replace('-off.png','-over.png');
+
+                alert($(this).attr('src'));
 
             }
         });
