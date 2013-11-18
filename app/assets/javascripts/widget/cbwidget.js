@@ -1232,6 +1232,8 @@ function CBSale(amount,transaction_id) {
 
         $(document).on('mouseenter', '.cbw-channel-toggle', function() {
 
+            alert("mouseenter");
+
             if ($(this).attr('src').indexOf('-off.png') >= 0) {
 
                 $(this).attr('src').replace('-off.png','-over.png');
@@ -1240,6 +1242,8 @@ function CBSale(amount,transaction_id) {
         });
 
         $(document).on('mouseleave', '.cbw-channel-toggle', function() {
+
+            alert("mouseleave");
 
             if ($(this).attr('src').indexOf('-over.png') >= 0) {
 
