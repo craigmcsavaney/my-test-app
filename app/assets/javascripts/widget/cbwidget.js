@@ -1230,22 +1230,41 @@ function CBSale(amount,transaction_id) {
 
         });
 
-        $(document).on({
-            mouseenter: function () {
-                if ($(this).attr('src').indexOf('-off.png') >= 0) {
+        $(document).on('mouseenter', '.cbw-channel-toggle', function() {
 
-                    $(this).attr('src').replace('-off.png','-over.png');
+            if ($(this).attr('src').indexOf('-off.png') >= 0) {
 
-                }
-            },
-            mouseleave: function () {
-                if ($(this).attr('src').indexOf('-over.png') >= 0) {
+                $(this).attr('src').replace('-off.png','-over.png');
 
-                    $(this).attr('src').replace('-over.png','-off.png');
-
-                }
             }
-        }, ".cbw-channel-toggle"); //pass the element as an argument to .on
+        });
+
+        $(document).on('mouseleave', '.cbw-channel-toggle', function() {
+
+            if ($(this).attr('src').indexOf('-over.png') >= 0) {
+
+                $(this).attr('src').replace('-over.png','-off.png');
+
+            }
+        });
+
+
+        // $(document).on({
+        //     mouseenter: function () {
+        //         if ($(this).attr('src').indexOf('-off.png') >= 0) {
+
+        //             $(this).attr('src').replace('-off.png','-over.png');
+
+        //         }
+        //     },
+        //     mouseleave: function () {
+        //         if ($(this).attr('src').indexOf('-over.png') >= 0) {
+
+        //             $(this).attr('src').replace('-over.png','-off.png');
+
+        //         }
+        //     }
+        // }, ".cbw-channel-toggle"); //pass the element as an argument to .on
 
         // $(document).on('mouseover', '.cbw-channel-toggle', function() {
 
