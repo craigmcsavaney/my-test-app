@@ -1130,7 +1130,8 @@ function CBSale(amount,transaction_id) {
                     // *** REDIRECT_URL MUST BE FOR THE SAME DOMAIN THAT FB APP IS REGISTERED TO ***
                     // *** HARDCODING HERE FOR NOW *** //s
 
-                    redirect_uri = "http://phil.causebutton.com/cbproto/fblanding.html?xyz=123";
+                    // redirect_uri = "http://phil.causebutton.com/cbproto/fblanding.html?xyz=123";
+                    redirect_uri = "http://causebutton.com/index.html?xyz=123";
 
                     // Hardcoding this for now 
                     // var app_id = "331567326978199";
