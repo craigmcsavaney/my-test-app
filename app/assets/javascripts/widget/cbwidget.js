@@ -458,28 +458,21 @@ function CBSale(amount,transaction_id) {
             // First, check to see if the value passed in from the current page is a valid
             // widget position value.
 
-            alert("WidgetPosition: "  + WidgetPosition);
-            alert("ServeData: " + ServeData.promotion.widget_position);
-
             var widget_position_valid = false;
             var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
 
             for (var i = 0; i < arr.length; i++) {
-                if (arr[i] === WidgetPosition) {
+                if (arr[i] == WidgetPosition) {
                     widget_position_valid = true;
                 }
             }
 
             // if the widget position from the current page is valid, use it.  Otherwise, use
-            // the value obtained from the ServeData.  If that value is missing for some reason,
-            // use "right-center".
+            // the value obtained from the ServeData.  If that ServeData value is missing, 
+            // the position will default to "right-center" when the widget is actually positioned.
             if (!widget_position_valid && ServeData.promotion.widget_position) {
                 WidgetPosition = ServeData.promotion.widget_position;
-            } else {
-                WidgetPosition = "right-center";
-            }
-
-            alert("WidgetPosition: " + WidgetPosition);
+            } 
 
             // Populate the active channels for current merchant/promotion
 
