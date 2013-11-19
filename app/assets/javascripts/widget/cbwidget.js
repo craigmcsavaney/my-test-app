@@ -458,6 +458,9 @@ function CBSale(amount,transaction_id) {
             // First, check to see if the value passed in from the current page is a valid
             // widget position value.
 
+            alert("WidgetPosition: "  + WidgetPosition);
+            alert("ServeData: " + ServeData.promotion.widget_position);
+
             var widget_position_valid = false;
             var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
 
@@ -476,6 +479,7 @@ function CBSale(amount,transaction_id) {
                 WidgetPosition = "right-center";
             }
 
+            alert("WidgetPosition: " + WidgetPosition);
 
             // Populate the active channels for current merchant/promotion
 
