@@ -7,10 +7,18 @@ class PromotionsController < ApplicationController
     @promotion.fb_caption = Setting.first.fb_caption
     @promotion.fb_redirect_url = Setting.first.fb_redirect_url
     @promotion.fb_thumb_url = Setting.first.fb_thumb_url
+    @promotion.twitter_msg_template = Setting.first.twitter_msg_template
+    @promotion.pin_image_url = Setting.first.pin_image_url
   end
 
   def new_admin
     @promotion = Promotion.new
+    @promotion.fb_link_label = Setting.first.fb_link_label
+    @promotion.fb_caption = Setting.first.fb_caption
+    @promotion.fb_redirect_url = Setting.first.fb_redirect_url
+    @promotion.fb_thumb_url = Setting.first.fb_thumb_url
+    @promotion.twitter_msg_template = Setting.first.twitter_msg_template
+    @promotion.pin_image_url = Setting.first.pin_image_url
   end
 
   def create

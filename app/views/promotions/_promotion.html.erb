@@ -1,5 +1,5 @@
 <li>
-	<% @a= @b= @c= @d= @e= @f= "" %>
+	<% @a= @b= @c= @d= @e= @f= @k= "" %>
 	<% if promotion.merchant_pct? %>
 		<% @a = promotion.merchant_pct %>
 	<% end %>
@@ -28,13 +28,16 @@
 		<% else %>
 		<% @h = "no" %>
 	<% end %>
+	<% @i = 0 %>
+	<% promotion.serves.each{|s| @i += s.shares.size} %>
 	<% if promotion.disable_msg_editing? %>
 		<% @j = "Yes" %>
 		<% else %>
 		<% @j = "no" %>
 	<% end %>
-	<% @i = 0 %>
-	<% promotion.serves.each{|s| @i += s.shares.size} %>
+	<% if promotion.widget_location_id? %>
+		<% @k = promotion.widget_location.name %>
+	<% end %>
   	<% if params[:action] == "index_admin" %>
 		<% @editpath = edit_promotion_admin_path(promotion) %>
 		<% @deletepath = destroy_promotion_admin_path(promotion) %>
@@ -56,6 +59,7 @@
 	<b>UID: </b><%= link_to promotion.uid, @editpath %><br/>
 	<b>Description: </b><%= link_to promotion.description, @editpath %><br/>
 	<b>Button Style: </b><%= link_to promotion.button.name, @editpath %><br/>
+	<b>Widget Location: </b><%= link_to @k, @editpath %><br/>
 	<b>Merchant Pct: </b><%= link_to @a, @editpath %>&nbsp;&nbsp;
 	<b>Supporter Pct: </b><%= link_to @c, @editpath %>&nbsp;&nbsp;
 	<b>Buyer Pct: </b><%= link_to @d, @editpath %><br/>

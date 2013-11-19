@@ -1133,7 +1133,8 @@ function CBSale(amount,transaction_id) {
                     redirect_uri = "http://phil.causebutton.com/cbproto/fblanding.html?xyz=123";
 
                     // Hardcoding this for now 
-                    var app_id = "331567326978199";
+                    // var app_id = "331567326978199";
+                    var app_id = "1412032855697890";
 
                     link_label = link_label.replace("{{merchant}}", ServeData.merchant.name);
                     //

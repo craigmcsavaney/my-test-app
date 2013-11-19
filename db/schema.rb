@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131016184500) do
+ActiveRecord::Schema.define(:version => 20131119133206) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -87,16 +87,27 @@ ActiveRecord::Schema.define(:version => 20131016184500) do
     t.integer  "buyer_id"
   end
 
+  create_table "lists", :force => true do |t|
+    t.string   "name",        :default => ""
+    t.string   "description", :default => ""
+    t.string   "type",                           :null => false
+    t.integer  "order",       :default => 0
+    t.boolean  "deleted",     :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
   create_table "merchants", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "website"
     t.string   "logo_link"
     t.boolean  "deleted"
-    t.integer  "promotions_count", :default => 0
+    t.integer  "promotions_count",   :default => 0
     t.string   "uid"
     t.integer  "button_id"
+    t.integer  "widget_location_id"
   end
 
   add_index "merchants", ["name"], :name => "index_merchants_on_name", :unique => true
@@ -152,6 +163,7 @@ ActiveRecord::Schema.define(:version => 20131016184500) do
     t.string   "googleplus_msg",                                         :default => ""
     t.string   "banner_template",                                        :default => ""
     t.integer  "button_id",                                                              :null => false
+    t.integer  "widget_location_id"
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"

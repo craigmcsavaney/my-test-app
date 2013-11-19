@@ -38,10 +38,16 @@ class MerchantsController < ApplicationController
 
   def edit
   	@merchant = Merchant.find(params[:id])
+    if @merchant.widget_location_id.nil?
+      @merchant.widget_location = WidgetLocation.where(name:"right-center").first
+    end
   end
 
   def edit_admin
     @merchant = Merchant.find(params[:id])
+    if @merchant.widget_location_id.nil?
+      @merchant.widget_location = WidgetLocation.where(name:"right-center").first
+    end
   end
 
   def update

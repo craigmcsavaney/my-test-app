@@ -2,7 +2,7 @@ class Promotion < ActiveRecord::Base
   include NotDeleteable
     versioned
 
-    attr_accessible :description, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :banner, :banner_template, :facebook_msg, :facebook_msg_template, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, :disable_msg_editing, :twitter_msg, :twitter_msg_template, :pinterest_msg, :pinterest_msg_template, :pin_image_url, :pin_def_board, :pin_thumb_url, :linkedin_msg, :linkedin_msg_template, :deleted, :email_subject, :email_subject_template, :email_body, :email_body_template, :googleplus_msg, :googleplus_msg_template, :button_id
+    attr_accessible :description, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :banner, :banner_template, :facebook_msg, :facebook_msg_template, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, :disable_msg_editing, :twitter_msg, :twitter_msg_template, :pinterest_msg, :pinterest_msg_template, :pin_image_url, :pin_def_board, :pin_thumb_url, :linkedin_msg, :linkedin_msg_template, :deleted, :email_subject, :email_subject_template, :email_body, :email_body_template, :googleplus_msg, :googleplus_msg_template, :button_id, :widget_location_id
 
     belongs_to :merchant, counter_cache: true
     has_and_belongs_to_many :channels,
@@ -10,15 +10,18 @@ class Promotion < ActiveRecord::Base
       before_remove: :habtm_update_uid
     belongs_to :cause
     belongs_to :button
+    belongs_to :widget_location
     has_many :serves
     has_many :shares, through: :serves
     #has_many :sales, through: :shares
 
-    before_validation :replace_nils, :get_landing_page, :get_button_id, :ensure_channel_attributes_present
+    before_validation :replace_nils, :get_landing_page, :get_button_id, :get_widget_location_id, :ensure_channel_attributes_present
 
     validates :merchant_id, presence: true
     validates :merchant, :presence => true
     validates :button_id, presence: true
+    validates :widget_location_id, presence: true
+    validates :widget_location, presence: true
     validates :button, :presence => {message: ":: Please pick your button style for this promotion"}
     validates :name, presence: true
     validates :cause, :presence => {message: ":: Please pick your default preferred cause for this promotion"} #, :unless => lambda { self.merchant_pct == 0 }
@@ -76,6 +79,17 @@ class Promotion < ActiveRecord::Base
       if self.button_id == "" || self.button_id.nil? || self.button_id == 0
         if !self.merchant.button_id.nil?
           self.button_id = self.merchant.button_id
+        end
+      end
+    end
+
+    private
+    def get_widget_location_id
+      if self.widget_location_id == "" || self.widget_location_id.nil? || self.widget_location_id == 0
+        if !self.merchant.widget_location_id.nil?
+            self.widget_location_id = self.merchant.widget_location_id
+          else
+            self.widget_location_id = WidgetLocation.where(name:"right-center").first.id
         end
       end
     end

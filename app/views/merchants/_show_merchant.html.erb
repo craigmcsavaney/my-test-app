@@ -1,6 +1,6 @@
 <li>
 	<% merchant = @merchant %>
-	<% @a= @b= @c= "" %>
+	<% @a= @b= @c= @d= "" %>
 	<% if merchant.website? %>
 		<% @a = merchant.website %>
 	<% end %>
@@ -11,6 +11,9 @@
 			<% @c = "none chosen" %>
 		<% else %>
 			<% @c = merchant.button.name %>
+	<% end %>
+	<% if merchant.widget_location_id? %>
+		<% @d = merchant.widget_location.name %>
 	<% end %>
 	<% if params[:action] == "show" %>
 		<% @editpath = edit_merchant_path(merchant) %>
@@ -25,6 +28,7 @@
 	<b>Website URL: </b><%= link_to @a, @editpath %><br/>
 	<b>Link to Logo: </b><%= link_to @b, @editpath %><br/>
 	<b>Default Button Style: </b><%= link_to @c, @editpath %><br/>
+	<b>Default Widget Location: </b><%= link_to @d, @editpath %><br/>
 	<b>Users</b><% for user in merchant.users %>
 	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;
 	<% end %><br/>  

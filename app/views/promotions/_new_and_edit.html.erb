@@ -71,9 +71,13 @@
 				<p class="collapse">You must choose a preferred cause for each promotion.  This is the cause that will benefit from your merchant-directed contributions (if any), and it's the cause that will receive any supporter-directed and buyer-directed contributions that cannot (for any reason) be donated to the cause of their choice. </p>
 			</div>
 			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), readonly: @served, id: "promotions" %>
+			<br/><br/>
 
 	        <%= f.label :button_id, "Button Style For This Promotion" %>
-	        <%= select_tag 'promotion[button_id]', options_from_collection_for_select(Button.all, :id, :name, @promotion.button_id), prompt: "use the default selection for this merchant" %>
+	        <%= select_tag 'promotion[button_id]', options_from_collection_for_select(Button.all, :id, :name, @promotion.button_id), prompt: "use the default widget location for this merchant" %>
+
+	        <%= f.label :widget_location_id, "Widget Location for this promotion (will be overridden if page-specific locations are implemented)" %>
+	        <%= select_tag 'promotion[widget_location_id]', options_from_collection_for_select(WidgetLocation.all, :id, :name, @promotion.widget_location_id), prompt: "use the default button style for this merchant" %>
 
 			<div class="collapse-group">
 				<div class="row">
