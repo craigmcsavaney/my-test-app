@@ -454,6 +454,29 @@ function CBSale(amount,transaction_id) {
 
             $("#cbw-promo-text").text(ServeData.promotion.banner);
 
+            // Determine the proper widget position
+            // First, check to see if the value passed in from the current page is a valid
+            // widget position value.
+
+            var widget_position_valid = false;
+            var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
+
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] === WidgetPosition) {
+                    widget_position_valid = true;
+                }
+            }
+
+            // if the widget position from the current page is valid, use it.  Otherwise, use
+            // the value obtained from the ServeData.  If that value is missing for some reason,
+            // use "right-center".
+            if (!widget_position_valid && ServeData.promotion.widget_position) {
+                WidgetPosition = ServeData.promotion.widget_position;
+            } else {
+                WidgetPosition = "right-center";
+            }
+
+
             // Populate the active channels for current merchant/promotion
 
             var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='https://morning-savannah-7661.herokuapp.com/assets/widget/chn_icons/icon-{0}-off.png'/>"
@@ -855,19 +878,6 @@ function CBSale(amount,transaction_id) {
             var widget_top = $("#cbw-widget").position().top;
             var widget_bottom = widget_top + widget_hgt;
             var widget_right = widget_left + widget_width;
-
-            var widget_position_valid = false;
-            var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i] === WidgetPosition) {
-                    widget_position_valid = true;
-                }
-            }
-
-            if (!widget_position_valid) {
-                WidgetPostition = "right-center";
-                // need to change this to be the default widget location passed in with the serve data.
-            }
 
             switch (WidgetPosition) {
 

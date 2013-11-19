@@ -6,6 +6,10 @@ node :button_html do |promotion|
 	promotion.button.html
 end
 
+node :widget_position do |promotion|
+	promotion.widget_location.name
+end
+
 node :cause_selector do |promotion|
 	if promotion.supporter_pct > 0 or promotion.buyer_pct > 0
 	true
