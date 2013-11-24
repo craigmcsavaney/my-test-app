@@ -9,6 +9,7 @@
   	<b>Name: </b><%= link_to cause.name, @editpath %>&nbsp;&nbsp;
 	<b>ID#: </b><%= link_to cause.id, @editpath %><br/>
 	<b>UID: </b><%= link_to cause.uid, @editpath %><br/>
+	<b>Type: </b><%= link_to cause.type, @editpath %><br/>
 	<b>Users</b><% for user in cause.users %>
 	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;
 	<% end %><br/>  

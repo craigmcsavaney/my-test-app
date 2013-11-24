@@ -1,0 +1,13 @@
+<% provide(:title, 'All Singles') %>
+<h1>All Singles (<%= @singles.count %>)</h1>
+
+<div class="container">
+	<%= will_paginate %>
+	<ul class="class-index">
+      	<%= render @singles %>
+	</ul>
+	<%= will_paginate %>
+	<br/>
+	<%= link_to 'Create New Single', new_single_path %><br/>
+	<%= go_back %>
+</div>

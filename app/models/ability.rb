@@ -33,9 +33,19 @@ class Ability
 
         if user.role? :super_admin
             can :manage, :all
-        elsif user.role? :user_admin
-            can :manage, [Cause, Merchant, Promotion, User, Donation]
-        elsif user.role? :user
+        end
+
+        if user.role? :user_admin
+            can :manage, [Cause, Merchant, Promotion, Donation, User]
+            can :view_admin_menu, User
+        end
+
+        if user.role? :event_admin
+            can :manage, [Event, Group]
+            can :view_admin_menu, User
+        end
+
+        if user.role? :user
             # Merchant permissions
             can [:index, :create], Merchant
             can [:edit, :update, :delete, :show], Merchant do |merchant|
@@ -46,16 +56,17 @@ class Ability
             can [:edit, :update, :delete, :show], Promotion do |promotion|
                 promotion.merchant.users.include?(user)
             end
-            # Cause permissions
-            can [:index, :create], Cause
-            can [:edit, :update, :delete, :show], Cause do |cause|
-                cause.users.include?(user)
+            # Single permissions
+            can [:index, :create], Single
+            can [:edit, :update, :delete, :show], Single do |single|
+                single.users.include?(user)
             end
             # Donation permissions
-            can [:index, :create], Donation
-            can [:edit, :update, :delete, :show], Donation do |donation|
+            can [:index, :show], Donation do |donation|
                 donation.users.include?(user)
             end
+
         end
+
     end
 end

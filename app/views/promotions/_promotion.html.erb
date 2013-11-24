@@ -35,8 +35,8 @@
 		<% else %>
 		<% @j = "no" %>
 	<% end %>
-	<% if promotion.widget_location_id? %>
-		<% @k = promotion.widget_location.name %>
+	<% if promotion.widget_position_id? %>
+		<% @k = promotion.widget_position.name %>
 	<% end %>
   	<% if params[:action] == "index_admin" %>
 		<% @editpath = edit_promotion_admin_path(promotion) %>

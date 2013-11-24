@@ -1,0 +1,20 @@
+<li>
+	<% if params[:action] == "index" %>
+		<% @editpath = edit_single_path(single) %>
+		<% @deletepath = single %>
+  	<% elsif params[:action] == "index_admin" %>
+		<% @editpath = edit_single_admin_path(single) %>
+		<% @deletepath = destroy_single_admin_path(single) %>
+	<% end %>
+  	<b>Name: </b><%= link_to single.name, @editpath %>&nbsp;&nbsp;
+	<b>ID#: </b><%= link_to single.id, @editpath %><br/>
+	<b>UID: </b><%= link_to single.uid, @editpath %><br/>
+	<b>Type: </b><%= link_to single.type, @editpath %><br/>
+	<b>Users</b><% for user in single.users %>
+	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;
+	<% end %><br/>  
+	<b>Actions: </b>
+	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
+		<%= link_to "delete", @deletepath, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+</li>

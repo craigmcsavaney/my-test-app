@@ -10,6 +10,7 @@ roles_list = [
   [ "SuperAdmin", "can manage all resources" ],
   [ "UserAdmin", "can manage all resources owned by all users" ],
   [ "User", "can manage only user-owned resources" ],
+  [ "EventAdmin", "can manage Cause Groups and Events" ],
 
 ]
 

@@ -2,21 +2,21 @@ class Merchant < ActiveRecord::Base
 	include NotDeleteable
 	versioned
 
-	attr_accessible :name, :user_ids, :website, :button_id, :logo_link, :uid, :deleted, :widget_location_id
+	attr_accessible :name, :user_ids, :website, :button_id, :logo_link, :uid, :deleted, :widget_position_id
 
 	has_and_belongs_to_many :users
 	has_many :promotions, dependent: :destroy
 	has_many :serves, through: :promotions
 	belongs_to :button
-	belongs_to :widget_location
+	belongs_to :widget_position
 
 	before_validation :generate_uid
 
 	validates :name, presence: true, uniqueness: { case_sensitive: false }
 	validates :website, url: true
 	validates :uid, presence: true, uniqueness: { case_sensitive: true }
-	validates :widget_location, presence: true
-	validates :widget_location_id, presence: true
+	validates :widget_position, presence: true
+	validates :widget_position_id, presence: true
 
 	delegate :user_id, to: :promotion
 

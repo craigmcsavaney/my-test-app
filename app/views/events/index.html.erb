@@ -1,0 +1,13 @@
+<% provide(:title, 'All Events') %>
+<h1>All Events (<%= @events.count %>)</h1>
+
+<div class="container">
+  	<%= will_paginate %>
+  	<ul class="class-index">
+        <%= render @events %>
+  	</ul>
+  	<%= will_paginate %>
+  	<br/>
+	<%= link_to 'Create New Event', new_event_path %><br/>
+	<%= go_back %>
+</div>

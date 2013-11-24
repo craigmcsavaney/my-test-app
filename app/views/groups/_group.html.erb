@@ -1,0 +1,18 @@
+<li>
+	<% @editpath = edit_group_path(group) %>
+	<% @deletepath = group %>
+  	<b>Name: </b><%= link_to group.name, @editpath %>&nbsp;&nbsp;
+	<b>ID#: </b><%= link_to group.id, @editpath %><br/>
+	<b>UID: </b><%= link_to group.uid, @editpath %><br/>
+	<b>Type: </b><%= link_to group.type, @editpath %><br/>
+	<b>Causes</b><% for cause in group.causes %>
+	<b>:&nbsp;</b><%= link_to cause.name, @editpath %>&nbsp;
+	<% end %><br/>  
+	<b>Users</b><% for user in group.users %>
+	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;
+	<% end %><br/>  
+	<b>Actions: </b>
+	  	<%= link_to "edit", @editpath %>&nbsp;&nbsp;
+		<%= link_to "delete", @deletepath, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+</li>

@@ -32,6 +32,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :merchants
   has_and_belongs_to_many :causes
+  has_and_belongs_to_many :singles, association_foreign_key: 'cause_id', join_table: 'causes_users'
+  has_and_belongs_to_many :groups, association_foreign_key: 'cause_id', join_table: 'causes_users'
   has_many :serves
   has_many :donations
 
@@ -71,6 +73,10 @@ class User < ActiveRecord::Base
     end
     @user_id = self.find_by_email(user).id
     return {user_id: @user_id, type: @type}
+  end
+
+  def view_admin_menu
+    # this is a placeholder method.  Used by CanCan to determine if a user should see the admin menu.
   end
 
 

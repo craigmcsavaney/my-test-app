@@ -41,6 +41,13 @@ Myapplication::Application.routes.draw do
   match '/causes/:id/update_admin',  to: 'causes#update_admin'
   match '/causes/:id/destroy_admin',  to: 'causes#destroy_admin', :as => :destroy_cause_admin
 
+  match '/singles/new_admin',  to: 'singles#new_admin', :as => :new_single_admin 
+  match '/singles/create_admin',  to: 'singles#create_admin'
+  match '/singles/index_admin',  to: 'singles#index_admin', :as => :singles_admin 
+  match '/singles/:id/edit_admin',  to: 'singles#edit_admin', :as => :edit_single_admin 
+  match '/singles/:id/update_admin',  to: 'singles#update_admin'
+  match '/singles/:id/destroy_admin',  to: 'singles#destroy_admin', :as => :destroy_single_admin
+
   match '/donations/index_admin',  to: 'donations#index_admin', :as => :donations_admin 
   match '/donations/show_admin/:id',  to: 'donations#show_admin', :as => :donation_admin 
 
@@ -57,6 +64,9 @@ Myapplication::Application.routes.draw do
   resources :donations
   resources :button_types
   resources :buttons
+  resources :events
+  resources :groups
+  resources :singles
   
   root to: 'static_pages#home'
 

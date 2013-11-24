@@ -1,4 +1,4 @@
-class WidgetLocation < List
+class WidgetPosition < List
 	include NotDeleteable
     versioned
 

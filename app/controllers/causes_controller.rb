@@ -29,6 +29,7 @@ class CausesController < ApplicationController
 
   def new
 		@cause = Cause.new
+    @cause.type = "Single"
   end
 
   def new_admin
@@ -69,7 +70,7 @@ class CausesController < ApplicationController
 
   def index
     @user = current_user
-  	@causes = @user.causes.order('name asc').paginate(page: params[:page])
+  	@causes = @user.causes.where(type:"Single").order('name asc').paginate(page: params[:page])
   end
 
   def index_admin

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131119133206) do
+ActiveRecord::Schema.define(:version => 20131122070806) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -39,10 +39,19 @@ ActiveRecord::Schema.define(:version => 20131119133206) do
     t.datetime "updated_at", :null => false
     t.boolean  "deleted"
     t.string   "uid"
+    t.string   "type"
   end
 
   add_index "causes", ["name"], :name => "index_causes_on_name", :unique => true
+  add_index "causes", ["type"], :name => "index_causes_on_type"
   add_index "causes", ["uid"], :name => "index_causes_on_uid", :unique => true
+
+  create_table "causes_groups", :id => false, :force => true do |t|
+    t.integer "cause_id"
+    t.integer "group_id"
+  end
+
+  add_index "causes_groups", ["cause_id", "group_id"], :name => "index_causes_groups_on_cause_id_and_group_id", :unique => true
 
   create_table "causes_users", :id => false, :force => true do |t|
     t.integer "cause_id"
@@ -87,6 +96,19 @@ ActiveRecord::Schema.define(:version => 20131119133206) do
     t.integer  "buyer_id"
   end
 
+  create_table "events", :force => true do |t|
+    t.string   "name",        :default => ""
+    t.string   "description", :default => ""
+    t.integer  "order",       :default => 0
+    t.boolean  "deleted",     :default => false
+    t.date     "event_date",  :default => '2013-11-22', :null => false
+    t.date     "start_date",  :default => '2013-11-22', :null => false
+    t.date     "end_date",    :default => '2013-11-22', :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "group_id",                              :null => false
+  end
+
   create_table "lists", :force => true do |t|
     t.string   "name",        :default => ""
     t.string   "description", :default => ""
@@ -107,7 +129,7 @@ ActiveRecord::Schema.define(:version => 20131119133206) do
     t.integer  "promotions_count",   :default => 0
     t.string   "uid"
     t.integer  "button_id"
-    t.integer  "widget_location_id"
+    t.integer  "widget_position_id"
   end
 
   add_index "merchants", ["name"], :name => "index_merchants_on_name", :unique => true
@@ -163,7 +185,7 @@ ActiveRecord::Schema.define(:version => 20131119133206) do
     t.string   "googleplus_msg",                                         :default => ""
     t.string   "banner_template",                                        :default => ""
     t.integer  "button_id",                                                              :null => false
-    t.integer  "widget_location_id"
+    t.integer  "widget_position_id"
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"

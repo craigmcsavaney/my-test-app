@@ -7,7 +7,7 @@ node :button_html do |promotion|
 end
 
 node :widget_position do |promotion|
-	promotion.widget_location.name
+	promotion.widget_position.name
 end
 
 node :cause_selector do |promotion|

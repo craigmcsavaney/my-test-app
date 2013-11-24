@@ -76,8 +76,8 @@
 	        <%= f.label :button_id, "Button Style For This Promotion" %>
 	        <%= select_tag 'promotion[button_id]', options_from_collection_for_select(Button.all, :id, :name, @promotion.button_id), prompt: "use the default widget location for this merchant" %>
 
-	        <%= f.label :widget_location_id, "Widget Location for this promotion (will be overridden if page-specific locations are implemented)" %>
-	        <%= select_tag 'promotion[widget_location_id]', options_from_collection_for_select(WidgetLocation.all, :id, :name, @promotion.widget_location_id), prompt: "use the default button style for this merchant" %>
+	        <%= f.label :widget_position_id, "Widget Location for this promotion (will be overridden if page-specific locations are implemented)" %>
+	        <%= select_tag 'promotion[widget_position_id]', options_from_collection_for_select(WidgetLocation.all, :id, :name, @promotion.widget_position_id), prompt: "use the default button style for this merchant" %>
 
 			<div class="collapse-group">
 				<div class="row">

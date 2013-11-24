@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-widget_locations_list = [
+widget_positions_list = [
   [ "top-left", "", 0],
   [ "top-center", "", 1],
   [ "top-right", "", 2],
@@ -19,11 +19,11 @@ widget_locations_list = [
 
 ]
 
-puts 'Preparing to create seed Widget Locations'
+puts 'Preparing to create seed Widget Positions'
 
-widget_locations_list.each do |name, description, order|
-  WidgetLocation.find_or_create_by_name( name, description: description, order: order )
+widget_positions_list.each do |name, description, order|
+  WidgetPosition.find_or_create_by_name( name, description: description, order: order )
 end
 
-puts 'All seed Widget Locations found or created'
+puts 'All seed Widget Positions found or created'
 

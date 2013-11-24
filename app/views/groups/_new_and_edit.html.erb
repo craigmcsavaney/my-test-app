@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="span7 offset1">
+      <%= form_for(@group) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+
+        <%= f.label :cause_ids, "Causes in this group" %>
+        <% for cause in @group.causes %>
+          <div>
+            <%= check_box_tag "group[cause_ids][]", cause.id, @group.causes.include?(cause) %>
+            <%= cause.name %>
+          </div>
+        <% end %>
+
+        <br/>
+        <%= f.label :user_ids, "Users for this group" %>
+        <% for user in @group.users %>
+          <div>
+            <%= check_box_tag "group[user_ids][]", user.id, @group.users.include?(user) %>
+            <%= user.email %>
+          </div>
+        <% end %>
+
+        <br/>
+        <%= f.label :uid, "Unique Identifier (UID)" %>
+        <%= f.text_field :uid, readonly: true, placeholder: "this will be assigned automatically" %>
+
+        <br/>
+
+        <%= f.submit button, class: "btn btn-large btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+  <%= go_back %>
+</div>

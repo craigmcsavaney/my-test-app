@@ -1,0 +1,13 @@
+<% provide(:title, 'All Groups') %>
+<h1>All Groups (<%= @groups.count %>)</h1>
+
+<div class="container">
+  	<%= will_paginate %>
+  	<ul class="class-index">
+        <%= render @groups %>
+  	</ul>
+  	<%= will_paginate %>
+  	<br/>
+	<%= link_to 'Create New Group', new_group_path %><br/>
+	<%= go_back %>
+</div>

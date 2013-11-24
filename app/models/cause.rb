@@ -2,7 +2,7 @@ class Cause < ActiveRecord::Base
 	include NotDeleteable
 	versioned
 	
-	attr_accessible :name, :user_ids, :deleted
+	attr_accessible :name, :user_ids, :deleted, :group_ids, :type, :uid
 
   before_validation :generate_uid
 
@@ -10,6 +10,7 @@ class Cause < ActiveRecord::Base
   validates :uid, presence: true, uniqueness: { case_sensitive: true }
 
 	has_and_belongs_to_many :users
+  has_and_belongs_to_many :groups
 	has_many :promotions
 	has_many :shares
 	has_many :serves

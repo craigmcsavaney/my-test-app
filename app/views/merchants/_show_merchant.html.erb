@@ -12,8 +12,8 @@
 		<% else %>
 			<% @c = merchant.button.name %>
 	<% end %>
-	<% if merchant.widget_location_id? %>
-		<% @d = merchant.widget_location.name %>
+	<% if merchant.widget_position_id? %>
+		<% @d = merchant.widget_position.name %>
 	<% end %>
 	<% if params[:action] == "show" %>
 		<% @editpath = edit_merchant_path(merchant) %>
