@@ -23,6 +23,8 @@ class GroupsController < ApplicationController
 
   # POST /groups
   def create
+    params[:group][:user_ids] ||= []
+    params[:group][:cause_ids] ||= []
     @group = Group.new(params[:group])
     if @group.save
       # Handle a successful save.
@@ -35,6 +37,8 @@ class GroupsController < ApplicationController
 
   # PUT /groups/1
   def update
+    params[:group][:user_ids] ||= []
+    params[:group][:cause_ids] ||= []
     @group = Group.find(params[:id])
     @group.updated_by = current_user
     if @group.update_attributes(params[:group])

@@ -8,12 +8,17 @@
 		      	<%= f.text_field :name %>
 
   				<% if ["new_admin","edit_admin"].include?params[:action] %>
-					<%= f.label :user_ids, "Selected Users for this cause" %>
-					<% for user in User.find(:all) %>
-						<div>
-							<%= check_box_tag "cause[user_ids][]", user.id, @cause.users.include?(user) %>
-							<%= user.email %>
-						</div>
+					<%= f.label :user_ids, "Users associated with this cause" %>
+					<% if @cause.users.any? %>
+						<% for user in @cause.users %>
+							<div>
+								<%= check_box_tag "cause[user_ids][]", user.id, @cause.users.include?(user) %>
+								<%= user.email %>
+							</div>
+						<% end %>
+					<% else %>
+						There are no users associated with this Cause
+						<br/>
 					<% end %>
 				<% end %>
 

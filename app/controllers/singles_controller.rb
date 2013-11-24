@@ -44,6 +44,7 @@ class SinglesController < ApplicationController
   end
 
   def update
+    params[:single][:user_ids] ||= []
   	@single = Single.find(params[:id])
     @single.updated_by = current_user
   	if @single.update_attributes(params[:single])
@@ -56,6 +57,7 @@ class SinglesController < ApplicationController
 	end
 
   def update_admin
+    params[:single][:user_ids] ||= []
     @single = Single.find(params[:id])
     @single.updated_by = current_user
     if @single.update_attributes(params[:single])

@@ -17,12 +17,17 @@
 
         <br/>
         <%= f.label :user_ids, "Users for this group" %>
-        <% for user in @group.users %>
-          <div>
-            <%= check_box_tag "group[user_ids][]", user.id, @group.users.include?(user) %>
-            <%= user.email %>
-          </div>
-        <% end %>
+          <% if @group.users.any? %>
+            <% for user in @group.users %>
+              <div>
+                <%= check_box_tag "group[user_ids][]", user.id, @group.users.include?(user) %>
+                <%= user.email %>
+              </div>
+            <% end %>
+          <% else %>
+            There are no users associated with this Cause Group
+            <br/>
+          <% end %>
 
         <br/>
         <%= f.label :uid, "Unique Identifier (UID)" %>
