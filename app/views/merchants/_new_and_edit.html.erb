@@ -25,7 +25,7 @@
 		        <%= select_tag 'merchant[button_id]', options_from_collection_for_select(Button.all, :id, :name, @merchant.button_id), prompt: "skip this now (choose button style when creating promotions)" %>
 
 		        <%= f.label :widget_position_id, "Default Widget Location (can be overridden at the promotion or page level)" %>
-		        <%= select_tag 'merchant[widget_position_id]', options_from_collection_for_select(WidgetLocation.all, :id, :name, @merchant.widget_position_id), prompt: "choose the default placement of your CauseButton widget" %>
+		        <%= select_tag 'merchant[widget_position_id]', options_from_collection_for_select(WidgetPosition.all, :id, :name, @merchant.widget_position_id), prompt: "choose the default placement of your CauseButton widget" %>
 
 		      	<%= f.label :uid, "Unique Identifier (UID)" %>
 		      	<%= f.text_field :uid, readonly: true, placeholder: "this will be assigned automatically" %>

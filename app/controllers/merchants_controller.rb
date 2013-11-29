@@ -39,14 +39,14 @@ class MerchantsController < ApplicationController
   def edit
   	@merchant = Merchant.find(params[:id])
     if @merchant.widget_position_id.nil?
-      @merchant.widget_position = WidgetLocation.where(name:"right-center").first
+      @merchant.widget_position = WidgetPosition.where(name:"right-center").first
     end
   end
 
   def edit_admin
     @merchant = Merchant.find(params[:id])
     if @merchant.widget_position_id.nil?
-      @merchant.widget_position = WidgetLocation.where(name:"right-center").first
+      @merchant.widget_position = WidgetPosition.where(name:"right-center").first
     end
   end
 

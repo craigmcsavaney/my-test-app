@@ -89,7 +89,7 @@ class Promotion < ActiveRecord::Base
         if !self.merchant.widget_position_id.nil?
             self.widget_position_id = self.merchant.widget_position_id
           else
-            self.widget_position_id = WidgetLocation.where(name:"right-center").first.id
+            self.widget_position_id = WidgetPosition.where(name:"right-center").first.id
         end
       end
     end
