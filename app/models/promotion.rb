@@ -4,6 +4,8 @@ class Promotion < ActiveRecord::Base
 
     attr_accessible :description, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :banner, :banner_template, :facebook_msg, :facebook_msg_template, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, :disable_msg_editing, :twitter_msg, :twitter_msg_template, :pinterest_msg, :pinterest_msg_template, :pin_image_url, :pin_def_board, :pin_thumb_url, :linkedin_msg, :linkedin_msg_template, :deleted, :email_subject, :email_subject_template, :email_body, :email_body_template, :googleplus_msg, :googleplus_msg_template, :button_id, :widget_position_id
 
+    attr_accessor :cause_uid
+
     belongs_to :merchant, counter_cache: true
     has_and_belongs_to_many :channels,
       before_add: :habtm_update_uid,

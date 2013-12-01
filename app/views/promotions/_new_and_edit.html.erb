@@ -73,14 +73,8 @@
 			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), readonly: @served, id: "promotions" %>
 			<br/><br/>
 
-			<% if false %>
-
-			<%= f.hidden_field :cause_id %>
-
-			<input type="hidden" id="causes" class="my-sel2" value="ff068a2c-2023-11e0-a279-4061860da51d"></input>
+			<%= f.hidden_field :cause_uid, :value => "ff068a2c-2023-11e0-a279-4061860da51d" %>
 			<br/><br/>
-
-			<% end %>
 
 	        <%= f.label :button_id, "Button Style For This Promotion" %>
 	        <%= select_tag 'promotion[button_id]', options_from_collection_for_select(Button.all, :id, :name, @promotion.button_id), prompt: "use the default widget location for this merchant" %>
@@ -410,10 +404,10 @@
 	</script>
     <script>
 		$(document).ready(function () {					
-			$("#1promotion_cause_id").select2({
-				placeholder: 'Causes Placeholder',
+			$("#promotion_cause_uid").select2({
+				placeholder: 'Click here to find a cause',
 				minimumInputLength: 3,
-				id: function(data){return {id: data.organization_uuid};},
+				id: 'organization_uuid',
 				ajax: {
 					url: 'http://graphapi.firstgiving.com/v2/list/organization?jsonpfunc=?',
 					dataType: 'jsonp',
