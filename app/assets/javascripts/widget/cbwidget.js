@@ -610,7 +610,52 @@ function CBSale(amount,transaction_id) {
 
             cause_select.select2();
             fgcause_select.select2({
-                placeholder: 'Click here to find a cause'
+                placeholder: 'Click here to find a cause',
+                minimumInputLength: 3,
+                multiple: false,
+                id: 'organization_uuid',
+                ajax: {
+                    url: 'https://graphapi.firstgiving.com/v2/list/organization?jsonpfunc=?',
+                    dataType: 'jsonp',
+                    jsonp: 'jsonpfunc',
+                    quietMillis: 200,
+                    data: function (term, page) {
+                        return {
+                            q: 'organization_name:' + term + '*%20XXYYZZ%20country:US', // search term
+                            page: page - 1,
+                            page_size: 25,
+                            sep: 'XXYYZZ',
+                        };
+                    },
+                    results: function(data, page) {
+                        var more =  false; 
+                        if (data.payload[0] && data.payload[0].numFound !== "") {
+                            more = (page * 25) < data.payload[0].numFound;
+                        }
+                        return { 
+                            results: data.payload, more: more
+                        };
+                    }
+                },
+                initSelection: function(element, callback) {
+                    // the input tag has a value attribute preloaded that points to a preselected cause's id
+                    // this function resolves that id attribute to an object that select2 can render
+                    // using its formatResult renderer - that way the cause name is shown preselected
+                    var id=$(element).val();
+                    if (id!=="") {
+                        $.ajax({
+                            dataType: 'jsonp',
+                            contentType: 'application/json',
+                            jsonp: 'jsonpfunc',
+                            url: 'https://graphapi.firstgiving.com/v2/object/organization/'+id+'?jsonpfunc=?',
+                        }).done(function(data) { console.log(data.payload.organization_name); callback(data.payload); });
+                    }
+                },
+                dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+                formatResult: causeFormatResult, // omitted for brevity, see the source of this page
+                formatSelection: causeFormatSelection,  // omitted for brevity, see the source of this page
+                nextSearchTerm: function (selectedObject, currentSearchTerm) {return currentSearchTerm;},
+                escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
             });
 
             if (ServeData.current_cause_id) {
@@ -621,6 +666,29 @@ function CBSale(amount,transaction_id) {
 
         }
 
+        function causeFormatResult(cause) {
+            var markup = "<div class='cause-result'><div id='" + cause.organization_uuid + "' class='cause-title'>" + cause.organization_name + "</div>";
+            var state = false;
+
+            if (cause.region) {
+                state = cause.region;
+            } else if (cause.county) {
+                state = cause.county;
+            } 
+            if (cause.city && state) {
+                markup += "<div class='cause-location'>" + cause.city + ", " + state + "</div>";
+            }
+            if (cause.category_title) {
+                markup += "<div class='cause-category'>" + cause.category_title + "</div>";
+            }
+            markup += "</div>"
+            return markup;
+        }  
+    
+        function causeFormatSelection(cause) {
+            var markup = "<div id='" + cause.organization_uuid + "' >" + cause.organization_name + "</div>";
+            return markup;
+        } 
 
         /* RegisterWidgetView - registers with server that the user clicked the cause button
          */
