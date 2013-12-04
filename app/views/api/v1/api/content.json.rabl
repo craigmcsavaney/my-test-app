@@ -27,7 +27,7 @@ node :content do
 				<div id="cbw-fgcause-select-ctrl-grp" class="control-group">
 					<label class="control-label" for="input-fgcause-sel">Select A FG Cause</label>
 					<div class="controls">
-						<select id="cbw-fgcause-select" class="cbw-fg-select2"/>
+						<input id="cbw-fgcause-select" class="cbw-fg-select2" type="hidden">
 					</div>
 				</div>
 				<div class="control-group" id="cbw-email-checkbox-ctl-grp">
