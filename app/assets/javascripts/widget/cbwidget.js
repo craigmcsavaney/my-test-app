@@ -596,6 +596,7 @@ function CBSale(amount,transaction_id) {
 
             //var causes = PromotionData.causes.cause_list;
             var cause_select = $("#cbw-cause-select");
+            var fgcause_select = $("#cbw-fgcause-select");
 
             // Populate the cause list...eventually this will be separate from the Promotion Data
             // but for now let's do this here...
@@ -608,6 +609,7 @@ function CBSale(amount,transaction_id) {
             }
 
             cause_select.select2();
+            fgcause_select.select2();
 
             if (ServeData.current_cause_id) {
                 cause_select.select2("val", ServeData.current_cause_id);
