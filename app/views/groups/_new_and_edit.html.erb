@@ -8,12 +8,17 @@
         <%= f.text_field :name %>
 
         <%= f.label :cause_ids, "Causes in this group" %>
-        <% for cause in @group.causes %>
-          <div>
-            <%= check_box_tag "group[cause_ids][]", cause.id, @group.causes.include?(cause) %>
-            <%= cause.name %>
-          </div>
-        <% end %>
+          <% if @group.causes.any? %>
+            <% for cause in @group.causes %>
+              <div>
+                <%= check_box_tag "group[cause_ids][]", cause.id, @group.causes.include?(cause) %>
+                <%= cause.name %>
+              </div>
+            <% end %>
+          <% else %>
+            There are no causes in this Group
+            <br/>
+          <% end %>
 
         <br/>
         <%= f.label :user_ids, "Users for this group" %>

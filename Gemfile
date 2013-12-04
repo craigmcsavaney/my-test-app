@@ -18,6 +18,7 @@ gem 'awesm', '0.1.10'
 gem 'money-rails', '0.8.1'
 gem "select2-rails", "~> 3.5.0"
 gem 'devise_invitable', '1.1.8'
+gem 'rest-client', :require => 'rest-client'
 # gem 'devise_invitable', '1.3.0'
 
 #added following require and gem for Guard compatibility with wdm

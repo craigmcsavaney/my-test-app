@@ -73,7 +73,19 @@
 			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), readonly: @served, id: "promotions" %>
 			<br/><br/>
 
-			<%= f.hidden_field :cause_uid, :value => "ff068a2c-2023-11e0-a279-4061860da51d" %>
+			<% if false %>
+
+			<%= f.hidden_field :fg_uuid, :value => "ff068a2c-2023-11e0-a279-4061860da51d" %>
+
+			<% end %>
+
+			<% if !@promotion.cause.nil? %>
+			<% 		@value = @promotion.cause.fg_uuid %>
+			<% else %>
+			<% 		@value = "" %>
+			<% end %>
+
+			<%= f.hidden_field :fg_uuid, value: @value %>
 			<br/><br/>
 
 	        <%= f.label :button_id, "Button Style For This Promotion" %>
@@ -404,9 +416,10 @@
 	</script>
     <script>
 		$(document).ready(function () {					
-			$("#promotion_cause_uid").select2({
+			$("#promotion_fg_uuid").select2({
 				placeholder: 'Click here to find a cause',
 				minimumInputLength: 3,
+				multiple: false,
 				id: 'organization_uuid',
 				ajax: {
 					url: 'http://graphapi.firstgiving.com/v2/list/organization?jsonpfunc=?',
@@ -448,17 +461,26 @@
 				dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
 				formatResult: causeFormatResult, // omitted for brevity, see the source of this page
 				formatSelection: causeFormatSelection,  // omitted for brevity, see the source of this page
+                nextSearchTerm: function (selectedObject, currentSearchTerm) {return currentSearchTerm;},
 				escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
 			});
-			
+
 			function causeFormatResult(cause) {
-				var markup = "<div id='" + cause.organization_uuid + "' class='cause-title'>" + cause.organization_name + "</div>";
-				if (cause.city !== undefined && cause.region !== undefined) {
-					markup += "<div class='cause-location'>" + cause.city + ", " + cause.region + "</div>";
+				var markup = "<div class='cause-result'><div id='" + cause.organization_uuid + "' class='cause-title'>" + cause.organization_name + "</div>";
+				var state = false;
+
+				if (cause.region) {
+					state = cause.region;
+				} else if (cause.county) {
+					state = cause.county;
+				} 
+				if (cause.city && state) {
+					markup += "<div class='cause-location'>" + cause.city + ", " + state + "</div>";
 				}
-				if (cause.category_title !== undefined) {
+				if (cause.category_title) {
 					markup += "<div class='cause-category'>" + cause.category_title + "</div>";
 				}
+				markup += "</div>"
 				return markup;
 			}  
 		

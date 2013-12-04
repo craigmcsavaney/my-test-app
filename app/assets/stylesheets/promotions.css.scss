@@ -1,3 +1,13 @@
 // Place all the styles related to the Promotions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.cause-result {
+	border-bottom: solid 1px gray;
+	padding-bottom: 8px;
+}
+.cause-location, .cause-category {
+	color: gray;
+	font-size: .75em;
+	line-height: 15px;
+}
+

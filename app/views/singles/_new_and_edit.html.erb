@@ -23,11 +23,31 @@
 				<% end %>
 
 				<br/>
+
+  				<% if ["new_admin","edit_admin"].include?params[:action] %>
+					<%= f.label :group_ids, "Groups that include this cause" %>
+					<% if @single.groups.any? %>
+						<% for group in @single.groups %>
+							<div>
+								<%= check_box_tag "single[group_ids][]", group.id, @single.groups.include?(group) %>
+								<%= group.name %>
+							</div>
+						<% end %>
+					<% else %>
+						There are no groups that include this Cause
+						<br/>
+					<% end %>
+				<% end %>
+
+				<br/>
 				<%= f.label :uid, "Unique Identifier (UID)" %>
 		      	<%= f.text_field :uid, readonly: true, placeholder: "this will be assigned automatically" %>
 
 				<%= f.label :type %>
 		      	<%= f.text_field :type, readonly: true %>
+
+				<%= f.label :fg_uuid, "FirstGiving Organization UUID" %>
+		      	<%= f.text_field :fg_uuid %>
 
 				<br/>
 

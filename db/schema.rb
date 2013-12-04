@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122070806) do
+ActiveRecord::Schema.define(:version => 20131201220849) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -34,14 +34,41 @@ ActiveRecord::Schema.define(:version => 20131122070806) do
   end
 
   create_table "causes", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "name",                                    :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.boolean  "deleted"
-    t.string   "uid"
-    t.string   "type"
+    t.string   "uid",                                     :null => false
+    t.string   "type",                                    :null => false
+    t.string   "fg_uuid",                 :default => ""
+    t.integer  "fg_type_id"
+    t.string   "alias",                   :default => ""
+    t.string   "abstract",                :default => ""
+    t.integer  "ein"
+    t.string   "fg_parent_uuid",          :default => ""
+    t.string   "address_line_1",          :default => ""
+    t.string   "address_line_2",          :default => ""
+    t.string   "address_line_3",          :default => ""
+    t.string   "address_line_full",       :default => ""
+    t.string   "city",                    :default => ""
+    t.string   "region",                  :default => ""
+    t.string   "postal_code",             :default => ""
+    t.string   "county",                  :default => ""
+    t.string   "country",                 :default => ""
+    t.string   "address_full",            :default => ""
+    t.string   "phone_number",            :default => ""
+    t.string   "area_code",               :default => ""
+    t.string   "url",                     :default => ""
+    t.string   "fg_category_code",        :default => ""
+    t.string   "fg_category_title",       :default => ""
+    t.string   "fg_category_description", :default => ""
+    t.string   "latitude",                :default => ""
+    t.string   "longitude",               :default => ""
+    t.string   "fg_revoked",              :default => ""
+    t.string   "fg_locale_db_id",         :default => ""
   end
 
+  add_index "causes", ["fg_uuid"], :name => "index_causes_on_fg_uuid"
   add_index "causes", ["name"], :name => "index_causes_on_name", :unique => true
   add_index "causes", ["type"], :name => "index_causes_on_type"
   add_index "causes", ["uid"], :name => "index_causes_on_uid", :unique => true

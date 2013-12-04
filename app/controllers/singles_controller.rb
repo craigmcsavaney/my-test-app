@@ -3,6 +3,7 @@ class SinglesController < ApplicationController
 
   def create
     params[:single][:user_ids] ||= []
+    params[:single][:group_ids] ||= []
 		@single = Single.new(params[:single])
     if @single.save
       user=current_user
@@ -17,6 +18,7 @@ class SinglesController < ApplicationController
 
   def create_admin
     params[:single][:user_ids] ||= []
+    params[:single][:group_ids] ||= []
     @single = Single.new(params[:single])
     if @single.save
       # Handle a successful save.
@@ -45,6 +47,7 @@ class SinglesController < ApplicationController
 
   def update
     params[:single][:user_ids] ||= []
+    params[:single][:group_ids] ||= []
   	@single = Single.find(params[:id])
     @single.updated_by = current_user
   	if @single.update_attributes(params[:single])
@@ -58,6 +61,7 @@ class SinglesController < ApplicationController
 
   def update_admin
     params[:single][:user_ids] ||= []
+    params[:single][:group_ids] ||= []
     @single = Single.find(params[:id])
     @single.updated_by = current_user
     if @single.update_attributes(params[:single])
