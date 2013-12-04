@@ -422,7 +422,7 @@
 				multiple: false,
 				id: 'organization_uuid',
 				ajax: {
-					url: 'http://graphapi.firstgiving.com/v2/list/organization?jsonpfunc=?',
+					url: 'https://graphapi.firstgiving.com/v2/list/organization?jsonpfunc=?',
 					dataType: 'jsonp',
 					jsonp: 'jsonpfunc',
 					quietMillis: 200,
@@ -454,7 +454,7 @@
 							dataType: 'jsonp',
 							contentType: 'application/json',
 							jsonp: 'jsonpfunc',
-							url: 'http://graphapi.firstgiving.com/v2/object/organization/'+id+'?jsonpfunc=?',
+							url: 'https://graphapi.firstgiving.com/v2/object/organization/'+id+'?jsonpfunc=?',
 						}).done(function(data) { console.log(data.payload.organization_name); callback(data.payload); });
 					}
 				},
@@ -494,5 +494,5 @@
 	</script>
 <% end %>
 
-<% javascript 'select2.js' %>
+<% javascript 'select2.min.js' %>
 <% javascript 'select2_locale_en.js' %>
