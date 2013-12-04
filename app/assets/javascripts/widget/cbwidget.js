@@ -609,7 +609,9 @@ function CBSale(amount,transaction_id) {
             }
 
             cause_select.select2();
-            fgcause_select.select2();
+            fgcause_select.select2({
+                placeholder: 'Click here to find a cause'
+            });
 
             if (ServeData.current_cause_id) {
                 cause_select.select2("val", ServeData.current_cause_id);

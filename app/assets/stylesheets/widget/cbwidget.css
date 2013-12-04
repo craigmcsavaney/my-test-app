@@ -32,7 +32,7 @@
 	overflow: hidden;
 }
 
-.cbw-select2 {
+.cbw-select2, .cbw-fg-select2 {
 	width: 98%;
 }
 
