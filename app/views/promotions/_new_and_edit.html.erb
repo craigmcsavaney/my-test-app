@@ -70,13 +70,32 @@
 				</div>
 				<p class="collapse">You must choose a preferred cause for each promotion.  This is the cause that will benefit from your merchant-directed contributions (if any), and it's the cause that will receive any supporter-directed and buyer-directed contributions that cannot (for any reason) be donated to the cause of their choice. </p>
 			</div>
-			<%= select_tag 'promotion[cause_id]', options_from_collection_for_select(Cause.all, :id, :name, @promotion.cause_id), readonly: @served, id: "promotions" %>
+
+			<% if !@promotion.cause.nil? && @promotion.cause.type == "Group" %>
+			<% 		@default1 = true %>
+			<% 	else %>
+			<% 		@default1 = false %>
+			<% end %>
+
+			<%= radio_button_tag 'promotion[cause_type]', "event", @default1 %><%= label_tag(:cause_type_group, "Choose an event") %>
+
+			<% if !@promotion.cause.nil? && @promotion.cause.type == "Group" %>
+			<% 		@initial_value = @promotion.event_id %>
+			<% 	else %>
+			<% 		@initial_value = "" %>
+			<% end %>
+
+			<%= select_tag 'promotion[event_id]', options_from_collection_for_select(Event.where("end_date > ?",Time.now).all, :id, :name, @initial_value), readonly: @served, id: "events", include_blank: true %>
 			<br/><br/>
 
 			<% if false %>
+				<%= f.hidden_field :fg_uuid, :value => "ff068a2c-2023-11e0-a279-4061860da51d" %>
+			<% end %>
 
-			<%= f.hidden_field :fg_uuid, :value => "ff068a2c-2023-11e0-a279-4061860da51d" %>
-
+			<% if !@promotion.cause.nil? && @promotion.cause.type == "Single" %>
+			<% 		@default2 = true %>
+			<% 	else %>
+			<% 		@default2 = false %>
 			<% end %>
 
 			<% if !@promotion.cause.nil? %>
@@ -85,7 +104,8 @@
 			<% 		@value = "" %>
 			<% end %>
 
-			<%= f.hidden_field :fg_uuid, value: @value %>
+			<%= radio_button_tag 'promotion[cause_type]', "single", @default2 %><%= label_tag(:cause_type_single, "Choose a single cause") %>
+			<%= f.hidden_field :fg_uuid, value: @value, readonly: @served %>
 			<br/><br/>
 
 	        <%= f.label :button_id, "Button Style For This Promotion" %>
@@ -401,7 +421,21 @@
 <% content_for :js do %>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('select#promotions').select2();
+			$('select#events').select2({
+				placeholder: 'Click here to select a group of causes'
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(document).on('change', 'select#events', function() {
+	            $("#promotion_cause_type_event").attr('checked', true);
+	            $("#promotion_cause_type_single").attr('checked', false);
+	        });
+			$(document).on('change', '#promotion_fg_uuid', function() {
+	            $("#promotion_cause_type_single").attr('checked', true);
+	            $("#promotion_cause_type_event").attr('checked', false);
+	        });
 		});
 	</script>
 	<script type="text/javascript">

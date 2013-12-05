@@ -1410,7 +1410,9 @@ function CBSale(amount,transaction_id) {
 
             //RepositionWidget();
 
-        });        $(window).resize(function() {
+        });        
+
+        $(window).resize(function() {
 
             var shown = $("#cbw-widget").css('display');
 

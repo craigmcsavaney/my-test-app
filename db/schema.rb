@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131201220849) do
+ActiveRecord::Schema.define(:version => 20131205130128) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(:version => 20131201220849) do
     t.string   "banner_template",                                        :default => ""
     t.integer  "button_id",                                                              :null => false
     t.integer  "widget_position_id"
+    t.integer  "event_id"
   end
 
   add_index "promotions", ["merchant_id"], :name => "index_promotions_on_merchant_id"

@@ -6,5 +6,4 @@ class Group < Cause
 
 	has_and_belongs_to_many :causes
 	has_many :events
-
 end

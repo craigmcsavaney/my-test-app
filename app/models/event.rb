@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   	attr_accessible :name, :description, :order, :deleted, :event_date, :start_date, :end_date, :group_id
 
   	belongs_to :group
+  	has_many :promotions
 
   	validates :name, presence: true, uniqueness: { case_sensitive: false }
   	validates :group_id, presence: true
