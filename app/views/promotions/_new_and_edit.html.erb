@@ -85,7 +85,7 @@
 			<% 		@initial_value = "" %>
 			<% end %>
 
-			<%= select_tag 'promotion[event_id]', options_from_collection_for_select(Event.where("end_date > ?",Time.now).all, :id, :name, @initial_value), readonly: @served, id: "events", include_blank: true %>
+			<%= select_tag 'promotion[event_id]', options_from_collection_for_select(Event.where("end_date is ? or end_date > ?",nil,Time.now).all, :id, :name, @initial_value), readonly: @served, id: "events", include_blank: true %>
 			<br/><br/>
 
 			<% if false %>

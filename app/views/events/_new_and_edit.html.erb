@@ -14,13 +14,13 @@
         <%= f.text_field :order %>
 
         <%= f.label :event_date %>
-        <%= f.date_select :start_date %>
+        <%= f.date_select :event_date %>
 
         <%= f.label :start_date %>
         <%= f.date_select :start_date %>
 
         <%= f.label :end_date %>
-        <%= f.date_select :start_date %>
+        <%= f.date_select :end_date, include_blank: true %>
 
         <%= f.label :group_id, "Cause Group for this Event" %>
         <%= select_tag 'event[group_id]', options_from_collection_for_select(Group.all, :id, :name, @event.group_id), prompt: "you must select a group" %>
