@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205195919) do
+ActiveRecord::Schema.define(:version => 20131205202811) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -130,10 +130,10 @@ ActiveRecord::Schema.define(:version => 20131205195919) do
     t.boolean  "deleted",     :default => false
     t.date     "event_date",  :default => '2013-11-22', :null => false
     t.date     "start_date",  :default => '2013-11-22', :null => false
-    t.date     "end_date",    :default => '2013-11-22', :null => false
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.integer  "group_id",                              :null => false
+    t.date     "end_date"
   end
 
   create_table "lists", :force => true do |t|
