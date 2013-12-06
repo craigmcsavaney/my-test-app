@@ -609,7 +609,9 @@ function CBSale(amount,transaction_id) {
                 cause_select.append(new Option(CauseData[i].name, CauseData[i].uid));
             }
 
-            cause_select.select2();
+            cause_select.select2({
+                placeholder: 'Click here to select a group of causes'
+            });
             fgcause_select.select2({
                 placeholder: 'Click here to find a cause',
                 minimumInputLength: 3,
