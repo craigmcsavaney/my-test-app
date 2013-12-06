@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
   	before_validation :generate_uid
 
   	validates :name, presence: true, uniqueness: { case_sensitive: false }
-  	validates :group_id, presence: true
+  	validates :group_id, presence: true, :uniqueness => {message: ":: The Cause Group you selected is already associated with an event.  Please pick another Cause Group for this Event."}, numericality: true
   	validates :event_date, presence: true
   	validates :start_date, presence: true
   	validates :uid, presence: true, uniqueness: { case_sensitive: true }
