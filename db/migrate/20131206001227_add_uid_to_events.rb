@@ -1,5 +1,5 @@
 class AddUidToEvents < ActiveRecord::Migration
   def change
-    add_column :events, :uid, :string, null: false
+    add_column :events, :uid, :string
   end
 end
