@@ -610,8 +610,7 @@ function CBSale(amount,transaction_id) {
             }
 
             cause_select.select2({
-                placeholder: 'Click here to select a group of causes',
-                allowClear: true
+                placeholder: 'Click here to select a group of causes'
             });
             fgcause_select.select2({
                 placeholder: 'Click here to find a cause',
