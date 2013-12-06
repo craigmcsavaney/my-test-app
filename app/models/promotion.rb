@@ -16,7 +16,7 @@ class Promotion < ActiveRecord::Base
     has_many :serves
     has_many :shares, through: :serves
     belongs_to :event
-    delegate :group, :to => :event, :allow_nil => true
+    # delegate :causes, :to => :group, :allow_nil => true
 
     before_validation :replace_nils, :get_landing_page, :get_button_id, :get_widget_position_id, :ensure_channel_attributes_present, :get_cause_id, :set_blank_accessors
 
@@ -58,7 +58,7 @@ class Promotion < ActiveRecord::Base
     def set_blank_accessors
       # If a promotion record is updated and there are no changes to the cause_id and event_id and the cause_type is blank and the cause exists, set the cause_type and fg_uuid to their proper value
       if self.cause_type.nil? || self.cause_type == ""
-        if !self.cause_id_changed? && !self.event_id_changed? && !self.cause.nil?
+        if !self.cause_id_changed? && !self.cause.nil? && !self.event_id_changed? 
           if self.cause.type == "Single"
             self.cause_type = "single"
             self.fg_uuid = self.cause.fg_uuid

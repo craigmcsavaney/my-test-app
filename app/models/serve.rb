@@ -113,7 +113,7 @@ class Serve < ActiveRecord::Base
 
   def get_current_cause
     if self.current_cause_id.nil?
-      self.current_cause_id = Promotion.find(self.promotion_id).cause_id
+      self.current_cause_id = self.promotion.cause_id
     end
   end
 

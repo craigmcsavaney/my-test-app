@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205205835) do
+ActiveRecord::Schema.define(:version => 20131206001227) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(:version => 20131205205835) do
     t.datetime "updated_at",                            :null => false
     t.integer  "group_id",                              :null => false
     t.date     "end_date"
+    t.string   "uid",                                   :null => false
   end
 
   create_table "lists", :force => true do |t|
