@@ -16,7 +16,7 @@ class Promotion < ActiveRecord::Base
     has_many :serves
     has_many :shares, through: :serves
     belongs_to :event
-    # delegate :causes, :to => :group, :allow_nil => true
+    delegate :causes, :to => :group, :allow_nil => true
 
     before_validation :replace_nils, :get_landing_page, :get_button_id, :get_widget_position_id, :ensure_channel_attributes_present, :get_cause_id, :set_blank_accessors
 
@@ -39,7 +39,7 @@ class Promotion < ActiveRecord::Base
     validates :fb_redirect_url, presence: true
     validates :fb_thumb_url, presence: true
     validate :channel_ids, :channel_count, on: :update
-    validate :excessive_contribution, :missing_contribution, :prevent_deletion_of_viewed_promotions, :mismatched_cause_type_selection
+    validate :excessive_contribution, :missing_contribution, :prevent_deletion_of_viewed_promotions#, :mismatched_cause_type_selection
 
     after_validation :check_for_disallowed_updates_to_served_promotions, :get_templates, :replace_nils, :replace_variables, :synchronize_cause_and_event
     before_update :check_content_change
@@ -233,7 +233,17 @@ class Promotion < ActiveRecord::Base
     amoeba do
       enable
       exclude_field :serves
+      exclude_field :shares
+      exclude_field :serves_count
       prepend :name => "Copy of "
+
+      customize(lambda { |original_promotion,new_promotion|
+        if original_promotion.cause.type == "Single"
+          new_promotion.cause_type = "single"
+        elsif original_promotion.cause.type == "Group"
+          new_promotion.cause_type = "event"
+        end
+      })
     end
 
     private
