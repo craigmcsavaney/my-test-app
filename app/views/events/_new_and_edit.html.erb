@@ -25,6 +25,8 @@
         <%= f.label :group_id, "Cause Group for this Event" %>
         <%= select_tag 'event[group_id]', options_from_collection_for_select(Group.all, :id, :name, @event.group_id), prompt: "you must select a group" %>
 
+        <%= f.label :uid, "Unique Identifier (UID)" %>
+        <%= f.text_field :uid, readonly: true, placeholder: "this will be assigned automatically" %>
 
         <%= f.submit button, class: "btn btn-large btn-primary" %>
       <% end %>

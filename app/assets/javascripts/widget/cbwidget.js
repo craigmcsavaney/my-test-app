@@ -535,7 +535,8 @@ function CBSale(amount,transaction_id) {
          * --------------------------------------------------------------------------------- */
         function LoadCausesData(url_base, merchant_id, session_id, serve_id) {
 
-            var method = "causes";
+            // var method = "causes";
+            var method = "events";
 
             var data_url = url_base + method + "/" + merchant_id;
 
