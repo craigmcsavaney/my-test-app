@@ -1642,6 +1642,10 @@ function CBSale(amount,transaction_id) {
             // TO DO: Clear the state of the widget...
         });
 
+        $("input[name='cause_type']").change(function(){
+                alert($("input[name='cause_type']").val());
+        });
+
 
     }); // end jquery.documentready
 
