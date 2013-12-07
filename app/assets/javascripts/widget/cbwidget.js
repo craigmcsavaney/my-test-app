@@ -1643,7 +1643,7 @@ function CBSale(amount,transaction_id) {
         });
 
         $(document).on('change', "input[name='cause_type_radio']", function(){
-                alert($("input[name='cause_type_radio']").val());
+                alert($("input[name='cause_type_radio']:checked").val());
         });
 
 
