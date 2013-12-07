@@ -610,7 +610,7 @@ function CBSale(amount,transaction_id) {
             }
 
             cause_select.select2("val", ServeData.current_event_uid);
-            var fg_initial_cause = ServeData.current_fg_uuid);
+            var fg_initial_cause = ServeData.current_fg_uuid;
 
             cause_select.select2({
                 placeholder: 'Click here to select a group of causes'
