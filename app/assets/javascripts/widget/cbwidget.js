@@ -66,6 +66,7 @@ function CBSale(amount,transaction_id) {
     var ReferringPath;
     var URLTarget;
     var FilteredParamString;  // original param string minus all referring path param(s)
+    var CauseType;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -266,7 +267,7 @@ function CBSale(amount,transaction_id) {
             URLTarget = "global";
 
         // Get the widget html template and load the serve date.  When both of these are complete, merge the serve data into the widget html.
-        $.when(GetWidgetHTML(), LoadServeData(CBServeUrlBase, CBMerchantID, ReferringPath)).done(function(a,b) {
+        $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
 
             MergeServeData(div);
 
@@ -278,9 +279,9 @@ function CBSale(amount,transaction_id) {
             } else {
 
                 // When the cause data is finished loading, merge the cause data into the widget.
-                $.when(LoadCausesData(CBServeUrlBase, CBMerchantID, ServeData.session_id, ServeData.serve_id)).done(function(a) {
+                $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
 
-                    MergeCauseData();
+                    MergeEventsData();
 
                 });
 
@@ -374,11 +375,11 @@ function CBSale(amount,transaction_id) {
         /* LoadServeData - given merchant_id, load the initial server data for active promotion
          * This will eventually replace the LoadPromotionData call
          */
-        function LoadServeData(url_base, merchant_id, referring_path) {
+        function LoadServeData(referring_path) {
 
             var method = "serve";
 
-            var data_url = url_base + method + "/" + merchant_id;
+            var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
 
             // Get the existing values for the cause button cookies so that 
             // we can properly initialize the widget
@@ -438,8 +439,6 @@ function CBSale(amount,transaction_id) {
             // append the widget html to the input div
 
             $("<div id=\"cbw-main-div\">").html( WidgetData.content ).appendTo(div);
-
-
 
             if (ServeData.email) {
 
@@ -504,7 +503,7 @@ function CBSale(amount,transaction_id) {
             SetCookie("cbwsession", ServeData.session_id, 30, "/");
             SetCookie("cbwserve", ServeData.serve_id, expire_mins, "/"); 
 
-            // Check and see if this serve has already been viewed.  If it has, update the CBPurchasePath with the currebt purchase path.  Otherwise, the path doesn't get updated until the CBW is actually viewed.
+            // Check and see if this serve has already been viewed.  If it has, update the CBPurchasePath with the current purchase path.  Otherwise, the path doesn't get updated until the CBW is actually viewed.
 
             var purchase_path = "";
 
@@ -518,103 +517,23 @@ function CBSale(amount,transaction_id) {
 
             }
 
-            // update the CBPurchasePath
+            // update the CBPurchasePath global variable to contain the current purchase path value
             PurchasePathUpdate(purchase_path);
 
-        }
-
-        /* ---------------------------------------------------------------------------------
-         * LoadCausesData(data_url, merchant_id, callback)
-         * ---------------------------------------------------------------------------------
-         * Loads the active promotion from the server given the merchant_id that was 
-         * presumably set on the embedded div element on the host page
-         *
-         * @data_url    = URL to use to obtain JSON data (AJAX call)
-         * @merchant_id = ID of the merchant to pass into the AJAX call
-         * @callback    = Callback function to call when the AJAX call is completed
-         * --------------------------------------------------------------------------------- */
-        function LoadCausesData(url_base, merchant_id, session_id, serve_id) {
-
-            // var method = "causes";
-            var method = "events";
-
-            var data_url = url_base + method + "/" + merchant_id;
-
-            // pass these values back into the server on the AJAX call so that we can get proper values in return
-            var ajxDataObj = new Object();
-
-            if (session_id) {
-                ajxDataObj.session_id = session_id;
-            }
-
-            if (serve_id) {
-                ajxDataObj.serve_id = serve_id;
-            }
-
-            return $.ajax({
-                type: 'POST',
-                url: data_url,
-                data: ajxDataObj,
-                timeout: 30000,
-                dataType: "jsonp",
-                success: function(data) {
-                     CauseData = data;
-
-                    if (CauseData.error) {
-    
-                        alert("API error: " + CauseData.error);
-
-                    }
-
-                },
-                error: function(data, status, xhr) {
-
-                        alert("LoadCauseData error");
-
-                },
-                complete: function(jqXHR, textStatus) {
-
-                }
-            });
-            
-        }
-
-        /* ---------------------------------------------------------------------------------
-         * MergeCauseData()
-         * ---------------------------------------------------------------------------------
-         * This function needs to be split into two separate functions: one that loads the causes
-         * list for the cause selector, and the remaining stuff probably needs to be added
-         * to the MergeServeData function.
-         *
-         * Callback function that is called when the results of the AJAX call to pull the 
-         * cause data necessary to populate the select2 cause selector.
-         *
-         * @data   = JSON data returned by the AJAX call (passed through as part of callback)
-         * @status = Status of the AJAX call (passed through as part of callback)
-         * @xhr    = jqXHR object that contains information about AJAX call 
-         * --------------------------------------------------------------------------------- */
-        function MergeCauseData() {
-
-            //var causes = PromotionData.causes.cause_list;
+            // assign variable names to the event selector and the fgcause selector
             var cause_select = $("#cbw-cause-select");
             var fgcause_select = $("#cbw-fgcause-select");
 
-            // Populate the cause list...eventually this will be separate from the Promotion Data
-            // but for now let's do this here...
-
-            //for (var i=0; i < causes.length; i++) {
-            for (var i=0; i < CauseData.length; i++) {
-
-                //cause_select.append(new Option(causes[i], i));
-                cause_select.append(new Option(CauseData[i].name, CauseData[i].uid));
-            }
-
+            // set the initial values of the event selector and the fgcause selector
             cause_select.select2("val", ServeData.current_event_uid);
             fgcause_select.attr('value', ServeData.current_fg_uuid);
 
+            // make the event selector a Select2 selector
             cause_select.select2({
                 placeholder: 'Click here to select a group of causes'
             });
+            
+            // make the fgcause selector a Select2 selector
             fgcause_select.select2({
                 placeholder: 'Click here to find a cause',
                 minimumInputLength: 3,
@@ -670,7 +589,6 @@ function CBSale(amount,transaction_id) {
             //     cause_select.select2("val", ServeData.promotion.default_cause);
             // }
 
-
         }
 
         function causeFormatResult(cause) {
@@ -697,13 +615,96 @@ function CBSale(amount,transaction_id) {
             return markup;
         } 
 
+        /* ---------------------------------------------------------------------------------
+         * LoadEventsData(session_id, serve_id)
+         * ---------------------------------------------------------------------------------
+         * Loads the active promotion from the server given the merchant_id that was 
+         * presumably set on the embedded div element on the host page
+         *
+         * @data_url    = URL to use to obtain JSON data (AJAX call)
+         * @merchant_id = ID of the merchant to pass into the AJAX call
+         * @callback    = Callback function to call when the AJAX call is completed
+         * --------------------------------------------------------------------------------- */
+        function LoadEventsData(session_id, serve_id) {
+
+            // var method = "causes";
+            var method = "events";
+
+            var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
+
+            // pass these values back into the server on the AJAX call so that we can get proper values in return
+            var ajxDataObj = new Object();
+
+            if (session_id) {
+                ajxDataObj.session_id = session_id;
+            }
+
+            if (serve_id) {
+                ajxDataObj.serve_id = serve_id;
+            }
+
+            return $.ajax({
+                type: 'POST',
+                url: data_url,
+                data: ajxDataObj,
+                timeout: 30000,
+                dataType: "jsonp",
+                success: function(data) {
+                     CauseData = data;
+
+                    if (CauseData.error) {
+    
+                        alert("API error: " + CauseData.error);
+
+                    }
+
+                },
+                error: function(data, status, xhr) {
+
+                        alert("LoadEventData error");
+
+                },
+                complete: function(jqXHR, textStatus) {
+
+                }
+            });
+            
+        }
+
+        /* ---------------------------------------------------------------------------------
+         * MergeEventsData()
+         * ---------------------------------------------------------------------------------
+         * This function needs to be split into two separate functions: one that loads the causes
+         * list for the cause selector, and the remaining stuff probably needs to be added
+         * to the MergeServeData function.
+         *
+         * Callback function that is called when the results of the AJAX call to pull the 
+         * cause data necessary to populate the select2 cause selector.
+         *
+         * @data   = JSON data returned by the AJAX call (passed through as part of callback)
+         * @status = Status of the AJAX call (passed through as part of callback)
+         * @xhr    = jqXHR object that contains information about AJAX call 
+         * --------------------------------------------------------------------------------- */
+        function MergeEventsData() {
+
+            // Populate the list of events
+
+            //for (var i=0; i < causes.length; i++) {
+            for (var i=0; i < CauseData.length; i++) {
+
+                //$("#cbw-cause-select").append(new Option(causes[i], i));
+                $("#cbw-cause-select").append(new Option(CauseData[i].name, CauseData[i].uid));
+            }
+
+        }
+
         /* RegisterWidgetView - registers with server that the user clicked the cause button
          */
-        function RegisterWidgetView(url_base, merchant_id) {
+        function RegisterWidgetView() {
 
             var method = "view";
 
-            var data_url = url_base + method + "/" + merchant_id;
+            var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
 
             // The CBW Session Cookie contains the session_id 
             var cbwSessionCookie = GetCookie("cbwsession");
@@ -749,13 +750,17 @@ function CBSale(amount,transaction_id) {
 
         }       
 
-        /* RegisterShareEvent - registers a post to a social media channel (or attempt to do so)
+        /* UpdateServe - Updates the Serve record with current email, current cause or event, current cause type.  Also, when a path is passed in, registers a post to a social media channel (or attempt to do so), and returns the approptiate new paths.
          */
-        function RegisterShareEvent(url_base, merchant_id, email, cause_id, path, callback) {
+        function UpdateServe(path, callback) {
+
+            var email = $("#cbw-email-input").val();
+            var sel_event_idx = $("#cbw-cause-select").select2("val");
+            var sel_cause_idx = $("#cbw-fgcause-select").select2("val");
 
             var method = "update";
 
-            var data_url = url_base + method + "/" + merchant_id;
+            var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
 
             // The CBW Session Cookie contains the session_id 
             var cbwSessionCookie = GetCookie("cbwsession");
@@ -1182,7 +1187,6 @@ function CBSale(amount,transaction_id) {
             var sel_channel = ServeData.channels[chname].details;
             //var awesm_link = "http://awe.sm/" + ServeData.paths[chname];
             var channel_path = GetChannelPath(ServeData.paths[chname]);
-            var sel_cause_idx = $("#cbw-cause-select").select2("val");
             //
             // Following assignment of selected_cause var does not work.  Need to figure
             // out how to get the noun name of the selected cause.  Until this is fixed,
@@ -1199,7 +1203,7 @@ function CBSale(amount,transaction_id) {
             // share_msg = share_msg.replace("{{supporter_cause}}", selected_cause);
             //
 
-            RegisterShareEvent(CBServeUrlBase, CBMerchantID, $("#cbw-email-input").val(), sel_cause_idx, ServeData.paths[chname], RegisterShareResult);
+            UpdateServe(ServeData.paths[chname], RegisterShareResult);
 
             switch (chname) {
 
@@ -1302,7 +1306,7 @@ function CBSale(amount,transaction_id) {
 
             if (!reset) return;
 
-            RegisterShareEvent(CBServeUrlBase, CBMerchantID, $("#cbw-email-input").val(), $("#cbw-cause-select").select2("val"), "", RegisterShareResult);
+            UpdateServe("", RegisterShareResult);
         }
 
         /*
@@ -1328,7 +1332,7 @@ function CBSale(amount,transaction_id) {
 
             if (display == "none") {
 
-                RegisterWidgetView(CBServeUrlBase, CBMerchantID);
+                RegisterWidgetView();
             }
 
             RepositionWidget();
@@ -1389,7 +1393,7 @@ function CBSale(amount,transaction_id) {
 
         //     // if (display == "none") {
 
-        //     //     RegisterWidgetView(CBServeUrlBase, CBMerchantID);
+        //     //     RegisterWidgetView();
         //     // }
 
         //     // RepositionWidget();
@@ -1412,7 +1416,7 @@ function CBSale(amount,transaction_id) {
 
             //if (display == "none") {
 
-            //    RegisterWidgetView(CBServeUrlBase, CBMerchantID);
+            //    RegisterWidgetView();
             //}
 
             //RepositionWidget();
