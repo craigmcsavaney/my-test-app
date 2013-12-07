@@ -520,13 +520,15 @@ function CBSale(amount,transaction_id) {
             // update the CBPurchasePath global variable to contain the current purchase path value
             PurchasePathUpdate(purchase_path);
 
+            CauseType = ServeData.cause_type
+
             // assign variable names to the event selector and the fgcause selector
             var cause_select = $("#cbw-cause-select");
             var fgcause_select = $("#cbw-fgcause-select");
 
             // set the initial values of the event selector and the fgcause selector
-            cause_select.select2("val", ServeData.current_event_uid);
-            fgcause_select.attr('value', ServeData.current_fg_uuid);
+            cause_select.select2("val", ServeData.event_uid);
+            fgcause_select.attr('value', ServeData.fg_uuid);
 
             // make the event selector a Select2 selector
             cause_select.select2({
@@ -755,8 +757,8 @@ function CBSale(amount,transaction_id) {
         function UpdateServe(path, callback) {
 
             var email = $("#cbw-email-input").val();
-            var sel_event_idx = $("#cbw-cause-select").select2("val");
-            var sel_cause_idx = $("#cbw-fgcause-select").select2("val");
+            var event_uid = $("#cbw-cause-select").select2("val");
+            var fg_uuid = $("#cbw-fgcause-select").select2("val");
 
             var method = "update";
 
@@ -776,8 +778,16 @@ function CBSale(amount,transaction_id) {
                 ajxDataObj.email = email;
             }
 
-            if (cause_id) {
-                ajxDataObj.cause_id = cause_id;
+            if (event_uid) {
+                ajxDataObj.event_uid = event_uid;
+            }
+
+            if (fg_uuid) {
+                ajxDataObj.fg_uuid = fg_uuid;
+            }
+
+            if (CauseType) {
+                ajxDataObj.cause_type = CauseType;
             }
 
             if (path) {

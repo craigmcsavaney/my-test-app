@@ -19,13 +19,19 @@ node :content do
 	                                    to your friends on our behalf and we will make a donation of 5% of all purchases</p>
 			<form id="cbw-widget-form" class="form-horizontal form-small">
 				<div id="cbw-cause-select-ctrl-grp" class="control-group">
-					<label class="control-label" for="input-cause-sel">Select A Cause</label>
+					<label class="control-label" for="input-cause-sel">
+						<input type="radio" name="cause_type" id="cause_type_event" value="event">
+						Select A Cause
+					</label>
 					<div class="controls">
 						<select id="cbw-cause-select" class="cbw-select2"/>
 					</div>
 				</div>
 				<div id="cbw-fgcause-select-ctrl-grp" class="control-group">
-					<label class="control-label" for="input-fgcause-sel">Select A FG Cause</label>
+					<label class="control-label" for="input-fgcause-sel">
+						<input type="radio" name="cause_type" id="cause_type_single" value="single">
+						Select A FG Cause
+					</label>
 					<div class="controls">
 						<input id="cbw-fgcause-select" class="cbw-fg-select2" type="hidden">
 					</div>
