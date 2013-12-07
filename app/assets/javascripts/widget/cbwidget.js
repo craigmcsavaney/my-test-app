@@ -1642,7 +1642,7 @@ function CBSale(amount,transaction_id) {
             // TO DO: Clear the state of the widget...
         });
 
-        $(document).on('change', "input[name='cause_type_radio']"function(){
+        $(document).on('change', "input[name='cause_type_radio']", function(){
                 alert($("input[name='cause_type_radio']").val());
         });
 
