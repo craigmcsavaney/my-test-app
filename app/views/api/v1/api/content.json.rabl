@@ -20,7 +20,7 @@ node :content do
 			<form id="cbw-widget-form" class="form-horizontal form-small">
 				<div id="cbw-cause-select-ctrl-grp" class="control-group">
 					<label class="control-label" for="input-cause-sel">
-						<input type="radio" name="cause_type" id="cause_type_event" value="event">
+						<input type="radio" name="cause_type_radio" id="cbw_cause_type_event" value="event">
 						Select A Cause
 					</label>
 					<div class="controls">
@@ -29,7 +29,7 @@ node :content do
 				</div>
 				<div id="cbw-fgcause-select-ctrl-grp" class="control-group">
 					<label class="control-label" for="input-fgcause-sel">
-						<input type="radio" name="cause_type" id="cause_type_single" value="single">
+						<input type="radio" name="cause_type_radio" id="cbw_cause_type_single" value="single">
 						Select A FG Cause
 					</label>
 					<div class="controls">
