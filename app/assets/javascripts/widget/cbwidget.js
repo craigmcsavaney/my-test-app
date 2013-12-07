@@ -610,7 +610,7 @@ function CBSale(amount,transaction_id) {
             }
 
             cause_select.select2("val", ServeData.current_event_uid);
-            var fg_initial_cause = ServeData.current_fg_uuid;
+            fgcause_select.attr('value', ServeData.current_fg_uuid);
 
             cause_select.select2({
                 placeholder: 'Click here to select a group of causes'
@@ -647,14 +647,13 @@ function CBSale(amount,transaction_id) {
                     // the input tag has a value attribute preloaded that points to a preselected cause's id
                     // this function resolves that id attribute to an object that select2 can render
                     // using its formatResult renderer - that way the cause name is shown preselected
-                    //var id=$(element).val();
-                    //if (id!=="") {
-                    if (fg_initial_cause!=="") {
+                    var id=$(element).val();
+                    if (id!=="") {
                         $.ajax({
                             dataType: 'jsonp',
                             contentType: 'application/json',
                             jsonp: 'jsonpfunc',
-                            url: 'https://graphapi.firstgiving.com/v2/object/organization/'+fg_initial_cause+'?jsonpfunc=?',
+                            url: 'https://graphapi.firstgiving.com/v2/object/organization/'+id+'?jsonpfunc=?',
                         }).done(function(data) { console.log(data.payload.organization_name); callback(data.payload); });
                     }
                 },
