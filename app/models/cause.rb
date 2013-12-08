@@ -34,6 +34,15 @@ class Cause < ActiveRecord::Base
     end
   end
 
+  def self.not_exists?(id)
+    # returns true if the id does not exist, false if it does exist
+      self.find(id)
+      false
+    rescue
+      true
+  end
+
+
   def self.get_cause_id(fg_uuid)
     if self.find_by_fg_uuid(fg_uuid)
       @cause = self.find_by_fg_uuid(fg_uuid)

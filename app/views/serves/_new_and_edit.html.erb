@@ -10,8 +10,15 @@
         <%= f.label :promotion_id %>
         <%= select_tag 'serve[promotion_id]', options_from_collection_for_select(Promotion.all, :id, :name, @serve.promotion_id) %>
 
-        <%= f.label :email %>
-        <%= f.text_field :email %>
+        <%= f.label :user_id %>
+        <%= f.text_field :user_id %>
+
+        <% if @serve.user_id.nil? %>
+        <%     @email = "null" %>
+        <%   else %>
+        <%     @email = @serve.user.email %>
+        <% end %>
+        <%= f.label :user_email, "User Email: " + @email %>
 
         <%= f.label :referring_share_id, "Referring Share ID" %>
         <%= select_tag 'serve[referring_share_id]', options_from_collection_for_select(Share.all, :id, :id, @serve.referring_share_id ), include_blank: true %>
@@ -20,8 +27,7 @@
         <%= f.check_box :viewed %>
 
         <br/><br/>
-        <%= f.label :shares_count, "Shares Count: " %><%= @serve.shares_count %>
-        <br/><br/>
+        <%= f.label :shares_count, "Shares Count: " + @serve.shares_count.to_s %>
 
         <%= f.label :session_id %>
         <%= f.text_field :session_id, readonly: true %>

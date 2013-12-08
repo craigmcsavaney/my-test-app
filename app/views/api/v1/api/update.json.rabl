@@ -1,6 +1,12 @@
 object @serve
 
-attributes :email
+#attributes :email
+
+node do |serve|
+	if !serve.user.nil?
+		{ :email => serve.user.email }
+	end
+end
 
 node :current_cause_id do |serve|
 	serve.cause.uid

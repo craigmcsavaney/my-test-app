@@ -5,9 +5,6 @@
     <% @a = "no" %>
   <% end %>
   <% @b= @c= "" %>
-  <% if serve.email? %>
-    <% @b = serve.email %>
-  <% end %>
   <% if serve.session_id? %>
     <% @c = serve.session_id %>
   <% end %>
@@ -21,7 +18,6 @@
   	<b><%= :id %>: </b><%= link_to serve.id, @editpath %><br/>
   	<b><%= :promotion_id %>: </b><%= link_to serve.promotion_id, @editpath %><br/>
     <b><%= :name %>: </b><%= link_to serve.promotion.name, @editpath %><br/>
-    <b><%= :email %>: </b><%= link_to @b, @editpath %><br/>
     <b><%= :user_id %>: </b><%= link_to @d, @editpath %>&nbsp;&nbsp;
     <b>User Email: </b><%= link_to @e, @editpath %><br/>
     <b><%= :viewed %>: </b><%= link_to @a, @editpath %><br/>

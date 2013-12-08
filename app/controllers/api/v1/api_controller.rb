@@ -245,8 +245,7 @@ module Api
             end
 
             def update
-                # inputs: merchant_id, session_id, callback, [path], [cause_id], [email]
-                # remember that the merchant_id and cause_id are both uid's
+                # inputs: merchant_id, session_id, callback, [path], [event_uid], [fg_uuid], [cause_type], [email]. Remember that the merchant_id is a uid
 
                 # first, verify that a callback parameter was passed
                 if params[:callback].nil?
@@ -270,8 +269,12 @@ module Api
                         return
                 end
 
+                # ************* should be able to delete the following
+
                 # next, check to see if an email was passed in and if it is different than the email in the current serve record.  If it is different, set the @email[:email_changed] flag to true and set the @email[:email] variable to the new email address.  Otherwise, set the flag to false and the email variable to the current value of the email
-                @email = Serve.email_changed?(@serve,params[:email])
+                #@email = Serve.email_changed?(@serve,params[:email])
+
+                # ************* should be able to delete the preceeding
 
                 # next, check to see if an email was passed in and if it is different than the email associated with the user in the current serve record.  If it is different, set the @user[:user_changed] flag to true and set the @user[:user_id] variable to the new user_id.  Otherwise, set the flag to false and the user_id variable to the current value of the serve user_id.
                 @user = Serve.user_changed?(@serve,params[:email])
@@ -279,19 +282,40 @@ module Api
                     cookies.permanent.signed[:user] = params[:email]
                 end
 
-                # check to see if a cause was passed in (non-nil) and if it is different from the current cause value.  If it is valid and different, set the @cause[:cause_changed] flag to true and the @cause[:cause] variable to the new cause.  Otherwise, set the flag to false and the cause variable to the current cause id value.  Remember that the cause_id being passed in is a uid but the cause being returned is an object.
-                @cause = Serve.cause_changed?(@serve,params[:cause_id])
+                # Using the cause_type, fg_uuid, and event_uid, get the new cause_id. When a serve is updated, values for cause_type ('single' or 'event'), fg_uuid (for single causes), and event_id (for events) may be included (all are optional).  If the cause_type is "single" and we have an actual value for fg_uuid, we use the fg_uuid to get (or create) the new cause_id. If the cause_type is event and there is an event_id submitted, we use the group_id associated with the event.  All other cases will result in a cause_id value of nil, meaning no new cause_id will be rendered.
 
-                # if either the current cause or the email has changed, update the current serve. Also, since the purchase path associated with the old cause and email may have been used already, mark it as confirmed and create a new paths for this channels.
-                if @cause[:cause_changed] or @email[:email_changed]
+                # first, create a cause_id variable and set to nil:
+
+                cause_id = nil  
+
+                # using the three inputs event_uid, fg_uuid, and cause_type, determine the correct cause if possible.  Here are the allowable cases that will result in a new cause_id:
+
+                # 1.  cause_type is 'single' and there is a corresponding value for fg_uuid.  The get_cause_id method below will return an existing cause_id for the fg_uuid value if one exists, or will create a new single cause using the fg_uuid.  If fg_uuid is invalid or the firstgiving api call fails, something bad will probably happen here.
+                if params[:cause_type] == "single" && !params[:fg_uuid].nil? && params[:fg_uuid] != ""
+                    cause_id = Cause.get_cause_id(params[:fg_uuid])
+                end
+
+                # 2.  cause_type is 'event' and there is a corresponding value for event_uid.  IN this case, we first check to see if an event exists for this event_uid, and if it does we use the cause_id associated with the group that is associated with the event.  If the event_uid does not belong to a valid event, we leave the cause_id set to nil.
+                if params[:cause_type] == "event" && !params[:event_uid].nil? && params[:event_uid] != ""
+                    if !Event.find_by_uid(params[:event_uid]).nil?
+                        # this will fail if an invalid event_uid was passed in, in which case the cause_id will not be updated.  
+                        cause_id = Event.find_by_uid(params[:event_uid]).group.id
+                    end
+                end
+
+                # Now check to see if the new cause is different from the current cause value for this serve.  Note that the new cause value can be nil.  If it is valid and different, set the @cause[:cause_changed] flag to true and the @cause[:cause_id] variable to the new cause id.  Otherwise, set the flag to false and the cause_id variable to the current cause id value.  Remember that the cause_id being passed in is an id but the cause being returned is an object.
+                @cause = Serve.cause_changed?(@serve,cause_id)
+
+                # if either the current cause or the user has changed, update the current serve. Also, since the purchase path associated with the old cause and email may have been used already, mark it as confirmed and create a new paths for this channel.
+                if @cause[:cause_changed] or @user[:user_changed]
                     # first, mark the Purchase share for this serve as confirmed:
                     #Serve.post_to_channel(@serve,Channel.find_by_name('Email'))
                     Serve.post_to_channel(@serve,Channel.find_by_name('Purchase'))
                     # next, update the Serve attributes to reflect the new email, current_cause_id, or both
-                    @serve.update_attributes(email: @email[:email], current_cause_id: @cause[:cause], user_id: @user[:user_id])
+                    @serve.update_attributes(current_cause_id: @cause[:cause_id], user_id: @user[:user_id])
                     # finally, create a new share for the purchase channel
                     #Share.create_share(@serve,Channel.find_by_name('Email'))
-                    Share.create_purchase_share(@serve,Channel.find_by_name('Purchase'),@cause[:cause])
+                    Share.create_purchase_share(@serve,Channel.find_by_name('Purchase'),@cause[:cause_id])
                 end
 
                 # next, check to see if a valid share path (one that is associated with the current serve) was passed in.  Note that if the share associated with the path has already been confirmed, the path will not be valid.  Not sure if this is necessary  - may be better to ignore whether the share is confirmed and create a new share anyhow.

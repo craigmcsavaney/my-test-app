@@ -2,9 +2,9 @@ class Promotion < ActiveRecord::Base
   include NotDeleteable
     versioned
 
-    attr_accessible :description, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :banner, :banner_template, :facebook_msg, :facebook_msg_template, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, :disable_msg_editing, :twitter_msg, :twitter_msg_template, :pinterest_msg, :pinterest_msg_template, :pin_image_url, :pin_def_board, :pin_thumb_url, :linkedin_msg, :linkedin_msg_template, :deleted, :email_subject, :email_subject_template, :email_body, :email_body_template, :googleplus_msg, :googleplus_msg_template, :button_id, :widget_position_id, :fg_uuid, :cause_type, :event_id
+    attr_accessible :description, :end_date, :start_date, :name, :merchant_id, :channel_ids, :type_id, :cause_id, :merchant_pct, :supporter_pct, :buyer_pct, :landing_page, :uid, :priority, :disabled, :banner, :banner_template, :facebook_msg, :facebook_msg_template, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, :disable_msg_editing, :twitter_msg, :twitter_msg_template, :pinterest_msg, :pinterest_msg_template, :pin_image_url, :pin_def_board, :pin_thumb_url, :linkedin_msg, :linkedin_msg_template, :deleted, :email_subject, :email_subject_template, :email_body, :email_body_template, :googleplus_msg, :googleplus_msg_template, :button_id, :widget_position_id, :fg_uuid, :cause_type, :event_id, :event_uid
 
-    attr_accessor :fg_uuid, :cause_type
+    attr_accessor :fg_uuid, :cause_type, :event_uid
 
     belongs_to :merchant, counter_cache: true
     has_and_belongs_to_many :channels,
@@ -18,7 +18,7 @@ class Promotion < ActiveRecord::Base
     belongs_to :event
     delegate :causes, :to => :group, :allow_nil => true
 
-    before_validation :replace_nils, :get_landing_page, :get_button_id, :get_widget_position_id, :ensure_channel_attributes_present, :get_cause_id, :set_blank_accessors
+    before_validation :replace_nils, :get_landing_page, :get_button_id, :get_widget_position_id, :ensure_channel_attributes_present, :get_cause_and_event, :set_blank_accessors
 
     validates :cause_type, presence: true # allowable values are 'single' and 'event'
     validates :merchant_id, presence: true
@@ -39,7 +39,7 @@ class Promotion < ActiveRecord::Base
     validates :fb_redirect_url, presence: true
     validates :fb_thumb_url, presence: true
     validate :channel_ids, :channel_count, on: :update
-    validate :excessive_contribution, :missing_contribution, :prevent_deletion_of_viewed_promotions#, :mismatched_cause_type_selection
+    validate :excessive_contribution, :missing_contribution, :prevent_deletion_of_viewed_promotions, :mismatched_cause_type_selection
 
     after_validation :check_for_disallowed_updates_to_served_promotions, :get_templates, :replace_nils, :replace_variables, :synchronize_cause_and_event
     before_update :check_content_change
@@ -56,7 +56,7 @@ class Promotion < ActiveRecord::Base
 
     private
     def set_blank_accessors
-      # If a promotion record is updated and there are no changes to the cause_id and event_id and the cause_type is blank and the cause exists, set the cause_type and fg_uuid to their proper value
+      # If a promotion record is updated and there are no changes to the cause_id and the cause_type is blank and the cause exists, set the cause_type, fg_uuid, and event_uid to thier proper values
       if self.cause_type.nil? || self.cause_type == ""
         if !self.cause_id_changed? && !self.cause.nil? && !self.event_id_changed? 
           if self.cause.type == "Single"
@@ -64,6 +64,7 @@ class Promotion < ActiveRecord::Base
             self.fg_uuid = self.cause.fg_uuid
           elsif self.cause.type == "Group"
             self.cause_type = "event"
+            self.event_uid = self.event.uid
           end
         end
       end
@@ -71,19 +72,28 @@ class Promotion < ActiveRecord::Base
 
     private
     def mismatched_cause_type_selection
-      if (self.cause_type == "single" && (self.fg_uuid.nil? || self.fg_uuid == "")) || (self.cause_type == "event" && (self.event_id.nil? || self.event_id == ""))
+      if (self.cause_type == "single" && (self.fg_uuid.nil? || self.fg_uuid == "")) || (self.cause_type == "event" && (self.event_uid.nil? || self.event_uid == ""))
         errors.add(:cause_id," :: Please select a cause or event, or make sure the radio button reflects your current selection")
       end
     end
 
     private
-    def get_cause_id
-      # Every time a promotion is saved or updated, a cause_type of "single" or "event" must beprovided, along with either a fg_uuid value (for single causes) or an event_id value (for events), or both.  If the cause_type is "single" and we have an actual value for fg_uuid, we use the fg_uuid to get (or create) the new cause_id. If the cause_type is event and there is an event_id submitted, we use the group_id associated with the event.  There are two other error conditions that will be checked in validation, where the selected cause_type is not accompanied by an event_id or fg_uuid (as appropriate).  
+    def get_cause_and_event
+      # Every time a promotion is saved or updated, a cause_type of "single" or "event" must be provided, along with either a fg_uuid value (for single causes) or an event_id value (for events), or both.  If the cause_type is "single" and we have an actual value for fg_uuid, we use the fg_uuid to get (or create) the new cause_id. If the cause_type is event and there is an event_id submitted, we use the group_id associated with the event.  There are two other error conditions that will be checked in validation, where the selected cause_type is not accompanied by an event_id or fg_uuid (as appropriate).  
+
+      # using the three inputs event_uid, fg_uuid, and cause_type, determine the correct cause if possible.  When not possible, later validations will raise the appropriate error.  Here are the possible cases:
+      # 1.  event_uid and fg_uuid both blank, (cause_type either single, event, or blank): make no change to the cause_id and event_id.  The method set_blank_accessors will fill in blank values for event_uid and fg_uuid if cause and event already exist, and an error will be raised on validation if cause_id is blank.
+      # 2.  cause_type is single or event, and there is a corresponding value for fg_uuid or event_uid.  THis case is handled below.
+      # 3.  cause_type is single or event, but there is no corresponding value for fg_uuid or event_uid (but the other value is present - otherwise this would be case 1).  This is a wierd case because the other value that is present could be different from the initial value associated with this record, indicating that the user opened the promotion, changed the value, then checked the radio button for the other cause_type despite the fact that it was blank.  In the web app, this will result in an error raised from the mismatched_cause_type_selection validation, but in the widget this must be caught and prevented.
       if self.cause_type == "single" && !self.fg_uuid.nil? && self.fg_uuid != ""
         self.cause_id = Cause.get_cause_id(self.fg_uuid)
       end
-      if self.cause_type == "event" && !self.event_id.nil? && self.event_id != ""
-        self.cause_id = self.event.group_id
+      if self.cause_type == "event" && !self.event_uid.nil? && self.event_uid != ""
+        if !Event.find_by_uid(self.event_uid).nil?
+          # this will fail if an invalid event_uid was passed in, in which case neither the event_id nor the cause_id will be updated.  If the previous values were valid, the update will succeed, but if they are blank the update will fail on validation.
+          self.event_id = Event.find_by_uid(self.event_uid).id
+          self.cause_id = self.event.group.id
+        end
       end
 
     end

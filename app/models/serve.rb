@@ -15,6 +15,8 @@ class Serve < ActiveRecord::Base
 
 	validates :promotion, presence: true
 	validates :promotion_id, presence: true
+  validates :cause, presence: true
+  validates :current_cause_id, presence: true
 
   after_validation :replace_nils, :get_current_cause
 
@@ -22,50 +24,52 @@ class Serve < ActiveRecord::Base
 
   before_save :get_session_id
 
-  def self.cause_changed?(serve,new_cause_uid)
-    # check to see if a cause was passed in (non-nil) and if it is different from
-    # the current cause value.
+  def self.cause_changed?(serve,new_cause_id)
+    # check to see if the new cause is different from the current cause value.
     case
       # check to see if both the old current cause and the new cause are nil or blank
-      when (serve.current_cause_id.nil? or serve.current_cause_id == "") && (new_cause_uid.nil? or new_cause_uid == "")
+      when (serve.current_cause_id.nil? or serve.current_cause_id == "") && (new_cause_id.nil? or new_cause_id == "")
+        # This should never happen, as every serve is required to have a cause and the update will fail if no cause is present.
         @cause_changed = false
-        @cause = serve.current_cause_id
+        @cause_id = serve.current_cause_id
       # check to see if the new current cause is a valid cause
-      when !Cause.cause_valid?(new_cause_uid)
+      when Cause.not_exists?(new_cause_id)
         @cause_changed = false
-        @cause = serve.current_cause_id
+        @cause_id = serve.current_cause_id
       # check to see if the new current cause is the same as the old current cause
-      when serve.cause.uid == new_cause_uid 
+      when serve.cause.id == new_cause_id 
         @cause_changed = false
-        @cause = serve.current_cause_id
+        @cause_id = serve.current_cause_id
       # since both are not blank or nil and they are not the same, they must be different
       else
         @cause_changed = true
-        @cause = Cause.where("uid = ?", new_cause_uid).first.id
+        @cause_id = Cause.find(new_cause_id).id
     end
-    return {cause_changed: @cause_changed, cause: @cause}
+    return {cause_changed: @cause_changed, cause_id: @cause_id}
   end
 
-  def self.email_changed?(serve,new_email)
-    # Check to see if a new email was passed in and if it is different than the email 
-    # in the serve record.  If it is different, set the email_changed flag to 
-    # true and set the email variable to the new email address.
-    case
-        # check to see if both the old email and the new email are nil or blank
-        when (serve.email.nil? or serve.email == "") && (new_email.nil? or new_email == "")
-            @email_changed = false
-            @email = serve.email
-        # check to see if the new email is the same as the old email
-        when serve.email == new_email #params[:email]
-            @email_changed = false
-            @email = serve.email
-        # since both are not blank or nil and they are not the same, they must be different
-        else
-            @email_changed = true
-            @email = new_email
-    end
-    return {email_changed: @email_changed, email: @email}
-  end
+  # following deprecated and replaced by user_changed? method below
+
+  # def self.email_changed?(serve,new_email)
+  #   # Check to see if a new email was passed in and if it is different than the email 
+  #   # in the serve record.  If it is different, set the email_changed flag to 
+  #   # true and set the email variable to the new email address.
+  #   case
+  #       # check to see if both the old email and the new email are nil or blank
+  #       when (serve.email.nil? or serve.email == "") && (new_email.nil? or new_email == "")
+  #           @email_changed = false
+  #           @email = serve.email
+  #       # check to see if the new email is the same as the old email
+  #       when serve.email == new_email #params[:email]
+  #           @email_changed = false
+  #           @email = serve.email
+  #       # since both are not blank or nil and they are not the same, they must be different
+  #       else
+  #           @email_changed = true
+  #           @email = new_email
+  #   end
+  #   return {email_changed: @email_changed, email: @email}
+  # end
 
   def self.user_changed?(serve,new_email)
     # Check to see if an email was passed in and if it is different than the email 

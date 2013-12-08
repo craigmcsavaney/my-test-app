@@ -531,9 +531,6 @@ function CBSale(amount,transaction_id) {
             fgcause_select.attr('value', ServeData.fg_uuid);
 
             // check the proper radio button based on the cause_type
-            //$("input[name='cause_type_radio']:checked").val()
-            //$("[name=gender]").val(["Male"]);
-            //$('input:radio[name="gender"][value="' + data['gender'] +'"]').prop('checked', true);
             $("[name=cause_type_radio]").val([ServeData.cause_type]);
 
             // make the event selector a Select2 selector
