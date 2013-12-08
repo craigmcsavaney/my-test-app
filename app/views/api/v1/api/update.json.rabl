@@ -5,6 +5,8 @@ object @serve
 node do |serve|
 	if !serve.user.nil?
 		{ :email => serve.user.email }
+	else
+		{ :email => "" }
 	end
 end
 
