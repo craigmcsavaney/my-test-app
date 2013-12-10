@@ -249,9 +249,15 @@ class Promotion < ActiveRecord::Base
 
       customize(lambda { |original_promotion,new_promotion|
         if original_promotion.cause.type == "Single"
-          new_promotion.cause_type = "single"
+          # necessary to satisfy the cause_type presence validation:
+          new_promotion.cause_type = "single" 
+          # necessary to satisfy the mismatched_cause_type_selection validator:
+          new_promotion.fg_uuid = original_promotion.cause.fg_uuid
         elsif original_promotion.cause.type == "Group"
+          # necessary to satisfy the cause_type presence validation:
           new_promotion.cause_type = "event"
+          # necessary to satisfy the mismatched_cause_type_selection validator
+          new_promotion.event_uid = original_promotion.event.uid
         end
       })
     end
