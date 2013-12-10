@@ -155,8 +155,6 @@ module Api
                         # create a new serve using the current promotion
                         @serve = Serve.create(promotion_id: @promotion.id, user_id: user_id)
                         # @serve = Serve.create(promotion_id: @promotion.id)
-                        render 'api/v1/api/success'
-                        return
 
                     # Second case, when serve_id is invalid and path is valid.
                     # Typically, this is a first time, referred visitor 
