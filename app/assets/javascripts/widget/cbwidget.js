@@ -697,19 +697,10 @@ function CBSale(amount,transaction_id) {
                 //$("#cbw-cause-select").append(new Option("",""));
             //for (var i=0; i < causes.length; i++) {
             for (var i=0; i < CauseData.length; i++) {
-                var defaultSelected = false;
-                var nowSelected     = false;
-                if (CauseData[i].uid == CauseData.event_uid) {
-                    nowSelected = true;
-                }
-
                 //$("#cbw-cause-select").append(new Option(causes[i], i));
-                $("#cbw-cause-select").append(new Option(CauseData[i].name, CauseData[i].uid, defaultSelected, nowSelected));
-
+                $("#cbw-cause-select").append(new Option(CauseData[i].name, CauseData[i].uid));
             }
-
-            //cause_select.select2("val", ServeData.event_uid);
-
+            cause_select.select2("val", ServeData.event_uid);
         }
 
         /* RegisterWidgetView - registers with server that the user clicked the cause button
