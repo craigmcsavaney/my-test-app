@@ -527,7 +527,7 @@ function CBSale(amount,transaction_id) {
             var fgcause_select = $("#cbw-fgcause-select");
 
             // set the initial values of the event selector and the fgcause selector
-            if (ServeData.event_uid) {
+            if (ServeData.event_uid && ServeData.event_uid != "") {
                 cause_select.select2("val", ServeData.event_uid);
             }
             fgcause_select.attr('value', ServeData.fg_uuid);
