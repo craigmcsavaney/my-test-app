@@ -527,7 +527,6 @@ function CBSale(amount,transaction_id) {
             var fgcause_select = $("#cbw-fgcause-select");
 
             // set the initial values of the event selector and the fgcause selector
-            cause_select.select2("val", ServeData.event_uid);
             fgcause_select.attr('value', ServeData.fg_uuid);
 
             // check the proper radio button based on the cause_type
@@ -538,7 +537,8 @@ function CBSale(amount,transaction_id) {
             //     placeholder: 'Click here to select a group of causes'
             // });
             cause_select.select2();
-            
+            cause_select.select2("val", ServeData.event_uid);
+
             // make the fgcause selector a Select2 selector
             fgcause_select.select2({
                 placeholder: 'Click here to find a cause',
