@@ -527,16 +527,17 @@ function CBSale(amount,transaction_id) {
             var fgcause_select = $("#cbw-fgcause-select");
 
             // set the initial values of the event selector and the fgcause selector
-            //cause_select.select2("val", ServeData.event_uid);
+            cause_select.select2("val", ServeData.event_uid);
             fgcause_select.attr('value', ServeData.fg_uuid);
 
             // check the proper radio button based on the cause_type
             $("[name=cause_type_radio]").val([ServeData.cause_type]);
 
             // make the event selector a Select2 selector
-            cause_select.select2({
-                placeholder: 'Click here to select a group of causes'
-            });
+            // cause_select.select2({
+            //     placeholder: 'Click here to select a group of causes'
+            // });
+            cause_select.select2();
             
             // make the fgcause selector a Select2 selector
             fgcause_select.select2({
@@ -693,7 +694,7 @@ function CBSale(amount,transaction_id) {
         function MergeEventsData() {
 
             // Populate the list of events
-                $("#cbw-cause-select").append(new Option("",""));
+                //$("#cbw-cause-select").append(new Option("",""));
             //for (var i=0; i < causes.length; i++) {
             for (var i=0; i < CauseData.length; i++) {
 
@@ -702,7 +703,7 @@ function CBSale(amount,transaction_id) {
 
             }
 
-            cause_select.select2("val", ServeData.event_uid);
+            //cause_select.select2("val", ServeData.event_uid);
 
         }
 
