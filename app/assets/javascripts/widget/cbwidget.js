@@ -527,7 +527,9 @@ function CBSale(amount,transaction_id) {
             var fgcause_select = $("#cbw-fgcause-select");
 
             // set the initial values of the event selector and the fgcause selector
-            cause_select.select2("val", ServeData.event_uid);
+            if (ServeData.event_uid) {
+                cause_select.select2("val", ServeData.event_uid);
+            }
             fgcause_select.attr('value', ServeData.fg_uuid);
 
             // check the proper radio button based on the cause_type
@@ -1645,9 +1647,9 @@ function CBSale(amount,transaction_id) {
             // TO DO: Clear the state of the widget...
         });
 
-        $(document).on('change', "input[name='cause_type_radio']", function(){
-                alert($("input[name='cause_type_radio']:checked").val());
-        });
+        // $(document).on('change', "input[name='cause_type_radio']", function(){
+        //         alert($("input[name='cause_type_radio']:checked").val());
+        // });
 
 
     }); // end jquery.documentready
