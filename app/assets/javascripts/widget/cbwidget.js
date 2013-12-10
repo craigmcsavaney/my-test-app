@@ -530,6 +530,7 @@ function CBSale(amount,transaction_id) {
             fgcause_select.attr('value', ServeData.fg_uuid);
             cause_select.select2("val", ServeData.event_uid);
 
+            alert("event_uid: " + ServeData.event_uid);
             alert("Selected value is: " + cause_select.select2("val"));
 
             // check the proper radio button based on the cause_type
@@ -541,7 +542,7 @@ function CBSale(amount,transaction_id) {
             // });
             cause_select.select2();
 
-            alert("Selected value is: "+$("#e8").select2("val"));
+            alert("Selected value is: " + cause_select.select2("val"));
 
             // make the fgcause selector a Select2 selector
             fgcause_select.select2({
