@@ -26,17 +26,28 @@ class Donation < ActiveRecord::Base
 
 	private
 	def send_donation_email
-		if self.choosers_email != "" && !self.choosers_email.nil?
-			DonationMailer.donation_email(self,self.choosers_email).deliver
+		if !self.chooser_id.nil?
+			DonationMailer.donation_email(self,self.chooser.email).deliver
 		elsif self.chosen_by = "merchant"
-			if !self.sale.buyer.nil? && self.sale.buyer.serve.email != "" && !self.sale.buyer.serve.email.nil?
-				DonationMailer.donation_email(self,self.sale.buyer.serve.email).deliver
+			if !self.buyer_id.nil?
+				DonationMailer.donation_email(self,self.buyer.email).deliver
 			end
 
-			if !self.sale.supporter.nil? && self.sale.supporter.serve.email != "" && !self.sale.supporter.serve.email.nil?
-				DonationMailer.donation_email(self,self.sale.supporter.serve.email).deliver
+			if !self.supporter_id.nil?
+				DonationMailer.donation_email(self,self.supporter.email).deliver
 			end
 		end
+		# if self.choosers_email != "" && !self.choosers_email.nil?
+		# 	DonationMailer.donation_email(self,self.choosers_email).deliver
+		# elsif self.chosen_by = "merchant"
+		# 	if !self.sale.buyer.nil? && self.sale.buyer.serve.email != "" && !self.sale.buyer.serve.email.nil?
+		# 		DonationMailer.donation_email(self,self.sale.buyer.serve.email).deliver
+		# 	end
+
+		# 	if !self.sale.supporter.nil? && self.sale.supporter.serve.email != "" && !self.sale.supporter.serve.email.nil?
+		# 		DonationMailer.donation_email(self,self.sale.supporter.serve.email).deliver
+		# 	end
+		# end
 			
 	end
 

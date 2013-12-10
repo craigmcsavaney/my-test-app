@@ -108,7 +108,7 @@ class Sale < ActiveRecord::Base
 				cause_id: Share.get_cause(self.buyer).id,
 				chosen_by: "buyer",
 				amount_cents: (self.amount_cents * ((self.buyer.promotion.buyer_pct).to_f/100)).round,
-				choosers_email: self.buyer.serve.email,
+				#choosers_email: self.buyer.serve.email,
 				chooser_id: buyer_id
 				)
 		end
@@ -121,7 +121,7 @@ class Sale < ActiveRecord::Base
 				cause_id: Share.get_cause(self.supporter).id,
 				chosen_by: "supporter",
 				amount_cents: (self.amount_cents * ((self.supporter.promotion.supporter_pct).to_f/100)).round,
-				choosers_email: self.supporter.serve.email,
+				#choosers_email: self.supporter.serve.email,
 				chooser_id: supporter_id
 				)
 

@@ -13,6 +13,8 @@ class Serve < ActiveRecord::Base
   has_many :sales, through: :shares
   delegate :merchant, :to => :promotion, :allow_nil => true
 
+  before_validation :get_current_cause
+
 	validates :promotion, presence: true
 	validates :promotion_id, presence: true
   validates :cause, presence: true
