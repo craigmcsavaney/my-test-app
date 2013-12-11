@@ -66,7 +66,6 @@ function CBSale(amount,transaction_id) {
     var ReferringPath;
     var URLTarget;
     var FilteredParamString;  // original param string minus all referring path param(s)
-    var CauseType;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -520,8 +519,6 @@ function CBSale(amount,transaction_id) {
             // update the CBPurchasePath global variable to contain the current purchase path value
             PurchasePathUpdate(purchase_path);
 
-            CauseType = ServeData.cause_type;
-
             // assign variable name to the fgcause selector
             var fgcause_select = $("#cbw-fgcause-select");
 
@@ -786,8 +783,8 @@ function CBSale(amount,transaction_id) {
                 ajxDataObj.fg_uuid = fg_uuid;
             }
 
-            if (CauseType) {
-                ajxDataObj.cause_type = CauseType;
+            if ($("input[name='cause_type_radio']:checked").val()) {
+                ajxDataObj.cause_type = $("input[name='cause_type_radio']:checked").val();
             }
 
             if (path) {
