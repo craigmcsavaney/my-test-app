@@ -1759,11 +1759,9 @@ function CBSale(amount,transaction_id) {
         //         alert($("input[name='cause-type-radio']:checked").val());
         // });
 
-        $("#cbw-cause-select")
-            .on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); })
+        $("#cbw-cause-select").on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); })
 
-        $("#cbw-fgcause-select")
-            .on("select2-opening", function() { $("#cbw-cause-select").select2("close"); })
+        $("#cbw-fgcause-select").on("select2-opening", function() { $("#cbw-cause-select").select2("close"); })
 
 
     }); // end jquery.documentready
