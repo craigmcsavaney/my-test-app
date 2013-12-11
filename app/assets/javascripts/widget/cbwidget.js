@@ -1292,7 +1292,7 @@ function CBSale(amount,transaction_id) {
 
         function BlinkErrorMessages () {
 
-            $("#cbw-email-input-error-message", "#cbw-cause-select-error-message", "#cbw-fgcause-select-error-message")
+            $("#cbw-email-input-error-message, #cbw-cause-select-error-message, #cbw-fgcause-select-error-message")
                     .fadeOut(200)
                     .fadeIn(200)
                     .fadeOut(200)
