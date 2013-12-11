@@ -67,6 +67,7 @@ function CBSale(amount,transaction_id) {
     var URLTarget;
     var FilteredParamString;  // original param string minus all referring path param(s)
     var CauseType;
+    var CauseSelect;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -523,7 +524,7 @@ function CBSale(amount,transaction_id) {
             CauseType = ServeData.cause_type;
 
             // assign variable names to the event selector and the fgcause selector
-            var cause_select = $("#cbw-cause-select");
+            var CauseSelect = $("#cbw-cause-select");
             var fgcause_select = $("#cbw-fgcause-select");
 
             // set the initial values of the event selector and the fgcause selector
@@ -534,16 +535,16 @@ function CBSale(amount,transaction_id) {
             $("[name=cause_type_radio]").val([ServeData.cause_type]);
 
             //make the event selector a Select2 selector
-            cause_select.select2({
-                placeholder: 'Click here to select a group of causes',
-            });
+            // cause_select.select2({
+            //     placeholder: 'Click here to select a group of causes',
+            // });
+            CauseSelect.select2()
 
-            cause_select.select2('data', {id: ServeData.event_uid, text: ServeData.event_uid});
-            //cause_select.select2()
+            //cause_select.select2('data', {id: ServeData.event_uid, text: ServeData.event_uid});
 
             //cause_select.select2('data').id = ServeData.event_uid;
 
-            alert("Selected value is: " + cause_select.select2("val"));
+            //alert("Selected value is: " + cause_select.select2("val"));
 
             // make the fgcause selector a Select2 selector
             fgcause_select.select2({
@@ -706,6 +707,7 @@ function CBSale(amount,transaction_id) {
                 //$("#cbw-cause-select").append(new Option(causes[i], i));
                 $("#cbw-cause-select").append(new Option(CauseData[i].name, CauseData[i].uid));
             }
+            CauseSelect.select2("val", ServeData.event_uid);
         }
 
         /* RegisterWidgetView - registers with server that the user clicked the cause button
