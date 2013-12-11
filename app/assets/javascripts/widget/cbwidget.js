@@ -528,19 +528,17 @@ function CBSale(amount,transaction_id) {
 
             // set the initial values of the event selector and the fgcause selector
             fgcause_select.attr('value', ServeData.fg_uuid);
-            cause_select.select2("val", ServeData.event_uid);
-
-            alert("event_uid: " + ServeData.event_uid);
-            alert("Selected value is: " + cause_select.select2("val"));
 
             // check the proper radio button based on the cause_type
             $("[name=cause_type_radio]").val([ServeData.cause_type]);
 
-            // make the event selector a Select2 selector
-            // cause_select.select2({
-            //     placeholder: 'Click here to select a group of causes'
-            // });
-            cause_select.select2()
+            //make the event selector a Select2 selector
+            cause_select.select2({
+                placeholder: 'Click here to select a group of causes'
+            });
+
+            cause_select.select2("val", ServeData.event_uid);
+            //cause_select.select2()
 
             //cause_select.select2('data').id = ServeData.event_uid;
 
