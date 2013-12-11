@@ -594,13 +594,13 @@ function CBSale(amount,transaction_id) {
         //         escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
         //     });
 
-        //     // if (ServeData.current_cause_id) {
-        //     //     cause_select.select2("val", ServeData.current_cause_id);
-        //     // } else {
-        //     //     cause_select.select2("val", ServeData.promotion.default_cause);
-        //     // }
+            // if (ServeData.current_cause_id) {
+            //     cause_select.select2("val", ServeData.current_cause_id);
+            // } else {
+            //     cause_select.select2("val", ServeData.promotion.default_cause);
+            // }
 
-        // }
+        }
 
         function causeFormatResult(cause) {
             var markup = "<div class='cause-result'><div id='" + cause.organization_uuid + "' class='cause-title'>" + cause.organization_name + "</div>";
