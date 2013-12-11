@@ -783,9 +783,9 @@ function CBSale(amount,transaction_id) {
                 ajxDataObj.fg_uuid = fg_uuid;
             }
 
-            if ($("input[name='cause_type_radio']:checked").val()) {
-                ajxDataObj.cause_type = $("input[name='cause_type_radio']:checked").val();
-                alert($("input[name='cause_type_radio']:checked").val());
+            if ($("input[name='cause-type-radio']:checked").val()) {
+                ajxDataObj.cause_type = $("input[name='cause-type-radio']:checked").val();
+                alert($("input[name='cause-type-radio']:checked").val());
             }
 
             if (path) {
@@ -1309,14 +1309,16 @@ function CBSale(amount,transaction_id) {
          * -------------------------------------------------------- */
         function CheckCauseAndCauseType () {
 
-            if (!$("#cbw-cause-select").select2("val") && $("input[name='cause_type_radio']:checked").val() == "event") {
+            alert("cbw-cause-select val: " + $("#cbw-cause-select").select2("val"));
+            alert("cause-type-radio val: " + $("input[name='cause-type-radio']:checked").val());
+            if (!$("#cbw-cause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "event") {
                 $("#cbw-cause-select-ctrl-grp").addClass('error');
                 $("#cbw-cause-select-error-message").show();
             } else {
                 $("#cbw-cause-select-ctrl-grp").removeClass('error');
                 $("#cbw-cause-select-error-message").hide();
             }
-            if (!$("#cbw-fgcause-select").select2("val") && $("input[name='cause_type_radio']:checked").val() == "single") {
+            if (!$("#cbw-fgcause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "single") {
                 $("#cbw-fgcause-select-ctrl-grp").addClass('error');
                 $("#cbw-fgcause-select-error-message").show();
             } else {
@@ -1694,24 +1696,24 @@ function CBSale(amount,transaction_id) {
          * -------------------------------------------------------- */
         $(document).ready(function() {
             $(document).on('change', '#cbw-cause-select', function() {
-                $("#cbw_cause_type_event").prop('checked', true);
-                $("#cbw_cause_type_single").prop('checked', false);
+                $("#cbw-cause-type-event").prop('checked', true);
+                $("#cbw-cause-type-single").prop('checked', false);
                 if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
                     CheckCauseAndCauseType;
                 }
                 //alert($("[name=promotion[cause_type]]:checked").val());
             });
             $(document).on('change', '#cbw-fgcause-select', function() {
-                $("#cbw_cause_type_single").prop('checked', true);
-                $("#cbw_cause_type_event").prop('checked', false);
+                $("#cbw-cause-type-single").prop('checked', true);
+                $("#cbw-cause-type-event").prop('checked', false);
                 //alert($("[name=promotion[cause_type]]:checked").val());
             });
             //$(document).on('change', "[name=promotion[cause_type]]:checked", function() {
             //    alert($("[name=promotion[cause_type]]:checked").val());
             //});
         });
-        // $(document).on('change', "input[name='cause_type_radio']", function(){
-        //         alert($("input[name='cause_type_radio']:checked").val());
+        // $(document).on('change', "input[name='cause-type-radio']", function(){
+        //         alert($("input[name='cause-type-radio']:checked").val());
         // });
 
 
