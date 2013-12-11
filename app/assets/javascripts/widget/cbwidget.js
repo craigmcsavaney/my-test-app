@@ -526,7 +526,7 @@ function CBSale(amount,transaction_id) {
             fgcause_select.attr('value', ServeData.fg_uuid);
 
             // check the proper radio button based on the cause_type
-            $("[name=cause_type_radio]").val([ServeData.cause_type]);
+            $("[name=cause-type-radio]").val([ServeData.cause_type]);
 
             // make the fgcause selector a Select2 selector
             fgcause_select.select2({
@@ -1527,9 +1527,8 @@ function CBSale(amount,transaction_id) {
                 return
                 
             }
-            alert('hello');
-            CheckCauseAndCauseType;
-            alert('goodbye');
+
+            CheckCauseAndCauseType();
 
             if ($("#cbw-cause-select-ctrl-grp").hasClass('error') || $("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
                 return
