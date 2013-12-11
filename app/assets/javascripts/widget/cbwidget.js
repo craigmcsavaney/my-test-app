@@ -1309,8 +1309,6 @@ function CBSale(amount,transaction_id) {
          * -------------------------------------------------------- */
         function CheckCauseAndCauseType () {
 
-            alert("cbw-cause-select val: " + $("#cbw-cause-select").select2("val"));
-            alert("cause-type-radio val: " + $("input[name='cause-type-radio']:checked").val());
             if (!$("#cbw-cause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "event") {
                 $("#cbw-cause-select-ctrl-grp").addClass('error');
                 $("#cbw-cause-select-error-message").show();
@@ -1528,9 +1526,19 @@ function CBSale(amount,transaction_id) {
                 
             }
 
+            var was_an_error = false;
+
+            if ($("#cbw-cause-select-ctrl-grp").hasClass('error') || $("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                was_an_error = true;
+            }
+
             CheckCauseAndCauseType();
 
             if ($("#cbw-cause-select-ctrl-grp").hasClass('error') || $("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+
+                if (was_an_error) {
+                    BlinkErrorMessages();
+                }
                 return
             }
 
