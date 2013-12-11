@@ -1527,8 +1527,9 @@ function CBSale(amount,transaction_id) {
                 return
                 
             }
-
+            alert('hello');
             CheckCauseAndCauseType;
+            alert('goodbye');
 
             if ($("#cbw-cause-select-ctrl-grp").hasClass('error') || $("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
                 return
