@@ -25,7 +25,7 @@ node :content do
 					</label>
 					<div class="controls">
 						<select id="cbw-cause-select" class="cbw-select2"/>
-						<p id="cbw-cause-select-error-message" style="display:none;" class="error">Please make a selection</p>
+						<p id="cbw-cause-select-error-message" style="display:none;" class="error">Oops - it's blank! Please make a selection</p>
 					</div>
 				</div>
 				<div id="cbw-fgcause-select-ctrl-grp" class="control-group">
@@ -35,7 +35,7 @@ node :content do
 					</label>
 					<div class="controls">
 						<input id="cbw-fgcause-select" class="cbw-fg-select2" type="hidden">
-						<p id="cbw-fgcause-select-error-message" style="display:none;" class="error">Please make a selection</p>
+						<p id="cbw-fgcause-select-error-message" style="display:none;" class="error">Oops - it's blank! Please make a selection</p>
 					</div>
 				</div>
 				<div class="control-group" id="cbw-email-checkbox-ctl-grp">

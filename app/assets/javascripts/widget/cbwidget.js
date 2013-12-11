@@ -785,7 +785,6 @@ function CBSale(amount,transaction_id) {
 
             if ($("input[name='cause-type-radio']:checked").val()) {
                 ajxDataObj.cause_type = $("input[name='cause-type-radio']:checked").val();
-                alert($("input[name='cause-type-radio']:checked").val());
             }
 
             if (path) {
@@ -1323,18 +1322,10 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-fgcause-select-ctrl-grp").removeClass('error');
                 $("#cbw-fgcause-select-error-message").hide();
             }
+
+            RepositionWidget();
+
         };
-
-            // } else {
-            //     $("#cbw-email-ctl-grp").removeClass('error');
-            //     //$(".cbw-channel-toggle").removeClass('disabled');
-            //     //$(".cbw-channel-toggle").prop('disabled', false);
-            //     $("#cbw-email-input-error-message").hide();
-            //     //$("#cbw-welcome-user-message").show();
-            //     $("#cbw-user-name").replaceWith(email);
-            // }
-
-
 
         /* --------------------------------------------------------
          * CloseWidget(reset) 
@@ -1347,6 +1338,9 @@ function CBSale(amount,transaction_id) {
         function CloseWidget(reset) {
 
             $("#cbw-widget").hide();
+
+            $("#cbw-cause-select").select2("close");
+            $("#cbw-fgcause-select").select2("close");
 
             if (!reset) return;
 
@@ -1624,11 +1618,15 @@ function CBSale(amount,transaction_id) {
         });
 
         /* --------------------------------------------------------
-         * Cause Change Handler 
+         * Event (cause group) Change Handler 
          * --------------------------------------------------------
-         * Right now this primarily updates the text in the share
-         * message (facebook only right now) so that it dynamically
-         * upates with the correct cause...
+         * Handles events triggered on a change in cbw-cause-select,
+         * which is the event selector.  This updates the text in 
+         * the share message (facebook only right now) so that it
+         * dynamically upates with the currently selected event.  It
+         * also checks consistency between cause_type and cause if
+         * an error condition exists and will clear the error if
+         * appropriate.
          * -------------------------------------------------------- */
         $(document).on('change', '#cbw-cause-select', function(e) {
 
@@ -1641,9 +1639,39 @@ function CBSale(amount,transaction_id) {
                 share_msg = share_msg.replace(removed, added);
                 $("#cbw-share-msg").val(share_msg);
             } 
+
+            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                CheckCauseAndCauseType();
+            }
         });
 
+        /* --------------------------------------------------------
+         * FG Cause (single cause) Change Handler 
+         * --------------------------------------------------------
+         * Handles events triggered on a change in cbw-fgcause-select,
+         * which is the cause selector.  This updates the text in 
+         * the share message (facebook only right now) so that it
+         * dynamically upates with the currently selected event.  It
+         * also checks consistency between cause_type and cause if
+         * an error condition exists and will clear the error if
+         * appropriate.
+         * -------------------------------------------------------- */
+        $(document).on('change', '#cbw-fgcause-select', function(e) {
 
+            var share_msg = $("#cbw-share-msg").val();
+
+            var added = e.added.text;
+            var removed = e.removed.text;
+
+            if (share_msg) {
+                share_msg = share_msg.replace(removed, added);
+                $("#cbw-share-msg").val(share_msg);
+            } 
+
+            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                CheckCauseAndCauseType();
+            }
+        });
 
         /* --------------------------------------------------------
          * Post Button Handler 
@@ -1655,8 +1683,6 @@ function CBSale(amount,transaction_id) {
         $(document).on('click', '#cbw-post-button', function() {
             PostToChannel();
         });
-
-
 
         /* --------------------------------------------------------
          * Close Button Handler 
@@ -1732,6 +1758,12 @@ function CBSale(amount,transaction_id) {
         // $(document).on('change', "input[name='cause-type-radio']", function(){
         //         alert($("input[name='cause-type-radio']:checked").val());
         // });
+
+        $("#cbw-cause-select")
+            .on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); })
+
+        $("#cbw-fgcause-select")
+            .on("select2-opening", function() { $("#cbw-cause-select").select2("close"); })
 
 
     }); // end jquery.documentready
