@@ -1299,6 +1299,35 @@ function CBSale(amount,transaction_id) {
                     .fadeIn(200);
         };
 
+        /* --------------------------------------------------------
+         * E-Mail Input Blur Handler
+         * --------------------------------------------------------
+         * When the user exits the email input field, validate the
+         * format of the input. If it is not valid, turn red and
+         * disable the Post button, re-enable and turn normal
+         * if valid.
+         * -------------------------------------------------------- */
+        function CheckCauseAndCauseType () {
+
+            if ($("#cbw-cause-select").select2("val") == "" && $("input[name='cause_type_radio']:checked").val() == "event") {
+                $("#cbw-cause-select-ctrl-grp").addClass('error');
+                $("#cbw-cause-select-error-message").show();
+            } else {
+                $("#cbw-cause-select-ctrl-grp").removeClass('error');
+                $("#cbw-cause-select-error-message").hide();
+            }
+        };
+
+            // } else {
+            //     $("#cbw-email-ctl-grp").removeClass('error');
+            //     //$(".cbw-channel-toggle").removeClass('disabled');
+            //     //$(".cbw-channel-toggle").prop('disabled', false);
+            //     $("#cbw-email-input-error-message").hide();
+            //     //$("#cbw-welcome-user-message").show();
+            //     $("#cbw-user-name").replaceWith(email);
+            // }
+
+
 
         /* --------------------------------------------------------
          * CloseWidget(reset) 
@@ -1653,6 +1682,9 @@ function CBSale(amount,transaction_id) {
             $(document).on('change', '#cbw-cause-select', function() {
                 $("#cbw_cause_type_event").prop('checked', true);
                 $("#cbw_cause_type_single").prop('checked', false);
+                if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                    CheckCauseAndCauseType;
+                }
                 //alert($("[name=promotion[cause_type]]:checked").val());
             });
             $(document).on('change', '#cbw-fgcause-select', function() {
