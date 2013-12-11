@@ -1309,7 +1309,7 @@ function CBSale(amount,transaction_id) {
          * -------------------------------------------------------- */
         function CheckCauseAndCauseType () {
 
-            if ($("#cbw-cause-select").select2("val") == "" && $("input[name='cause_type_radio']:checked").val() == "event") {
+            if (!$("#cbw-cause-select").select2("val") && $("input[name='cause_type_radio']:checked").val() == "event") {
                 $("#cbw-cause-select-ctrl-grp").addClass('error');
                 $("#cbw-cause-select-error-message").show();
             } else {
