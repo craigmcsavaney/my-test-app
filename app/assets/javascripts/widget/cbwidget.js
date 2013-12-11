@@ -1737,7 +1737,7 @@ function CBSale(amount,transaction_id) {
          * --------------------------------------------------------
          * Add stuff here
          * -------------------------------------------------------- */
-        $(document).ready(function() {
+        //$(document).ready(function() {
             $(document).on('change', '#cbw-cause-select', function() {
                 $("#cbw-cause-type-event").prop('checked', true);
                 $("#cbw-cause-type-single").prop('checked', false);
@@ -1754,14 +1754,21 @@ function CBSale(amount,transaction_id) {
             //$(document).on('change', "[name=promotion[cause_type]]:checked", function() {
             //    alert($("[name=promotion[cause_type]]:checked").val());
             //});
-        });
+        //});
         // $(document).on('change', "input[name='cause-type-radio']", function(){
         //         alert($("input[name='cause-type-radio']:checked").val());
         // });
 
-        $("#cbw-cause-select").on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); })
+        $(document).on("select2-opening", "#cbw-cause-select", function() {
+            $("#cbw-fgcause-select").select2("close");   
+        }
+        $(document).on("select2-opening", "#cbw-fgcause-select", function() {
+            $("#cbw-cause-select").select2("close");   
+        }
 
-        $("#cbw-fgcause-select").on("select2-opening", function() { $("#cbw-cause-select").select2("close"); })
+        //$("#cbw-cause-select").on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); })
+
+        //$("#cbw-fgcause-select").on("select2-opening", function() { $("#cbw-cause-select").select2("close"); })
 
 
     }); // end jquery.documentready
