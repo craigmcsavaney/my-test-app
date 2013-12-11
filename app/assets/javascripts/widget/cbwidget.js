@@ -1316,6 +1316,13 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-cause-select-ctrl-grp").removeClass('error');
                 $("#cbw-cause-select-error-message").hide();
             }
+            if (!$("#cbw-fgcause-select").select2("val") && $("input[name='cause_type_radio']:checked").val() == "single") {
+                $("#cbw-fgcause-select-ctrl-grp").addClass('error');
+                $("#cbw-fgcause-select-error-message").show();
+            } else {
+                $("#cbw-fgcause-select-ctrl-grp").removeClass('error');
+                $("#cbw-fgcause-select-error-message").hide();
+            }
         };
 
             // } else {
@@ -1518,6 +1525,13 @@ function CBSale(amount,transaction_id) {
                 return
                 
             }
+
+            CheckCauseAndCauseType;
+
+            if ($("#cbw-cause-select-ctrl-grp").hasClass('error') || $("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                return
+            }
+
 
             if (SelectedChannel) {
 
