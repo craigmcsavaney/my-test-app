@@ -538,7 +538,7 @@ function CBSale(amount,transaction_id) {
                 placeholder: 'Click here to select a group of causes',
             });
 
-            cause_select.select2("val", {id: ServeData.event_uid, text: ServeData.event_uid});
+            cause_select.select2('data', {id: ServeData.event_uid, text: ServeData.event_uid});
             //cause_select.select2()
 
             //cause_select.select2('data').id = ServeData.event_uid;
