@@ -707,7 +707,10 @@ function CBSale(amount,transaction_id) {
                 //$("#cbw-cause-select").append(new Option(causes[i], i));
                 $("#cbw-cause-select").append(new Option(CauseData[i].name, CauseData[i].uid));
             }
-            CauseSelect.select2("val", ServeData.event_uid);
+            $("#cbw-cause-select").select2().select2("val", ServeData.event_uid);
+            alert("Selected value is: " + $("#cbw-cause-select").select2("val"));
+
+
         }
 
         /* RegisterWidgetView - registers with server that the user clicked the cause button
