@@ -1522,7 +1522,7 @@ function CBSale(amount,transaction_id) {
 
             if ($("#cbw-email-ctl-grp").hasClass('error')) {
 
-                BlinkErrorMessage();
+                BlinkErrorMessages();
 
                 return
                 
@@ -1593,7 +1593,7 @@ function CBSale(amount,transaction_id) {
                 //$(".cbw-channel-toggle").prop('disabled', true);
                 $("#cbw-email-input-error-message").show();
                 //$("#cbw-welcome-user-message").hide()
-                BlinkErrorMessage();
+                BlinkErrorMessages();
             } else {
                 $("#cbw-email-ctl-grp").removeClass('error');
                 //$(".cbw-channel-toggle").removeClass('disabled');
@@ -1652,7 +1652,7 @@ function CBSale(amount,transaction_id) {
 
             if ($("#cbw-email-ctl-grp").hasClass('error')) {
 
-                BlinkErrorMessage();
+                BlinkErrorMessages();
                 
             } else {
 
@@ -1678,7 +1678,7 @@ function CBSale(amount,transaction_id) {
 
             if ($("#cbw-email-ctl-grp").hasClass('error')) {
 
-                BlinkErrorMessage();
+                BlinkErrorMessages();
 
             } else {
 
