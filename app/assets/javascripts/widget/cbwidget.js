@@ -524,14 +524,14 @@ function CBSale(amount,transaction_id) {
 
             // assign variable names to the event selector and the fgcause selector
             var cause_select = $("#cbw-cause-select");
-            var fgcause_select = $("#cbw-fgcause-select");
+            var fgcause_select = $("#cbw-fgcause-select1");
 
             // set the initial values of the event selector and the fgcause selector
             fgcause_select.attr('value', ServeData.fg_uuid);
-            //cause_select.select2("val", ServeData.event_uid);
+            cause_select.select2("val", ServeData.event_uid);
 
             alert("event_uid: " + ServeData.event_uid);
-            //alert("Selected value is: " + cause_select.select2("val"));
+            alert("Selected value is: " + cause_select.select2("val"));
 
             // check the proper radio button based on the cause_type
             $("[name=cause_type_radio]").val([ServeData.cause_type]);
@@ -542,7 +542,7 @@ function CBSale(amount,transaction_id) {
             // });
             cause_select.select2()
 
-            cause_select.select2('data').id = ServeData.event_uid;
+            //cause_select.select2('data').id = ServeData.event_uid;
 
             alert("Selected value is: " + cause_select.select2("val"));
 
