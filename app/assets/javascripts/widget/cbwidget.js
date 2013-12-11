@@ -711,10 +711,7 @@ function CBSale(amount,transaction_id) {
                 placeholder: 'Click here to select a group of causes',
             });
             //$("#cbw-cause-select").select2().select2("val", ServeData.event_uid);
-            $("#cbw-cause-select").select2("val", ServeData.event_uid);
-            alert("Selected value is: " + $("#cbw-cause-select").select2("val"));
-
-
+            //$("#cbw-cause-select").select2("val", ServeData.event_uid);
         }
 
         /* RegisterWidgetView - registers with server that the user clicked the cause button
