@@ -67,7 +67,6 @@ function CBSale(amount,transaction_id) {
     var URLTarget;
     var FilteredParamString;  // original param string minus all referring path param(s)
     var CauseType;
-    var CauseSelect;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -523,28 +522,14 @@ function CBSale(amount,transaction_id) {
 
             CauseType = ServeData.cause_type;
 
-            // assign variable names to the event selector and the fgcause selector
-            //var CauseSelect = $("#cbw-cause-select");
+            // assign variable name to the fgcause selector
             var fgcause_select = $("#cbw-fgcause-select");
 
-            // set the initial values of the event selector and the fgcause selector
+            // set the initial values of the fgcause selector
             fgcause_select.attr('value', ServeData.fg_uuid);
-            //cause_select.attr('value', ServeData.event_uid);
 
             // check the proper radio button based on the cause_type
             $("[name=cause_type_radio]").val([ServeData.cause_type]);
-
-            //make the event selector a Select2 selector
-            // cause_select.select2({
-            //     placeholder: 'Click here to select a group of causes',
-            // });
-            //CauseSelect.select2()
-
-            //cause_select.select2('data', {id: ServeData.event_uid, text: ServeData.event_uid});
-
-            //cause_select.select2('data').id = ServeData.event_uid;
-
-            //alert("Selected value is: " + cause_select.select2("val"));
 
             // make the fgcause selector a Select2 selector
             fgcause_select.select2({
@@ -700,18 +685,19 @@ function CBSale(amount,transaction_id) {
          * --------------------------------------------------------------------------------- */
         function MergeEventsData() {
 
+            // add an empty option before the list of events so the placeholder will work
+            $("#cbw-cause-select").append(new Option("",""));
             // Populate the list of events
-                $("#cbw-cause-select").append(new Option("",""));
-            //for (var i=0; i < causes.length; i++) {
             for (var i=0; i < CauseData.length; i++) {
                 //$("#cbw-cause-select").append(new Option(causes[i], i));
                 $("#cbw-cause-select").append(new Option(CauseData[i].name, CauseData[i].uid));
             }
+            // initialize the events select2 selector
             $("#cbw-cause-select").select2({
                 placeholder: 'Click here to select a group of causes',
             });
-            //$("#cbw-cause-select").select2().select2("val", ServeData.event_uid);
-            //$("#cbw-cause-select").select2("val", ServeData.event_uid);
+            // set the initial value of the event picklist
+            $("#cbw-cause-select").select2().select2("val", ServeData.event_uid);
         }
 
         /* RegisterWidgetView - registers with server that the user clicked the cause button
