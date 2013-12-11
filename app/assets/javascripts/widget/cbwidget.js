@@ -1290,9 +1290,9 @@ function CBSale(amount,transaction_id) {
             }
         };
 
-        function BlinkErrorMessages () {
+        function BlinkErrorMessage (selector) {
 
-            $("#cbw-email-input-error-message, #cbw-cause-select-error-message, #cbw-fgcause-select-error-message")
+            $(selector)
                     .fadeOut(200)
                     .fadeIn(200)
                     .fadeOut(200)
@@ -1520,24 +1520,33 @@ function CBSale(amount,transaction_id) {
 
             if ($("#cbw-email-ctl-grp").hasClass('error')) {
 
-                BlinkErrorMessages();
+                BlinkErrorMessage("#cbw-email-ctl-grp");
 
                 return
                 
             }
 
-            var was_an_error = false;
+            var was_an_error1 = false;
+            var was_an_error2 = false;
 
-            if ($("#cbw-cause-select-ctrl-grp").hasClass('error') || $("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-                was_an_error = true;
+            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                was_an_error1 = true;
+            }
+            if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                was_an_error2 = true;
             }
 
             CheckCauseAndCauseType();
 
-            if ($("#cbw-cause-select-ctrl-grp").hasClass('error') || $("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-
-                if (was_an_error) {
-                    BlinkErrorMessages();
+            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                if (was_an_error1) {
+                    BlinkErrorMessage("#cbw-cause-select-ctrl-grp");
+                }
+                return
+            }
+            if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                if (was_an_error2) {
+                    BlinkErrorMessage("#cbw-fgcause-select-ctrl-grp");
                 }
                 return
             }
@@ -1601,7 +1610,7 @@ function CBSale(amount,transaction_id) {
                 //$(".cbw-channel-toggle").prop('disabled', true);
                 $("#cbw-email-input-error-message").show();
                 //$("#cbw-welcome-user-message").hide()
-                BlinkErrorMessages();
+                BlinkErrorMessage("#cbw-email-input-error-message");
             } else {
                 $("#cbw-email-ctl-grp").removeClass('error');
                 //$(".cbw-channel-toggle").removeClass('disabled');
@@ -1660,7 +1669,7 @@ function CBSale(amount,transaction_id) {
 
             if ($("#cbw-email-ctl-grp").hasClass('error')) {
 
-                BlinkErrorMessages();
+                BlinkErrorMessage("#cbw-email-ctl-grp");
                 
             } else {
 
@@ -1686,7 +1695,7 @@ function CBSale(amount,transaction_id) {
 
             if ($("#cbw-email-ctl-grp").hasClass('error')) {
 
-                BlinkErrorMessages();
+                BlinkErrorMessage("#cbw-email-ctl-grp");
 
             } else {
 
