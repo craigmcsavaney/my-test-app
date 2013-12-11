@@ -524,7 +524,7 @@ function CBSale(amount,transaction_id) {
             CauseType = ServeData.cause_type;
 
             // assign variable names to the event selector and the fgcause selector
-            var CauseSelect = $("#cbw-cause-select");
+            //var CauseSelect = $("#cbw-cause-select");
             var fgcause_select = $("#cbw-fgcause-select");
 
             // set the initial values of the event selector and the fgcause selector
@@ -538,7 +538,7 @@ function CBSale(amount,transaction_id) {
             // cause_select.select2({
             //     placeholder: 'Click here to select a group of causes',
             // });
-            CauseSelect.select2()
+            //CauseSelect.select2()
 
             //cause_select.select2('data', {id: ServeData.event_uid, text: ServeData.event_uid});
 
@@ -707,7 +707,11 @@ function CBSale(amount,transaction_id) {
                 //$("#cbw-cause-select").append(new Option(causes[i], i));
                 $("#cbw-cause-select").append(new Option(CauseData[i].name, CauseData[i].uid));
             }
-            $("#cbw-cause-select").select2().select2("val", ServeData.event_uid);
+            $("#cbw-cause-select").select2({
+                placeholder: 'Click here to select a group of causes',
+            });
+            //$("#cbw-cause-select").select2().select2("val", ServeData.event_uid);
+            $("#cbw-cause-select").select2("val", ServeData.event_uid);
             alert("Selected value is: " + $("#cbw-cause-select").select2("val"));
 
 
