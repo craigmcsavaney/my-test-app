@@ -785,6 +785,7 @@ function CBSale(amount,transaction_id) {
 
             if ($("input[name='cause_type_radio']:checked").val()) {
                 ajxDataObj.cause_type = $("input[name='cause_type_radio']:checked").val();
+                alert($("input[name='cause_type_radio']:checked").val());
             }
 
             if (path) {
@@ -1620,9 +1621,13 @@ function CBSale(amount,transaction_id) {
         /* --------------------------------------------------------
          * Close Button Handler 
          * --------------------------------------------------------
-         * This simply closes the widget and resets the values to
-         * their defaults so that the next time it is opened it will
-         * be in the proper state
+         * This simply closes the widget.  Note that if an attempt
+         * to close the widget is made while there is still an error
+         * condition present on the email address, the widget will
+         * remain open and the error message will blink.  This is 
+         * because on widget close we send updated cause and email
+         * info to the api, but that can't happen while there email
+         * field has an error.
          * -------------------------------------------------------- */
         $(document).on('click', '.cbw .close', function() {
 
@@ -1639,6 +1644,26 @@ function CBSale(amount,transaction_id) {
             // TO DO: Clear the state of the widget...
         });
 
+        /* --------------------------------------------------------
+         * Cause Type radio button Handlers
+         * --------------------------------------------------------
+         * Add stuff here
+         * -------------------------------------------------------- */
+        $(document).ready(function() {
+            $(document).on('change', '#cbw-cause-select', function() {
+                $("#cbw_cause_type_event").prop('checked', true);
+                $("#cbw_cause_type_single").prop('checked', false);
+                //alert($("[name=promotion[cause_type]]:checked").val());
+            });
+            $(document).on('change', '#cbw-fgcause-select', function() {
+                $("#cbw_cause_type_single").prop('checked', true);
+                $("#cbw_cause_type_event").prop('checked', false);
+                //alert($("[name=promotion[cause_type]]:checked").val());
+            });
+            //$(document).on('change', "[name=promotion[cause_type]]:checked", function() {
+            //    alert($("[name=promotion[cause_type]]:checked").val());
+            //});
+        });
         // $(document).on('change', "input[name='cause_type_radio']", function(){
         //         alert($("input[name='cause_type_radio']:checked").val());
         // });
