@@ -701,7 +701,7 @@ function CBSale(amount,transaction_id) {
         function MergeEventsData() {
 
             // Populate the list of events
-                //$("#cbw-cause-select").append(new Option("",""));
+                $("#cbw-cause-select").append(new Option("",""));
             //for (var i=0; i < causes.length; i++) {
             for (var i=0; i < CauseData.length; i++) {
                 //$("#cbw-cause-select").append(new Option(causes[i], i));
