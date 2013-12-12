@@ -1759,16 +1759,19 @@ function CBSale(amount,transaction_id) {
         //         alert($("input[name='cause-type-radio']:checked").val());
         // });
 
-        $(document).on("select2-opening", "#cbw-cause-select", function() {
-            $("#cbw-fgcause-select").select2("close");   
-        }
-        $(document).on("select2-opening", "#cbw-fgcause-select", function() {
-            $("#cbw-cause-select").select2("close");   
-        }
+        $(document).ready(function() {
+            // $(document).on("select2-opening", "#cbw-cause-select", function() {
+            //     $("#cbw-fgcause-select").select2("close");   
+            // }
+            // $(document).on("select2-opening", "#cbw-fgcause-select", function() {
+            //     $("#cbw-cause-select").select2("close");   
+            // }
 
-        //$("#cbw-cause-select").on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); })
+            $("#cbw-cause-select").on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); })
 
-        //$("#cbw-fgcause-select").on("select2-opening", function() { $("#cbw-cause-select").select2("close"); })
+            $("#cbw-fgcause-select").on("select2-opening", function() { $("#cbw-cause-select").select2("close"); })
+
+        };
 
 
     }); // end jquery.documentready
