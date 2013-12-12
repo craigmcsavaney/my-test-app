@@ -1767,10 +1767,11 @@ function CBSale(amount,transaction_id) {
             //     $("#cbw-cause-select").select2("close");   
             // }
 
-            $("#cbw-cause-select").on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); })
+            $("#cbw-cause-select").on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); });
+            $("#cbw-cause-select").on("select2-opening", function() { alert("first"); });
 
-            $("#cbw-fgcause-select").on("select2-opening", function() { $("#cbw-cause-select").select2("close"); })
-
+            $("#cbw-fgcause-select").on("select2-opening", function() { $("#cbw-cause-select").select2("close"); });
+            $("#cbw-cause-select").on("select2-opening", function() { alert("second"); });
         });
 
 
