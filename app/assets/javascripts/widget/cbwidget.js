@@ -812,7 +812,7 @@ function CBSale(amount,transaction_id) {
             reqObj.done(callback);
         }
 
-        function RegisterShareResult(data, status, xhr) {
+        function LoadServeUpdateResponse(data, status, xhr) {
 
             // var channel_map = { "purchase":"pur", "twitter":"tw", "facebook":"fb", "pinterest":"pin",
             //     "linkedin":"li", "email": "em"
@@ -1210,7 +1210,7 @@ function CBSale(amount,transaction_id) {
             // share_msg = share_msg.replace("{{supporter_cause}}", selected_cause);
             //
 
-            UpdateServe(ServeData.paths[chname], RegisterShareResult);
+            UpdateServe(ServeData.paths[chname], LoadServeUpdateResponse);
 
             switch (chname) {
 
@@ -1328,23 +1328,23 @@ function CBSale(amount,transaction_id) {
         };
 
         /* --------------------------------------------------------
-         * CloseWidget(reset) 
+         * CloseWidget(update) 
          * --------------------------------------------------------
-         * Closes the widget and optionally (if reset == true) resets
-         * the state of the widget fields to their default values
-         * so that the next time it is opened, it will be set to
-         * defaults.
+         * Closes the widget and optionally (if update == true) updates
+         * the current serve.  Also ensures the select2 selectors
+         * are closed.
          * -------------------------------------------------------- */
-        function CloseWidget(reset) {
+        function CloseWidget(update) {
 
             $("#cbw-widget").hide();
 
             $("#cbw-cause-select").select2("close");
             $("#cbw-fgcause-select").select2("close");
 
-            if (!reset) return;
+            if (update) {
+                UpdateServe("", LoadServeUpdateResponse);
+            };
 
-            UpdateServe("", RegisterShareResult);
         }
 
         /*
@@ -1687,41 +1687,15 @@ function CBSale(amount,transaction_id) {
         /* --------------------------------------------------------
          * Close Button Handler 
          * --------------------------------------------------------
-         * This simply closes the widget and resets the values to
-         * their defaults so that the next time it is opened it will
-         * be in the proper state
+         * This simply closes the widget.  If there are email or
+         * cause errors present when the widget is closed, the serve
+         * will not be updated.
          * -------------------------------------------------------- */
-        $(document).on('click', '#cbw-close-button', function() {
+        $(document).on('click', '.cbw .close, #cbw-close-button', function() {
 
-            if ($("#cbw-email-ctl-grp").hasClass('error')) {
+            if ($("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
 
-                BlinkErrorMessage("#cbw-email-ctl-grp");
-                
-            } else {
-
-                CloseWidget(true);
-
-            }
-
-            // TO DO: Clear the state of the widget...
-        });
-
-        /* --------------------------------------------------------
-         * Close Button Handler 
-         * --------------------------------------------------------
-         * This simply closes the widget.  Note that if an attempt
-         * to close the widget is made while there is still an error
-         * condition present on the email address, the widget will
-         * remain open and the error message will blink.  This is 
-         * because on widget close we send updated cause and email
-         * info to the api, but that can't happen while there email
-         * field has an error.
-         * -------------------------------------------------------- */
-        $(document).on('click', '.cbw .close', function() {
-
-            if ($("#cbw-email-ctl-grp").hasClass('error')) {
-
-                BlinkErrorMessage("#cbw-email-ctl-grp");
+                CloseWidget(false);
 
             } else {
 
@@ -1729,7 +1703,6 @@ function CBSale(amount,transaction_id) {
 
             }
 
-            // TO DO: Clear the state of the widget...
         });
 
         /* --------------------------------------------------------
@@ -1737,42 +1710,31 @@ function CBSale(amount,transaction_id) {
          * --------------------------------------------------------
          * Add stuff here
          * -------------------------------------------------------- */
-        //$(document).ready(function() {
-            $(document).on('change', '#cbw-cause-select', function() {
-                $("#cbw-cause-type-event").prop('checked', true);
-                $("#cbw-cause-type-single").prop('checked', false);
-                if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-                    CheckCauseAndCauseType;
-                }
-                //alert($("[name=promotion[cause_type]]:checked").val());
-            });
-            $(document).on('change', '#cbw-fgcause-select', function() {
-                $("#cbw-cause-type-single").prop('checked', true);
-                $("#cbw-cause-type-event").prop('checked', false);
-                //alert($("[name=promotion[cause_type]]:checked").val());
-            });
-            //$(document).on('change', "[name=promotion[cause_type]]:checked", function() {
-            //    alert($("[name=promotion[cause_type]]:checked").val());
-            //});
-        //});
-        // $(document).on('change', "input[name='cause-type-radio']", function(){
-        //         alert($("input[name='cause-type-radio']:checked").val());
-        // });
+        $(document).on('change', '#cbw-cause-select', function() {
+            $("#cbw-cause-type-event").prop('checked', true);
+            $("#cbw-cause-type-single").prop('checked', false);
+            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                CheckCauseAndCauseType;
+            }
+        });
+        $(document).on('change', '#cbw-fgcause-select', function() {
+            $("#cbw-cause-type-single").prop('checked', true);
+            $("#cbw-cause-type-event").prop('checked', false);
+        });
 
-        //$(document).ready(function() {
-            $(document).on("select2-opening", "#cbw-cause-select", function() {
-                $("#cbw-fgcause-select").select2("close");   
-            });
-            $(document).on("select2-opening", "#cbw-fgcause-select", function() {
-                $("#cbw-cause-select").select2("close");   
-            });
-
-            // $("#cbw-cause-select").on("select2-opening", function() { $("#cbw-fgcause-select").select2("close"); });
-            // $("#cbw-cause-select").on("select2-opening", function() { alert("first"); });
-
-            // $("#cbw-fgcause-select").on("select2-opening", function() { $("#cbw-cause-select").select2("close"); });
-            // $("#cbw-cause-select").on("select2-opening", function() { alert("second"); });
-        //});
+        /* --------------------------------------------------------
+         * Select2 Handlers
+         * --------------------------------------------------------
+         * These event handlers ensure that both the event and the
+         * single cause Select2 selectors aren't both open at the
+         * same time.
+         * -------------------------------------------------------- */
+        $(document).on("select2-opening", "#cbw-cause-select", function() {
+            $("#cbw-fgcause-select").select2("close");   
+        });
+        $(document).on("select2-opening", "#cbw-fgcause-select", function() {
+            $("#cbw-cause-select").select2("close");   
+        });
 
 
     }); // end jquery.documentready
