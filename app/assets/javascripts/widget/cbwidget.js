@@ -1771,7 +1771,7 @@ function CBSale(amount,transaction_id) {
 
             $("#cbw-fgcause-select").on("select2-opening", function() { $("#cbw-cause-select").select2("close"); })
 
-        };
+        });
 
 
     }); // end jquery.documentready
