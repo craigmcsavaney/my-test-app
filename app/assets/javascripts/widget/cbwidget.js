@@ -1512,22 +1512,18 @@ function CBSale(amount,transaction_id) {
          * -------------------------------------------------------- */
         $(document).on('click', '.cbw-channel-toggle', function() {
 
-            if ($("#cbw-email-ctl-grp").hasClass('error')) {
-
-                BlinkErrorMessage("#cbw-email-ctl-grp");
-
-                return
-                
-            }
-
             var was_an_error1 = false;
             var was_an_error2 = false;
+            var was_an_error3 = false;
 
             if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
                 was_an_error1 = true;
             }
             if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
                 was_an_error2 = true;
+            }
+            if ($("#cbw-email-ctl-grp").hasClass('error')) {
+                was_an_error3 = true;
             }
 
             CheckCauseAndCauseType();
@@ -1544,7 +1540,9 @@ function CBSale(amount,transaction_id) {
                 }
                 return
             }
-
+            if (was_an_error3)
+                BlinkErrorMessage("#cbw-email-ctl-grp");
+            }
 
             if (SelectedChannel) {
 
