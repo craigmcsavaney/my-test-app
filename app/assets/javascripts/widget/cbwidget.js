@@ -1209,11 +1209,6 @@ function CBSale(amount,transaction_id) {
 
             UpdateServe(ServeData.paths[chname], LoadServeUpdateResponse);
 
-            alert("success");
-            alert(sel_channel.url_prefix);
-            alert(share_msg);
-            alert(channel_path);
-
             switch (chname) {
 
                 case 'twitter':
@@ -1739,6 +1734,7 @@ function CBSale(amount,transaction_id) {
             // state if an error condition exists, but it won't be visible
             // unless the widget is reopened.
             CheckCauseAndCauseType();
+            CheckEmailValid();
 
             if ($("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
 
@@ -1804,10 +1800,12 @@ function CBSale(amount,transaction_id) {
          * same time.
          * -------------------------------------------------------- */
         $(document).on("select2-opening", "#cbw-cause-select", function() {
-            $("#cbw-fgcause-select").select2("close");   
+            $("#cbw-fgcause-select").select2("close");
+            CheckEmailValid();   
         });
         $(document).on("select2-opening", "#cbw-fgcause-select", function() {
             $("#cbw-cause-select").select2("close");   
+            CheckEmailValid();
         });
 
 
