@@ -1652,6 +1652,11 @@ function CBSale(amount,transaction_id) {
          * -------------------------------------------------------- */
         $(document).on('change', '#cbw-cause-select', function(e) {
 
+            $("#cbw-cause-type-event").prop('checked', true);
+            $("#cbw-cause-type-single").prop('checked', false);
+            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                CheckCauseAndCauseType;
+            }
             var share_msg = $("#cbw-share-msg").val();
 
             var added = e.added.text;
@@ -1662,9 +1667,9 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-share-msg").val(share_msg);
             } 
 
-            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-                CheckCauseAndCauseType();
-            }
+            // if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+            //     CheckCauseAndCauseType();
+            // }
         });
 
         /* --------------------------------------------------------
@@ -1680,6 +1685,11 @@ function CBSale(amount,transaction_id) {
          * -------------------------------------------------------- */
         $(document).on('change', '#cbw-fgcause-select', function(e) {
 
+            $("#cbw-cause-type-single").prop('checked', true);
+            $("#cbw-cause-type-event").prop('checked', false);
+            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                CheckCauseAndCauseType;
+            }
             var share_msg = $("#cbw-share-msg").val();
 
             var added = e.added.text;
@@ -1690,9 +1700,9 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-share-msg").val(share_msg);
             } 
 
-            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-                CheckCauseAndCauseType();
-            }
+            // if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+            //     CheckCauseAndCauseType();
+            // }
         });
 
         /* --------------------------------------------------------
@@ -1746,14 +1756,14 @@ function CBSale(amount,transaction_id) {
             CheckEmailValid
         });
         $(document).on('click', '#cbw-cause-select-ctrl-grp', function() {
-            CheckCauseAndCauseType();
+            //CheckCauseAndCauseType();
             CheckEmailValid
         });
         $(document).on('click', '#cbw-fgcause-select-ctrl-grp', function() {
-            CheckCauseAndCauseType();
+            //CheckCauseAndCauseType();
             CheckEmailValid
         });
-        $(document).on('click', '#cbw-email-checkbox', function() {
+        $(document).on('click', '#cbw-email-checkbox-ctl-grp', function() {
             CheckCauseAndCauseType();
             CheckEmailValid
         });
@@ -1763,17 +1773,20 @@ function CBSale(amount,transaction_id) {
          * --------------------------------------------------------
          * Add stuff here
          * -------------------------------------------------------- */
-        $(document).on('change', '#cbw-cause-select', function() {
-            $("#cbw-cause-type-event").prop('checked', true);
-            $("#cbw-cause-type-single").prop('checked', false);
-            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-                CheckCauseAndCauseType;
-            }
-        });
-        $(document).on('change', '#cbw-fgcause-select', function() {
-            $("#cbw-cause-type-single").prop('checked', true);
-            $("#cbw-cause-type-event").prop('checked', false);
-        });
+        // $(document).on('change', '#cbw-cause-select', function() {
+        //     $("#cbw-cause-type-event").prop('checked', true);
+        //     $("#cbw-cause-type-single").prop('checked', false);
+        //     if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+        //         CheckCauseAndCauseType;
+        //     }
+        // });
+        // $(document).on('change', '#cbw-fgcause-select', function() {
+        //     $("#cbw-cause-type-single").prop('checked', true);
+        //     $("#cbw-cause-type-event").prop('checked', false);
+        //     if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+        //         CheckCauseAndCauseType;
+        //     }
+        // });
 
         /* --------------------------------------------------------
          * Select2 Handlers
