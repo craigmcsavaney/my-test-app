@@ -432,7 +432,12 @@ function CBSale(amount,transaction_id) {
 
         }       
 
-        //function MergeServeData() {
+        /* ---------------------------------------------------------------------------------
+         * MergeServeData(div)
+         * ---------------------------------------------------------------------------------
+         * Merges the serve data returned from LoadServeData into the appropriate places
+         * in the widget.
+         * --------------------------------------------------------------------------------- */
         function MergeServeData(div) {
 
             // append the widget html to the input div
@@ -525,6 +530,13 @@ function CBSale(amount,transaction_id) {
             // set the initial values of the fgcause selector
             fgcause_select.attr('value', ServeData.fg_uuid);
 
+            // initialize the events select2 selector
+            $("#cbw-cause-select").select2({
+                placeholder: 'Click here to select a group of causes',
+            });
+            // set the initial value of the event picklist
+            $("#cbw-cause-select").select2("val", ServeData.event_uid);
+
             // check the proper radio button based on the cause_type
             $("[name=cause-type-radio]").val([ServeData.cause_type]);
 
@@ -578,12 +590,6 @@ function CBSale(amount,transaction_id) {
                 escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
             });
 
-            // if (ServeData.current_cause_id) {
-            //     cause_select.select2("val", ServeData.current_cause_id);
-            // } else {
-            //     cause_select.select2("val", ServeData.promotion.default_cause);
-            // }
-
         }
 
         function causeFormatResult(cause) {
@@ -613,8 +619,9 @@ function CBSale(amount,transaction_id) {
         /* ---------------------------------------------------------------------------------
          * LoadEventsData(session_id, serve_id)
          * ---------------------------------------------------------------------------------
-         * Loads the active promotion from the server given the merchant_id that was 
-         * presumably set on the embedded div element on the host page
+         * Loads the list of events to be displayed in the events selector.  Note that this
+         * only happens when the value of cause_selector is true (meaning that the user has
+         * the ability to direct a portion of the donation).
          *
          * @data_url    = URL to use to obtain JSON data (AJAX call)
          * @merchant_id = ID of the merchant to pass into the AJAX call
@@ -684,12 +691,6 @@ function CBSale(amount,transaction_id) {
                 //$("#cbw-cause-select").append(new Option(causes[i], i));
                 $("#cbw-cause-select").append(new Option(EventData[i].name, EventData[i].uid));
             }
-            // initialize the events select2 selector
-            $("#cbw-cause-select").select2({
-                placeholder: 'Click here to select a group of causes',
-            });
-            // set the initial value of the event picklist
-            $("#cbw-cause-select").select2("val", ServeData.event_uid);
         }
 
         /* RegisterWidgetView - registers with server that the user clicked the cause button
@@ -813,7 +814,6 @@ function CBSale(amount,transaction_id) {
             //     "linkedin":"li", "email": "em"
             // };
 
-            ServeData.current_cause_id = data.current_cause_id;
             ServeData.email = data.email;
 
             // Replace the links with new ones from server
@@ -1537,6 +1537,7 @@ function CBSale(amount,transaction_id) {
             }
             if (was_an_error3) {
                 BlinkErrorMessage("#cbw-email-ctl-grp");
+                return
             }
 
             if (SelectedChannel) {
