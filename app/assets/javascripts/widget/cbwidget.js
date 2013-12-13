@@ -1300,6 +1300,32 @@ function CBSale(amount,transaction_id) {
          * disable the Post button, re-enable and turn normal
          * if valid.
          * -------------------------------------------------------- */
+        function CheckEmailValid () {
+
+            if (!EmailValid($('#cbw-email-input').val())) {
+                $("#cbw-email-ctl-grp").addClass('error');
+                $("#cbw-email-input-error-message").show();
+                BlinkErrorMessage("#cbw-email-input-error-message");
+            } else {
+                $("#cbw-email-ctl-grp").removeClass('error');
+                $("#cbw-email-input-error-message").hide();
+                $("#cbw-user-name").replaceWith(email);
+            }
+
+            RepositionWidget();
+
+        };
+
+        /* --------------------------------------------------------
+         * CheckCauseAndCauseType()
+         * --------------------------------------------------------
+         * Checks the current cause_type from the cause_type radio
+         * buttons and ensures that a value exists from the appropriate
+         * cause or event selector. If the appropriate selector is
+         * blank, adds the error class and shows the error message.
+         * Also, clears the class and error message when the condition
+         * is cleared.
+         * -------------------------------------------------------- */
         function CheckCauseAndCauseType () {
 
             if (!$("#cbw-cause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "event") {
@@ -1521,6 +1547,7 @@ function CBSale(amount,transaction_id) {
             }
 
             CheckCauseAndCauseType();
+            CheckEmailValid();
 
             if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
                 if (was_an_error1) {
@@ -1534,8 +1561,10 @@ function CBSale(amount,transaction_id) {
                 }
                 return
             }
-            if (was_an_error3) {
-                BlinkErrorMessage("#cbw-email-ctl-grp");
+            if ($("#cbw-email-ctl-grp").hasClass('error')) {
+                if (was_an_error3) {
+                    BlinkErrorMessage("#cbw-email-ctl-grp");
+                }
                 return
             }
 
@@ -1584,31 +1613,31 @@ function CBSale(amount,transaction_id) {
          * disable the Post button, re-enable and turn normal
          * if valid.
          * -------------------------------------------------------- */
-        $(document).on('blur', '#cbw-email-input', function() {
+        // $(document).on('blur', '#cbw-email-input', function() {
 
-            var email = $('#cbw-email-input').val();
+        //     var email = $('#cbw-email-input').val();
 
-            //var emlre = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        //     //var emlre = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-            //if (email != "" && !emlre.test(email)) {
-            if (!EmailValid(email)) {
-                $("#cbw-email-ctl-grp").addClass('error');
-                //$(".cbw-channel-toggle").addClass('disabled');
-                //$(".cbw-channel-toggle").prop('disabled', true);
-                $("#cbw-email-input-error-message").show();
-                //$("#cbw-welcome-user-message").hide()
-                BlinkErrorMessage("#cbw-email-input-error-message");
-            } else {
-                $("#cbw-email-ctl-grp").removeClass('error');
-                //$(".cbw-channel-toggle").removeClass('disabled');
-                //$(".cbw-channel-toggle").prop('disabled', false);
-                $("#cbw-email-input-error-message").hide();
-                //$("#cbw-welcome-user-message").show();
-                $("#cbw-user-name").replaceWith(email);
-            }
+        //     //if (email != "" && !emlre.test(email)) {
+        //     if (!EmailValid(email)) {
+        //         $("#cbw-email-ctl-grp").addClass('error');
+        //         //$(".cbw-channel-toggle").addClass('disabled');
+        //         //$(".cbw-channel-toggle").prop('disabled', true);
+        //         $("#cbw-email-input-error-message").show();
+        //         //$("#cbw-welcome-user-message").hide()
+        //         BlinkErrorMessage("#cbw-email-input-error-message");
+        //     } else {
+        //         $("#cbw-email-ctl-grp").removeClass('error');
+        //         //$(".cbw-channel-toggle").removeClass('disabled');
+        //         //$(".cbw-channel-toggle").prop('disabled', false);
+        //         $("#cbw-email-input-error-message").hide();
+        //         //$("#cbw-welcome-user-message").show();
+        //         $("#cbw-user-name").replaceWith(email);
+        //     }
 
-            RepositionWidget();
-        });
+        //     RepositionWidget();
+        // });
 
         /* --------------------------------------------------------
          * Event (cause group) Change Handler 
@@ -1702,6 +1731,25 @@ function CBSale(amount,transaction_id) {
                 CloseWidget(true);
 
             }
+
+        });
+
+        /* --------------------------------------------------------
+         * Check for email and cause input errors 
+         * --------------------------------------------------------
+         * This simply closes the widget.  If there are email or
+         * cause errors present when the widget is closed, the serve
+         * will not be updated.
+         * -------------------------------------------------------- */
+        $(document).on('click', '#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp', function() {
+
+            // First, check to see if there's a consistencey error between
+            // the cause_type and the cause type selector.  This will clear
+            // an error if the error condition exists, or set the error
+            // state if an error condition exists, but it won't be visible
+            // unless the widget is reopened.
+            CheckCauseAndCauseType();
+            CheckEmailValid
 
         });
 
