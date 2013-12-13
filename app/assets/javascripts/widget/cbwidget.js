@@ -1210,6 +1210,9 @@ function CBSale(amount,transaction_id) {
             UpdateServe(ServeData.paths[chname], LoadServeUpdateResponse);
 
             alert("success");
+            alert(sel_channel.url_prefix);
+            alert(share_msg);
+            alert(channel_path);
 
             switch (chname) {
 
