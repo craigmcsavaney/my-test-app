@@ -60,7 +60,7 @@ function CBSale(amount,transaction_id) {
     var all_scripts = document.getElementsByTagName('script');
     var script_url;
     var ServeData;
-    var CauseData;
+    var EventData;
     var WidgetData;
     var ScriptsCounter;
     var ReferringPath;
@@ -622,7 +622,6 @@ function CBSale(amount,transaction_id) {
          * --------------------------------------------------------------------------------- */
         function LoadEventsData(session_id, serve_id) {
 
-            // var method = "causes";
             var method = "events";
 
             var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
@@ -645,11 +644,11 @@ function CBSale(amount,transaction_id) {
                 timeout: 30000,
                 dataType: "jsonp",
                 success: function(data) {
-                     CauseData = data;
+                     EventData = data;
 
-                    if (CauseData.error) {
+                    if (EventData.error) {
     
-                        alert("API error: " + CauseData.error);
+                        alert("API error: " + EventData.error);
 
                     }
 
@@ -669,12 +668,8 @@ function CBSale(amount,transaction_id) {
         /* ---------------------------------------------------------------------------------
          * MergeEventsData()
          * ---------------------------------------------------------------------------------
-         * This function needs to be split into two separate functions: one that loads the causes
-         * list for the cause selector, and the remaining stuff probably needs to be added
-         * to the MergeServeData function.
-         *
          * Callback function that is called when the results of the AJAX call to pull the 
-         * cause data necessary to populate the select2 cause selector.
+         * event data necessary to populate the select2 event selector.
          *
          * @data   = JSON data returned by the AJAX call (passed through as part of callback)
          * @status = Status of the AJAX call (passed through as part of callback)
@@ -685,16 +680,16 @@ function CBSale(amount,transaction_id) {
             // add an empty option before the list of events so the placeholder will work
             $("#cbw-cause-select").append(new Option("",""));
             // Populate the list of events
-            for (var i=0; i < CauseData.length; i++) {
+            for (var i=0; i < EventData.length; i++) {
                 //$("#cbw-cause-select").append(new Option(causes[i], i));
-                $("#cbw-cause-select").append(new Option(CauseData[i].name, CauseData[i].uid));
+                $("#cbw-cause-select").append(new Option(EventData[i].name, EventData[i].uid));
             }
             // initialize the events select2 selector
             $("#cbw-cause-select").select2({
                 placeholder: 'Click here to select a group of causes',
             });
             // set the initial value of the event picklist
-            $("#cbw-cause-select").select2().select2("val", ServeData.event_uid);
+            $("#cbw-cause-select").select2("val", ServeData.event_uid);
         }
 
         /* RegisterWidgetView - registers with server that the user clicked the cause button
