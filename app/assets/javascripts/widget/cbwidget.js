@@ -1753,6 +1753,10 @@ function CBSale(amount,transaction_id) {
             CheckCauseAndCauseType();
             CheckEmailValid
         });
+        $(document).on('click', '#cbw-email-checkbox', function() {
+            CheckCauseAndCauseType();
+            CheckEmailValid
+        });
 
         /* --------------------------------------------------------
          * Cause Type radio button Handlers
