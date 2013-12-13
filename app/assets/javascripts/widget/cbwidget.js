@@ -1753,19 +1753,19 @@ function CBSale(amount,transaction_id) {
          * -------------------------------------------------------- */
         $(document).on('click', '#cbw-email-ctl-grp', function() {
             CheckCauseAndCauseType();
-            CheckEmailValid
+            CheckEmailValid();
         });
         $(document).on('click', '#cbw-cause-select-ctrl-grp', function() {
             //CheckCauseAndCauseType();
-            CheckEmailValid
+            CheckEmailValid();
         });
         $(document).on('click', '#cbw-fgcause-select-ctrl-grp', function() {
             //CheckCauseAndCauseType();
-            CheckEmailValid
+            CheckEmailValid();
         });
         $(document).on('click', '#cbw-email-checkbox-ctl-grp', function() {
             CheckCauseAndCauseType();
-            CheckEmailValid
+            CheckEmailValid();
         });
 
         /* --------------------------------------------------------
