@@ -1686,6 +1686,13 @@ function CBSale(amount,transaction_id) {
          * -------------------------------------------------------- */
         $(document).on('click', '.cbw .close', function() {
 
+            // First, check to see if there's a consistencey error between
+            // the cause_type and the cause type selector.  This will clear
+            // an error if the error condition exists, or set the error
+            // state if an error condition exists, but it won't be visible
+            // unless the widget is reopened.
+            CheckCauseAndCauseType();
+
             if ($("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
 
                 CloseWidget(false);
