@@ -1305,11 +1305,11 @@ function CBSale(amount,transaction_id) {
             if (!EmailValid($('#cbw-email-input').val())) {
                 $("#cbw-email-ctl-grp").addClass('error');
                 $("#cbw-email-input-error-message").show();
-                BlinkErrorMessage("#cbw-email-input-error-message");
+                //BlinkErrorMessage("#cbw-email-input-error-message");
             } else {
                 $("#cbw-email-ctl-grp").removeClass('error');
                 $("#cbw-email-input-error-message").hide();
-                $("#cbw-user-name").replaceWith(email);
+                //$("#cbw-user-name").replaceWith(email);
             }
 
             RepositionWidget();
@@ -1741,16 +1741,17 @@ function CBSale(amount,transaction_id) {
          * cause errors present when the widget is closed, the serve
          * will not be updated.
          * -------------------------------------------------------- */
-        $(document).on('click', '#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp', function() {
-
-            // First, check to see if there's a consistencey error between
-            // the cause_type and the cause type selector.  This will clear
-            // an error if the error condition exists, or set the error
-            // state if an error condition exists, but it won't be visible
-            // unless the widget is reopened.
+        $(document).on('click', '#cbw-email-ctl-grp', function() {
             CheckCauseAndCauseType();
             CheckEmailValid
-
+        });
+        $(document).on('click', '#cbw-cause-select-ctrl-grp', function() {
+            CheckCauseAndCauseType();
+            CheckEmailValid
+        });
+        $(document).on('click', '#cbw-fgcause-select-ctrl-grp', function() {
+            CheckCauseAndCauseType();
+            CheckEmailValid
         });
 
         /* --------------------------------------------------------
