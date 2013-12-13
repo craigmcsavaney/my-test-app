@@ -814,6 +814,9 @@ function CBSale(amount,transaction_id) {
             // };
 
             ServeData.email = data.email;
+            ServeData.cause_type = data.cause_type;
+            ServeData.fg_uuid = data.fg_uuid;
+            ServeData.event_uid = data.event_uid;
 
             // Replace the links with new ones from server
 
@@ -1205,6 +1208,8 @@ function CBSale(amount,transaction_id) {
             //
 
             UpdateServe(ServeData.paths[chname], LoadServeUpdateResponse);
+
+            alert("success");
 
             switch (chname) {
 
