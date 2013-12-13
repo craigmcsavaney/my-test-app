@@ -1684,7 +1684,7 @@ function CBSale(amount,transaction_id) {
          * cause errors present when the widget is closed, the serve
          * will not be updated.
          * -------------------------------------------------------- */
-        $(document).on('click', '.cbw .close, #cbw-close-button', function() {
+        $(document).on('click', '.cbw .close', function() {
 
             if ($("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
 
