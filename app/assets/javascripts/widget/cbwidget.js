@@ -1535,7 +1535,7 @@ function CBSale(amount,transaction_id) {
                 }
                 return
             }
-            if (was_an_error3)
+            if (was_an_error3) {
                 BlinkErrorMessage("#cbw-email-ctl-grp");
             }
 
