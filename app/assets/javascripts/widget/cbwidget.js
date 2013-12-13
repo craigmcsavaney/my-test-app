@@ -270,21 +270,20 @@ function CBSale(amount,transaction_id) {
 
             MergeServeData(div);
 
+            // When the event data is finished loading, merge the event data into the widget.
+            $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
+
+                MergeEventsData();
+
+            });
+
             // If the cause selector for this promotion is false, hide the cause selector in the widget.  Otherwise, load the cause data.
             if (!ServeData.promotion.cause_selector) {
 
                 $("#cbw-cause-select-ctrl-grp").hide();
+                $("#cbw-fgcause-select-ctrl-grp").hide();
             
-            } else {
-
-                // When the cause data is finished loading, merge the cause data into the widget.
-                $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
-
-                    MergeEventsData();
-
-                });
-
-            }
+            } 
 
         });
         
