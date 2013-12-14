@@ -1216,7 +1216,7 @@ function CBSale(amount,transaction_id) {
             // synchronous, the rest of this function is wrapped in the
             // following when().done function.
             //$.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
-                UpdateServe(ServeData.paths[chname], LoadServeUpdateResponse);
+                UpdateServe(ServeData.paths[chname], MergeServeUpdateData);
                 //MergeServeUpdateData();
                 console.log(ServeData.cause_name);
                 // following rem'd to disable user field editing:
