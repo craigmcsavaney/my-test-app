@@ -1209,82 +1209,82 @@ function CBSale(amount,transaction_id) {
             // Now update the serve, which will record the cause or event associated
             // with this share.  This must happen before replacing the cause name
             // in the share message because we need to get the group name from
-            // the api based on a selected event in the widget.
+            // the api based on a selected event in the widget.  To make all this
+            // synchronous, the rest of this function is wrapped in the
+            // following when().done function.
             $.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
                 MergeServeUpdateData();
-                console.log("inner: " + ServeData.cause_name);
-            });
-            //UpdateServe(ServeData.paths[chname], MergeServeUpdateData);
-            console.log("outer: " + ServeData.cause_name);
-            // following rem'd to disable user field editing:
-            // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
-            var share_msg = sel_channel.msg;
-            // now replace the supporter_cause placeholder with the current value.
-            share_msg = share_msg.replace("{{supporter_cause}}", ServeData.cause_name);
+                // following rem'd to disable user field editing:
+                // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
+                var share_msg = sel_channel.msg;
+                // now replace the supporter_cause placeholder with the current value.
+                share_msg = share_msg.replace("{{supporter_cause}}", ServeData.cause_name);
 
-            switch (chname) {
+                switch (chname) {
 
-                case 'twitter':
-                    PostToTwitter(sel_channel.url_prefix, share_msg, channel_path);
-                    break;
-                
-                case 'facebook':
-                    var redirect_uri = sel_channel.redirect_url;
-                    var link_label = sel_channel.link_label;
-                    var caption = sel_channel.caption;
-                    var url_prefix = sel_channel.url_prefix;
-
-                    // *** REDIRECT_URL MUST BE FOR THE SAME DOMAIN THAT FB APP IS REGISTERED TO ***
-                    // *** HARDCODING HERE FOR NOW *** //s
-
-                    // redirect_uri = "http://phil.causebutton.com/cbproto/fblanding.html?xyz=123";
-                    redirect_uri = "http://causebutton.com/index.html?xyz=123";
-
-                    // Hardcoding this for now 
-                    // var app_id = "331567326978199";
-                    var app_id = "1412032855697890";
-
-                    link_label = link_label.replace("{{merchant}}", ServeData.merchant.name);
-                    //
-                    // following rem'd because selected_cause not working from above
-                    //
-                    //link_label = link_label.replace("{{supporter_cause}}", selected_cause);
-                    //
-
-                    if (sel_channel.thumb_url) {
-
-                        var image_url = sel_channel.thumb_url;
-
-                        PostToFacebook(url_prefix, channel_path, share_msg, redirect_uri, link_label, caption, app_id, image_url);
+                    case 'twitter':
+                        PostToTwitter(sel_channel.url_prefix, share_msg, channel_path);
+                        break;
                     
-                    } else {
+                    case 'facebook':
+                        var redirect_uri = sel_channel.redirect_url;
+                        var link_label = sel_channel.link_label;
+                        var caption = sel_channel.caption;
+                        var url_prefix = sel_channel.url_prefix;
+
+                        // *** REDIRECT_URL MUST BE FOR THE SAME DOMAIN THAT FB APP IS REGISTERED TO ***
+                        // *** HARDCODING HERE FOR NOW *** //s
+
+                        // redirect_uri = "http://phil.causebutton.com/cbproto/fblanding.html?xyz=123";
+                        redirect_uri = "http://causebutton.com/index.html?xyz=123";
+
+                        // Hardcoding this for now 
+                        // var app_id = "331567326978199";
+                        var app_id = "1412032855697890";
+
+                        link_label = link_label.replace("{{merchant}}", ServeData.merchant.name);
+                        //
+                        // following rem'd because selected_cause not working from above
+                        //
+                        //link_label = link_label.replace("{{supporter_cause}}", selected_cause);
+                        //
+
+                        if (sel_channel.thumb_url) {
+
+                            var image_url = sel_channel.thumb_url;
+
+                            PostToFacebook(url_prefix, channel_path, share_msg, redirect_uri, link_label, caption, app_id, image_url);
                         
-                        PostToFacebook(url_prefix, channel_path, share_msg, redirect_uri, link_label, caption, app_id);
-                    }
+                        } else {
+                            
+                            PostToFacebook(url_prefix, channel_path, share_msg, redirect_uri, link_label, caption, app_id);
+                        }
 
-                    break;
+                        break;
 
-                case 'pinterest':
+                    case 'pinterest':
 
-                    // image is currently hardcoded on the server so replacing here with hardcoded one for testing purposes
+                        // image is currently hardcoded on the server so replacing here with hardcoded one for testing purposes
 
-                    var image_url = "http://phil.causebutton.com/cbproto/img/funky_astronaut.png";
+                        var image_url = "http://phil.causebutton.com/cbproto/img/funky_astronaut.png";
 
-                    PostToPinterest(sel_channel.url_prefix, channel_path, share_msg, image_url);
-                    break;
+                        PostToPinterest(sel_channel.url_prefix, channel_path, share_msg, image_url);
+                        break;
 
-                case 'email':
+                    case 'email':
 
-                    var subject = "test email subject";
+                        var subject = "test email subject";
 
-                    var body = "this is the body content of the test email";
+                        var body = "this is the body content of the test email";
 
-                    PostToEmail(subject, body);
-                    break;
+                        PostToEmail(subject, body);
+                        break;
 
-                default:
-                    alert('inactive channel selection');
-            }
+                    default:
+                        alert('inactive channel selection');
+                }
+
+            });
 
         };
 
@@ -1362,26 +1362,6 @@ function CBSale(amount,transaction_id) {
             PositionWidget('reposition');
 
         };
-
-        /* --------------------------------------------------------
-         * CloseWidget(update) 
-         * --------------------------------------------------------
-         * Closes the widget and optionally (if update == true) updates
-         * the current serve.  Also ensures the select2 selectors
-         * are closed.
-         * -------------------------------------------------------- */
-        function CloseWidget(update) {
-
-            $("#cbw-widget").hide();
-
-            $("#cbw-cause-select").select2("close");
-            $("#cbw-fgcause-select").select2("close");
-
-            if (update) {
-                UpdateServe("", MergeServeUpdateData);
-            };
-
-        }
 
         /*
          * EVENT HANDLER FUNCTIONS
@@ -1747,17 +1727,17 @@ function CBSale(amount,transaction_id) {
             // unless the widget is reopened.
             CheckCauseAndCauseType();
             CheckEmailValid();
-
-            if ($("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-
-                CloseWidget(false);
-
-            } else {
-
-                CloseWidget(true);
-
+            // next, hide the widget and close any open select2 selectors
+            $("#cbw-widget").hide();
+            $("#cbw-cause-select").select2("close");
+            $("#cbw-fgcause-select").select2("close");
+            // finally, update the serve if there are no errors on the email
+            // or cause and event selectors:
+            if (!$("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                $.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
+                    MergeServeUpdateData();
+                }
             }
-
         });
 
         /* --------------------------------------------------------
