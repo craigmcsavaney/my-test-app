@@ -747,7 +747,7 @@ function CBSale(amount,transaction_id) {
 
         /* UpdateServe - Updates the Serve record with current email, current cause or event, current cause type.  Also, when a path is passed in, registers a post to a social media channel (or attempt to do so), and returns the approptiate new paths.
          */
-        function UpdateServe(path) {
+        function UpdateServe(path, callback) {
 
             var email = $("#cbw-email-input").val();
             var event_uid = $("#cbw-cause-select").select2("val");
@@ -787,7 +787,7 @@ function CBSale(amount,transaction_id) {
                 ajxDataObj.path = path;
             }
 
-            return $.ajax({
+            var reqObj = $.ajax({
                 type: 'POST',
                 async: false,
                 url: data_url,
@@ -806,9 +806,11 @@ function CBSale(amount,transaction_id) {
                 }
             });
 
+            reqObj.done(callback);
+
         }
 
-        function MergeServeUpdateData() {
+        function MergeServeUpdateData(data, status, xhr) {
 
             // replace the ServeData values with new values returned from the UpdateServe
             // api dataset:
@@ -1214,8 +1216,8 @@ function CBSale(amount,transaction_id) {
             // synchronous, the rest of this function is wrapped in the
             // following when().done function.
             //$.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
-                UpdateServe(ServeData.paths[chname]);
-                MergeServeUpdateData();
+                UpdateServe(ServeData.paths[chname], LoadServeUpdateResponse);
+                //MergeServeUpdateData();
                 console.log(ServeData.cause_name);
                 // following rem'd to disable user field editing:
                 // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
