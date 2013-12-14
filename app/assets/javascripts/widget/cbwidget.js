@@ -1733,10 +1733,11 @@ function CBSale(amount,transaction_id) {
             $("#cbw-fgcause-select").select2("close");
             // finally, update the serve if there are no errors on the email
             // or cause and event selectors:
-            if (!$("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+            if (!$("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) 
+                {
                 $.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
                     MergeServeUpdateData();
-                }
+                });
             }
         });
 
