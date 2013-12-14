@@ -687,7 +687,7 @@ function CBSale(amount,transaction_id) {
             $("#cbw-cause-select").select2({
                 placeholder: 'Click here to select a group of causes',
                 data:{ results: EventData, text: 'name' },
-                id: 'uid',
+                //id: 'uid',
                 formatSelection: format1,
                 formatResult: format1
             });
@@ -1215,13 +1215,13 @@ function CBSale(amount,transaction_id) {
             var cause_name;
             // var event_selector = $("#cbw-cause-select");
             // var single_selector = $("#cbw-fgcause-select");
-            // if ($("input[name='cause-type-radio']:checked").val() == "event") {
+            //if ($("input[name='cause-type-radio']:checked").val() == "event") {
             //    var data = $(event_selector).select2('data');
             //    var data = $("#cbw-fgcause-select").select2('data');
             //    cause_name = data.text;
-            var single_selector = $("#cbw-fgcause-select");
-            var data = $(single_selector).select2('data');
-            cause_name = data.organization_name;
+            //var single_selector = $("#cbw-fgcause-select");
+            //var data = $(single_selector).select2('data');
+            cause_name = $("#cbw-fgcause-select").select2('data').organization_name;
             alert(cause_name);
             // } else {
             //     var data = $(single_selector).select2('data');
@@ -1242,7 +1242,7 @@ function CBSale(amount,transaction_id) {
             //$.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
             UpdateServe(ServeData.paths[chname], MergeServeUpdateData);
             //MergeServeUpdateData();
-            console.log(ServeData.cause_name);
+            //console.log(ServeData.cause_name);
 
             switch (chname) {
 

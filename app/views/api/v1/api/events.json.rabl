@@ -1,3 +1,4 @@
 collection @events
-attributes :name, :uid, :group_name
+attributes :uid => :id
+attributes :name, :group_name
 
