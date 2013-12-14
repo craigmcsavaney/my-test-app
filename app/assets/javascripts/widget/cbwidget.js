@@ -1764,15 +1764,21 @@ function CBSale(amount,transaction_id) {
          * that the handlers for the Select2 selectors are in the
          * scripts below.
          * -------------------------------------------------------- */
-        $(document).on('click', '#cbw-cause-select-ctrl-grp', function() {
-            //CheckCauseAndCauseType();
-            CheckEmailValid();
-        });
-        $(document).on('click', '#cbw-fgcause-select-ctrl-grp', function() {
-            //CheckCauseAndCauseType();
-            CheckEmailValid();
-        });
-        $(document).on('click', '#cbw-email-checkbox-ctl-grp', function() {
+        // $(document).on('click', '#cbw-cause-select-ctrl-grp', function() {
+        //     //CheckCauseAndCauseType();
+        //     CheckEmailValid();
+        //     if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+        //         CheckCauseAndCauseType;
+        //     }
+        // });
+        // $(document).on('click', '#cbw-fgcause-select-ctrl-grp', function() {
+        //     //CheckCauseAndCauseType();
+        //     CheckEmailValid();
+        //     if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+        //         CheckCauseAndCauseType;
+        //     }
+        // });
+        $(document).on('click', '#cbw-email-checkbox-ctl-grp, #cbw-email-ctl-grp', function() {
             CheckCauseAndCauseType();
             CheckEmailValid();
         });
@@ -1787,10 +1793,16 @@ function CBSale(amount,transaction_id) {
         $(document).on("select2-opening", "#cbw-cause-select", function() {
             $("#cbw-fgcause-select").select2("close");
             CheckEmailValid();   
+            if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                CheckCauseAndCauseType;
+            }
         });
         $(document).on("select2-opening", "#cbw-fgcause-select", function() {
             $("#cbw-cause-select").select2("close");   
             CheckEmailValid();
+            if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                CheckCauseAndCauseType;
+            }
         });
 
 
