@@ -809,14 +809,13 @@ function CBSale(amount,transaction_id) {
 
         function LoadServeUpdateResponse(data, status, xhr) {
 
-            // var channel_map = { "purchase":"pur", "twitter":"tw", "facebook":"fb", "pinterest":"pin",
-            //     "linkedin":"li", "email": "em"
-            // };
-
+            // replace the ServeData values with new values returned from the UpdateServe
+            // api dataset:
             ServeData.email = data.email;
             ServeData.cause_type = data.cause_type;
             ServeData.fg_uuid = data.fg_uuid;
             ServeData.event_uid = data.event_uid;
+            ServeData.cause_name = data.cause_name;
 
             // Replace the links with new ones from server
 
@@ -1587,14 +1586,22 @@ function CBSale(amount,transaction_id) {
 
                 if ($(this).attr('src') == SelectedChannel.attr('src')) {
 
-                    if (SelectedChannel.attr('src').indexOf('-on.png') >= 0) {
+                    // following rem'd as part of disabling user field editing
+                    // the share_msg box never opens, there's no real reason
+                    // to "close" an open channel when a user clicks on the
+                    // open channel's icon.  Instead, this action should
+                    // open the channel again, which is added below.
 
-                        CloseChannel();
+                    // if (SelectedChannel.attr('src').indexOf('-on.png') >= 0) {
 
-                    } else {
+                    //     CloseChannel();
 
-                        OpenChannel();
-                    }
+                    // } else {
+
+                    //     OpenChannel();
+                    // }
+
+                    OpenChannel();
 
                 } else {
 
