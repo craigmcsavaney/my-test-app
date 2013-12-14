@@ -1211,12 +1211,11 @@ function CBSale(amount,transaction_id) {
             // in the share message because we need to get the group name from
             // the api based on a selected event in the widget.
             UpdateServe(ServeData.paths[chname], LoadServeUpdateResponse);
+            alert(ServeData.cause_name);
             // following rem'd to disable user field editing:
             // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
             var share_msg = sel_channel.msg;
-            // now replace the merchant and supporter_cause placeholders in the
-            // share message with the current values.
-            share_msg = share_msg.replace("{{merchant}}", ServeData.merchant.name);
+            // now replace the supporter_cause placeholder with the current value.
             share_msg = share_msg.replace("{{supporter_cause}}", ServeData.cause_name);
 
             switch (chname) {
