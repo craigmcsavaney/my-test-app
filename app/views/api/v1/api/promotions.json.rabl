@@ -1,6 +1,5 @@
 object @promotion
 attributes :name, :id, :banner, :landing_page
-# attributes :cause_id => :default_cause
 
 node :button_html do |promotion|
 	promotion.button.html
@@ -22,11 +21,13 @@ node do |promotion|
 	if promotion.cause.type == 'Single'
 		{ :default_cause_type => "single", 
 		  :default_fg_uuid => promotion.cause.fg_uuid, 
-		  :default_event_uid => "" }
+		  :default_event_uid => "",
+		  :default_cause_name => promotion.cause.name }
 	else
 		{ :default_cause_type => "event", 
 		  :default_fg_uuid => "", 
-		  :default_event_uid => promotion.cause.event.uid }
+		  :default_event_uid => promotion.cause.event.uid,
+		  :default_cause_name => promotion.cause.name }
 	end
 end
 

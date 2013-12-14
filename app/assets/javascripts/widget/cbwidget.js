@@ -1106,44 +1106,48 @@ function CBSale(amount,transaction_id) {
 
             var chidx = SelectedChannel.attr('idx');
 
-            if (!ServeData.channels[chidx].user_fields) {
+            // following rem'd out to disable user field editing:
+
+            // if (!ServeData.channels[chidx].user_fields) {
 
                 PostToChannel();
 
-            } else {
+            // } else {
 
-                $("#cbw-share-msg-ctrl-grp").show();
+            //     $("#cbw-share-msg-ctrl-grp").show();
 
-                PositionWidget('reposition');
+            //     PositionWidget('reposition');
                 
-            }
+            // }
         }
 
         function SelectChannel() {
 
             var chidx = SelectedChannel.attr('idx');
 
-            $("#cbw-share-msg").val("");
+            // following rem'd out to disable user field editing:
 
-            if (ServeData.channels[chidx].user_fields) {
+            // $("#cbw-share-msg").val("");
 
-                var user_fields = ServeData.channels[chidx].user_fields;
+            // if (ServeData.channels[chidx].user_fields) {
 
-                var elem = $("#" + user_fields.elem_id);
-                var defval = user_fields.default; // default is either the default value or a reference to another field in JSON to take it from
-                var deftype = user_fields.def_type; // reference = take defval from another field, o/w take whatever is present in user_fields.defaults
+            //     var user_fields = ServeData.channels[chidx].user_fields;
 
-                if (deftype == "reference") {
+            //     var elem = $("#" + user_fields.elem_id);
+            //     var defval = user_fields.default; // default is either the default value or a reference to another field in JSON to take it from
+            //     var deftype = user_fields.def_type; // reference = take defval from another field, o/w take whatever is present in user_fields.defaults
 
-                    defval = ServeData.channels[chidx].details[defval];
+            //     if (deftype == "reference") {
 
-                }
+            //         defval = ServeData.channels[chidx].details[defval];
 
-                defval = defval.replace("{{merchant}}", ServeData.merchant.name);
+            //     }
 
-                elem.val(defval);
+            //     defval = defval.replace("{{merchant}}", ServeData.merchant.name);
 
-            }
+            //     elem.val(defval);
+
+            // }
 
         }
 
@@ -1199,24 +1203,22 @@ function CBSale(amount,transaction_id) {
             var chname = SelectedChannel.attr('idx');
             var sel_channel = ServeData.channels[chname].details;
             //var awesm_link = "http://awe.sm/" + ServeData.paths[chname];
+            // !!!! Must set channel_path before running UpdateServe, because
+            // UpdateServe will get a new path for this channel, which is the path
+            // that should be used for the next share, not this one.
             var channel_path = GetChannelPath(ServeData.paths[chname]);
-            //
-            // Following assignment of selected_cause var does not work.  Need to figure
-            // out how to get the noun name of the selected cause.  Until this is fixed,
-            // the lines below that replace {{supporter_cause}} with the cause name can't be used.
-            //
-            // var selected_cause = $("#cbw-cause-select").select2().data();
-            // alert("selected_cause = " + selected_cause);
-            //
-            var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
-            share_msg = share_msg.replace("{{merchant}}", ServeData.merchant.name);
-            //
-            // following rem'd out because selected_cause not working from above
-            //
-            // share_msg = share_msg.replace("{{supporter_cause}}", selected_cause);
-            //
-
+            // Now update the serve, which will record the cause or event associated
+            // with this share.  This must happen before replacing the cause name
+            // in the share message because we need to get the group name from
+            // the api based on a selected event in the widget.
             UpdateServe(ServeData.paths[chname], LoadServeUpdateResponse);
+            // following rem'd to disable user field editing:
+            // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
+            var share_msg = sel_channel.msg;
+            // now replace the merchant and supporter_cause placeholders in the
+            // share message with the current values.
+            share_msg = share_msg.replace("{{merchant}}", ServeData.merchant.name);
+            share_msg = share_msg.replace("{{supporter_cause}}", ServeData.cause_name);
 
             switch (chname) {
 
@@ -1470,6 +1472,16 @@ function CBSale(amount,transaction_id) {
 
         // });
 
+        /* --------------------------------------------------------
+         * Email checkbox toggle hanlder
+         * --------------------------------------------------------
+         * This event handler toggles visibility of the email
+         * input control when the checkbox value is changed.  It
+         * also deletes invalid email addresses, which prevents
+         * bad addresses from being sent to the api in ServeUpdates.
+         * At the moment, an email value will be use in ServeUpdate
+         * whether or not the email field is visible.
+         * -------------------------------------------------------- */
         $(document).on('change', '#cbw-email-checkbox', function() {
 
             if ($("#cbw-email-ctl-grp").hasClass('error')) {
@@ -1480,16 +1492,7 @@ function CBSale(amount,transaction_id) {
 
             }
 
-            var display = $("#cbw-email-ctl-grp").css('display');
-
             $("#cbw-email-ctl-grp").toggle();
-
-            //if (display == "none") {
-
-            //    RegisterWidgetView();
-            //}
-
-            //PositionWidget('reposition');
 
         });        
 
@@ -1669,19 +1672,14 @@ function CBSale(amount,transaction_id) {
             if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
                 CheckCauseAndCauseType;
             }
-            var share_msg = $("#cbw-share-msg").val();
-
-            var added = e.added.text;
-            var removed = e.removed.text;
-
-            if (share_msg) {
-                share_msg = share_msg.replace(removed, added);
-                $("#cbw-share-msg").val(share_msg);
-            } 
-
-            // if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-            //     CheckCauseAndCauseType();
-            // }
+            // following rem'd to disable user field editing:
+            // var share_msg = $("#cbw-share-msg").val();
+            // var added = e.added.text;
+            // var removed = e.removed.text;
+            // if (share_msg) {
+            //     share_msg = share_msg.replace(removed, added);
+            //     $("#cbw-share-msg").val(share_msg);
+            // } 
         });
 
         /* --------------------------------------------------------
@@ -1702,19 +1700,14 @@ function CBSale(amount,transaction_id) {
             if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
                 CheckCauseAndCauseType;
             }
-            var share_msg = $("#cbw-share-msg").val();
-
-            var added = e.added.text;
-            var removed = e.removed.text;
-
-            if (share_msg) {
-                share_msg = share_msg.replace(removed, added);
-                $("#cbw-share-msg").val(share_msg);
-            } 
-
-            // if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-            //     CheckCauseAndCauseType();
-            // }
+            // following rem'd to disable user field editing:
+            // var share_msg = $("#cbw-share-msg").val();
+            // var added = e.added.text;
+            // var removed = e.removed.text;
+            // if (share_msg) {
+            //     share_msg = share_msg.replace(removed, added);
+            //     $("#cbw-share-msg").val(share_msg);
+            // } 
         });
 
         /* --------------------------------------------------------

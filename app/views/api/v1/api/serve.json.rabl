@@ -10,11 +10,13 @@ node do |serve|
 	if serve.cause.type == 'Single'
 		{ :cause_type => "single", 
 		  :fg_uuid => serve.cause.fg_uuid, 
-		  :event_uid => "" }
+		  :event_uid => "",
+		  :cause_name => serve.cause.name }
 	else
 		{ :cause_type => "event", 
 		  :fg_uuid => "", 
-		  :event_uid => serve.cause.event.uid }
+		  :event_uid => serve.cause.event.uid,
+		  :cause_name => serve.cause.name }
 	end
 end
 
