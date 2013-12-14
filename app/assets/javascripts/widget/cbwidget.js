@@ -683,6 +683,7 @@ function CBSale(amount,transaction_id) {
             for (var i=0; i < EventData.length; i++) {
                 //$("#cbw-cause-select").append(new Option(causes[i], i));
                 $("#cbw-cause-select").append(new Option(EventData[i].name, EventData[i].uid));
+            }
             // initialize the events select2 selector
             $("#cbw-cause-select").select2({
                 placeholder: 'Click here to select a group of causes'
