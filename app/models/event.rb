@@ -7,6 +7,9 @@ class Event < ActiveRecord::Base
   	belongs_to :group
   	has_many :promotions
 
+    delegate :name, to: :group, prefix: true
+
+
   	before_validation :generate_uid
 
   	validates :name, presence: true, uniqueness: { case_sensitive: false }

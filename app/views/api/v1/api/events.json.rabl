@@ -1,2 +1,3 @@
 collection @events
-attributes :name, :uid
+attributes :name, :uid, :group_name
+

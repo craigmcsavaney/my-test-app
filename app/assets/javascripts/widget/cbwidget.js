@@ -1739,9 +1739,7 @@ function CBSale(amount,transaction_id) {
             // or cause and event selectors:
             if (!$("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) 
                 {
-                $.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
-                    MergeServeUpdateData();
-                });
+                UpdateServe(ServeData.paths[chname], MergeServeUpdateData);
             }
         });
 
