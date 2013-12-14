@@ -1209,15 +1209,20 @@ function CBSale(amount,transaction_id) {
             // that should be used for the next share, not this one.
             var channel_path = GetChannelPath(ServeData.paths[chname]);
             var cause_name;
-            var event_selector = $("#cbw-cause-select");
-            var single_selector = $("#cbw-fgcause-select");
-            if ($("input[name='cause-type-radio']:checked").val() == "event") {
-                var data = $(event_selector).select2('data');
-                cause_name = data.text;
-            } else {
-                var data = $(single_selector).select2('data');
-                cause_name = data.text;
-            }
+            // var event_selector = $("#cbw-cause-select");
+            // var single_selector = $("#cbw-fgcause-select");
+            // if ($("input[name='cause-type-radio']:checked").val() == "event") {
+            //    var data = $(event_selector).select2('data');
+            //    var data = $("#cbw-fgcause-select").select2('data');
+            //    cause_name = data.text;
+
+            cause_name = $("#cbw-fgcause-select").select2('data').text;
+            alert($("#cbw-fgcause-select").select2('val'));
+            alert($("#cbw-fgcause-select").select2('data').text);
+            // } else {
+            //     var data = $(single_selector).select2('data');
+            //     cause_name = data.text;
+            // }
 
             // following rem'd to disable user field editing:
             // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
