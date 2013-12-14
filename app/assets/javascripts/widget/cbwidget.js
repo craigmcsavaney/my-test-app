@@ -684,20 +684,19 @@ function CBSale(amount,transaction_id) {
             //     //$("#cbw-cause-select").append(new Option(causes[i], i));
             //     $("#cbw-cause-select").append(new Option(EventData[i].name, EventData[i].uid));
             // initialize the events select2 selector
-            function format(item) { return item.name; };
             $("#cbw-cause-select").select2({
                 placeholder: 'Click here to select a group of causes',
                 data:{ results: EventData, text: 'name' },
                 id: 'uid',
-                formatSelection: format,
-                formatResult: format
+                formatSelection: format1,
+                formatResult: format1
             });
             // set the initial value of the event picklist
             $("#cbw-cause-select").select2("val", ServeData.event_uid);
 
-            }
         }
 
+        function format1(item) { return item.name; };
         /* RegisterWidgetView - registers with server that the user clicked the cause button
          */
         function RegisterWidgetView() {
