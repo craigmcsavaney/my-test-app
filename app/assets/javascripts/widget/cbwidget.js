@@ -1215,10 +1215,10 @@ function CBSale(amount,transaction_id) {
             //    var data = $(event_selector).select2('data');
             //    var data = $("#cbw-fgcause-select").select2('data');
             //    cause_name = data.text;
-
-            cause_name = $("#cbw-fgcause-select").select2('data').text;
-            alert($("#cbw-fgcause-select").select2('val'));
-            alert($("#cbw-fgcause-select").select2('data').text);
+            var single_selector = $("#cbw-fgcause-select");
+            var data = $(single_selector).select2('data');
+            cause_name = data.text;
+            alert(cause_name);
             // } else {
             //     var data = $(single_selector).select2('data');
             //     cause_name = data.text;
