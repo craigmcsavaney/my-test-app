@@ -789,6 +789,7 @@ function CBSale(amount,transaction_id) {
 
             return $.ajax({
                 type: 'POST',
+                async: false,
                 url: data_url,
                 data: ajxDataObj,
                 timeout: 30000,
@@ -1212,8 +1213,10 @@ function CBSale(amount,transaction_id) {
             // the api based on a selected event in the widget.  To make all this
             // synchronous, the rest of this function is wrapped in the
             // following when().done function.
-            $.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
+            //$.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
+                UpdateServe(ServeData.paths[chname]);
                 MergeServeUpdateData();
+                console.log(ServeData.cause_name);
                 // following rem'd to disable user field editing:
                 // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
                 var share_msg = sel_channel.msg;
@@ -1284,7 +1287,7 @@ function CBSale(amount,transaction_id) {
                         alert('inactive channel selection');
                 }
 
-            });
+            //});
 
         };
 
