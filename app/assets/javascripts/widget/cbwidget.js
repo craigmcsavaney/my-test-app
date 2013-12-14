@@ -61,6 +61,7 @@ function CBSale(amount,transaction_id) {
     var script_url;
     var ServeData;
     var EventData;
+    var UpdateData;
     var WidgetData;
     var ScriptsCounter;
     var ReferringPath;
@@ -793,7 +794,7 @@ function CBSale(amount,transaction_id) {
                 timeout: 30000,
                 dataType: "jsonp",
                 success: function(data) {
-                    //alert(data.status);
+                    UpdateData = data;
                 },
                 error: function(data, status, xhr) {
 
@@ -806,21 +807,21 @@ function CBSale(amount,transaction_id) {
 
         }
 
-        function MergeServeUpdateData(data, status, xhr) {
+        function MergeServeUpdateData() {
 
             // replace the ServeData values with new values returned from the UpdateServe
             // api dataset:
-            ServeData.email = data.email;
-            ServeData.cause_type = data.cause_type;
-            ServeData.fg_uuid = data.fg_uuid;
-            ServeData.event_uid = data.event_uid;
-            ServeData.cause_name = data.cause_name;
+            ServeData.email = UpdateData.email;
+            ServeData.cause_type = UpdateData.cause_type;
+            ServeData.fg_uuid = UpdateData.fg_uuid;
+            ServeData.event_uid = UpdateData.event_uid;
+            ServeData.cause_name = UpdateData.cause_name;
 
             // Replace the links with new ones from server
 
             for (var i in ServeData.paths) {
                 // alert(i + " :: " + ServeData.paths[i] + " :: " + data.paths[i] );
-                ServeData.paths[i] = data.paths[i];
+                ServeData.paths[i] = UpdateData.paths[i];
 
             };
 
