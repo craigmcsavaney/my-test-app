@@ -1797,22 +1797,22 @@ function CBSale(amount,transaction_id) {
         $(document).on("select2-opening", "#cbw-cause-select", function() {
             $("#cbw-fgcause-select").select2("close");
             CheckEmailValid();   
-            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+            //if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
                 CheckCauseAndCauseType;
-            }
-            if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-                CheckCauseAndCauseType;
-            }
+            //}
+            //if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+            //    CheckCauseAndCauseType;
+            //}
         });
         $(document).on("select2-opening", "#cbw-fgcause-select", function() {
             $("#cbw-cause-select").select2("close");   
             CheckEmailValid();
-            if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+            //if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
                 CheckCauseAndCauseType;
-            }
-            if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-                CheckCauseAndCauseType;
-            }
+            //}
+            //if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+            //    CheckCauseAndCauseType;
+            //}
         });
 
 
