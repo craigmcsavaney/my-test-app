@@ -1221,7 +1221,7 @@ function CBSale(amount,transaction_id) {
             //    cause_name = data.text;
             var single_selector = $("#cbw-fgcause-select");
             var data = $(single_selector).select2('data');
-            cause_name = data.cause.organization_name;
+            alert("Selected data is: "+JSON.stringify(data));
             alert(cause_name);
             // } else {
             //     var data = $(single_selector).select2('data');
