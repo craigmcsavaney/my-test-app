@@ -1210,9 +1210,11 @@ function CBSale(amount,transaction_id) {
             var channel_path = GetChannelPath(ServeData.paths[chname]);
             var cause_name
             if ($("input[name='cause-type-radio']:checked").val() == "event") {
-                cause_name = $("#cbw-fgcause-select").select2().select2('data').text;
+                var data = $("#cbw-fgcause-select").select2('data');
+                cause_name = data.text;
             } else {
-                cause_name = $("#cbw-fgcause-select").select2().select2('data').text;
+                var data = $("#cbw-fgcause-select").select2('data');
+                cause_name = data.text;
             }
 
             // following rem'd to disable user field editing:
