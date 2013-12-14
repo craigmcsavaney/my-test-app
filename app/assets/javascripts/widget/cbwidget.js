@@ -951,7 +951,9 @@ function CBSale(amount,transaction_id) {
 
         }
 
-        function RepositionWidget() {
+        function PositionWidget(type) {
+            // type should be 'initial' for the first time the widget is opened,
+            // or 'reposition' for all subsequent widget positioning.
 
             var widget_width = $("#cbw-widget").width();
             var widget_hgt = $("#cbw-widget").height();
@@ -986,14 +988,18 @@ function CBSale(amount,transaction_id) {
 
                 case 'left-center':
 
-                    $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                    $("#cbw-widget").css('left', '1px');
+                    if (type == "initial") {
+                        $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                        $("#cbw-widget").css('left', '1px');
+                    }
                     break;
 
                 case 'center':
 
-                    $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                    $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                    if (type == "initial") {
+                        $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                        $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                    }
                     // $("#cbw-widget").css('top', '50%');
                     // $("#cbw-widget").css('left', '50%');
                     // $("#cbw-widget").css('margin-top', '-225px');
@@ -1002,8 +1008,10 @@ function CBSale(amount,transaction_id) {
 
                 case 'right-center':
 
-                    $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                    $("#cbw-widget").css('right', '1px');
+                    if (type == "initial") {
+                        $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                        $("#cbw-widget").css('right', '1px');
+                    }
                     break;
 
                 case 'bottom-left':
@@ -1029,9 +1037,10 @@ function CBSale(amount,transaction_id) {
                     // both an invalid widget-position value from the merchant web page and
                     // an invalid widget position value from the serve data.
 
-                    $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                    $("#cbw-widget").css('right', '1px');   
-
+                    if (type == "initial") {
+                        $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                        $("#cbw-widget").css('right', '1px');   
+                    }
                     // var move_up = 0, move_left = 0;
 
                     // $("#cbw-widget").css("top", ((win_hgt-widget_hgt)/2));
@@ -1068,7 +1077,7 @@ function CBSale(amount,transaction_id) {
 
             $("#cbw-share-msg-ctrl-grp").hide();
 
-            RepositionWidget();
+            PositionWidget('reposition');
 
         }
 
@@ -1105,7 +1114,7 @@ function CBSale(amount,transaction_id) {
 
                 $("#cbw-share-msg-ctrl-grp").show();
 
-                RepositionWidget();
+                PositionWidget('reposition');
                 
             }
         }
@@ -1315,7 +1324,7 @@ function CBSale(amount,transaction_id) {
                 //$("#cbw-user-name").replaceWith(email);
             }
 
-            RepositionWidget();
+            PositionWidget('reposition');
 
         };
 
@@ -1346,7 +1355,7 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-fgcause-select-error-message").hide();
             }
 
-            RepositionWidget();
+            PositionWidget('reposition');
 
         };
 
@@ -1396,7 +1405,7 @@ function CBSale(amount,transaction_id) {
                 RegisterWidgetView();
             }
 
-            RepositionWidget();
+            PositionWidget('initial');
 
         });
 
@@ -1457,7 +1466,7 @@ function CBSale(amount,transaction_id) {
         //     //     RegisterWidgetView();
         //     // }
 
-        //     // RepositionWidget();
+        //     // PositionWidget('reposition');
 
         // });
 
@@ -1480,7 +1489,7 @@ function CBSale(amount,transaction_id) {
             //    RegisterWidgetView();
             //}
 
-            //RepositionWidget();
+            //PositionWidget('reposition');
 
         });        
 
@@ -1488,9 +1497,9 @@ function CBSale(amount,transaction_id) {
 
             var shown = $("#cbw-widget").css('display');
 
-            if (WidgetPosition != "center" && shown != "none") {
+            if (shown != "none") {
 
-                RepositionWidget();
+                PositionWidget('reposition');
             }
         });
 
@@ -1522,7 +1531,7 @@ function CBSale(amount,transaction_id) {
 
             }
 
-            RepositionWidget();
+            PositionWidget('reposition');
 
         });
 
@@ -1639,7 +1648,7 @@ function CBSale(amount,transaction_id) {
         //         $("#cbw-user-name").replaceWith(email);
         //     }
 
-        //     RepositionWidget();
+        //     PositionWidget('reposition');
         // });
 
         /* --------------------------------------------------------
@@ -1751,14 +1760,10 @@ function CBSale(amount,transaction_id) {
         /* --------------------------------------------------------
          * Check for email and cause input errors 
          * --------------------------------------------------------
-         * This simply closes the widget.  If there are email or
-         * cause errors present when the widget is closed, the serve
-         * will not be updated.
+         * These handlers check for cause and email input errors. Note
+         * that the handlers for the Select2 selectors are in the
+         * scripts below.
          * -------------------------------------------------------- */
-        $(document).on('click', '#cbw-email-ctl-grp', function() {
-            CheckCauseAndCauseType();
-            CheckEmailValid();
-        });
         $(document).on('click', '#cbw-cause-select-ctrl-grp', function() {
             //CheckCauseAndCauseType();
             CheckEmailValid();
@@ -1773,31 +1778,11 @@ function CBSale(amount,transaction_id) {
         });
 
         /* --------------------------------------------------------
-         * Cause Type radio button Handlers
-         * --------------------------------------------------------
-         * Add stuff here
-         * -------------------------------------------------------- */
-        // $(document).on('change', '#cbw-cause-select', function() {
-        //     $("#cbw-cause-type-event").prop('checked', true);
-        //     $("#cbw-cause-type-single").prop('checked', false);
-        //     if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-        //         CheckCauseAndCauseType;
-        //     }
-        // });
-        // $(document).on('change', '#cbw-fgcause-select', function() {
-        //     $("#cbw-cause-type-single").prop('checked', true);
-        //     $("#cbw-cause-type-event").prop('checked', false);
-        //     if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-        //         CheckCauseAndCauseType;
-        //     }
-        // });
-
-        /* --------------------------------------------------------
          * Select2 Handlers
          * --------------------------------------------------------
          * These event handlers ensure that both the event and the
          * single cause Select2 selectors aren't both open at the
-         * same time.
+         * same time, and check email validity.
          * -------------------------------------------------------- */
         $(document).on("select2-opening", "#cbw-cause-select", function() {
             $("#cbw-fgcause-select").select2("close");
