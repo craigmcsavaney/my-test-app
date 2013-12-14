@@ -1208,12 +1208,14 @@ function CBSale(amount,transaction_id) {
             // UpdateServe will get a new path for this channel, which is the path
             // that should be used for the next share, not this one.
             var channel_path = GetChannelPath(ServeData.paths[chname]);
-            var cause_name
+            var cause_name;
+            var event_selector = $("#cbw-cause-select");
+            var single_selector = $("#cbw-fgcause-select");
             if ($("input[name='cause-type-radio']:checked").val() == "event") {
-                var data = $("#cbw-fgcause-select").select2('data');
+                var data = $(event_selector).select2('data');
                 cause_name = data.text;
             } else {
-                var data = $("#cbw-fgcause-select").select2('data');
+                var data = $(single_selector).select2('data');
                 cause_name = data.text;
             }
 
