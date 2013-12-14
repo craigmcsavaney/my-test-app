@@ -1809,6 +1809,19 @@ function CBSale(amount,transaction_id) {
             }
         });
 
+        /* --------------------------------------------------------
+         * Select2 Handlers
+         * --------------------------------------------------------
+         * These event handlers ensure that both the event and the
+         * single cause Select2 selectors aren't both open at the
+         * same time, and check email validity.
+         * -------------------------------------------------------- */
+        $(document).on("change", "input[name='cause-type-radio']:checked", function() {
+            CheckEmailValid();   
+            if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                CheckCauseAndCauseType();
+            }
+        });
 
     }); // end jquery.documentready
 
