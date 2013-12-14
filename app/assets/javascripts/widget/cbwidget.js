@@ -67,7 +67,6 @@ function CBSale(amount,transaction_id) {
     var ReferringPath;
     var URLTarget;
     var FilteredParamString;  // original param string minus all referring path param(s)
-    var Window;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -748,7 +747,7 @@ function CBSale(amount,transaction_id) {
 
         /* UpdateServe - Updates the Serve record with current email, current cause or event, current cause type.  Also, when a path is passed in, registers a post to a social media channel (or attempt to do so), and returns the approptiate new paths.
          */
-        function UpdateServe(path) {
+        function UpdateServe(path, callback) {
 
             var email = $("#cbw-email-input").val();
             var event_uid = $("#cbw-cause-select").select2("val");
@@ -788,7 +787,7 @@ function CBSale(amount,transaction_id) {
                 ajxDataObj.path = path;
             }
 
-            return $.ajax({
+            var reqObj = $.ajax({
                 type: 'POST',
                 url: data_url,
                 data: ajxDataObj,
@@ -806,11 +805,11 @@ function CBSale(amount,transaction_id) {
                 }
             });
 
-            //reqObj.done(callback);
+            reqObj.done(callback);
 
         }
 
-        function MergeServeUpdateData() {
+        function MergeServeUpdateData(data, status, xhr) {
 
             // replace the ServeData values with new values returned from the UpdateServe
             // api dataset:
@@ -1201,8 +1200,7 @@ function CBSale(amount,transaction_id) {
          * Posts the message to the selected channel with the selected
          * message, link, image, etc. appropriate for that channel.
          * -------------------------------------------------------- */
-        function PostToChannel() { 
-            Window = window.open(''); 
+        function PostToChannel() {  
             var chname = SelectedChannel.attr('idx');
             var sel_channel = ServeData.channels[chname].details;
             //var awesm_link = "http://awe.sm/" + ServeData.paths[chname];
@@ -1216,9 +1214,9 @@ function CBSale(amount,transaction_id) {
             // the api based on a selected event in the widget.  To make all this
             // synchronous, the rest of this function is wrapped in the
             // following when().done function.
-            $.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
-            //    UpdateServe(ServeData.paths[chname], MergeServeUpdateData);
-                MergeServeUpdateData();
+            //$.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
+                UpdateServe(ServeData.paths[chname], MergeServeUpdateData);
+                //MergeServeUpdateData();
                 console.log(ServeData.cause_name);
                 // following rem'd to disable user field editing:
                 // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
@@ -1290,7 +1288,7 @@ function CBSale(amount,transaction_id) {
                         alert('inactive channel selection');
                 }
 
-            });
+            //});
 
         };
 
@@ -1841,7 +1839,7 @@ function CBSale(amount,transaction_id) {
 
         var windowSpecs = "width=550,height=258,resizable=0,scrollbars=0";
 
-        Window.open(apiCall, windowName, windowSpecs, true);
+        window.open(apiCall, windowName, windowSpecs);
 
     }
 
