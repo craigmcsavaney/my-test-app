@@ -1218,7 +1218,7 @@ function CBSale(amount,transaction_id) {
             var channel_path = GetChannelPath(ServeData.paths[chname]);
             var cause_name;
             if ($("input[name='cause-type-radio']:checked").val() == "event") {
-                cause_name = $("#cbw-fgcause-select").select2('data').organization_name;
+                cause_name = $("#cbw-cause-select").select2('data').cause_name;
             } else {
                 cause_name = $("#cbw-fgcause-select").select2('data').organization_name;
             }
