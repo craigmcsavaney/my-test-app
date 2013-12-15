@@ -677,23 +677,24 @@ function CBSale(amount,transaction_id) {
          * --------------------------------------------------------------------------------- */
         function MergeEventsData() {
 
-            // add an empty option before the list of events so the placeholder will work
-            $("#cbw-cause-select").append(new Option("",""));
-            // Populate the list of events
-            for (var i=0; i < EventData.length; i++) {
-                //$("#cbw-cause-select").append(new Option(causes[i], i));
-                $("#cbw-cause-select").append(new Option(EventData[i].name, EventData[i].uid));
-            }
-            // initialize the events select2 selector
-            $("#cbw-cause-select").select2({
-                placeholder: 'Click here to select a group of causes'
-            });
-            //    ,
-            //     data:{ results: EventData, text: 'name' },
-            //     //id: 'uid',
-            //     formatSelection: format1,
-            //     formatResult: format1
+            // // add an empty option before the list of events so the placeholder will work
+            // $("#cbw-cause-select").append(new Option("",""));
+            // // Populate the list of events
+            // for (var i=0; i < EventData.length; i++) {
+            //     //$("#cbw-cause-select").append(new Option(causes[i], i));
+            //     $("#cbw-cause-select").append(new Option(EventData[i].name, EventData[i].uid));
+            // }
+            // // initialize the events select2 selector
+            // $("#cbw-cause-select").select2({
+            //     placeholder: 'Click here to select a group of causes'
             // });
+            $("#cbw-cause-select").select2({
+                placeholder: 'Click here to select a group of causes',
+                data:{ results: EventData, text: 'name' },
+                id: 'uid',
+                formatSelection: format1,
+                formatResult: format1
+            });
             // // set the initial value of the event picklist
             $("#cbw-cause-select").select2("val", ServeData.event_uid);
 

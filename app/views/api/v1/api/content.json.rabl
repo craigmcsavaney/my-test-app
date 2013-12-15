@@ -24,7 +24,8 @@ node :content do
 						Select A Cause
 					</label>
 					<div class="controls">
-						<select id="cbw-cause-select" class="cbw-select2"/>
+						<!--<select id="cbw-cause-select" class="cbw-select2" >-->
+						<input id="cbw-cause-select" class="cbw-select2" type="hidden">
 						<p id="cbw-cause-select-error-message" style="display:none;" class="error">Oops - it&apos;s blank! Please make a selection</p>
 					</div>
 				</div>
