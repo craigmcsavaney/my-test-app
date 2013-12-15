@@ -2,21 +2,15 @@ object @serve
 attributes :id => :serve_id
 attributes :email, :session_id, :created_at, :viewed
 
-#node :current_cause_id do |serve|
-#	serve.cause.uid
-#end	
-
 node do |serve|
 	if serve.cause.type == 'Single'
 		{ :cause_type => "single", 
 		  :fg_uuid => serve.cause.fg_uuid, 
-		  :event_uid => "",
-		  :cause_name => serve.cause.name }
+		  :event_uid => "" }
 	else
 		{ :cause_type => "event", 
 		  :fg_uuid => "", 
-		  :event_uid => serve.cause.event.uid,
-		  :cause_name => serve.cause.name }
+		  :event_uid => serve.cause.event.uid }
 	end
 end
 

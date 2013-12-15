@@ -688,19 +688,21 @@ function CBSale(amount,transaction_id) {
             // $("#cbw-cause-select").select2({
             //     placeholder: 'Click here to select a group of causes'
             // });
+            // Data for the select2 below comes from the response to the Events api
+            // and must be in the format [{"uid":"","name":"","group_name":""},{repeat}]
             $("#cbw-cause-select").select2({
                 placeholder: 'Click here to select a group of causes',
                 data:{ results: EventData, text: 'name' },
                 id: 'uid',
-                formatSelection: format1,
-                formatResult: format1
+                formatSelection: eventFormat,
+                formatResult: eventFormat
             });
             // // set the initial value of the event picklist
             $("#cbw-cause-select").select2("val", ServeData.event_uid);
 
         }
 
-        function format1(item) { return item.name; };
+        function eventFormat(item) { return item.name; };
         /* RegisterWidgetView - registers with server that the user clicked the cause button
          */
         function RegisterWidgetView() {
@@ -753,7 +755,7 @@ function CBSale(amount,transaction_id) {
 
         }       
 
-        /* UpdateServe - Updates the Serve record with current email, current cause or event, current cause type.  Also, when a path is passed in, registers a post to a social media channel (or attempt to do so), and returns the approptiate new paths.
+        /* UpdateServe - Updates the Serve record with current email, current cause or event, current cause type.  Also, when a path is passed in, registers a post to a social media channel (or attempt to do so), and returns the approptiate new paths.  Note that this function will not be called if any errors exist on the email, cause, or event, so we do not need to check for errors here.
          */
         function UpdateServe(path, callback) {
 
@@ -775,7 +777,7 @@ function CBSale(amount,transaction_id) {
                 ajxDataObj.session_id = cbwSessionCookie;
             }
 
-            if (email && EmailValid(email)) {
+            if (email) {
                 ajxDataObj.email = email;
             }
 
@@ -825,7 +827,6 @@ function CBSale(amount,transaction_id) {
             ServeData.cause_type = UpdateData.cause_type;
             ServeData.fg_uuid = UpdateData.fg_uuid;
             ServeData.event_uid = UpdateData.event_uid;
-            ServeData.cause_name = UpdateData.cause_name;
 
             // Replace the links with new ones from server
 
@@ -1222,23 +1223,17 @@ function CBSale(amount,transaction_id) {
             } else {
                 cause_name = $("#cbw-fgcause-select").select2('data').organization_name;
             }
-            console.log("cause_name: " + cause_name);
 
             // following rem'd to disable user field editing:
             // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
             var share_msg = sel_channel.msg;
-            // now replace the supporter_cause placeholder with the current value.
+            // now replace the supporter_cause placeholder with the currently 
+            // selected event or cause name.
             share_msg = share_msg.replace("{{supporter_cause}}", cause_name);
             // Now update the serve, which will record the cause or event associated
-            // with this share.  This must happen before replacing the cause name
-            // in the share message because we need to get the group name from
-            // the api based on a selected event in the widget.  To make all this
-            // synchronous, the rest of this function is wrapped in the
-            // following when().done function.
-            //$.when(UpdateServe(ServeData.paths[chname])).done(function(a) {
+            // with this share.  This is done asynchronously so the channel will
+            // open right away.
             UpdateServe(ServeData.paths[chname], MergeServeUpdateData);
-            //MergeServeUpdateData();
-            //console.log(ServeData.cause_name);
 
             switch (chname) {
 
@@ -1254,20 +1249,13 @@ function CBSale(amount,transaction_id) {
 
                     // *** REDIRECT_URL MUST BE FOR THE SAME DOMAIN THAT FB APP IS REGISTERED TO ***
                     // *** HARDCODING HERE FOR NOW *** //s
-
-                    // redirect_uri = "http://phil.causebutton.com/cbproto/fblanding.html?xyz=123";
                     redirect_uri = "http://causebutton.com/index.html?xyz=123";
 
-                    // Hardcoding this for now 
-                    // var app_id = "331567326978199";
+                    // This is the app_id for the Facebook Causebutton app: 
                     var app_id = "1412032855697890";
 
                     link_label = link_label.replace("{{merchant}}", ServeData.merchant.name);
-                    //
-                    // following rem'd because selected_cause not working from above
-                    //
-                    //link_label = link_label.replace("{{supporter_cause}}", selected_cause);
-                    //
+                    link_label = link_label.replace("{{supporter_cause}}", cause_name);
 
                     if (sel_channel.thumb_url) {
 
@@ -1306,6 +1294,14 @@ function CBSale(amount,transaction_id) {
 
         };
 
+        /* --------------------------------------------------------
+         * EmailValid (email)
+         * --------------------------------------------------------
+         * Checks the format of the email.  Allows letters, numbers,
+         * dots and dashes before the @, same after the the @ and 
+         * before the ".", then 2-4 letters or numbers.  Returns true
+         * if valid, false if not.
+         * -------------------------------------------------------- */
         function EmailValid (email) {
 
             var emlre = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -1317,6 +1313,12 @@ function CBSale(amount,transaction_id) {
             }
         };
 
+        /* --------------------------------------------------------
+         * BlinkErrorMessage (selector)
+         * --------------------------------------------------------
+         * Takes the target selector as input, blinks the selector
+         * off and on twice.
+         * -------------------------------------------------------- */
         function BlinkErrorMessage (selector) {
 
             $(selector)
@@ -1327,7 +1329,7 @@ function CBSale(amount,transaction_id) {
         };
 
         /* --------------------------------------------------------
-         * E-Mail Input Blur Handler
+         * CheckEmailValid ()
          * --------------------------------------------------------
          * When the user exits the email input field, validate the
          * format of the input. If it is not valid, turn red and
@@ -1432,45 +1434,6 @@ function CBSale(amount,transaction_id) {
 
             }
         });
-
-
-        // $(document).on({
-        //     mouseenter: function () {
-        //         if ($(this).attr('src').indexOf('-off.png') >= 0) {
-
-        //             $(this).attr('src').replace('-off.png','-over.png');
-
-        //         }
-        //     },
-        //     mouseleave: function () {
-        //         if ($(this).attr('src').indexOf('-over.png') >= 0) {
-
-        //             $(this).attr('src').replace('-over.png','-off.png');
-
-        //         }
-        //     }
-        // }, ".cbw-channel-toggle"); //pass the element as an argument to .on
-
-        // $(document).on('mouseover', '.cbw-channel-toggle', function() {
-
-        //     //var display = $("#cbw-widget").css('display');
-
-        //     if ($(this).attr('src').indexOf('-off.png') >= 0) {
-
-        //         $(this).attr('src').replace('-off.png','-on.png');
-
-        //     }
-
-        //     //$("#cbw-twitter").toggle();
-
-        //     // if (display == "none") {
-
-        //     //     RegisterWidgetView();
-        //     // }
-
-        //     // PositionWidget('reposition');
-
-        // });
 
         /* --------------------------------------------------------
          * Email checkbox toggle hanlder
@@ -1627,41 +1590,6 @@ function CBSale(amount,transaction_id) {
 
         });
 
-
-        /* --------------------------------------------------------
-         * E-Mail Input Blur Handler
-         * --------------------------------------------------------
-         * When the user exits the email input field, validate the
-         * format of the input. If it is not valid, turn red and
-         * disable the Post button, re-enable and turn normal
-         * if valid.
-         * -------------------------------------------------------- */
-        // $(document).on('blur', '#cbw-email-input', function() {
-
-        //     var email = $('#cbw-email-input').val();
-
-        //     //var emlre = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-        //     //if (email != "" && !emlre.test(email)) {
-        //     if (!EmailValid(email)) {
-        //         $("#cbw-email-ctl-grp").addClass('error');
-        //         //$(".cbw-channel-toggle").addClass('disabled');
-        //         //$(".cbw-channel-toggle").prop('disabled', true);
-        //         $("#cbw-email-input-error-message").show();
-        //         //$("#cbw-welcome-user-message").hide()
-        //         BlinkErrorMessage("#cbw-email-input-error-message");
-        //     } else {
-        //         $("#cbw-email-ctl-grp").removeClass('error');
-        //         //$(".cbw-channel-toggle").removeClass('disabled');
-        //         //$(".cbw-channel-toggle").prop('disabled', false);
-        //         $("#cbw-email-input-error-message").hide();
-        //         //$("#cbw-welcome-user-message").show();
-        //         $("#cbw-user-name").replaceWith(email);
-        //     }
-
-        //     PositionWidget('reposition');
-        // });
-
         /* --------------------------------------------------------
          * Event (cause group) Change Handler 
          * --------------------------------------------------------
@@ -1758,26 +1686,10 @@ function CBSale(amount,transaction_id) {
         });
 
         /* --------------------------------------------------------
-         * Check for email and cause input errors 
+         * Email checkbox and input handlers
          * --------------------------------------------------------
-         * These handlers check for cause and email input errors. Note
-         * that the handlers for the Select2 selectors are in the
-         * scripts below.
+         * These handlers check for cause and email input errors. 
          * -------------------------------------------------------- */
-        // $(document).on('click', '#cbw-cause-select-ctrl-grp', function() {
-        //     //CheckCauseAndCauseType();
-        //     CheckEmailValid();
-        //     if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-        //         CheckCauseAndCauseType;
-        //     }
-        // });
-        // $(document).on('click', '#cbw-fgcause-select-ctrl-grp', function() {
-        //     //CheckCauseAndCauseType();
-        //     CheckEmailValid();
-        //     if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-        //         CheckCauseAndCauseType;
-        //     }
-        // });
         $(document).on('click', '#cbw-email-checkbox-ctl-grp', function() {
             CheckCauseAndCauseType();
             CheckEmailValid();
@@ -1810,11 +1722,9 @@ function CBSale(amount,transaction_id) {
         });
 
         /* --------------------------------------------------------
-         * Select2 Handlers
+         * Cause_type radio button handlers
          * --------------------------------------------------------
-         * These event handlers ensure that both the event and the
-         * single cause Select2 selectors aren't both open at the
-         * same time, and check email validity.
+         * These handlers check for cause and email input errors.
          * -------------------------------------------------------- */
         $(document).on("change", "input[name='cause-type-radio']:checked", function() {
             CheckEmailValid();   
@@ -1827,10 +1737,6 @@ function CBSale(amount,transaction_id) {
 
     /*** NOTE - ANY FUNCTIONS DEFINED OUT HERE WILL NOT HAVE ACCESS TO JQUERY PROPERLY DUE TO jQuery.noConflict(true) ***/
 
-    /*
-     * AWE.SM HELPER FUNCTIONS
-     */
-    
     /* --------------------------------------------------------
      * PostToTwitter(message)
      * --------------------------------------------------------
