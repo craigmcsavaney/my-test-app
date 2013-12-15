@@ -702,7 +702,7 @@ function CBSale(amount,transaction_id) {
 
         }
 
-        function causeFormatResult(event) {
+        function eventFormatResult(event) {
             var markup = "<div class='event-result'><div id='" + event.uid + "' class='event-title'>" + event.name + "</div>";
             markup += "<div class='event-description'>" + event.description + "</div>";
             // var state = false;
