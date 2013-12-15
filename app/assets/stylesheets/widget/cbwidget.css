@@ -33,7 +33,8 @@
 }
 
 .cbw-select2, .cbw-fg-select2 {
-	width: 98%;
+	width: 95%;
+	float: right;
 }
 
 #cbw-heading {
@@ -192,4 +193,9 @@ select {
 #cbw-email-checkbox-label {
     display: block;
     padding-top: 0;
+}
+
+.cbw .control-label {
+	width: 100%;
+	padding-left: 5%;
 }

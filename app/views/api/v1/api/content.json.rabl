@@ -20,30 +20,28 @@ node :content do
 			<form id="cbw-widget-form" class="form-horizontal form-small">
 				<div id="cbw-cause-select-ctrl-grp" class="control-group">
 					<label class="control-label" for="input-cause-sel">
-						<input type="radio" name="cause-type-radio" id="cbw-cause-type-event" value="event">
 						Select A Cause
 					</label>
 					<div class="controls">
-						<!--<select id="cbw-cause-select" class="cbw-select2" >-->
+						<input type="radio" name="cause-type-radio" id="cbw-cause-type-event" value="event">
 						<input id="cbw-cause-select" class="cbw-select2" type="hidden">
 						<p id="cbw-cause-select-error-message" style="display:none;" class="error">Oops - it&apos;s blank! Please make a selection</p>
 					</div>
 				</div>
 				<div id="cbw-fgcause-select-ctrl-grp" class="control-group">
 					<label class="control-label" for="input-fgcause-sel">
-						<input type="radio" name="cause-type-radio" id="cbw-cause-type-single" value="single">
 						Select A FG Cause
 					</label>
 					<div class="controls">
+						<input type="radio" name="cause-type-radio" id="cbw-cause-type-single" value="single">
 						<input id="cbw-fgcause-select" class="cbw-fg-select2" type="hidden">
 						<p id="cbw-fgcause-select-error-message" style="display:none;" class="error">Oops - it&apos;s blank! Please make a selection</p>
 					</div>
 				</div>
-				<div class="control-group" id="cbw-email-checkbox-ctl-grp">
-					<label class="control-label" id="cbw-email-checkbox-label"><input type="checkbox" id="cbw-email-checkbox"></label>
-					<div class="controls">
-						<p id="cbw-email-checkbox-text">Tell me when I&apos;ve caused a donation!</p>
-					</div>
+				<div id="cbw-email-checkbox-ctl-grp">
+					<label class="control-label" id="cbw-email-checkbox-label"><input type="checkbox" id="cbw-email-checkbox">
+					<p id="cbw-email-checkbox-text">Tell me when I&apos;ve caused a donation!</p>
+					</label>
 				</div>
 	        	<div id="cbw-email-ctl-grp" class="control-group" style="display:none;">
 					<div class="controls">
