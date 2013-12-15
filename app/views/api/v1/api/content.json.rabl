@@ -39,8 +39,9 @@ node :content do
 					</div>
 				</div>
 				<div id="cbw-email-checkbox-ctl-grp">
-					<label class="control-label" id="cbw-email-checkbox-label"><input type="checkbox" id="cbw-email-checkbox">
-					<p id="cbw-email-checkbox-text">Tell me when I&apos;ve caused a donation!</p>
+					<label class="control-label" id="cbw-email-checkbox-label">
+						<span id="cbw-email-checkbox-text">Tell me when I&apos;ve caused a donation!</span>
+						<input type="checkbox" id="cbw-email-checkbox">
 					</label>
 				</div>
 	        	<div id="cbw-email-ctl-grp" class="control-group" style="display:none;">
