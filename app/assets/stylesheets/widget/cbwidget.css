@@ -22,10 +22,6 @@
     height: auto;
 }
 
-.form-small input[type='text'] {
-	width: 93%;
-}
-
 .form-small textarea {
 	width: 90%;
 	resize: none;
@@ -157,6 +153,7 @@ select {
 
 #cbw-email-input {
 	margin-bottom: 5px;
+	float: right;
 }
 
 #cbw-channels-grp .control-label {
@@ -194,7 +191,7 @@ select {
 
 #cbw-email-checkbox-label {
     display: block;
-    padding-top: 0;
+    padding-top: 5px;
 }
 
 .cbw .control-label {
@@ -204,4 +201,8 @@ select {
 
 #cbw-cause-type-event, #cbw-cause-type-single {
 	margin-left: 2px;
+}
+
+#cbw-email-checkbox {
+	margin-bottom: 4px;
 }
