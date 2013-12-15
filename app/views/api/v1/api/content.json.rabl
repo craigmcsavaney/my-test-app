@@ -20,7 +20,7 @@ node :content do
 			<form id="cbw-widget-form" class="form-horizontal form-small">
 				<div id="cbw-cause-select-ctrl-grp" class="control-group">
 					<label class="control-label" for="input-cause-sel">
-						Select A Cause
+						Choose a cause group that benefits victims of a recent disaster or supports a current awareness campaign...
 					</label>
 					<div class="controls">
 						<input type="radio" name="cause-type-radio" id="cbw-cause-type-event" value="event">
@@ -30,7 +30,7 @@ node :content do
 				</div>
 				<div id="cbw-fgcause-select-ctrl-grp" class="control-group">
 					<label class="control-label" for="input-fgcause-sel">
-						Select A FG Cause
+						or find the individual cause of your choice
 					</label>
 					<div class="controls">
 						<input type="radio" name="cause-type-radio" id="cbw-cause-type-single" value="single">
@@ -51,7 +51,7 @@ node :content do
 					</div>
 				</div>
 				<div id="cbw-channels-grp" class="control-group">
-	            	<label for="cbw-channels" class="control-label">Preview & Edit</label>
+	            	<label id="cbw-channels-grp-label" class="control-label">Preview & Edit, then Post:</label>
 	            	<div id="cbw-channels" class="controls"/>
 	            </div>			
 	            <div id="cbw-share-msg-ctrl-grp" class="control-group" style="display: none;">

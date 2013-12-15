@@ -1,5 +1,5 @@
 #cbw-widget {
-	width: 400px;
+	width: 350px;
 	height: auto;
 	border: 1px solid #003399;
 	background-color: #0E76BC;
@@ -87,9 +87,9 @@ select {
 }
 
 #cbw-promo-text {
-	font-size: 10pt;
+	font-size: 11pt;
 	text-align: justify;
-	padding: 0 5px;
+	padding: 0 4px 0;
 }
 
 .cbw .close {
@@ -154,10 +154,16 @@ select {
 #cbw-email-input {
 	margin-bottom: 5px;
 	float: right;
+	width: 91%;
+	font-size: 9pt;
 }
 
-#cbw-channels-grp .control-label {
+#cbw-channels-grp-label {
 	margin-bottom: 0;
+	width: auto;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-top: 2px;
 }
 
 #cbw-heading-logo {
@@ -192,6 +198,7 @@ select {
 #cbw-email-checkbox-label {
     display: block;
     padding-top: 5px;
+    padding-bottom: 4px;
 }
 
 .cbw .control-label {
@@ -199,10 +206,17 @@ select {
 	padding-left: 5%;
 }
 
-#cbw-cause-type-event, #cbw-cause-type-single {
-	margin-left: 2px;
+#cbw-email-checkbox {
+	margin-bottom: 5px;
 }
 
-#cbw-email-checkbox {
-	margin-bottom: 4px;
+.cbw .cause-result {
+	border-bottom: solid 1px gray;
+	padding-bottom: 8px;
+}
+
+.cbw .cause-location, .cbw .cause-category {
+	color: gray;
+	font-size: .75em;
+	line-height: 15px;
 }
