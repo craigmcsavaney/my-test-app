@@ -211,12 +211,16 @@ select {
 	margin-bottom: 5px;
 }
 
-.cause-result {
+.cause-result, .event-result {
 	border-bottom: solid 1px gray;
 	padding-bottom: 8px;
 }
 
-.cause-location, .cause-category {
+.cause-title, .event-title {}
+
+.cause-selection, .event-selection {}
+
+.cause-location, .cause-category, .event-description {
 	font-size: .85em;
 	line-height: 15px;
 }

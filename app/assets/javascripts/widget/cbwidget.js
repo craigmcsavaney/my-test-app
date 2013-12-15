@@ -694,15 +694,41 @@ function CBSale(amount,transaction_id) {
                 placeholder: 'Click here to select a group of causes',
                 data:{ results: EventData, text: 'name' },
                 id: 'uid',
-                formatSelection: eventFormat,
-                formatResult: eventFormat
+                formatSelection: eventFormatSelection,
+                formatResult: eventFormatResult
             });
             // // set the initial value of the event picklist
             $("#cbw-cause-select").select2("val", ServeData.event_uid);
 
         }
 
-        function eventFormat(item) { return item.name; };
+        function causeFormatResult(event) {
+            var markup = "<div class='event-result'><div id='" + event.uid + "' class='event-title'>" + event.name + "</div>";
+            markup += "<div class='event-description'>" + event.description + "</div>";
+            // var state = false;
+
+            // if (cause.region) {
+            //     state = cause.region;
+            // } else if (cause.county) {
+            //     state = cause.county;
+            // } 
+            // if (cause.city && state) {
+            //     markup += "<div class='cause-location'>" + cause.city + ", " + state + "</div>";
+            // }
+            // if (cause.category_title) {
+            //     markup += "<div class='cause-category'>" + cause.category_title + "</div>";
+            // }
+            markup += "</div>"
+            return markup;
+        }  
+    
+        function eventFormatSelection(event) {
+            var markup = "<div class='event-selection' id='" + event.uid + "' >" + event.name + "</div>";
+            return markup;
+        } 
+
+        // function eventFormat(item) { return item.name; };
+
         /* RegisterWidgetView - registers with server that the user clicked the cause button
          */
         function RegisterWidgetView() {
