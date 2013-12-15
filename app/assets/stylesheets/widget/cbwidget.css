@@ -159,7 +159,7 @@ select {
 	font-size: 9pt;
 }
 
-#cbw-channels-grp-label {
+#cbw-channels-grp-label.control-label {
 	margin-bottom: 0;
 	width: auto;
 	padding-right: 10px;
@@ -211,13 +211,12 @@ select {
 	margin-bottom: 5px;
 }
 
-.cbw .cause-result {
+.cause-result {
 	border-bottom: solid 1px gray;
 	padding-bottom: 8px;
 }
 
-.cbw .cause-location, .cbw .cause-category {
-	color: gray;
-	font-size: .75em;
+.cause-location, .cause-category {
+	font-size: .85em;
 	line-height: 15px;
 }
