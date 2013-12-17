@@ -53,7 +53,7 @@ node :content do
 					</div>
 				</div>
 				<div id="cbw-channels-grp" class="control-group">
-	            	<label id="cbw-channels-grp-label" class="control-label">Preview & Edit, then Post:</label>
+	            	<label id="cbw-channels-grp-label" class="control-label">Preview (& Edit), then Post...</label>
 	            	<div id="cbw-channels" class="controls"/>
 	            </div>			
 	            <div id="cbw-share-msg-ctrl-grp" class="control-group" style="display: none;">

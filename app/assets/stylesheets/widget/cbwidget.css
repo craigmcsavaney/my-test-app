@@ -45,6 +45,7 @@
 .cbw-channel-toggle {
 	margin-right: 5px;
 	cursor: pointer;
+	margin-bottom: 10px;
 }
 
 #cbw-share-msg-ctrl-grp textarea {
@@ -162,10 +163,13 @@ select {
 
 #cbw-channels-grp-label.control-label {
 	margin-bottom: 0;
-	width: auto;
-	padding-right: 10px;
-	padding-bottom: 10px;
+	width: 100%;
+	padding-bottom: 7px;
 	padding-top: 2px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.3em;
+
 }
 
 #cbw-heading-logo {
@@ -190,6 +194,7 @@ select {
 
 #cbw-email-checkbox-ctl-grp {
 	margin-bottom:0;
+	height: 28px;
 }
 
 #cbw-email-checkbox-text {
@@ -219,4 +224,10 @@ select {
 .cause-location, .cause-category, .event-description {
 	font-size: .85em;
 	line-height: 15px;
+}
+
+#cbw-channels-grp {
+	border: 1px solid red;
+	border-radius: 5px;
+	margin: 0 3px 0;
 }
