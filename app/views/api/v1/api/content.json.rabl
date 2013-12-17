@@ -19,21 +19,23 @@ node :content do
 	                                    to your friends on our behalf and we will make a donation of 5% of all purchases</p>
 			<form id="cbw-widget-form" class="form-horizontal form-small">
 				<div id="cbw-cause-select-ctrl-grp" class="control-group">
+					<input type="radio" name="cause-type-radio" id="cbw-cause-type-event" value="event">
 					<label class="control-label" for="input-cause-sel">
-						Choose a cause group that benefits victims of a recent disaster or supports a current awareness campaign...
+						<b>Cause Group</b>&nbsp;
+						<i><span style="color:#999999;">Help victims of a recent disaster or support a current awareness campaign...</span></i>
 					</label>
 					<div class="controls">
-						<input type="radio" name="cause-type-radio" id="cbw-cause-type-event" value="event">
 						<input id="cbw-cause-select" class="cbw-select2" type="hidden">
 						<p id="cbw-cause-select-error-message" style="display:none;" class="error">Oops - it&apos;s blank! Please make a selection</p>
 					</div>
 				</div>
 				<div id="cbw-fgcause-select-ctrl-grp" class="control-group">
+					<input type="radio" name="cause-type-radio" id="cbw-cause-type-single" value="single">
 					<label class="control-label" for="input-fgcause-sel">
-						or find the individual cause of your choice
+						<b>Individual Cause</b>&nbsp;
+						<i><span style="color:#999999;">Support your favorite cause...</span></i>
 					</label>
 					<div class="controls">
-						<input type="radio" name="cause-type-radio" id="cbw-cause-type-single" value="single">
 						<input id="cbw-fgcause-select" class="cbw-fg-select2" type="hidden">
 						<p id="cbw-fgcause-select-error-message" style="display:none;" class="error">Oops - it&apos;s blank! Please make a selection</p>
 					</div>

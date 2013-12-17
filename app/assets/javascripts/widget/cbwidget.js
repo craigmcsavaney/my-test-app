@@ -705,19 +705,6 @@ function CBSale(amount,transaction_id) {
         function eventFormatResult(event) {
             var markup = "<div class='event-result'><div id='" + event.uid + "' class='event-title'>" + event.name + "</div>";
             markup += "<div class='event-description'>" + event.description + "</div>";
-            // var state = false;
-
-            // if (cause.region) {
-            //     state = cause.region;
-            // } else if (cause.county) {
-            //     state = cause.county;
-            // } 
-            // if (cause.city && state) {
-            //     markup += "<div class='cause-location'>" + cause.city + ", " + state + "</div>";
-            // }
-            // if (cause.category_title) {
-            //     markup += "<div class='cause-category'>" + cause.category_title + "</div>";
-            // }
             markup += "</div>"
             return markup;
         }  

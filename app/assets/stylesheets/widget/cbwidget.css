@@ -129,7 +129,7 @@ select {
 
 #cbw-body-normal .control-label {
 	color: #0E76BC;
-	width: 100%;
+	width: 95%;
 	cursor: default;
 	text-align: left;
 }
@@ -202,10 +202,7 @@ select {
     padding-bottom: 4px;
 }
 
-.cbw .control-label {
-	width: 100%;
-	padding-left: 5%;
-}
+.cbw .control-label {}
 
 #cbw-email-checkbox {
 	margin-bottom: 5px;
