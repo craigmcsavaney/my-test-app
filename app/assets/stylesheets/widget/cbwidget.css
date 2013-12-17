@@ -132,6 +132,7 @@ select {
 	width: 95%;
 	cursor: default;
 	text-align: left;
+	float: right;
 }
 
 #cbw-body-normal .controls {
@@ -201,8 +202,6 @@ select {
     padding-top: 5px;
     padding-bottom: 4px;
 }
-
-.cbw .control-label {}
 
 #cbw-email-checkbox {
 	margin-bottom: 5px;
