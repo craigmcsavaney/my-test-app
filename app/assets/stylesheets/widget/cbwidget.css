@@ -226,8 +226,9 @@ select {
 }
 
 #cbw-channels-grp {
-	border: 1px solid #0E76BC;
+	border: 1px solid #0E76BD;
 	border-radius: 5px;
-	margin: 0 3px 0;
+	margin: 0 3px 5px !important;
 	text-align: center;
+	background-color: #E3F0F8;
 }
