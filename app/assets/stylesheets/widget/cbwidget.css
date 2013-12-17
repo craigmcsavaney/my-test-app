@@ -127,7 +127,7 @@ select {
           box-shadow: 0px 0px 10px 3px #666666; /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
 }
 
-#cbw-body-normal.control-label {
+#cbw-body-normal .control-label {
 	color: #0E76BC;
 	width: 95%;
 	cursor: default;
