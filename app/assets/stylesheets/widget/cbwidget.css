@@ -168,7 +168,7 @@ select {
 	padding-top: 2px;
 	text-align: center;
 	font-weight: bold;
-	font-size: 1.3em;
+	font-size: 1.2em;
 
 }
 
@@ -199,13 +199,12 @@ select {
 
 #cbw-email-checkbox-text {
 	margin-top: 3px;
-	padding-right: 15px;
+	padding-right: 5px;
 }
 
 #cbw-email-checkbox-label {
     display: block;
     padding-top: 5px;
-    padding-bottom: 4px;
 }
 
 #cbw-email-checkbox {
@@ -227,7 +226,8 @@ select {
 }
 
 #cbw-channels-grp {
-	border: 1px solid red;
+	border: 1px solid #0E76BC;
 	border-radius: 5px;
 	margin: 0 3px 0;
+	text-align: center;
 }
