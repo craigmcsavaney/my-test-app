@@ -67,12 +67,20 @@ Myapplication::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'morning-savannah-7661.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address:              'smtp.gmail.com',
+  #   port:                 '587',
+  #   domain:               'causebutton.com',
+  #   user_name:            'craig@causebutton.com',
+  #   password:             'USna21412',
+  #   authentication:       'plain',
+  #   enable_starttls_auto: true  }
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
+    address:              'smtp.sendgrid.net',
     port:                 '587',
-    domain:               'causebutton.com',
-    user_name:            'craig@causebutton.com',
-    password:             'USna21412',
+    domain:               'heroku.com',
+    user_name:            'app16481349@heroku.com',
+    password:             'sx4rori8',
     authentication:       'plain',
     enable_starttls_auto: true  }
 end
