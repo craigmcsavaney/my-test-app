@@ -67,7 +67,7 @@ node :content do
 				</div>
 			</form>          
 			<div id="cbw-links">
-    			<span id="cbw-links-info-toggle">more info</span>
+    			<a id="cbw-links-info-toggle">more info</a>
 			</div>
 			<div id="cbw-links-info" style="display:none;" >
     			<textarea id="cbw-links-info-text" rows="3">content placeholder</textarea>
