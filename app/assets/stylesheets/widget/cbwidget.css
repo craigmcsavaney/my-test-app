@@ -232,3 +232,12 @@ select {
 	text-align: center;
 	background-color: #E3F0F8;
 }
+
+#cbw-links-info-text {
+	width: 94%:
+	margin: 1px 3px 3px;
+	font-size: .8em;
+	line-height: 1.2em;
+	resize: vertical;
+}
+

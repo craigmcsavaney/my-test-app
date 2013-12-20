@@ -70,7 +70,7 @@ node :content do
     			<span id="cbw-links-info-toggle">more info</span>
 			</div>
 			<div id="cbw-links-info" style="display:none;" >
-    			<textarea id="cbw-links-info-text" rows="3">lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff </textarea>
+    			<textarea id="cbw-links-info-text" rows="3">content placeholder</textarea>
 			</div>
 	    </div>
 	</div>
