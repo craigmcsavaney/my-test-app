@@ -1494,19 +1494,19 @@ function CBSale(amount,transaction_id) {
 
         });
 
-        $(document).on('click', '#cbw-links-terms-toggle', function() {
+        $(document).on('click', '#cbw-links-info-toggle', function() {
 
-            var display = $("#cbw-links-terms").css('display');
+            var display = $("#cbw-links-info").css('display');
 
-            $("#cbw-links-terms").toggle();
+            $("#cbw-links-info").toggle();
 
             if (display == "none") {
 
-                $("#cbw-links-terms-toggle").html("show less"); 
+                $("#cbw-links-info-toggle").html("less info"); 
 
             } else {
 
-                $("#cbw-links-terms-toggle").html("show more");
+                $("#cbw-links-info-toggle").html("more info");
 
             }
 
