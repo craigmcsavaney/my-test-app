@@ -67,10 +67,10 @@ node :content do
 				</div>
 			</form>          
 			<div id="cbw-links">
-    			<span id="cbw-links-terms-toggle">show more</span>
+    			<span id="cbw-links-info-toggle">more info</span>
 			</div>
-			<div id="cbw-links-terms" style="display:none;" >
-    			lots and lots and lots of terms go here
+			<div id="cbw-links-info" style="display:none;" >
+    			<textarea id="cbw-links-info-text" rows="3">lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff lots and lots and lots of stuff </textarea>
 			</div>
 	    </div>
 	</div>
