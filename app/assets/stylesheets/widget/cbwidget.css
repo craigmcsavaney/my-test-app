@@ -241,3 +241,7 @@ select {
 	resize: vertical;
 }
 
+#cbw-links {
+	cursor: pointer;
+}
+

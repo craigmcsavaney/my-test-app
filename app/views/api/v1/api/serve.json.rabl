@@ -1,6 +1,14 @@
 object @serve
 attributes :id => :serve_id
-attributes :email, :session_id, :created_at, :viewed
+attributes :session_id, :viewed
+
+node do |serve|
+	if !serve.user.nil?
+		{ :email => serve.user.email }
+	else
+		{ :email => "" }
+	end
+end
 
 node do |serve|
 	if serve.cause.type == 'Single'
