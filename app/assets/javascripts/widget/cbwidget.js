@@ -792,7 +792,7 @@ function CBSale(amount,transaction_id) {
                 ajxDataObj.session_id = cbwSessionCookie;
             }
 
-            if (email) {
+            if (email != ServeData.email) {
                 ajxDataObj.email = email;
             }
 
