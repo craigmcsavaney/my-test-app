@@ -447,6 +447,7 @@ function CBSale(amount,transaction_id) {
             if (ServeData.email) {
 
                 $("#cbw-email-input").val(ServeData.email);
+                $("#cbw-email-checkbox").prop('checked',true);
             }
 
             // add the cause button html to the cbw html.  
