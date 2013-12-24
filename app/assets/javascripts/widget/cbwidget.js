@@ -1426,9 +1426,12 @@ function CBSale(amount,transaction_id) {
              * -------------------------------------------------------- */
             $(document).on('click', '#cbw-main-btn', function() {
 
-                var max_sec = new Date().getTime() + 5000;
+                var t = 0;
 
-                while (new Date() < max_sec && !Loaded) {}
+                while (t < 100 && !Loaded) {
+                    console.log(Loaded + t);
+                    t += 1;
+                }
 
                 var display = $("#cbw-widget").css('display');
 
