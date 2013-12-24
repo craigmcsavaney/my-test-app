@@ -1,6 +1,8 @@
 var CBServeUrlBase;
 var CBMerchantID;
 var CBPurchasePath;
+var Loaded = false;
+
 
 function CBSale(amount,transaction_id) {
 
