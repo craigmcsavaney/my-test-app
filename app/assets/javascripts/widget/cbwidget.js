@@ -1426,9 +1426,7 @@ function CBSale(amount,transaction_id) {
              * -------------------------------------------------------- */
             $(document).on('click', '#cbw-main-btn', function() {
 
-                while (!Loaded) {
-                    return true;
-                }
+                while (!Loaded) {}
 
                 var display = $("#cbw-widget").css('display');
 
