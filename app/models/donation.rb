@@ -2,7 +2,7 @@ class Donation < ActiveRecord::Base
   	include NotDeleteable
 	versioned
     
-    attr_accessible :sale_id, :merchant_id, :cause_id, :chosen_by, :amount, :amount_cents, :choosers_email, :chooser_id, :supporter_id, :buyer_id
+    attr_accessible :sale_id, :merchant_id, :cause_id, :chosen_by, :amount, :amount_cents, :chooser_id, :supporter_id, :buyer_id
 
   	belongs_to :sale
   	delegate :share, :to => :sale, :allow_nil => true

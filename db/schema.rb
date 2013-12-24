@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131224151207) do
+ActiveRecord::Schema.define(:version => 20131224183348) do
 
   create_table "button_types", :force => true do |t|
     t.string   "name",                           :null => false
@@ -109,15 +109,14 @@ ActiveRecord::Schema.define(:version => 20131224151207) do
   add_index "channels_promotions", ["promotion_id", "channel_id"], :name => "index_channels_promotions_on_promotion_id_and_channel_id", :unique => true
 
   create_table "donations", :force => true do |t|
-    t.integer  "sale_id",                        :null => false
-    t.integer  "merchant_id",                    :null => false
-    t.integer  "cause_id",                       :null => false
-    t.string   "chosen_by",                      :null => false
-    t.integer  "amount_cents",   :default => 0,  :null => false
-    t.string   "choosers_email", :default => ""
+    t.integer  "sale_id",                     :null => false
+    t.integer  "merchant_id",                 :null => false
+    t.integer  "cause_id",                    :null => false
+    t.string   "chosen_by",                   :null => false
+    t.integer  "amount_cents", :default => 0, :null => false
     t.boolean  "deleted"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.integer  "chooser_id"
     t.integer  "supporter_id"
     t.integer  "buyer_id"
