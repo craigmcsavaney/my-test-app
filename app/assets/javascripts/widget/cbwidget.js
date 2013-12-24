@@ -792,6 +792,8 @@ function CBSale(amount,transaction_id) {
                 ajxDataObj.session_id = cbwSessionCookie;
             }
 
+            // following allows null email values to be passed to the api so a user can update an existing
+            // email to make it null
             if (email != ServeData.email) {
                 ajxDataObj.email = email;
             }

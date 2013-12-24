@@ -16,7 +16,6 @@ class Promotion < ActiveRecord::Base
     has_many :serves
     has_many :shares, through: :serves
     belongs_to :event
-    delegate :causes, :to => :group, :allow_nil => true
 
     before_validation :replace_nils, :get_landing_page, :get_button_id, :get_widget_position_id, :ensure_channel_attributes_present, :get_cause_and_event, :set_blank_accessors
 

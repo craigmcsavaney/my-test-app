@@ -4,7 +4,7 @@ attributes :session_id, :viewed
 
 node do |serve|
 	if !serve.user.nil?
-		{ :email => serve.user.email }
+		{ :email => serve.email }
 	else
 		{ :email => "" }
 	end

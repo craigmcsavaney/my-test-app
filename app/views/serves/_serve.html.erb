@@ -9,10 +9,10 @@
     <% @c = serve.session_id %>
   <% end %>
   <% if serve.user_id.nil? %>
-      <% @d = @e = "" %>
+      <% @d = @e = "null" %>
       <% else %>
       <% @d = serve.user_id %>
-      <% @e = serve.user.email %>
+      <% @e = serve.email %>
   <% end %>
 	<% @editpath = edit_serve_path(serve) %>
   	<b><%= :id %>: </b><%= link_to serve.id, @editpath %><br/>

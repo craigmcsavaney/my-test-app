@@ -3,7 +3,7 @@ class Serve < ActiveRecord::Base
   include NotDeleteable
 	versioned
 
-	attr_accessible :promotion_id, :email, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :user_id
+	attr_accessible :promotion_id, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :user_id
 
   belongs_to :promotion, counter_cache: true
   belongs_to :share, foreign_key: "referring_share_id"
@@ -11,7 +11,9 @@ class Serve < ActiveRecord::Base
   belongs_to :user
   has_many :shares
   has_many :sales, through: :shares
-  delegate :merchant, :to => :promotion, :allow_nil => true
+  delegate :merchant, to: :promotion, allow_nil: true
+  delegate :email, to: :user, allow_nil: true
+
 
   before_validation :get_current_cause
 
@@ -50,41 +52,18 @@ class Serve < ActiveRecord::Base
     return {cause_changed: @cause_changed, cause_id: @cause_id}
   end
 
-  # following deprecated and replaced by user_changed? method below
-
-  # def self.email_changed?(serve,new_email)
-  #   # Check to see if a new email was passed in and if it is different than the email 
-  #   # in the serve record.  If it is different, set the email_changed flag to 
-  #   # true and set the email variable to the new email address.
-  #   case
-  #       # check to see if both the old email and the new email are nil or blank
-  #       when (serve.email.nil? or serve.email == "") && (new_email.nil? or new_email == "")
-  #           @email_changed = false
-  #           @email = serve.email
-  #       # check to see if the new email is the same as the old email
-  #       when serve.email == new_email #params[:email]
-  #           @email_changed = false
-  #           @email = serve.email
-  #       # since both are not blank or nil and they are not the same, they must be different
-  #       else
-  #           @email_changed = true
-  #           @email = new_email
-  #   end
-  #   return {email_changed: @email_changed, email: @email}
-  # end
-
   def self.user_changed?(serve,new_email)
     # Check to see if an email was passed in and if it is different than the email 
     # associated with the user in the current serve record.  If it is different, set the 
     # user_changed flag to true and set the user_id variable to the new user_id.
     case
         # check to see if both the old user and the new user are nil or blank
-        when (serve.user.nil? or serve.user.email == "") && (new_email.nil? or new_email == "")
+        when (serve.user.nil? or serve.email == "") && (new_email.nil? or new_email == "")
             @user_changed = false
             @user_id = nil
             @type = nil
         # check to see if the new user is the same as the old user
-        when !serve.user.nil? && serve.user.email == new_email #params[:email]
+        when !serve.user.nil? && serve.email == new_email
             @user_changed = false
             @user_id = serve.user_id
             @type = nil

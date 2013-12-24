@@ -12,13 +12,15 @@
 
         <%= f.label :user_id %>
         <%= f.text_field :user_id %>
+        <br/><br/>
 
         <% if @serve.user_id.nil? %>
         <%     @email = "null" %>
         <%   else %>
-        <%     @email = @serve.user.email %>
+        <%     @email = @serve.email %>
         <% end %>
         <%= f.label :user_email, "User Email: " + @email %>
+        <br/>
 
         <%= f.label :referring_share_id, "Referring Share ID" %>
         <%= select_tag 'serve[referring_share_id]', options_from_collection_for_select(Share.all, :id, :id, @serve.referring_share_id ), include_blank: true %>

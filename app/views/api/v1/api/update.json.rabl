@@ -4,7 +4,7 @@ object @serve
 
 node do |serve|
 	if !serve.user.nil?
-		{ :email => serve.user.email }
+		{ :email => serve.email }
 	else
 		{ :email => "" }
 	end
