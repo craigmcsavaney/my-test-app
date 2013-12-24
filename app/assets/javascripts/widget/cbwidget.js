@@ -287,8 +287,11 @@ function CBSale(amount,transaction_id) {
                 
                 } 
 
+                Loaded = true;
+
             });
-            
+
+
             /*
              * HELPER FUNCTIONS 
              */
