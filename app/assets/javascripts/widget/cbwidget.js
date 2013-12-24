@@ -774,7 +774,14 @@ function CBSale(amount,transaction_id) {
          */
         function UpdateServe(path, callback) {
 
-            var email = $("#cbw-email-input").val();
+            // Check to see if the email checkbox is checked.  If it is,
+            // use the value of the email input box.  If not, use null
+            // for the email value.
+            if ($("#cbw-email-checkbox").prop('checked')) {
+                var email = $("#cbw-email-input").val();
+            } else {
+                var email = "";
+            }
             var event_uid = $("#cbw-cause-select").select2("val");
             var fg_uuid = $("#cbw-fgcause-select").select2("val");
 
