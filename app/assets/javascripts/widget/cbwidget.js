@@ -1420,12 +1420,10 @@ function CBSale(amount,transaction_id) {
             /* --------------------------------------------------------
              * Main Cause Button Handler
              * --------------------------------------------------------
-             * Activates the cause button widget, eventually will 
-             * incorporate more logic as to whether the widget can be
-             * displayed, what form to display, etc. maybe also be
-             * responsible for pulling the Active Promotion
+             * Activates the cause button widget.  Any element on a page
+             * that is used to open the cause button widget must 
              * -------------------------------------------------------- */
-            $(document).on('click', '#cbw-main-btn', function() {
+            $(document).on('click', '.cbw-main-btn', function() {
 
                 if (!Loaded) {
                     return;
