@@ -1430,8 +1430,9 @@ function CBSale(amount,transaction_id) {
                 var t = 0;
                 console.log(Loaded);
 
-                while (t < 100 && !Loaded) {
-                    console.log(Loaded + t);
+                while (!Loaded) {
+                    console.log(Loaded);
+                    console.log(t);
                     t += 1;
                 }
 
