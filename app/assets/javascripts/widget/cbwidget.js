@@ -84,7 +84,7 @@ function CBSale(amount,transaction_id) {
 
     CBMerchantID = document.getElementById("cb-widget-replace").getAttribute("cbw-merchant-id");
 
-    CBServeUrlBase = "https://morning-savannah-7661.herokuapp.com/api/v1/";
+    CBServeUrlBase = "https://causebutton.herokuapp.com/api/v1/";
 
     // Chain load the scripts here in the order listed below...
     // when the last script in the chain is loaded, main() will be called
@@ -486,7 +486,7 @@ function CBSale(amount,transaction_id) {
 
                 // Populate the active channels for current merchant/promotion
 
-                var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='https://morning-savannah-7661.herokuapp.com/assets/widget/chn_icons/icon-{0}-off.png'/>"
+                var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='https://causebutton.herokuapp.com/assets/widget/chn_icons/icon-{0}-off.png'/>"
 
                 var channel_div = $("#cbw-channels");
 
