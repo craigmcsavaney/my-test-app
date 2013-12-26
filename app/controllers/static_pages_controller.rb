@@ -1,14 +1,16 @@
 class StaticPagesController < ApplicationController
-  def home
-  end
+	layout false, only: :home
 
-  def help
-  end
+  	def home
+  	end
 
-  def about
+  	def help
+  	end
+
+  	def about
   	#TestMailer.welcome_email2.deliver
-  end
+  	end
 
-  def contact
-  end
+  	def contact
+  	end
 end
