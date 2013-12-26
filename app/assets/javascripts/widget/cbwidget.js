@@ -1421,7 +1421,10 @@ function CBSale(amount,transaction_id) {
              * Main Cause Button Handler
              * --------------------------------------------------------
              * Activates the cause button widget.  Any element on a page
-             * that is used to open the cause button widget must 
+             * that is used to open the cause button widget must include the
+             * class "cbw-main-btn".  Note that the widget won't open until
+             * Loaded = true, which happens when the event, serve, and content
+             * data is done loading.
              * -------------------------------------------------------- */
             $(document).on('click', '.cbw-main-btn', function() {
 
