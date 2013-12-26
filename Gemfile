@@ -59,7 +59,7 @@ group :test do
   gem 'email_spec'
 end
 
-group :production do
+group :production, :staging do
 	gem 'pg'
   gem 'rails_12factor'
 end
