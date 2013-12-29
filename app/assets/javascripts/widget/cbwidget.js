@@ -1,8 +1,6 @@
 var CBServeUrlBase;
 var CBMerchantID;
 var CBPurchasePath;
-var Loaded = false;
-
 
 function CBSale(amount,transaction_id) {
 
@@ -69,6 +67,7 @@ function CBSale(amount,transaction_id) {
     var ReferringPath;
     var URLTarget;
     var FilteredParamString;  // original param string minus all referring path param(s)
+    var Loaded = false;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
