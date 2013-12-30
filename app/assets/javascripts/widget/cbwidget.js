@@ -68,7 +68,7 @@ function CBSale(amount,transaction_id) {
     var URLTarget;
     var FilteredParamString;  // original param string minus all referring path param(s)
     var Loaded = false;
-    var Host;
+    var CBAssetsBase;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -79,18 +79,15 @@ function CBSale(amount,transaction_id) {
         }
     }
 
-    // following gets the widget hose plus assets/widget/ 
+    // following gets the widget host plus assets/widget/ 
     // This is the prefix used for retrieving all widget assets
-    URLPrefix  = script_url.substring(0,script_url.lastIndexOf("/") + 1);
-
-    // following gets the widget host, everything before /assets/widget/...
-    Host = script_url.substring(0,script_url.lastIndexOf("assets"));
-
-    CBMerchantID = document.getElementById("cb-widget-replace").getAttribute("cbw-merchant-id");
+    CBAssetsBase  = script_url.substring(0,script_url.lastIndexOf("/") + 1);
 
     // Following adds the api suffix to the Host
     // This is the prefix used for all api calls
-    CBApiBase = Host + "api/v1/";
+    CBApiBase = script_url.substring(0,script_url.lastIndexOf("assets")) + "api/v1/";
+
+    CBMerchantID = document.getElementById("cb-widget-replace").getAttribute("cbw-merchant-id");
 
     // Chain load the scripts here in the order listed below...
     // when the last script in the chain is loaded, main() will be called
@@ -100,8 +97,8 @@ function CBSale(amount,transaction_id) {
 
     var scripts = [
         {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
-        {"name": "Bootstrap", "src": URLPrefix + "bootstrap.min.js"},
-        {"name": "Select2", "src": URLPrefix + "select2.min.js"},
+        {"name": "Bootstrap", "src": CBAssetsBase + "bootstrap.min.js"},
+        {"name": "Select2", "src": CBAssetsBase + "select2.min.js"},
     ];
 
     // Set the ScriptsCounter to 0.  This is incremented as the scripts are loaded
@@ -239,9 +236,9 @@ function CBSale(amount,transaction_id) {
 
             // Dynamically load the pre-requisite and local stylesheets
 
-            AddStylesheet('cbw-bs-css', URLPrefix + ".." + "/widget/cbw-bootstrap.css");
-            AddStylesheet('cbw-css-sel2', URLPrefix + ".." + "/widget/select2.css");
-            AddStylesheet('cbw-css', URLPrefix + "cbwidget.css");
+            AddStylesheet('cbw-bs-css', CBAssetsBase + ".." + "/widget/cbw-bootstrap.css");
+            AddStylesheet('cbw-css-sel2', CBAssetsBase + ".." + "/widget/select2.css");
+            AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
 
             // get the parameters passed into the page so that we can carry these forward if necessary
             // for example, as part of the process of determining the landing page or promotion id
@@ -470,6 +467,8 @@ function CBSale(amount,transaction_id) {
 
                 $("#cbw-promo-text").text(ServeData.promotion.banner);
 
+                $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
+
                 // Determine the proper widget position
                 // First, check to see if the value passed in from the current page is a valid
                 // widget position value.
@@ -492,7 +491,7 @@ function CBSale(amount,transaction_id) {
 
                 // Populate the active channels for current merchant/promotion
 
-                var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='https://causebutton.herokuapp.com/assets/widget/chn_icons/icon-{0}-off.png'/>"
+                var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='" + CBAssetsBase + "chn_icons/icon-{0}-off.png'/>"
 
                 var channel_div = $("#cbw-channels");
 
