@@ -1,4 +1,4 @@
-var CBServeUrlBase;
+var CBApiBase;
 var CBMerchantID;
 var CBPurchasePath;
 
@@ -27,7 +27,7 @@ function CBSale(amount,transaction_id) {
             ajxDataObj.transaction_id = transaction_id;
         }
 
-        var data_url = CBServeUrlBase + method;
+        var data_url = CBApiBase + method;
 
         var reqObj = $CB.ajax({
             type: 'POST',
@@ -78,12 +78,18 @@ function CBSale(amount,transaction_id) {
         }
     }
 
-    // following gets to the /assets/widget/ directory
+    // following gets the widget hose plus assets/widget/ 
+    // This is the prefix used for retrieving all widget assets
     URLPrefix  = script_url.substring(0,script_url.lastIndexOf("/") + 1);
+
+    // following gets the widget host, everything before /assets/widget/...
+    Host = script_url.substring(0,script_url.lastIndexOf("assets"));
 
     CBMerchantID = document.getElementById("cb-widget-replace").getAttribute("cbw-merchant-id");
 
-    CBServeUrlBase = "https://causebutton.herokuapp.com/api/v1/";
+    // Following adds the api suffix to the Host
+    // This is the prefix used for all api calls
+    CBApiBase = Host + "api/v1/";
 
     // Chain load the scripts here in the order listed below...
     // when the last script in the chain is loaded, main() will be called
@@ -358,7 +364,7 @@ function CBSale(amount,transaction_id) {
 
                 return $.ajax({
                     type: 'POST',
-                    url: CBServeUrlBase + "content",
+                    url: CBApiBase + "content",
                     timeout: 30000,
                     dataType: "jsonp",
                     success: function(json) {
@@ -382,7 +388,7 @@ function CBSale(amount,transaction_id) {
 
                 var method = "serve";
 
-                var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
+                var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // Get the existing values for the cause button cookies so that 
                 // we can properly initialize the widget
@@ -630,7 +636,7 @@ function CBSale(amount,transaction_id) {
 
                 var method = "events";
 
-                var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
+                var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // pass these values back into the server on the AJAX call so that we can get proper values in return
                 var ajxDataObj = new Object();
@@ -728,7 +734,7 @@ function CBSale(amount,transaction_id) {
 
                 var method = "view";
 
-                var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
+                var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // The CBW Session Cookie contains the session_id 
                 var cbwSessionCookie = GetCookie("cbwsession");
@@ -791,7 +797,7 @@ function CBSale(amount,transaction_id) {
 
                 var method = "update";
 
-                var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
+                var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // The CBW Session Cookie contains the session_id 
                 var cbwSessionCookie = GetCookie("cbwsession");
