@@ -1,8 +1,6 @@
-var CBServeUrlBase;
+var CBApiBase;
 var CBMerchantID;
 var CBPurchasePath;
-var Loaded = false;
-
 
 function CBSale(amount,transaction_id) {
 
@@ -29,7 +27,7 @@ function CBSale(amount,transaction_id) {
             ajxDataObj.transaction_id = transaction_id;
         }
 
-        var data_url = CBServeUrlBase + method;
+        var data_url = CBApiBase + method;
 
         var reqObj = $CB.ajax({
             type: 'POST',
@@ -69,6 +67,8 @@ function CBSale(amount,transaction_id) {
     var ReferringPath;
     var URLTarget;
     var FilteredParamString;  // original param string minus all referring path param(s)
+    var Loaded = false;
+    var CBAssetsBase;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -79,12 +79,15 @@ function CBSale(amount,transaction_id) {
         }
     }
 
-    // following gets to the /assets/widget/ directory
-    URLPrefix  = script_url.substring(0,script_url.lastIndexOf("/") + 1);
+    // following gets the widget host plus assets/widget/ 
+    // This is the prefix used for retrieving all widget assets
+    CBAssetsBase  = script_url.substring(0,script_url.lastIndexOf("/") + 1);
+
+    // Following adds the api suffix to the Host
+    // This is the prefix used for all api calls
+    CBApiBase = script_url.substring(0,script_url.lastIndexOf("assets")) + "api/v1/";
 
     CBMerchantID = document.getElementById("cb-widget-replace").getAttribute("cbw-merchant-id");
-
-    CBServeUrlBase = "https://causebutton.herokuapp.com/api/v1/";
 
     // Chain load the scripts here in the order listed below...
     // when the last script in the chain is loaded, main() will be called
@@ -94,8 +97,8 @@ function CBSale(amount,transaction_id) {
 
     var scripts = [
         {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
-        {"name": "Bootstrap", "src": URLPrefix + "bootstrap.min.js"},
-        {"name": "Select2", "src": URLPrefix + "select2.min.js"},
+        {"name": "Bootstrap", "src": CBAssetsBase + "bootstrap.min.js"},
+        {"name": "Select2", "src": CBAssetsBase + "select2.min.js"},
     ];
 
     // Set the ScriptsCounter to 0.  This is incremented as the scripts are loaded
@@ -233,9 +236,9 @@ function CBSale(amount,transaction_id) {
 
             // Dynamically load the pre-requisite and local stylesheets
 
-            AddStylesheet('cbw-bs-css', URLPrefix + ".." + "/widget/cbw-bootstrap.css");
-            AddStylesheet('cbw-css-sel2', URLPrefix + ".." + "/widget/select2.css");
-            AddStylesheet('cbw-css', URLPrefix + "cbwidget.css");
+            AddStylesheet('cbw-bs-css', CBAssetsBase + ".." + "/widget/cbw-bootstrap.css");
+            AddStylesheet('cbw-css-sel2', CBAssetsBase + ".." + "/widget/select2.css");
+            AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
 
             // get the parameters passed into the page so that we can carry these forward if necessary
             // for example, as part of the process of determining the landing page or promotion id
@@ -359,7 +362,7 @@ function CBSale(amount,transaction_id) {
 
                 return $.ajax({
                     type: 'POST',
-                    url: CBServeUrlBase + "content",
+                    url: CBApiBase + "content",
                     timeout: 30000,
                     dataType: "jsonp",
                     success: function(json) {
@@ -383,7 +386,7 @@ function CBSale(amount,transaction_id) {
 
                 var method = "serve";
 
-                var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
+                var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // Get the existing values for the cause button cookies so that 
                 // we can properly initialize the widget
@@ -464,6 +467,8 @@ function CBSale(amount,transaction_id) {
 
                 $("#cbw-promo-text").text(ServeData.promotion.banner);
 
+                $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
+
                 // Determine the proper widget position
                 // First, check to see if the value passed in from the current page is a valid
                 // widget position value.
@@ -486,7 +491,7 @@ function CBSale(amount,transaction_id) {
 
                 // Populate the active channels for current merchant/promotion
 
-                var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='https://causebutton.herokuapp.com/assets/widget/chn_icons/icon-{0}-off.png'/>"
+                var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='" + CBAssetsBase + "chn_icons/icon-{0}-off.png'/>"
 
                 var channel_div = $("#cbw-channels");
 
@@ -631,7 +636,7 @@ function CBSale(amount,transaction_id) {
 
                 var method = "events";
 
-                var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
+                var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // pass these values back into the server on the AJAX call so that we can get proper values in return
                 var ajxDataObj = new Object();
@@ -729,7 +734,7 @@ function CBSale(amount,transaction_id) {
 
                 var method = "view";
 
-                var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
+                var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // The CBW Session Cookie contains the session_id 
                 var cbwSessionCookie = GetCookie("cbwsession");
@@ -792,7 +797,7 @@ function CBSale(amount,transaction_id) {
 
                 var method = "update";
 
-                var data_url = CBServeUrlBase + method + "/" + CBMerchantID;
+                var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // The CBW Session Cookie contains the session_id 
                 var cbwSessionCookie = GetCookie("cbwsession");
