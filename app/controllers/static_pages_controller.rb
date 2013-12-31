@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-	layout false, only: :home
+	layout false, only: :landing
 
   	def home
   	end
@@ -13,4 +13,7 @@ class StaticPagesController < ApplicationController
 
   	def contact
   	end
+
+    def landing
+    end
 end
