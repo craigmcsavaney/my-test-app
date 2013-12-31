@@ -6,11 +6,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to "Fancy Logo Goes Here", root_path, id: "logo" %>
+      <%= link_to "Fancy Logo Goes Here", home_path, id: "logo" %>
       <nav>
         <div class="nav-collapse collapse">
           <ul class="nav pull-right">
-            <li><%= link_to "Home",    root_path %></li>
+            <li><%= link_to "Home",    home_path %></li>
             <li><%= link_to "Help",    help_path %></li>
             <li><%= link_to "About Us", about_path %></li>
             <% if !signed_in? %>
