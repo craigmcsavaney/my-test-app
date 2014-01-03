@@ -35,6 +35,10 @@ Myapplication::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  # Added by Craig to prevent asset caching
+  config.assets.cache_store = :null_store
+  config.sass.cache = false
+
   # Added by Craig based on Devise configuration guidance:
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.delivery_method = :smtp
