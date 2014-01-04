@@ -55,20 +55,22 @@ function CBSale(amount,transaction_id) {
  **/
 
 (function() {
-    var WidgetPosition;
-    var SelectedChannel;
     var all_scripts = document.getElementsByTagName('script');
     var script_url;
+    var ScriptsCounter;
+    var CBAssetsBase;
+    var ReferringPath;
+    var FilteredParamString;  // original param string minus all referring path param(s)
     var ServeData;
     var EventData;
     var UpdateData;
     var WidgetData;
-    var ScriptsCounter;
-    var ReferringPath;
-    var URLTarget;
-    var FilteredParamString;  // original param string minus all referring path param(s)
+    var PageTarget; // this is the url target passed in as a param with the script src url
+    var URLTarget; // this is the calculated url target value
     var Loaded = false;
-    var CBAssetsBase;
+    var PagePosition; // this is the widget position passed in as a param with the script src url
+    var WidgetPosition; // Holds the calculated widget position value
+    var SelectedChannel;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -87,7 +89,31 @@ function CBSale(amount,transaction_id) {
     // This is the prefix used for all api calls
     CBApiBase = script_url.substring(0,script_url.lastIndexOf("assets")) + "api/v1/";
 
-    CBMerchantID = document.getElementById("cb-widget-replace").getAttribute("cbw-merchant-id");
+    // Following parses the param string of script_url and assigns values to
+    // CBMerchantID, PageTarget (optional), and PagePosition (optional).
+    var hashes = script_url.slice(script_url.indexOf('?') + 1).split('&');
+    for (var i=0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        //vars.push(hash[0]);
+        //vars[hash[0]] = hash[1];
+        switch (hash[0]) {
+            case 'cbw-merchant-id':
+                CBMerchantID = hash[1];
+                break;
+            case 'cbw-url-target':
+                PageTarget = hash[1];
+                break;
+            case 'cbw-position':
+                PagePosition = hash[1];
+                break;
+        }
+    }
+
+    // following validates the input position.  Returns the input if valid or an empty string if not.
+    PagePosition = ValidatePosition(PagePosition);
+
+    // following validates the input target.  Returns the input if valid or an empty string if not.
+    PageTarget = ValidateTarget(PageTarget);
 
     // Chain load the scripts here in the order listed below...
     // when the last script in the chain is loaded, main() will be called
@@ -217,6 +243,55 @@ function CBSale(amount,transaction_id) {
         jQuery = window.jQuery.noConflict(true);
     }
     
+    /* ---------------------------------------------------------------------------------
+     * ValidatePosition(position)
+     * ---------------------------------------------------------------------------------
+     * This function is called to validate a widget position input.  If the position
+     * input is valid, it is returned, otherwise null is returned.
+     * --------------------------------------------------------------------------------- */
+    function ValidatePosition(position) {
+
+        var widget_position_valid = false;
+        var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
+
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == position) {
+                widget_position_valid = true;
+            }
+        }
+
+        if (!widget_position_valid) {
+            position = "";
+        }
+        return position;
+    }
+
+    /* ---------------------------------------------------------------------------------
+     * ValidateTarget(target)
+     * ---------------------------------------------------------------------------------
+     * This function is called to validate a widget url target input.  If the target
+     * input is valid, it is returned, otherwise null is returned.  At the moment, the
+     * only valid inputs are "local" and "default", but at some point we may allow 
+     * specific urls to be passed in, in which case we'll have to test for a valid url
+     * pattern here.
+     * --------------------------------------------------------------------------------- */
+    function ValidateTarget(target) {
+
+        var widget_target_valid = false;
+        var arr = [ "local", "default" ];
+
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == target) {
+                widget_target_valid = true;
+            }
+        }
+
+        if (!widget_target_valid) {
+            target = "";
+        }
+        return target;
+    }
+
     /* --------------------------------------------------------------------------------------------------------
      * main()
      * --------------------------------------------------------------------------------------------------------
@@ -236,8 +311,8 @@ function CBSale(amount,transaction_id) {
 
             // Dynamically load the pre-requisite and local stylesheets
 
-            AddStylesheet('cbw-bs-css', CBAssetsBase + ".." + "/widget/cbw-bootstrap.css");
-            AddStylesheet('cbw-css-sel2', CBAssetsBase + ".." + "/widget/select2.css");
+            AddStylesheet('cbw-bs-css', CBAssetsBase + "cbw-bootstrap.css");
+            AddStylesheet('cbw-css-sel2', CBAssetsBase + "select2.css");
             AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
 
             // get the parameters passed into the page so that we can carry these forward if necessary
@@ -262,16 +337,7 @@ function CBSale(amount,transaction_id) {
             // This is the id value of the div to which the entire widget will be appended - must match the name used on the parent web page
             var div = $("#cb-widget-replace");
 
-            // Get the widget position value from the div on the parent web page
-            WidgetPosition = div.attr("cbw-position");
-
-            // Get the cbw-url-target value from the div on the parent web page.  If the value is "local" then target links will be constructed using the link to this page when sharing into channels.  If the value is blank or "global", then target links will be constructed using the target url for this promotion from the serve json.
-            URLTarget = div.attr("cbw-url-target");
-
-            if (!URLTarget || URLTarget != "local")
-                URLTarget = "global";
-
-            // Get the widget html template and load the serve date.  When both of these are complete, merge the serve data into the widget html.
+            // Get the widget html template and load the serve data.  When both of these are complete, merge the serve data into the widget html.
             $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
 
                 MergeServeData(div);
@@ -468,26 +534,6 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-promo-text").text(ServeData.promotion.banner);
 
                 $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
-
-                // Determine the proper widget position
-                // First, check to see if the value passed in from the current page is a valid
-                // widget position value.
-
-                var widget_position_valid = false;
-                var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
-
-                for (var i = 0; i < arr.length; i++) {
-                    if (arr[i] == WidgetPosition) {
-                        widget_position_valid = true;
-                    }
-                }
-
-                // if the widget position from the current page is valid, use it.  Otherwise, use
-                // the value obtained from the ServeData.  If that ServeData value is missing, 
-                // the position will default to "right-center" when the widget is actually positioned.
-                if (!widget_position_valid && ServeData.promotion.widget_position) {
-                    WidgetPosition = ServeData.promotion.widget_position;
-                } 
 
                 // Populate the active channels for current merchant/promotion
 
@@ -879,8 +925,6 @@ function CBSale(amount,transaction_id) {
 
             }               
 
-
-
             /* ---------------------------------------------------------------------------------
              * GetExpireMins()
              * ---------------------------------------------------------------------------------
@@ -994,8 +1038,9 @@ function CBSale(amount,transaction_id) {
             }
 
             function PositionWidget(type) {
-                // type should be 'initial' for the first time the widget is opened,
-                // or 'reposition' for all subsequent widget positioning.
+                // type should be 'initial' for the first time the widget is opened or for
+                // repositioning of the widget due to window resizing, otherwise it should be
+                // 'reposition' for all subsequent widget positioning.
 
                 var widget_width = $("#cbw-widget").width();
                 var widget_hgt = $("#cbw-widget").height();
@@ -1014,18 +1059,24 @@ function CBSale(amount,transaction_id) {
 
                         $("#cbw-widget").css('top', '1px');
                         $("#cbw-widget").css('left', '1px');
+                        $("#cbw-widget").css('bottom', '');
+                        $("#cbw-widget").css('right', '');
                         break;
 
                     case 'top-center':
 
                         $("#cbw-widget").css('top', '1px');
                         $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                        $("#cbw-widget").css('bottom', '');
+                        $("#cbw-widget").css('right', '');
                         break;
 
                     case 'top-right':
 
                         $("#cbw-widget").css('top', '1px');
                         $("#cbw-widget").css('right', '1px');
+                        $("#cbw-widget").css('bottom', '');
+                        $("#cbw-widget").css('left', '');
                         break;
 
                     case 'left-center':
@@ -1033,6 +1084,8 @@ function CBSale(amount,transaction_id) {
                         if (type == "initial") {
                             $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
                             $("#cbw-widget").css('left', '1px');
+                            $("#cbw-widget").css('bottom', '');
+                            $("#cbw-widget").css('right', '');
                         }
                         break;
 
@@ -1041,11 +1094,9 @@ function CBSale(amount,transaction_id) {
                         if (type == "initial") {
                             $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
                             $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                            $("#cbw-widget").css('bottom', '');
+                            $("#cbw-widget").css('right', '');
                         }
-                        // $("#cbw-widget").css('top', '50%');
-                        // $("#cbw-widget").css('left', '50%');
-                        // $("#cbw-widget").css('margin-top', '-225px');
-                        // $("#cbw-widget").css('margin-left', '-225px');
                         break;
 
                     case 'right-center':
@@ -1053,6 +1104,8 @@ function CBSale(amount,transaction_id) {
                         if (type == "initial") {
                             $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
                             $("#cbw-widget").css('right', '1px');
+                            $("#cbw-widget").css('bottom', '');
+                            $("#cbw-widget").css('left', '');
                         }
                         break;
 
@@ -1060,18 +1113,24 @@ function CBSale(amount,transaction_id) {
 
                         $("#cbw-widget").css('bottom', '1px');
                         $("#cbw-widget").css('left', '1px');
+                        $("#cbw-widget").css('top', '');
+                        $("#cbw-widget").css('right', '');
                         break;
 
                     case 'bottom-center':
 
                         $("#cbw-widget").css('bottom', '1px');
                         $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                        $("#cbw-widget").css('top', '');
+                        $("#cbw-widget").css('right', '');
                         break;
 
                     case 'bottom-right':
 
                         $("#cbw-widget").css('bottom', '1px');
                         $("#cbw-widget").css('right', '1px');
+                        $("#cbw-widget").css('top', '');
+                        $("#cbw-widget").css('left', '');
                         break;
 
                     default:
@@ -1083,33 +1142,21 @@ function CBSale(amount,transaction_id) {
                             $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
                             $("#cbw-widget").css('right', '1px');   
                         }
-                        // var move_up = 0, move_left = 0;
+                }
 
-                        // $("#cbw-widget").css("top", ((win_hgt-widget_hgt)/2));
+                // following ensures that the top right corner of the widget is always visible,
+                // even when the window shrinks or the widget expands in such a way that it
+                // would become hidden. This way the widget can be closed by the user.
+                if (win_width < widget_width) {
+                    $("#cbw-widget").css('right', '1px');
+                    $("#cbw-widget").css('left', '');
+                }
 
-                        // if (widget_right > win_width) {
-
-                        //     move_left = (widget_right - win_width);
-                        //     $("#cbw-widget").css("margin-left", -(move_left + 15));
-                        
-                        // } else {
-                        
-                        //     $("#cbw-widget").css("margin-left", 0);
-                        // }
-
-                        // if (widget_bottom > win_hgt) {
-
-                        //     move_up = (widget_bottom - win_hgt);
-
-                        //     $("#cbw-widget").css("margin-top", -(move_up + 15));
-                        
-                        // } else {
-                        
-                        //     $("#cbw-widget").css("margin-top", "5px");
-                        // }
+                if (win_hgt < widget_hgt) {
+                    $("#cbw-widget").css('top', '1px');
+                    $("#cbw-widget").css('bottom', '');
                 }
             }
-
 
             function CloseChannel() {
 
@@ -1204,7 +1251,7 @@ function CBSale(amount,transaction_id) {
             function GetChannelPath(link) {
                 var path = ""; 
                 // See if the URLTarget is set to local.  If it is, use the url to this specific page,
-                // otherwise, use the url associated with this promotion. 
+                // otherwise, use the default url associated with this promotion. 
                 if (URLTarget == "local") {
                     // get the local page URL minus the params
                     path = window.location.href.slice(window.location.href.indexOf('?') + 1);
@@ -1425,7 +1472,9 @@ function CBSale(amount,transaction_id) {
             /* --------------------------------------------------------
              * Main Cause Button Handler
              * --------------------------------------------------------
-             * Activates the cause button widget.  Any element on a page
+             * Activates the cause button widget and displays it in its
+             * proper location based on the button, page, or promotion
+             * position values as appropriate.  Any element on a page
              * that is used to open the cause button widget must include the
              * class "cbw-main-btn".  Note that the widget won't open until
              * Loaded = true, which happens when the event, serve, and content
@@ -1437,13 +1486,29 @@ function CBSale(amount,transaction_id) {
                     return;
                 }
 
-                var display = $("#cbw-widget").css('display');
+                var button_position = ValidatePosition($(this).attr('cbw-position'));
 
-                $("#cbw-widget").toggle();
+                if (button_position != '') {
+                    WidgetPosition = button_position;
+                } else if (PagePosition != '') {
+                    WidgetPosition = PagePosition;
+                } else {
+                    WidgetPosition = ServeData.promotion.widget_position;
+                }
 
-                if (display == "none") {
+                var button_target = ValidateTarget($(this).attr('cbw-url-target'));
 
+                if (button_target != '') {
+                    URLTarget = button_target;
+                } else if (PageTarget != '') {
+                    URLTarget = PageTarget;
+                } else {
+                    URLTarget = '';
+                }
+
+                if ($("#cbw-widget").css('display') == "none") {
                     RegisterWidgetView();
+                    $("#cbw-widget").toggle();
                 }
 
                 PositionWidget('initial');
@@ -1502,7 +1567,7 @@ function CBSale(amount,transaction_id) {
 
                 if (shown != "none") {
 
-                    PositionWidget('reposition');
+                    PositionWidget('initial');
                 }
             });
 
