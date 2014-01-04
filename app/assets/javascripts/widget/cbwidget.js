@@ -1472,7 +1472,9 @@ function CBSale(amount,transaction_id) {
             /* --------------------------------------------------------
              * Main Cause Button Handler
              * --------------------------------------------------------
-             * Activates the cause button widget.  Any element on a page
+             * Activates the cause button widget and displays it in its
+             * proper location based on the button, page, or promotion
+             * position values as appropriate.  Any element on a page
              * that is used to open the cause button widget must include the
              * class "cbw-main-btn".  Note that the widget won't open until
              * Loaded = true, which happens when the event, serve, and content
@@ -1484,13 +1486,29 @@ function CBSale(amount,transaction_id) {
                     return;
                 }
 
-                var display = $("#cbw-widget").css('display');
+                var button_position = ValidatePosition($(this).attr('cbw-position'));
 
-                $("#cbw-widget").toggle();
+                if (button_position != '') {
+                    WidgetPosition = button_position;
+                } else if (PagePosition != '') {
+                    WidgetPosition = PagePosition;
+                } else {
+                    WidgetPosition = ServeData.promotion.widget_position;
+                }
 
-                if (display == "none") {
+                var button_target = ValidateTarget($(this).attr('cbw-url-target'));
 
+                if (button_target != '') {
+                    URLTarget = button_target;
+                } else if (PageTarget != '') {
+                    URLTarget = PageTarget;
+                } else {
+                    URLTarget = '';
+                }
+
+                if ($("#cbw-widget").css('display') == "none") {
                     RegisterWidgetView();
+                    $("#cbw-widget").toggle();
                 }
 
                 PositionWidget('initial');
