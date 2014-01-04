@@ -535,26 +535,6 @@ function CBSale(amount,transaction_id) {
 
                 $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
 
-                // Determine the proper widget position
-                // First, check to see if the value passed in from the current page is a valid
-                // widget position value.
-
-                var widget_position_valid = false;
-                var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
-
-                for (var i = 0; i < arr.length; i++) {
-                    if (arr[i] == WidgetPosition) {
-                        widget_position_valid = true;
-                    }
-                }
-
-                // if the widget position from the current page is valid, use it.  Otherwise, use
-                // the value obtained from the ServeData.  If that ServeData value is missing, 
-                // the position will default to "right-center" when the widget is actually positioned.
-                if (!widget_position_valid && ServeData.promotion.widget_position) {
-                    WidgetPosition = ServeData.promotion.widget_position;
-                } 
-
                 // Populate the active channels for current merchant/promotion
 
                 var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='" + CBAssetsBase + "chn_icons/icon-{0}-off.png'/>"
