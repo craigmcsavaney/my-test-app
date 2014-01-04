@@ -612,14 +612,10 @@ function CBSale(amount,transaction_id) {
                     $("#cbw-email-ctl-grp").css("display", "block");
                 }
 
-                // add the cause button html to the cbw html.  
-
-                $(".cbw-btn").append(ServeData.promotion.button_html);
-
                 // Populate the promotion text dictated by the server
-
                 $("#cbw-promo-text").text(ServeData.promotion.banner);
 
+                // Add the logo image
                 $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
 
                 // Populate the active channels for current merchant/promotion
