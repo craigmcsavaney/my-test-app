@@ -537,6 +537,63 @@ function CBSale(amount,transaction_id) {
             }       
 
             /* ---------------------------------------------------------------------------------
+             * WriteCookies()
+             * ---------------------------------------------------------------------------------
+             * Writes the cbsession and cbserve cookies after the Serve data is loaded.
+             * --------------------------------------------------------------------------------- */
+            function WriteCookies() {
+                // Set and update cookies...
+                // First, get the number of minutes until the expiration of the current serve
+                var expire_mins = GetExpireMins();
+
+                // Now, set the session cookie and the serve cookie
+
+                SetCookie("cbwsession", ServeData.session_id, 30, "/");
+                SetCookie("cbwserve", ServeData.serve_id, expire_mins, "/"); 
+
+            }
+
+            /* ---------------------------------------------------------------------------------
+             * LoadPurchasePath()
+             * ---------------------------------------------------------------------------------
+             * Loads the current Purchase Path after the Serve data is loaded.
+             * --------------------------------------------------------------------------------- */
+            function LoadPurchasePath() {
+                // Check and see if this serve has already been viewed.  If it has, update the 
+                // CBPurchasePath with the current purchase path.  Otherwise, the path doesn't 
+                // get updated until the CBW is actually viewed.
+
+                var purchase_path = "";
+
+                if (ServeData.viewed == true) {
+                    if (ServeData.paths['purchase']) {
+                        purchase_path = ServeData.paths["purchase"];
+                    }
+                }
+
+                // update the CBPurchasePath global variable to contain the current purchase path value
+                PurchasePathUpdate(purchase_path);
+                console.log(CBPurchasePath);
+            }
+
+            /* ---------------------------------------------------------------------------------
+             * MergeButtons()
+             * ---------------------------------------------------------------------------------
+             * Merges button html from the serve data into elements containing class .cbw-btn
+             * --------------------------------------------------------------------------------- */
+            function MergeButtons() {
+
+                // add the button html to every element on the page that includes class cbw-btn.  
+                $(".cbw-btn").append(ServeData.promotion.button_html);
+
+                // Now add the class cbw-main-btn to every element on the page to which we
+                // just added the button html.  This turns the element into a "button"
+                // that can open the widget.
+                $(".cbw-btn").addClass('cbw-main-btn')
+
+            }
+
+            /* ---------------------------------------------------------------------------------
              * MergeServeData(div)
              * ---------------------------------------------------------------------------------
              * Merges the serve data returned from LoadServeData into the appropriate places
