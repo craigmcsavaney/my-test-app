@@ -639,32 +639,6 @@ function CBSale(amount,transaction_id) {
                     }
                 }            
 
-                // Set and update cookies...
-                // First, get the number of minutes until the expiration of the current serve
-                var expire_mins = GetExpireMins();
-
-                // Now, set the session cookie and the serve cookie
-
-                SetCookie("cbwsession", ServeData.session_id, 30, "/");
-                SetCookie("cbwserve", ServeData.serve_id, expire_mins, "/"); 
-
-                // Check and see if this serve has already been viewed.  If it has, update the CBPurchasePath with the current purchase path.  Otherwise, the path doesn't get updated until the CBW is actually viewed.
-
-                var purchase_path = "";
-
-                if (ServeData.viewed == true) {
-
-                    if (ServeData.paths['purchase']) {
-
-                        purchase_path = ServeData.paths["purchase"];
-
-                    }
-
-                }
-
-                // update the CBPurchasePath global variable to contain the current purchase path value
-                PurchasePathUpdate(purchase_path);
-
                 // assign variable name to the fgcause selector
                 var fgcause_select = $("#cbw-fgcause-select");
 
