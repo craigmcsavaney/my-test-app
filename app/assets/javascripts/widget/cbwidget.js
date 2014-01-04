@@ -1251,7 +1251,7 @@ function CBSale(amount,transaction_id) {
             function GetChannelPath(link) {
                 var path = ""; 
                 // See if the URLTarget is set to local.  If it is, use the url to this specific page,
-                // otherwise, use the url associated with this promotion. 
+                // otherwise, use the default url associated with this promotion. 
                 if (URLTarget == "local") {
                     // get the local page URL minus the params
                     path = window.location.href.slice(window.location.href.indexOf('?') + 1);
