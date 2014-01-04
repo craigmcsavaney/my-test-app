@@ -243,6 +243,55 @@ function CBSale(amount,transaction_id) {
         jQuery = window.jQuery.noConflict(true);
     }
     
+    /* ---------------------------------------------------------------------------------
+     * ValidatePosition(position)
+     * ---------------------------------------------------------------------------------
+     * This function is called to validate a widget position input.  If the position
+     * input is valid, it is returned, otherwise null is returned.
+     * --------------------------------------------------------------------------------- */
+    function ValidatePosition(position) {
+
+        var widget_position_valid = false;
+        var arr = [ "top-left","top-center","top-right","left-center","center","right-center","bottom-left","bottom-center","bottom-right"];
+
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == position) {
+                widget_position_valid = true;
+            }
+        }
+
+        if (!widget_position_valid) {
+            position = "";
+        }
+        return position;
+    }
+
+    /* ---------------------------------------------------------------------------------
+     * ValidateTarget(target)
+     * ---------------------------------------------------------------------------------
+     * This function is called to validate a widget url target input.  If the target
+     * input is valid, it is returned, otherwise null is returned.  At the moment, the
+     * only valid inputs are "local" and "default", but at some point we may allow 
+     * specific urls to be passed in, in which case we'll have to test for a valid url
+     * pattern here.
+     * --------------------------------------------------------------------------------- */
+    function ValidateTarget(target) {
+
+        var widget_target_valid = false;
+        var arr = [ "local", "default" ];
+
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == target) {
+                widget_target_valid = true;
+            }
+        }
+
+        if (!widget_target_valid) {
+            target = "";
+        }
+        return target;
+    }
+
     /* --------------------------------------------------------------------------------------------------------
      * main()
      * --------------------------------------------------------------------------------------------------------
