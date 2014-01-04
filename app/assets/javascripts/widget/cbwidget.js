@@ -337,16 +337,7 @@ function CBSale(amount,transaction_id) {
             // This is the id value of the div to which the entire widget will be appended - must match the name used on the parent web page
             var div = $("#cb-widget-replace");
 
-            // Get the widget position value from the div on the parent web page
-            WidgetPosition = div.attr("cbw-position");
-
-            // Get the cbw-url-target value from the div on the parent web page.  If the value is "local" then target links will be constructed using the link to this page when sharing into channels.  If the value is blank or "global", then target links will be constructed using the target url for this promotion from the serve json.
-            URLTarget = div.attr("cbw-url-target");
-
-            if (!URLTarget || URLTarget != "local")
-                URLTarget = "global";
-
-            // Get the widget html template and load the serve date.  When both of these are complete, merge the serve data into the widget html.
+            // Get the widget html template and load the serve data.  When both of these are complete, merge the serve data into the widget html.
             $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
 
                 MergeServeData(div);
