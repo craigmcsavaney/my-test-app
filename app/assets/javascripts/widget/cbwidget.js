@@ -311,8 +311,8 @@ function CBSale(amount,transaction_id) {
 
             // Dynamically load the pre-requisite and local stylesheets
 
-            AddStylesheet('cbw-bs-css', CBAssetsBase + ".." + "/widget/cbw-bootstrap.css");
-            AddStylesheet('cbw-css-sel2', CBAssetsBase + ".." + "/widget/select2.css");
+            AddStylesheet('cbw-bs-css', CBAssetsBase + "cbw-bootstrap.css");
+            AddStylesheet('cbw-css-sel2', CBAssetsBase + "select2.css");
             AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
 
             // get the parameters passed into the page so that we can carry these forward if necessary
