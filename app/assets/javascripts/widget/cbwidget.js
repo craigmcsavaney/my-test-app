@@ -89,7 +89,31 @@ function CBSale(amount,transaction_id) {
     // This is the prefix used for all api calls
     CBApiBase = script_url.substring(0,script_url.lastIndexOf("assets")) + "api/v1/";
 
-    CBMerchantID = document.getElementById("cb-widget-replace").getAttribute("cbw-merchant-id");
+    // Following parses the param string of script_url and assigns values to
+    // CBMerchantID, PageTarget (optional), and PagePosition (optional).
+    var hashes = script_url.slice(script_url.indexOf('?') + 1).split('&');
+    for (var i=0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        //vars.push(hash[0]);
+        //vars[hash[0]] = hash[1];
+        switch (hash[0]) {
+            case 'cbw-merchant-id':
+                CBMerchantID = hash[1];
+                break;
+            case 'cbw-url-target':
+                PageTarget = hash[1];
+                break;
+            case 'cbw-position':
+                PagePosition = hash[1];
+                break;
+        }
+    }
+
+    // following validates the input position.  Returns the input if valid or an empty string if not.
+    PagePosition = ValidatePosition(PagePosition);
+
+    // following validates the input target.  Returns the input if valid or an empty string if not.
+    PageTarget = ValidateTarget(PageTarget);
 
     // Chain load the scripts here in the order listed below...
     // when the last script in the chain is loaded, main() will be called
