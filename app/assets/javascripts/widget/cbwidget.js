@@ -332,35 +332,65 @@ function CBSale(amount,transaction_id) {
             if (params.length > 0) {
                 GetReferringPath(params);
                 CBPurchasePath = ReferringPath;
-            } 
+            }
 
-            // This is the id value of the div to which the entire widget will be appended - must match the name used on the parent web page
-            var div = $("#cb-widget-replace");
+            // This is the id value of the div to which the entire widget will be appended.
+            // This used to be #cb-widget-replace but now the widget is appended to the body tag.
+            var div = $("body");
 
-            // Get the widget html template and load the serve data.  When both of these are complete, merge the serve data into the widget html.
-            $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
+            // Now check to see if there are any elements on the page that include
+            // either the .cbw-btn class or the .cbw-main-btn class.  (Remember that this
+            // script injects a .cbw-main-btn class when it adds the button html to elements
+            // containing the .cbw-btn class, but this happens later in the execution of the
+            // script so we have to look for .cbw-btn classes here.) If there are, then
+            // we need to build the widget and append it to the page body.  If there aren't,
+            // we only need to retrieve the serve data. 
 
-                MergeServeData(div);
+            if ($(".cbw-main-btn, .cbw-btn").length == 0) {
 
-                // When the event data is finished loading, merge the event data into the widget.
-                $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
+                // This is the case where the widget does not need to get built.
+                // When the loading of the serve data is complete, just need to
+                // write cookies and load the purchase path variable.
+                $.when(LoadServeData(ReferringPath)).done(function(a) {
 
-                    MergeEventsData();
+                    WriteCookies();
+                    LoadPurchasePath();
 
                 });
 
-                // If the cause selector for this promotion is false, hide the cause selector in the widget.  Otherwise, load the cause data.
-                if (!ServeData.promotion.cause_selector) {
+            } else {
 
-                    $("#cbw-cause-select-ctrl-grp").hide();
-                    $("#cbw-fgcause-select-ctrl-grp").hide();
-                
-                } 
+                // Get the widget html template and load the serve data.  When both 
+                // of these are complete, write cookies, load the purchase path variable, 
+                // merge the serve data into the widget html, and merge the button html.
+                $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
 
-                Loaded = true;
+                    WriteCookies();
+                    LoadPurchasePath();
+                    MergeServeData(div);
+                    MergeButtons();
 
-            });
+                    // When the event data is finished loading, merge the event data into the widget.
+                    $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
 
+                        MergeEventsData();
+
+                    });
+
+                    // If the cause selector for this promotion is false, hide the cause selector
+                    // in the widget.  Otherwise, load the cause data.
+                    if (!ServeData.promotion.cause_selector) {
+
+                        $("#cbw-cause-select-ctrl-grp").hide();
+                        $("#cbw-fgcause-select-ctrl-grp").hide();
+                    
+                    } 
+
+                    Loaded = true;
+
+                });
+
+            }
 
             /*
              * HELPER FUNCTIONS 
