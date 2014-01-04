@@ -1567,7 +1567,7 @@ function CBSale(amount,transaction_id) {
 
                 if (shown != "none") {
 
-                    PositionWidget('reposition');
+                    PositionWidget('initial');
                 }
             });
 
