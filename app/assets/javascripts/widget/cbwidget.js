@@ -55,20 +55,22 @@ function CBSale(amount,transaction_id) {
  **/
 
 (function() {
-    var WidgetPosition;
-    var SelectedChannel;
     var all_scripts = document.getElementsByTagName('script');
     var script_url;
+    var ScriptsCounter;
+    var CBAssetsBase;
+    var ReferringPath;
+    var FilteredParamString;  // original param string minus all referring path param(s)
     var ServeData;
     var EventData;
     var UpdateData;
     var WidgetData;
-    var ScriptsCounter;
-    var ReferringPath;
-    var URLTarget;
-    var FilteredParamString;  // original param string minus all referring path param(s)
+    var PageTarget; // this is the url target passed in as a param with the script src url
+    var URLTarget; // this is the calculated url target value
     var Loaded = false;
-    var CBAssetsBase;
+    var PagePosition; // this is the widget position passed in as a param with the script src url
+    var WidgetPosition; // Holds the calculated widget position value
+    var SelectedChannel;
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
