@@ -314,7 +314,7 @@ function CBSale(amount,transaction_id) {
 
             // Dynamically load the pre-requisite and local stylesheets
 
-            AddStylesheet('cbw-reset', CBAssetsBase + "cbw-reset.css");
+            AddStylesheet('cbw-reset', CBAssetsBase + "cbwreset.css");
             AddStylesheet('cbw-css-sel2', CBAssetsBase + "select2.css");
             AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
 
