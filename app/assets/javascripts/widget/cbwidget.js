@@ -2009,10 +2009,10 @@ function CBSale(amount,transaction_id) {
              * image_url    = the URL to the image that will be posted to the user's pinterest stream
              * message      = the message that will be pre-populated in the intermediate dialog and ultimately posted to the user's pintrest feed (editable by user)
              */
-            var result = AWESM.share.email({
-                'subject': subject,
-                'body': body
-            });
+            // var result = AWESM.share.email({
+            //     'subject': subject,
+            //     'body': body
+            // });
         }
 
         /*
@@ -2026,9 +2026,9 @@ function CBSale(amount,transaction_id) {
              * image_url    = the URL to the image that will be posted to the user's pinterest stream
              * message      = the message that will be pre-populated in the intermediate dialog and ultimately posted to the user's pintrest feed (editable by user)
              */
-            var result = AWESM.share.linkedin({
-                'url': target_url
-            });
+            // var result = AWESM.share.linkedin({
+            //     'url': target_url
+            // });
         }
 
         /*
@@ -2042,9 +2042,9 @@ function CBSale(amount,transaction_id) {
              * image_url    = the URL to the image that will be posted to the user's pinterest stream
              * message      = the message that will be pre-populated in the intermediate dialog and ultimately posted to the user's pintrest feed (editable by user)
              */
-            var result = AWESM.share.googleplus({
-                'url': target_url
-            });
+            // var result = AWESM.share.googleplus({
+            //     'url': target_url
+            // });
         }
 
     } // end main()
