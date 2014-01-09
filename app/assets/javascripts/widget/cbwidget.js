@@ -384,8 +384,12 @@ function CBSale(amount,transaction_id) {
                     // in the widget.  Otherwise, load the cause data.
                     if (!ServeData.promotion.cause_selector) {
 
-                        $("#cbw-cause-select-ctrl-grp").hide();
-                        $("#cbw-fgcause-select-ctrl-grp").hide();
+                        // $("#cbw-cause-select-ctrl-grp").hide();
+                        $("#cbw-cause-select-ctrl-grp").removeClass("widget-show");
+                        $("#cbw-cause-select-ctrl-grp").addClass("widget-hide");
+                        // $("#cbw-fgcause-select-ctrl-grp").hide();
+                        $("#cbw-fgcause-select-ctrl-grp").removeClass("widget-show");
+                        $("#cbw-fgcause-select-ctrl-grp").addClass("widget-hide");
                     
                     } 
 
@@ -612,7 +616,9 @@ function CBSale(amount,transaction_id) {
 
                     $("#cbw-email-input").val(ServeData.email);
                     $("#cbw-email-checkbox").prop('checked',true);
-                    $("#cbw-email-ctl-grp").css("display", "block");
+                    // $("#cbw-email-ctl-grp").css("display", "block");
+                    $("#cbw-email-ctl-grp").removeClass("widget-hide");
+                    $("#cbw-email-ctl-grp").addClass("widget-show");
                 }
 
                 // Populate the promotion text dictated by the server
@@ -1227,7 +1233,9 @@ function CBSale(amount,transaction_id) {
 
                 SelectedChannel.attr('src', new_img);   
 
-                $("#cbw-share-msg-ctrl-grp").hide();
+                // $("#cbw-share-msg-ctrl-grp").hide();
+                $("#cbw-share-msg-ctrl-grp").removeClass("widget-show");
+                $("#cbw-share-msg-ctrl-grp").addClass("widget-hide");
 
                 PositionWidget('reposition');
 
@@ -1482,11 +1490,15 @@ function CBSale(amount,transaction_id) {
 
                 if (!EmailValid($('#cbw-email-input').val())) {
                     $("#cbw-email-ctl-grp").addClass('error');
-                    $("#cbw-email-input-error-message").show();
+                    // $("#cbw-email-input-error-message").show();
+                    $("#cbw-email-input-error-message").removeClass("widget-hide");
+                    $("#cbw-email-input-error-message").addClass("widget-show");
                     //BlinkErrorMessage("#cbw-email-input-error-message");
                 } else {
                     $("#cbw-email-ctl-grp").removeClass('error');
-                    $("#cbw-email-input-error-message").hide();
+                    // $("#cbw-email-input-error-message").hide();
+                    $("#cbw-email-input-error-message").removeClass("widget-show");
+                    $("#cbw-email-input-error-message").addClass("widget-hide");
                     //$("#cbw-user-name").replaceWith(email);
                 }
 
@@ -1508,17 +1520,25 @@ function CBSale(amount,transaction_id) {
 
                 if (!$("#cbw-cause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "event") {
                     $("#cbw-cause-select-ctrl-grp").addClass('error');
-                    $("#cbw-cause-select-error-message").show();
+                    // $("#cbw-cause-select-error-message").show();
+                    $("#cbw-cause-select-error-message").removeClass("widget-hide");
+                    $("#cbw-cause-select-error-message").addClass("widget-show");
                 } else {
                     $("#cbw-cause-select-ctrl-grp").removeClass('error');
-                    $("#cbw-cause-select-error-message").hide();
+                    // $("#cbw-cause-select-error-message").hide();
+                    $("#cbw-cause-select-error-message").removeClass("widget-show");
+                    $("#cbw-cause-select-error-message").addClass("widget-hide");
                 }
                 if (!$("#cbw-fgcause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "single") {
                     $("#cbw-fgcause-select-ctrl-grp").addClass('error');
-                    $("#cbw-fgcause-select-error-message").show();
+                    // $("#cbw-fgcause-select-error-message").show();
+                    $("#cbw-fgcause-select-error-message").removeClass("widget-hide");
+                    $("#cbw-fgcause-select-error-message").addClass("widget-show");
                 } else {
                     $("#cbw-fgcause-select-ctrl-grp").removeClass('error');
-                    $("#cbw-fgcause-select-error-message").hide();
+                    // $("#cbw-fgcause-select-error-message").hide();
+                    $("#cbw-fgcause-select-error-message").removeClass("widget-show");
+                    $("#cbw-fgcause-select-error-message").addClass("widget-hide");
                 }
 
                 PositionWidget('reposition');
@@ -1571,7 +1591,9 @@ function CBSale(amount,transaction_id) {
 
                 if ($("#cbw-widget").css('display') == "none") {
                     RegisterWidgetView();
-                    $("#cbw-widget").toggle();
+                    //$("#cbw-widget").toggle();
+                    $("#cbw-widget").removeClass("widget-hide");
+                    $("#cbw-widget").addClass("widget-show");
                 }
 
                 PositionWidget('initial');
@@ -1620,8 +1642,14 @@ function CBSale(amount,transaction_id) {
 
                 }
 
-                $("#cbw-email-ctl-grp").toggle();
-
+                if ($("#cbw-email-ctl-grp").css('display') == "none") {
+                    $("#cbw-email-ctl-grp").removeClass("widget-hide");
+                    $("#cbw-email-ctl-grp").addClass("widget-show");
+                } else {
+                    $("#cbw-email-ctl-grp").removeClass("widget-show");
+                    $("#cbw-email-ctl-grp").addClass("widget-hide");
+                }
+                //$("#cbw-email-ctl-grp").toggle();
             });        
 
             $(window).resize(function() {
@@ -1650,14 +1678,19 @@ function CBSale(amount,transaction_id) {
 
                 var display = $("#cbw-links-info").css('display');
 
-                $("#cbw-links-info").toggle();
+
+                //$("#cbw-links-info").toggle();
 
                 if (display == "none") {
 
+                    $("#cbw-links-info").removeClass("widget-hide");
+                    $("#cbw-links-info").addClass("widget-show");
                     $("#cbw-links-info-toggle").html("less info"); 
 
                 } else {
 
+                    $("#cbw-links-info").removeClass("widget-show");
+                    $("#cbw-links-info").addClass("widget-hide");
                     $("#cbw-links-info-toggle").html("more info");
 
                 }
@@ -1829,7 +1862,7 @@ function CBSale(amount,transaction_id) {
              * cause errors present when the widget is closed, the serve
              * will not be updated.
              * -------------------------------------------------------- */
-            $(document).on('click', '.cbw .close', function() {
+            $(document).on('click', '.cbw #cbw-heading-close', function() {
 
                 // First, check to see if there's a consistencey error between
                 // the cause_type and the cause type selector.  This will clear
@@ -1839,7 +1872,9 @@ function CBSale(amount,transaction_id) {
                 CheckCauseAndCauseType();
                 CheckEmailValid();
                 // next, hide the widget and close any open select2 selectors
-                $("#cbw-widget").hide();
+                // $("#cbw-widget").hide();
+                $("#cbw-widget").removeClass("widget-show");
+                $("#cbw-widget").addClass("widget-hide");
                 $("#cbw-cause-select").select2("close");
                 $("#cbw-fgcause-select").select2("close");
                 // finally, update the serve if there are no errors on the email
