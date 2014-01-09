@@ -1,3 +1,38 @@
+/*
+reset styles
+*/
+
+.cbw-reset html, .cbw-reset body, .cbw-reset div, .cbw-reset span, .cbw-reset applet, .cbw-reset object, .cbw-reset iframe, .cbw-reset h1, .cbw-reset h2, .cbw-reset h3, .cbw-reset h4, .cbw-reset h5, .cbw-reset h6, .cbw-reset p, .cbw-reset blockquote, .cbw-reset pre, .cbw-reset a, .cbw-reset abbr, .cbw-reset acronym, .cbw-reset address, .cbw-reset big, .cbw-reset cite, .cbw-reset code, .cbw-reset del, .cbw-reset dfn, .cbw-reset em, .cbw-reset img, .cbw-reset ins, .cbw-reset kbd, .cbw-reset q, .cbw-reset s, .cbw-reset samp, .cbw-reset small, .cbw-reset strike, .cbw-reset strong, .cbw-reset sub, .cbw-reset sup, .cbw-reset tt, .cbw-reset var, .cbw-reset b, .cbw-reset u, .cbw-reset i, .cbw-reset center, .cbw-reset dl, .cbw-reset dt, .cbw-reset dd, .cbw-reset ol, .cbw-reset ul, .cbw-reset li, .cbw-reset fieldset, .cbw-reset form, .cbw-reset label, .cbw-reset legend, .cbw-reset table, .cbw-reset caption, .cbw-reset tbody, .cbw-reset tfoot, .cbw-reset thead, .cbw-reset tr, .cbw-reset th, .cbw-reset td, .cbw-reset article, .cbw-reset aside, .cbw-reset canvas, .cbw-reset details, .cbw-reset embed, .cbw-reset figure, .cbw-reset figcaption, .cbw-reset footer, .cbw-reset header, .cbw-reset hgroup, .cbw-reset menu, .cbw-reset nav, .cbw-reset output, .cbw-reset ruby, .cbw-reset section, .cbw-reset summary, .cbw-reset time, .cbw-reset mark, .cbw-reset audio, .cbw-reset video {
+    border: 0 none !important;
+    /*font: inherit !important;*/
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: baseline !important;
+}
+.cbw-reset article, .cbw-reset aside, .cbw-reset details, .cbw-reset figcaption, .cbw-reset figure, .cbw-reset footer, .cbw-reset header, .cbw-reset hgroup, .cbw-reset menu, .cbw-reset nav, .cbw-reset section {
+    display: block !important;
+}
+.cbw-reset body {
+    line-height: 1 !important;
+}
+.cbw-reset ol, .cbw-reset ul {
+    list-style: none outside none !important;
+}
+.cbw-reset blockquote, .cbw-reset q {
+    quotes: none !important;
+}
+.cbw-reset blockquote:before, .cbw-reset blockquote:after, .cbw-reset q:before, .cbw-reset q:after {
+    content: none !important;
+}
+.cbw-reset table {
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+}
+
+/* 
+Widget custom styles, all namespaced .cbw
+*/
+
 .cbw #cbw-widget {
 	width: 350px !important;
 	height: auto !important;
