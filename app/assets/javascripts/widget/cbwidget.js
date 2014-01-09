@@ -127,7 +127,6 @@ function CBSale(amount,transaction_id) {
 
     var scripts = [
         {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
-        {"name": "Bootstrap", "src": CBAssetsBase + "bootstrap.min.js"},
         {"name": "Select2", "src": CBAssetsBase + "select2.min.js"},
     ];
 
@@ -315,7 +314,7 @@ function CBSale(amount,transaction_id) {
 
             // Dynamically load the pre-requisite and local stylesheets
 
-            AddStylesheet('cbw-bs-css', CBAssetsBase + "cbw-bootstrap.css");
+            AddStylesheet('cbw-reset', CBAssetsBase + "cbw-reset.css");
             AddStylesheet('cbw-css-sel2', CBAssetsBase + "select2.css");
             AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
 
