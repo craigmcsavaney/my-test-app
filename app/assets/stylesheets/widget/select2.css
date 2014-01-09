@@ -2,13 +2,13 @@
 Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 */
 .select2-container {
-    margin: 0;
+    margin: 0 !important;
     position: relative;
     display: inline-block;
     /* inline-block for ie7 */
     zoom: 1;
     *display: inline;
-    vertical-align: middle;
+    vertical-align: middle !important;
 }
 
 .select2-container,
@@ -31,11 +31,11 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 .select2-container .select2-choice {
     display: block;
     height: 26px;
-    padding: 0 0 0 8px;
+    padding: 0 0 0 8px !important;
     overflow: hidden;
     position: relative;
 
-    border: 1px solid #aaa;
+    border: 1px solid #aaa !important;
     white-space: nowrap;
     line-height: 26px;
     color: #444;
@@ -67,7 +67,7 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 }
 
 .select2-container.select2-drop-above .select2-choice {
-    border-bottom-color: #aaa;
+    border-bottom-color: #aaa !important;
 
     -webkit-border-radius:0 0 4px 4px;
        -moz-border-radius:0 0 4px 4px;
@@ -83,11 +83,11 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 }
 
 .select2-container.select2-allowclear .select2-choice .select2-chosen {
-    margin-right: 42px;
+    margin-right: 42px !important;
 }
 
 .select2-container .select2-choice > .select2-chosen {
-    margin-right: 26px;
+    margin-right: 26px !important;
     display: block;
     overflow: hidden;
 
@@ -106,7 +106,7 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
     right: 24px;
     top: 8px;
 
-    font-size: 1px;
+    font-size:  !important;
     text-decoration: none;
 
     border: 0;
@@ -126,8 +126,8 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 
 .select2-drop-undermask {
     border: 0;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     position: absolute;
     left: 0;
     top: 0;
@@ -138,8 +138,8 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 
 .select2-drop-mask {
     border: 0;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     position: absolute;
     left: 0;
     top: 0;
@@ -152,14 +152,14 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 
 .select2-drop {
     width: 100%;
-    margin-top: -1px;
+    margin-top: -1px !important;
     position: absolute;
     z-index: 9999;
     top: 100%;
 
     background: #fff;
     color: #000;
-    border: 1px solid #aaa;
+    border: 1px solid #aaa !important;
     border-top: 0;
 
     -webkit-border-radius: 0 0 4px 4px;
@@ -172,17 +172,17 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 }
 
 .select2-drop-auto-width {
-    border-top: 1px solid #aaa;
+    border-top: 1px solid #aaa !important;
     width: auto;
 }
 
 .select2-drop-auto-width .select2-search {
-    padding-top: 4px;
+    padding-top: 4px !important;
 }
 
 .select2-drop.select2-drop-above {
-    margin-top: 1px;
-    border-top: 1px solid #aaa;
+    margin-top: 1px !important;
+    border-top: 1px solid #aaa !important;
     border-bottom: 0;
 
     -webkit-border-radius: 4px 4px 0 0;
@@ -195,12 +195,12 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 }
 
 .select2-drop-active {
-    border: 1px solid #5897fb;
-    border-top: none;
+    border: 1px solid #5897fb !important;
+    border-top: none !important;
 }
 
 .select2-drop.select2-drop-above.select2-drop-active {
-    border-top: 1px solid #5897fb;
+    border-top: 1px solid #5897fb !important;
 }
 
 .select2-container .select2-choice .select2-arrow {
@@ -211,7 +211,7 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
     right: 0;
     top: 0;
 
-    border-left: 1px solid #aaa;
+    border-left: 1px solid #aaa !important;
     -webkit-border-radius: 0 4px 4px 0;
        -moz-border-radius: 0 4px 4px 0;
             border-radius: 0 4px 4px 0;
@@ -241,9 +241,9 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
     display: inline-block;
     width: 100%;
     min-height: 26px;
-    margin: 0;
-    padding-left: 4px;
-    padding-right: 4px;
+    margin: 0 !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
 
     position: relative;
     z-index: 10000;
@@ -255,14 +255,14 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
     width: 100%;
     height: auto !important;
     min-height: 26px;
-    padding: 4px 20px 4px 5px;
-    margin: 0;
+    padding: 4px 20px 4px 5px !important;
+    margin: 0 !important;
 
     outline: 0;
-    font-family: sans-serif;
-    font-size: 1em;
+    font-family: sans-serif !important;
+    font-size: 1em !important;
 
-    border: 1px solid #aaa;
+    border: 1px solid #aaa !important;
     -webkit-border-radius: 0;
        -moz-border-radius: 0;
             border-radius: 0;
@@ -281,7 +281,7 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 }
 
 .select2-drop.select2-drop-above .select2-search input {
-    margin-top: 4px;
+    margin-top: 4px !important;
 }
 
 .select2-search input.select2-active {
@@ -296,7 +296,7 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices {
-    border: 1px solid #5897fb;
+    border: 1px solid #5897fb !important;
     outline: none;
 
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
@@ -305,7 +305,7 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 }
 
 .select2-dropdown-open .select2-choice {
-    border-bottom-color: transparent;
+    border-bottom-color: transparent !important;
     -webkit-box-shadow: 0 1px 0 #fff inset;
        -moz-box-shadow: 0 1px 0 #fff inset;
             box-shadow: 0 1px 0 #fff inset;
@@ -330,8 +330,8 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 
 .select2-dropdown-open.select2-drop-above .select2-choice,
 .select2-dropdown-open.select2-drop-above .select2-choices {
-    border: 1px solid #5897fb;
-    border-top-color: transparent;
+    border: 1px solid #5897fb !important;
+    border-top-color: transparent !important;
 
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, white), color-stop(0.5, #eeeeee));
     background-image: -webkit-linear-gradient(center top, white 0%, #eeeeee 50%);
@@ -344,7 +344,7 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 
 .select2-dropdown-open .select2-choice .select2-arrow {
     background: transparent;
-    border-left: none;
+    border-left: none !important;
     filter: none;
 }
 .select2-dropdown-open .select2-choice .select2-arrow b {
@@ -354,8 +354,8 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 /* results */
 .select2-results {
     max-height: 200px;
-    padding: 0 0 0 4px;
-    margin: 4px 4px 4px 0;
+    padding: 0 0 0 4px !important;
+    margin: 4px 4px 4px 0 !important;
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
@@ -363,17 +363,17 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 }
 
 .select2-results ul.select2-result-sub {
-    margin: 0;
-    padding-left: 0;
+    margin: 0 !important;
+    padding-left: 0 !important;
 }
 
-.select2-results ul.select2-result-sub > li .select2-result-label { padding-left: 20px }
-.select2-results ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 40px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 60px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 80px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 100px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 110px }
-.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 120px }
+.select2-results ul.select2-result-sub > li .select2-result-label { padding-left: 20px  !important}
+.select2-results ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 40px  !important}
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 60px  !important}
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 80px !important }
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 100px !important }
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 110px !important }
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label { padding-left: 120px !important }
 
 .select2-results li {
     list-style: none;
@@ -382,12 +382,12 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 }
 
 .select2-results li.select2-result-with-children > .select2-result-label {
-    font-weight: bold;
+    font-weight: bold !important;
 }
 
 .select2-results .select2-result-label {
-    padding: 3px 7px 4px;
-    margin: 0;
+    padding: 3px 7px 4px !important;
+    margin: 0 !important;
     cursor: pointer;
 
     min-height: 1em;
@@ -407,7 +407,7 @@ Version: 3.4.1 Timestamp: Thu Jun 27 18:02:10 PDT 2013
 
 .select2-results li em {
     background: #feffde;
-    font-style: normal;
+    font-style: normal !important;
 }
 
 .select2-results .select2-highlighted em {
@@ -460,7 +460,7 @@ disabled look for disabled choices in the results dropdown
 .select2-container.select2-container-disabled .select2-choice {
     background-color: #f4f4f4;
     background-image: none;
-    border: 1px solid #ddd;
+    border: 1px solid #ddd !important;
     cursor: default;
 }
 
@@ -480,11 +480,11 @@ disabled look for disabled choices in the results dropdown
 .select2-container-multi .select2-choices {
     height: auto !important;
     height: 1%;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     position: relative;
 
-    border: 1px solid #aaa;
+    border: 1px solid #aaa !important;
     cursor: text;
     overflow: hidden;
 
@@ -506,7 +506,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-container-multi.select2-container-active .select2-choices {
-    border: 1px solid #5897fb;
+    border: 1px solid #5897fb !important;
     outline: none;
 
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
@@ -518,17 +518,17 @@ disabled look for disabled choices in the results dropdown
     list-style: none;
 }
 .select2-container-multi .select2-choices .select2-search-field {
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     white-space: nowrap;
 }
 
 .select2-container-multi .select2-choices .select2-search-field input {
-    padding: 5px;
-    margin: 1px 0;
+    padding: 5px !important;
+    margin: 1px 0 !important;
 
-    font-family: sans-serif;
-    font-size: 100%;
+    font-family: sans-serif !important;
+    font-size: 100% !important;
     color: #666;
     outline: 0;
     border: 0;
@@ -547,14 +547,14 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-container-multi .select2-choices .select2-search-choice {
-    padding: 3px 5px 3px 18px;
-    margin: 3px 0 3px 5px;
+    padding: 3px 5px 3px 18px !important;
+    margin: 3px 0 3px 5px !important;
     position: relative;
 
     line-height: 13px;
     color: #333;
     cursor: default;
-    border: 1px solid #aaaaaa;
+    border: 1px solid #aaaaaa !important;
 
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
@@ -599,7 +599,7 @@ disabled look for disabled choices in the results dropdown
     right: 3px;
     top: 4px;
 
-    font-size: 1px;
+    font-size: 1px !important;
     outline: none;
     background: url('select2.png') right top no-repeat;
 }
@@ -619,13 +619,13 @@ disabled look for disabled choices in the results dropdown
 .select2-container-multi.select2-container-disabled .select2-choices{
     background-color: #f4f4f4;
     background-image: none;
-    border: 1px solid #ddd;
+    border: 1px solid #ddd !important;
     cursor: default;
 }
 
 .select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice {
-    padding: 3px 5px 3px 5px;
-    border: 1px solid #ddd;
+    padding: 3px 5px 3px 5px !important;
+    border: 1px solid #ddd !important;
     background-image: none;
     background-color: #f4f4f4;
 }
@@ -646,8 +646,8 @@ disabled look for disabled choices in the results dropdown
     width: 1px;
     height: 1px;
     border: 0;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     overflow: hidden;
     position: absolute;
     outline: 0;

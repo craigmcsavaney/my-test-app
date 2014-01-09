@@ -59,6 +59,7 @@ function CBSale(amount,transaction_id) {
     var script_url;
     var ScriptsCounter;
     var CBAssetsBase;
+    var CBBase;
     var ReferringPath;
     var FilteredParamString;  // original param string minus all referring path param(s)
     var ServeData;
@@ -85,9 +86,12 @@ function CBSale(amount,transaction_id) {
     // This is the prefix used for retrieving all widget assets
     CBAssetsBase  = script_url.substring(0,script_url.lastIndexOf("/") + 1);
 
-    // Following adds the api suffix to the Host
+    // Following gets the base url to the Host
+    CBBase = script_url.substring(0,script_url.lastIndexOf("assets"));
+
+    // Following adds the api suffix to the base Host url
     // This is the prefix used for all api calls
-    CBApiBase = script_url.substring(0,script_url.lastIndexOf("assets")) + "api/v1/";
+    CBApiBase = CBBase + "api/v1/";
 
     // Following parses the param string of script_url and assigns values to
     // CBMerchantID, PageTarget (optional), and PagePosition (optional).
@@ -123,7 +127,6 @@ function CBSale(amount,transaction_id) {
 
     var scripts = [
         {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
-        {"name": "Bootstrap", "src": CBAssetsBase + "bootstrap.min.js"},
         {"name": "Select2", "src": CBAssetsBase + "select2.min.js"},
     ];
 
@@ -311,7 +314,7 @@ function CBSale(amount,transaction_id) {
 
             // Dynamically load the pre-requisite and local stylesheets
 
-            AddStylesheet('cbw-bs-css', CBAssetsBase + "cbw-bootstrap.css");
+            AddStylesheet('cbw-reset', CBAssetsBase + "cbw-reset.css");
             AddStylesheet('cbw-css-sel2', CBAssetsBase + "select2.css");
             AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
 
@@ -381,8 +384,12 @@ function CBSale(amount,transaction_id) {
                     // in the widget.  Otherwise, load the cause data.
                     if (!ServeData.promotion.cause_selector) {
 
-                        $("#cbw-cause-select-ctrl-grp").hide();
-                        $("#cbw-fgcause-select-ctrl-grp").hide();
+                        // $("#cbw-cause-select-ctrl-grp").hide();
+                        $("#cbw-cause-select-ctrl-grp").removeClass("widget-show");
+                        $("#cbw-cause-select-ctrl-grp").addClass("widget-hide");
+                        // $("#cbw-fgcause-select-ctrl-grp").hide();
+                        $("#cbw-fgcause-select-ctrl-grp").removeClass("widget-show");
+                        $("#cbw-fgcause-select-ctrl-grp").addClass("widget-hide");
                     
                     } 
 
@@ -609,7 +616,9 @@ function CBSale(amount,transaction_id) {
 
                     $("#cbw-email-input").val(ServeData.email);
                     $("#cbw-email-checkbox").prop('checked',true);
-                    $("#cbw-email-ctl-grp").css("display", "block");
+                    // $("#cbw-email-ctl-grp").css("display", "block");
+                    $("#cbw-email-ctl-grp").removeClass("widget-hide");
+                    $("#cbw-email-ctl-grp").addClass("widget-show");
                 }
 
                 // Populate the promotion text dictated by the server
@@ -617,6 +626,9 @@ function CBSale(amount,transaction_id) {
 
                 // Add the logo image
                 $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
+
+                // Add the logo link target
+                $("#cbw-heading-logo-link").attr('href', CBBase);
 
                 // Populate the active channels for current merchant/promotion
 
@@ -1198,6 +1210,8 @@ function CBSale(amount,transaction_id) {
                         if (type == "initial") {
                             $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
                             $("#cbw-widget").css('right', '1px');   
+                            $("#cbw-widget").css('bottom', '');
+                            $("#cbw-widget").css('left', '');
                         }
                 }
 
@@ -1221,7 +1235,8 @@ function CBSale(amount,transaction_id) {
 
                 SelectedChannel.attr('src', new_img);   
 
-                $("#cbw-share-msg-ctrl-grp").hide();
+                $("#cbw-share-msg-ctrl-grp").removeClass("widget-show");
+                $("#cbw-share-msg-ctrl-grp").addClass("widget-hide");
 
                 PositionWidget('reposition');
 
@@ -1476,11 +1491,15 @@ function CBSale(amount,transaction_id) {
 
                 if (!EmailValid($('#cbw-email-input').val())) {
                     $("#cbw-email-ctl-grp").addClass('error');
-                    $("#cbw-email-input-error-message").show();
+                    // $("#cbw-email-input-error-message").show();
+                    $("#cbw-email-input-error-message").removeClass("widget-hide");
+                    $("#cbw-email-input-error-message").addClass("widget-show");
                     //BlinkErrorMessage("#cbw-email-input-error-message");
                 } else {
                     $("#cbw-email-ctl-grp").removeClass('error');
-                    $("#cbw-email-input-error-message").hide();
+                    // $("#cbw-email-input-error-message").hide();
+                    $("#cbw-email-input-error-message").removeClass("widget-show");
+                    $("#cbw-email-input-error-message").addClass("widget-hide");
                     //$("#cbw-user-name").replaceWith(email);
                 }
 
@@ -1502,17 +1521,25 @@ function CBSale(amount,transaction_id) {
 
                 if (!$("#cbw-cause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "event") {
                     $("#cbw-cause-select-ctrl-grp").addClass('error');
-                    $("#cbw-cause-select-error-message").show();
+                    // $("#cbw-cause-select-error-message").show();
+                    $("#cbw-cause-select-error-message").removeClass("widget-hide");
+                    $("#cbw-cause-select-error-message").addClass("widget-show");
                 } else {
                     $("#cbw-cause-select-ctrl-grp").removeClass('error');
-                    $("#cbw-cause-select-error-message").hide();
+                    // $("#cbw-cause-select-error-message").hide();
+                    $("#cbw-cause-select-error-message").removeClass("widget-show");
+                    $("#cbw-cause-select-error-message").addClass("widget-hide");
                 }
                 if (!$("#cbw-fgcause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "single") {
                     $("#cbw-fgcause-select-ctrl-grp").addClass('error');
-                    $("#cbw-fgcause-select-error-message").show();
+                    // $("#cbw-fgcause-select-error-message").show();
+                    $("#cbw-fgcause-select-error-message").removeClass("widget-hide");
+                    $("#cbw-fgcause-select-error-message").addClass("widget-show");
                 } else {
                     $("#cbw-fgcause-select-ctrl-grp").removeClass('error');
-                    $("#cbw-fgcause-select-error-message").hide();
+                    // $("#cbw-fgcause-select-error-message").hide();
+                    $("#cbw-fgcause-select-error-message").removeClass("widget-show");
+                    $("#cbw-fgcause-select-error-message").addClass("widget-hide");
                 }
 
                 PositionWidget('reposition');
@@ -1565,7 +1592,9 @@ function CBSale(amount,transaction_id) {
 
                 if ($("#cbw-widget").css('display') == "none") {
                     RegisterWidgetView();
-                    $("#cbw-widget").toggle();
+                    //$("#cbw-widget").toggle();
+                    $("#cbw-widget").removeClass("widget-hide");
+                    $("#cbw-widget").addClass("widget-show");
                 }
 
                 PositionWidget('initial');
@@ -1614,8 +1643,14 @@ function CBSale(amount,transaction_id) {
 
                 }
 
-                $("#cbw-email-ctl-grp").toggle();
-
+                if ($("#cbw-email-ctl-grp").css('display') == "none") {
+                    $("#cbw-email-ctl-grp").removeClass("widget-hide");
+                    $("#cbw-email-ctl-grp").addClass("widget-show");
+                } else {
+                    $("#cbw-email-ctl-grp").removeClass("widget-show");
+                    $("#cbw-email-ctl-grp").addClass("widget-hide");
+                }
+                //$("#cbw-email-ctl-grp").toggle();
             });        
 
             $(window).resize(function() {
@@ -1644,14 +1679,19 @@ function CBSale(amount,transaction_id) {
 
                 var display = $("#cbw-links-info").css('display');
 
-                $("#cbw-links-info").toggle();
+
+                //$("#cbw-links-info").toggle();
 
                 if (display == "none") {
 
+                    $("#cbw-links-info").removeClass("widget-hide");
+                    $("#cbw-links-info").addClass("widget-show");
                     $("#cbw-links-info-toggle").html("less info"); 
 
                 } else {
 
+                    $("#cbw-links-info").removeClass("widget-show");
+                    $("#cbw-links-info").addClass("widget-hide");
                     $("#cbw-links-info-toggle").html("more info");
 
                 }
@@ -1823,7 +1863,7 @@ function CBSale(amount,transaction_id) {
              * cause errors present when the widget is closed, the serve
              * will not be updated.
              * -------------------------------------------------------- */
-            $(document).on('click', '.cbw .close', function() {
+            $(document).on('click', '.cbw #cbw-heading-close', function() {
 
                 // First, check to see if there's a consistencey error between
                 // the cause_type and the cause type selector.  This will clear
@@ -1833,7 +1873,9 @@ function CBSale(amount,transaction_id) {
                 CheckCauseAndCauseType();
                 CheckEmailValid();
                 // next, hide the widget and close any open select2 selectors
-                $("#cbw-widget").hide();
+                // $("#cbw-widget").hide();
+                $("#cbw-widget").removeClass("widget-show");
+                $("#cbw-widget").addClass("widget-hide");
                 $("#cbw-cause-select").select2("close");
                 $("#cbw-fgcause-select").select2("close");
                 // finally, update the serve if there are no errors on the email
@@ -2002,10 +2044,10 @@ function CBSale(amount,transaction_id) {
              * image_url    = the URL to the image that will be posted to the user's pinterest stream
              * message      = the message that will be pre-populated in the intermediate dialog and ultimately posted to the user's pintrest feed (editable by user)
              */
-            var result = AWESM.share.email({
-                'subject': subject,
-                'body': body
-            });
+            // var result = AWESM.share.email({
+            //     'subject': subject,
+            //     'body': body
+            // });
         }
 
         /*
@@ -2019,9 +2061,9 @@ function CBSale(amount,transaction_id) {
              * image_url    = the URL to the image that will be posted to the user's pinterest stream
              * message      = the message that will be pre-populated in the intermediate dialog and ultimately posted to the user's pintrest feed (editable by user)
              */
-            var result = AWESM.share.linkedin({
-                'url': target_url
-            });
+            // var result = AWESM.share.linkedin({
+            //     'url': target_url
+            // });
         }
 
         /*
@@ -2035,9 +2077,9 @@ function CBSale(amount,transaction_id) {
              * image_url    = the URL to the image that will be posted to the user's pinterest stream
              * message      = the message that will be pre-populated in the intermediate dialog and ultimately posted to the user's pintrest feed (editable by user)
              */
-            var result = AWESM.share.googleplus({
-                'url': target_url
-            });
+            // var result = AWESM.share.googleplus({
+            //     'url': target_url
+            // });
         }
 
     } // end main()
