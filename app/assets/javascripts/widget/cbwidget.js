@@ -59,6 +59,7 @@ function CBSale(amount,transaction_id) {
     var script_url;
     var ScriptsCounter;
     var CBAssetsBase;
+    var CBBase;
     var ReferringPath;
     var FilteredParamString;  // original param string minus all referring path param(s)
     var ServeData;
@@ -85,9 +86,12 @@ function CBSale(amount,transaction_id) {
     // This is the prefix used for retrieving all widget assets
     CBAssetsBase  = script_url.substring(0,script_url.lastIndexOf("/") + 1);
 
-    // Following adds the api suffix to the Host
+    // Following gets the base url to the Host
+    CBBase = script_url.substring(0,script_url.lastIndexOf("assets"));
+
+    // Following adds the api suffix to the base Host url
     // This is the prefix used for all api calls
-    CBApiBase = script_url.substring(0,script_url.lastIndexOf("assets")) + "api/v1/";
+    CBApiBase = CBBase + "api/v1/";
 
     // Following parses the param string of script_url and assigns values to
     // CBMerchantID, PageTarget (optional), and PagePosition (optional).
@@ -617,6 +621,9 @@ function CBSale(amount,transaction_id) {
 
                 // Add the logo image
                 $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
+
+                // Add the logo link target
+                $("#cbw-heading-logo-link").attr('href', CBBase);
 
                 // Populate the active channels for current merchant/promotion
 
