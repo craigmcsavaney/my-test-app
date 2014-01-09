@@ -1210,6 +1210,8 @@ function CBSale(amount,transaction_id) {
                         if (type == "initial") {
                             $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
                             $("#cbw-widget").css('right', '1px');   
+                            $("#cbw-widget").css('bottom', '');
+                            $("#cbw-widget").css('left', '');
                         }
                 }
 
@@ -1233,7 +1235,6 @@ function CBSale(amount,transaction_id) {
 
                 SelectedChannel.attr('src', new_img);   
 
-                // $("#cbw-share-msg-ctrl-grp").hide();
                 $("#cbw-share-msg-ctrl-grp").removeClass("widget-show");
                 $("#cbw-share-msg-ctrl-grp").addClass("widget-hide");
 
