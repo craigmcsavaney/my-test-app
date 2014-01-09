@@ -1,0 +1,306 @@
+.cbw #cbw-widget {
+	width: 350px !important;
+	height: auto !important;
+	border: 1px solid #003399 !important;
+	background-color: #0E76BC !important;
+	border-radius: 6px !important;
+	position: fixed !important;
+	z-index: 9999 !important;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    color: #333333 !important;
+    line-height: 20px !important;
+    font-size: 14px !important;
+}
+
+.cbw #cbw-widget .widget-show, .cbw #cbw-widget.widget-show {
+	display: block !important;
+}
+
+.cbw #cbw-widget .widget-hide, .cbw #cbw-widget.widget-hide {
+	display: none !important;
+}
+
+.cbw #cbw-cause-select-ctrl-grp, .cbw #cbw-fgcause-select-ctrl-grp {
+	display: table !important;
+}
+
+.cbw #cbw-widget .cbw-control-group {
+	margin: 0 4px !important;
+}
+.cbw #cbw-widget .cbw-control-group.error input {
+	border-color: red !important;
+}
+
+.cbw #cbw-widget .cbw-control-group:before, .cbw #cbw-widget .cbw-control-group:after {
+    content: "" !important;
+    display: table !important;
+    line-height: 0 !important;
+}
+
+.cbw #cbw-widget .cbw-control-group:after {
+	clear: both !important;
+}
+
+.cbw #cbw-widget .cbw-control-label {
+	color: #0E76BC !important;
+	width: 94% !important;
+	cursor: default !important;
+	text-align: left !important;
+	float: right !important;
+	padding-bottom: 7px !important;
+	padding-top: 2px !important;
+	text-align: left !important;
+	font-weight: bold !important;
+}
+
+.cbw #cbw-heading {
+	background-color: #0E76BC !important;
+	padding-left: 4px !important;
+	height: 31px !important;
+	padding-top: 4px !important;
+	border-radius: 6px 6px 0px 0px !important;
+	border-bottom: 1px solid #003399 !important;
+}
+
+.cbw .cbw-channel-toggle {
+	margin-right: 5px !important;
+	cursor: pointer !important;
+	margin-bottom: 5px !important;
+	vertical-align: baseline !important;
+}
+
+.cbw #cbw-share-msg-ctrl-grp textarea {
+	font-size: 9pt !important;
+}
+
+.cbw #cbw-promo-text {
+	font-size: 11pt !important;
+	text-align: justify !important;
+	padding: 0 4px 0 !important;
+	margin: 0 !important;
+}
+
+.cbw #cbw-welcome-user-message {
+	padding-left: 100px !important;
+	font-weight: normal !important;
+	font-size: small !important;
+}
+
+.cbw #cbw-user-name-change {
+	font-size: 7pt !important;
+}
+
+.cbw #cbw-links.cbw-control-group {
+	text-align: center !important;
+	line-height: 10px !important;
+	margin-bottom: 3px !important;
+	margin-top: 5px !important;
+	color: #666666 !important;
+	font-size: 8pt !important;
+	cursor: pointer !important;
+} 
+
+.cbw #cbw-widget.box_shadow {
+  -webkit-box-shadow: 0px 0px 10px 3px #666666 !important; /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
+          box-shadow: 0px 0px 10px 3px #666666 !important; /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
+}
+
+.cbw #cbw-body-normal {
+	background-color: #ffffff !important;
+	border-radius: 0 0 6px 6px !important;
+	padding: 5px !important;
+}
+
+.cbw #cbw-email-input {
+	margin-bottom: 10px !important;
+	float: left !important;
+	width: 330px !important;
+	background-color: #FFFFFF !important;
+    border: 1px solid #AAAAAA !important;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset !important;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s !important;
+    height: 26px !important;
+    background-clip: padding-box !important;
+    background-image: -moz-linear-gradient(center bottom , #EEEEEE 0%, #FFFFFF 50%) !important;
+    color: #444444 !important;
+    display: block !important;
+    overflow: hidden !important;
+    text-align: center !important;
+    padding: 0 !important;
+    font-size: 9pt !important;
+}
+
+.cbw #cbw-heading-logo {
+	display: inline !important;
+}
+
+.cbw #cbw-heading-logo-link {
+	cursor: pointer !important;
+}
+
+.cbw #cbw-heading-close {
+	float: right !important;
+	padding-top: 4px !important;
+	margin: 0 10px 0 0 !important;
+	color: #ffffff !important;
+	cursor: pointer !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    line-height: 20px !important;
+}
+
+.cbw #cbw-heading-close:hover {
+	text-shadow: 0 0 10px #FFFFFF !important;
+}
+
+.cbw #cbw-heading-logo-img {
+    border: 1px solid #FFFFFF !important;
+    border-radius: 5px 5px 5px 5px !important;
+    height: 20px !important;
+    padding: 3px 5px !important;
+}
+
+.cbw #cbw-email-checkbox-ctl-grp.cbw-control-group {
+	margin-bottom:0 !important;
+	height: 28px !important;
+}
+
+.cbw #cbw-email-checkbox-text {
+	margin-top: 3px !important;
+	padding-right: 5px !important;
+}
+
+.cbw #cbw-email-checkbox-label {
+    display: block !important;
+    padding-top: 5px !important;
+}
+
+.cbw #cbw-email-checkbox {
+	margin-bottom: 5px !important;
+	cursor: pointer !important;
+}
+
+.cbw #cbw-channels-grp.cbw-control-group {
+	border: 1px solid #0E76BD !important;
+	border-radius: 5px !important;
+	text-align: center !important;
+	background-color: #E3F0F8 !important;
+	height: auto !important;
+}
+
+.cbw #cbw-links-info-text {
+	font-size: .8em !important;
+	line-height: 1.2em !important;
+	resize: vertical !important;
+	width: 330px !important;
+	background-color: #FFFFFF !important;
+    border: 1px solid #AAAAAA !important;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset !important;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s !important;
+    color: #444444 !important;
+    overflow: auto !important;
+    padding: 0 !important;
+    margin: 2px 0 0 !important;
+}
+
+.cbw #cbw-links-info.cbw-control-group {
+    margin-bottom: 4px !important;
+}
+
+.cbw #cause-sel-control-text, .cbw #fgcause-sel-control-text {
+	color: #999999 !important;
+	font-style: italic !important;
+	font-weight: normal !important;
+}
+
+.cbw .cbw-link {
+    color: #0088CC !important;
+    text-decoration: none !important;
+}
+
+.cbw .cause-select-radio {
+	margin-top: 5px !important;
+	cursor: pointer !important;
+	vertical-align: top !important;
+}
+
+.cbw #cbw-channels-grp-label.cbw-control-label {
+	text-align: center !important;
+	font-size: 1.2em !important;
+}
+
+.cbw #cbw-email-input-error-message, .cbw #cbw-cause-select-error-message, .cbw #cbw-fgcause-select-error-message {
+	margin: 0 0 2px 2% !important;
+	color: red !important;
+	text-align: center !important;
+	font-size: .9em !important;
+}
+
+.cbw .cbw-select2, .cbw .cbw-fg-select2 {
+	width: 97% !important;
+}
+
+/*
+Select2 styles that override the styles in select2.css and should be .cbw namespaced:
+*/
+
+.cbw .error .select2-container .select2-choice {
+	border-color: red !important;
+	margin-bottom: 3px !important;
+}
+
+.cbw .select2-container .select2-choice {
+	font-size: 9pt !important;
+	width: 322px !important;
+}
+
+/*
+Select2 styles that override the styles in select2.css and should not be .cbw namespaced
+(because they build at the bottom of the body outside of the widget):
+*/
+
+#select2-drop.select2-drop.select2-with-searchbox.select2-drop-active { 
+	font-size: 10pt !important;
+	line-height: 20px !important;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    color: #333333 !important;
+    width: 332px !important;
+}
+
+#select2-drop.select2-drop.select2-with-searchbox.select2-drop-active .select2-search {
+	font-size: 12px !important;
+}
+
+/*
+Styles for Select2 search result displays that use cbw-defined classes and should not be .cbw namespaced
+(because they build at the bottom of the body outside of the widget):
+*/
+
+.select2-results .cause-result, .select2-results .event-result {
+	border-bottom: solid 1px gray !important;
+	padding-bottom: 8px !important;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+	font-size: 12px !important;
+	line-height: 14px !important;
+}
+
+.select2-results .cause-title, .select2-results .event-title {}
+
+.select2-results .cause-selection, .select2-results .event-selection {}
+
+.select2-results .cause-location, .select2-results .cause-category, .select2-results .event-description {
+	font-size: .85em !important;
+	padding-left: 10px !important;
+}
+
+/*
+Non-.cbw namespaced styles, meant to apply to elements on the page
+and outside of the widget
+*/
+
+.cbw-main-btn {
+	cursor: pointer !important;
+}
+
