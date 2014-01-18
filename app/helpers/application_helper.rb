@@ -19,4 +19,8 @@ module ApplicationHelper
     content_for(:head) { javascript_include_tag(*files) }
   end
 
+  def webform_url
+    "http://www.hydrapouch.com/causebutton/crm/modules/Webforms/capture.php"
+  end
+
 end
