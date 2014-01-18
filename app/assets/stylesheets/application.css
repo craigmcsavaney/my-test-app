@@ -10,5 +10,7 @@
  *
  *= require_self
  *= require select2
- *= require_tree .
+ *= require select2-bootstrap
+ *= require custom
+ *= require scaffolds
  */
