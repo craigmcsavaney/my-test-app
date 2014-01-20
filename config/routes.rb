@@ -68,7 +68,8 @@ Myapplication::Application.routes.draw do
   resources :events
   resources :groups
   resources :singles
-  
+  resources :contact_messages, only: :create
+
   root to: 'static_pages#landing'
 
   match '/home',    to: 'static_pages#home'
