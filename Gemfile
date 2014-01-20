@@ -19,7 +19,10 @@ gem 'money-rails', '0.8.1'
 gem "select2-rails", "~> 3.5.0"
 gem 'devise_invitable', '1.1.8'
 gem 'rest-client', :require => 'rest-client'
+gem 'font-awesome-sass'
 # gem 'devise_invitable', '1.3.0'
+gem 'activerecord-tableless', '~> 1.0'
+gem "recaptcha", :require => "recaptcha/rails"
 
 #added following require and gem for Guard compatibility with wdm
 require 'rbconfig'
