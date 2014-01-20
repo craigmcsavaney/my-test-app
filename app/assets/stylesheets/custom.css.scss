@@ -93,7 +93,7 @@ p {
   h1 { font-size: 3em;
   }
   h2 { font-size: 1.7em;
-  }  
+  }
 }
 
 @media screen and (min-width: 989px) {
@@ -284,3 +284,22 @@ select {
 select#promotion_start_date_1i,  select#promotion_start_date_2i, select#promotion_start_date_3i, select#promotion_end_date_1i,  select#promotion_end_date_2i, select#promotion_end_date_3i {
   width: 110px;
 }
+
+/* FAQ */
+
+.fa-plus-square, .fa-minus-square-o, .question {
+  cursor: pointer;
+}
+
+.question-group, .contact-message {
+  font-size: 1.2em;
+}
+
+.answer {
+  margin-top: 10px;
+}
+
+.grey {
+  color: grey;
+}
+
