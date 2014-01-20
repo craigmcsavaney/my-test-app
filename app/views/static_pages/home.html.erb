@@ -1,44 +1,78 @@
 <% provide(:title, 'Home') %>
 <div class="container">
-	<img width="800" src="../assets/horizontal.svg" style="margin: 100px auto; display: block;">
-	<br/>
-	<br/>
-	<form name="ContactUs" action=<%= webform_url %> method="post" accept-charset="utf-8">
-		<strong><h3>Contact Us</h3></strong>
-		<p>
-			<input type="hidden" name="publicid" value="be33dece7a77ce22229b1027653aeebe"></input>
-			<input type="hidden" name="name" value="ContactUs"></input>
- 			<!-- <input type="hidden" name="returnurl" value="causebutton.com:/home"></input> -->
- 			<input type="hidden" name="returnurl" value="<%= request.host %>:<%= request.port %>/home"></input>
-			<input id="leadsource[]" name="leadsource[]" type="hidden" value="ContactUs" />
-	        <input id="leadstatus[]" name="leadstatus[]" type="hidden" value="Open" />
-		</p>
-		
-		<p>
-			<label>First Name<span style='color:red;'>*</span></label>
-			<input type="text" value="" name="firstname"  required />
-		</p>
-		<p>
-			<label>Last Name<span style='color:red;'>*</span></label>
-			<input type="text" value="" name="lastname"  required />
-		</p>
-		<p>
-			<label>Phone</label>
-			<input type="text" value="" name="phone"  ></input>
-		</p>
-		<p>
-			<label>Email<span style='color:red;'>*</span></label>
-			<input type="text" value="" name="email"  required />
-		</p>
-		<p>
-			<label>Message<span style='color:red;'>*</span></label>
-<!-- 			<input type="text" value="" name="label:Message"  required="true"></input>
- -->
- 			<textarea  name="label:Message" maxlength='1000' height='250' required ></textarea>
-		</p>
-		<p>
-			<input type="submit" value="Submit" ></input>
-			<input type='reset'  value='Reset' />
-		</p>
-	</form>
+	<div class="span9">
+		<img width="800" src="../assets/horizontal.svg" style="margin: 50px auto 40px; display: block;">
+		<h3>Questions</h3>
+		<br/>
+		<%= faq "If I make a purchase after I share a post about this merchant with one of my social networks, will my purchase cause a donation?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<br/>
+		<%= faq "Do I have to make a purchase or spend any money?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<br/>
+		<%= faq "Do I have to create an account?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<br/>
+		<%= faq "How can I find out when I cause donations?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<br/>
+		<%= faq "What if the cause I select won't accept donations from this merchant?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<br/>
+		<%= faq "Why can't I find my favorite cause?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<br/>
+
+		<h3>Contact Us</h3>
+		<br/>
+		<div class='collapse-group contact-message row'>
+      		<div class='span1'><i class='fa fa-plus-square fa-2x'></i></div>
+      		<div class='span8 question'>Contact Us Form
+        		<div class='collapse answer'>
+			      	<%= form_for @message do |f| %>
+				        <%= render 'shared/error_messages', object: f.object %>
+				        <br/>
+
+				        <label>First Name<span style='color:red;'>*</span></label>
+				        <%= f.text_field :first_name, :required => true %>
+
+				        <label>Last Name<span style='color:red;'>*</span></label>
+				        <%= f.text_field :last_name, :required => true %>
+
+				        <%= f.label :phone %>
+				        <%= f.text_field :phone %>
+
+				        <label>Email<span style='color:red;'>*</span></label>
+				        <%= f.text_field :email, :required => true %>
+
+				        <label>Message<span style='color:red;'>*</span></label>
+				        <%= f.text_area :message, :required => true, :maxlength => 1000, :rows => 5 %>
+
+				        <br/>
+				        <%= recaptcha_tags %>
+				        <br/>
+
+				        <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
+				        <%= f.submit "Clear Form", :type => "reset", class: "btn btn-large btn-primary" %>
+				    <% end %>		
+        		</div>
+      		</div>
+    	</div>
+	</div>
 </div><!-- /.container -->
+
+<% content_for :js do %>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.fa-plus-square, .fa-minus-square-o, .question').on('click', function(e) {
+			    e.preventDefault();
+			    var $this = $(this);
+			    var $collapse = $this.closest('.collapse-group').find('.collapse');
+			    $collapse.collapse('toggle');
+			    var $square = $this.closest('.collapse-group').find('.fa-plus-square, .fa-minus-square-o');
+			    $square.toggleClass("fa-plus-square fa-minus-square-o");
+			    var $question = $this.closest('.collapse-group').find('.question');
+			    $question.toggleClass("grey");
+			});
+		});
+	</script>
+	<script type="text/javascript">
+ 		var RecaptchaOptions = {
+    		theme : 'clean'
+ 		};
+ 	</script>
+<% end %>
