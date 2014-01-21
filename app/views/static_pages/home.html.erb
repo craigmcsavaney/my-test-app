@@ -4,17 +4,21 @@
 		<img width="800" src="../assets/horizontal.svg" style="margin: 50px auto 40px; display: block;">
 		<h3>Questions</h3>
 		<br/>
-		<%= faq "If I make a purchase after I share a post about this merchant with one of my social networks, will my purchase cause a donation?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<%= faq "If I make a purchase after I share a post to one of my social networks, will my purchase cause a donation?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
 		<br/>
-		<%= faq "Do I have to make a purchase or spend any money?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<%= faq "Do I have to make a purchase or spend any money to support my cause?","Nope. No purchase, no fee, no donation, nothing. All the donations come directly from the merchants who display the CauseButton." %>
 		<br/>
-		<%= faq "Do I have to create an account?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<%= faq "Do I have to create an account?","No, no need to create an account. You might want to so you can see all the donations you've caused, but it's completely optional." %>
 		<br/>
-		<%= faq "How can I find out when I cause donations?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<%= faq "How can I find out when I cause donations?","Easy - enter your email address in the CauseButton widget and we'll send you an email whenever you cause a donation." %>
 		<br/>
-		<%= faq "What if the cause I select won't accept donations from this merchant?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<%= faq "What if the cause I select won't accept donations from this merchant?","If a donation can't be delivered to the cause you selected for any reason, that donation will always go to the merchant's preferred cause. Donations are never, ever kept by CauseButton." %>
 		<br/>
-		<%= faq "Why can't I find my favorite cause?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+		<%= faq "How many causes can I choose from?","You can choose from over 1.5 million registered charities in the US." %>
+		<br/>
+		<%= faq "What if a cause I love isn't registered in the US?","They won't be in our database, but if they contact us we can add them." %>
+		<br/>
+		<%= faq "Does CauseButton charge a fee to make all this cool stuff happen?","Yes. Merchants pay us for hosting their CauseButton promotions, and we withold a small transaction processing fee from each donation (cause movin' money around isn't free yet). The processing fee varies depending on whether we pay by check or electronically, and that choice can be made by the charity." %>
 		<br/>
 
 		<h3>Contact Us</h3>
@@ -23,7 +27,7 @@
       		<div class='span1'><i class='fa fa-plus-square fa-2x'></i></div>
       		<div class='span8'><span class='question'>Contact Us Form</span>
         		<div class='collapse'>
-			      	<%= form_for @message do |f| %>
+			      	<%= form_for @message, :html => { :id => 'contact-us-form' } do |f| %>
 				        <%= render 'shared/error_messages', object: f.object %>
 				        <br/>
 
