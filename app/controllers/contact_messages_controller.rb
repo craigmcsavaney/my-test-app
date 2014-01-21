@@ -5,7 +5,7 @@ class ContactMessagesController < ApplicationController
     if !@message.valid?
       flash[:failure] = "Oops - something's not right. Please try again."
     elsif !verify_recaptcha
-      flash[:failure] = "Oops - don't forget to fill out the Captcha phrase"
+      # this will raise the recaptcha api error, which gets translated in config/locales/en.yml
     else
       success = ContactMessage.post_contact_message(@message.first_name, @message.last_name, @message.phone, @message.email, @message.message)
       if success

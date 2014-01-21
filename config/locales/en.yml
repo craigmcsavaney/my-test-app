@@ -3,3 +3,8 @@
 
 en:
   hello: "Hello world"
+
+en:
+  recaptcha:
+    errors:
+      incorrect-captcha-sol: 'Oops - please try filling out the Captcha phrase again.'
