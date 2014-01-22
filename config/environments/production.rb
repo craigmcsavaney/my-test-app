@@ -49,7 +49,7 @@ Myapplication::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( holder.js select2.js select2.min.js select2_locale_en.js widget/cbwidget.js widget/bootstrap.min.js widget/select2.js widget/select2.min.js widget/select2_locale_en.js widget/cbw-bootstrap.css widget/select2.css widget/cbwidget.css favicon.ico )
+  config.assets.precompile += %w( holder.js select2.js select2.min.js select2_locale_en.js widget/cbwidget.js widget/bootstrap.min.js widget/select2.js widget/select2.min.js widget/select2_locale_en.js widget/cbw-bootstrap.css widget/select2.css widget/cbwidget.css )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
