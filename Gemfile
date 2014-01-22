@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '1.9.3'
 gem 'rails', '3.2.13'
 gem 'bootstrap-sass', '2.1'
 gem 'bcrypt-ruby', '3.0.1'
@@ -9,7 +10,7 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'cancan', '1.6.10'
 gem 'vestal_versions', :git => 'git://github.com/laserlemon/vestal_versions'
 gem 'amoeba', '2.0.0'
-gem 'devise', '3.0.0'
+gem 'devise', '3.2.2'
 # gem 'devise', '3.1.1'
 gem 'seedbank', github: 'james2m/seedbank'
 gem 'rabl', '0.8.6'
@@ -17,13 +18,15 @@ gem 'oj', '2.1.4'
 gem 'awesm', '0.1.10'
 gem 'money-rails', '0.8.1'
 gem "select2-rails", "~> 3.5.0"
-gem 'devise_invitable', '1.1.8'
+gem 'devise_invitable', '1.3.2'
 gem 'rest-client', :require => 'rest-client'
 # gem 'devise_invitable', '1.3.0'
+gem 'rails4_upgrade'
 
 #added following require and gem for Guard compatibility with wdm
 require 'rbconfig'
 gem 'wdm', '>= 0.1.0' if RbConfig::CONFIG['target_os'] =~ /mswin|mingw/i
+
 
 
 group :development do
@@ -56,7 +59,7 @@ group :test do
   gem 'rb-notifu', '0.0.4'
   gem 'win32console', '1.3.0'
   gem 'factory_girl_rails', '4.1.0'
-  gem 'email_spec'
+  gem 'email_spec', '1.5.0'
 end
 
 group :production, :staging do
