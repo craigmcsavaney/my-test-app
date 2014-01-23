@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+ruby '1.9.3'
+gem 'rails', '~>4.0.0'
 gem 'bootstrap-sass', '2.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
@@ -20,9 +21,28 @@ gem "select2-rails", "~> 3.5.0"
 gem 'devise_invitable', '1.1.8'
 gem 'rest-client', :require => 'rest-client'
 gem 'font-awesome-sass'
-# gem 'devise_invitable', '1.3.0'
 gem 'activerecord-tableless', '~> 1.0'
 gem "recaptcha", :require => "recaptcha/rails"
+
+# rails 4 upgrade gem:
+gem 'rails4_upgrade'
+# following three moved as part of 4.0 upgrade
+gem 'sass-rails', '~>4.0.0'
+gem 'coffee-rails', '~>4.0.0'
+gem 'uglifier', '>=1.3.0'
+# added as part of 4.0 upgrade:
+gem 'actionpack-action_caching', '~>1.0.0'
+gem 'actionpack-page_caching', '~>1.0.0'
+gem 'actionpack-xml_parser', '~>1.0.0'
+gem 'actionview-encoded_mail_to', '~>1.0.4'
+gem 'activerecord-session_store', '~>0.0.1'
+gem 'activeresource', '~>4.0.0.beta1'
+gem 'protected_attributes', '~>1.0.1'
+gem 'rails-observers', '~>0.1.1'
+gem 'rails-perftest', '~>0.0.2'
+
+# Following gem added because this is the version Devise 3.2.2 needs at the moment:
+gem 'activesupport', '4.0.2'
 
 #added following require and gem for Guard compatibility with wdm
 require 'rbconfig'
@@ -30,31 +50,33 @@ gem 'wdm', '>= 0.1.0' if RbConfig::CONFIG['target_os'] =~ /mswin|mingw/i
 
 
 group :development do
-	gem 'mysql2', '0.3.11'
-	gem 'guard-rspec', '1.2.1'
+  gem 'mysql2', '0.3.11'
+  gem 'guard-rspec', '1.2.1'
   gem 'annotate', '2.5.0'
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.11.0'
+  gem 'rspec-rails', '>= 2.13.2'
   gem 'guard-spork', '1.2.0'
   gem 'childprocess', '0.3.9'
   gem 'spork', '0.9.2'
   gem 'rails-erd'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '3.2.5'
-  gem 'coffee-rails', '3.2.2'
-  gem 'uglifier', '1.2.3'
-end
+# Delete `group :assets` and move these gems
+# (and any others) to the top level as part of upgrade to rails 4.0
+# # Gems used only for assets and not required
+# # in production environments by default.
+# group :assets do
+#   gem 'sass-rails',   '3.2.5'
+#   gem 'coffee-rails', '3.2.2'
+#   gem 'uglifier', '1.2.3'
+# end
 
 gem 'jquery-rails', '2.0.2'
 
 group :test do
-	gem 'capybara', '1.1.2'
+  gem 'capybara', '1.1.2'
   gem 'rb-fchange', '0.0.5'
   gem 'rb-notifu', '0.0.4'
   gem 'win32console', '1.3.0'
@@ -63,7 +85,7 @@ group :test do
 end
 
 group :production, :staging do
-	gem 'pg'
+  gem 'pg'
   gem 'rails_12factor'
 end
 
