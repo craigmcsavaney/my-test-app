@@ -9,7 +9,7 @@ class ContactMessagesController < ApplicationController
     else
       success = ContactMessage.post_contact_message(@message.first_name, @message.last_name, @message.phone, @message.email, @message.message)
       if success
-        flash[:success] = "Thanks - your message was submitted successfully!"
+        flash[:success] = "Thanks - we got your message and we'll get back to you shortly!"
         @message = ContactMessage.new
       else
         flash[:failure] = "Oops - something went wrong.  Please try again."
