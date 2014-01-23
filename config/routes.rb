@@ -1,13 +1,13 @@
 Myapplication::Application.routes.draw do
   namespace :api do
     namespace :v1 do
-      match 'serve/:merchant_id', to: 'api#serve', :as => :serve, format: 'json'
-      match 'view/:merchant_id', to: 'api#view', :as => :view, format: 'json'
-      match 'update/:merchant_id', to: 'api#update', :as => :update, format: 'json'
-      match 'causes/:merchant_id', to: 'api#causes', :as => :causes, format: 'json'
-      match 'events/:merchant_id', to: 'api#events', :as => :events, format: 'json'
-      match 'sale', to: 'api#sale', :as => :sale, format: 'json'
-      match 'content', to: 'api#content', :as => :content, format: 'json'
+      match 'serve/:merchant_id', to: 'api#serve', :as => :serve, format: 'json', :via => :any
+      match 'view/:merchant_id', to: 'api#view', :as => :view, format: 'json', :via => :any
+      match 'update/:merchant_id', to: 'api#update', :as => :update, format: 'json', :via => :any
+      match 'causes/:merchant_id', to: 'api#causes', :as => :causes, format: 'json', :via => :any
+      match 'events/:merchant_id', to: 'api#events', :as => :events, format: 'json', :via => :any
+      match 'sale', to: 'api#sale', :as => :sale, format: 'json', :via => :any
+      match 'content', to: 'api#content', :as => :content, format: 'json', :via => :any
     end
   end
 
@@ -16,41 +16,41 @@ Myapplication::Application.routes.draw do
   #match '/api/serve/:merchant_id', to: 'api#serve', :as => :api_serve, format: 'json'
   #match '/api/serve/:merchant_id', to: 'api#serve', :as => :api_serve, format: 'json'
 
-  match '/merchants/new_admin',  to: 'merchants#new_admin', :as => :new_merchant_admin 
-  match '/merchants/create_admin',  to: 'merchants#create_admin'
-  match '/merchants/index_admin',  to: 'merchants#index_admin', :as => :merchants_admin 
-  match '/merchants/:id/edit_admin',  to: 'merchants#edit_admin', :as => :edit_merchant_admin 
-  match '/merchants/:id/update_admin',  to: 'merchants#update_admin'
-  match '/merchants/:id/destroy_admin',  to: 'merchants#destroy_admin', :as => :destroy_merchant_admin
-  match '/merchants/:id/current',  to: 'merchants#current', :as => :current_promotion
-  match '/merchants/show_admin/:id',  to: 'merchants#show_admin', :as => :merchant_admin 
+  get '/merchants/new_admin',  to: 'merchants#new_admin', :as => :new_merchant_admin
+  post '/merchants/create_admin',  to: 'merchants#create_admin'
+  get '/merchants/index_admin',  to: 'merchants#index_admin', :as => :merchants_admin
+  get '/merchants/:id/edit_admin',  to: 'merchants#edit_admin', :as => :edit_merchant_admin
+  patch '/merchants/:id/update_admin',  to: 'merchants#update_admin'
+  delete '/merchants/:id/destroy_admin',  to: 'merchants#destroy_admin', :as => :destroy_merchant_admin
+  get '/merchants/:id/current',  to: 'merchants#current', :as => :current_merchant
+  get '/merchants/show_admin/:id',  to: 'merchants#show_admin', :as => :merchant_admin
 
-  match '/promotions/new_admin',  to: 'promotions#new_admin', :as => :new_promotion_admin 
-  match '/promotions/create_admin',  to: 'promotions#create_admin'
-  match '/promotions/index_admin',  to: 'promotions#index_admin', :as => :promotions_admin 
-  match '/promotions/:id/edit_admin',  to: 'promotions#edit_admin', :as => :edit_promotion_admin 
-  match '/promotions/:id/update_admin',  to: 'promotions#update_admin'
-  match '/promotions/:id/destroy_admin',  to: 'promotions#destroy_admin', :as => :destroy_promotion_admin
-  match '/promotions/:id/duplicate',  to: 'promotions#duplicate', :as => :duplicate_promotion
-  match '/promotions/:id/duplicate_admin',  to: 'promotions#duplicate_admin', :as => :duplicate_promotion_admin
-  match '/promotions/:merchant_id/current',  to: 'promotions#current', :as => :current_promotion
+  get '/promotions/new_admin',  to: 'promotions#new_admin', :as => :new_promotion_admin , :via => :any
+  post '/promotions/create_admin',  to: 'promotions#create_admin', :via => :any
+  get '/promotions/index_admin',  to: 'promotions#index_admin', :as => :promotions_admin , :via => :any
+  get '/promotions/:id/edit_admin',  to: 'promotions#edit_admin', :as => :edit_promotion_admin, :via => :any 
+  patch '/promotions/:id/update_admin',  to: 'promotions#update_admin', :via => :any
+  delete '/promotions/:id/destroy_admin',  to: 'promotions#destroy_admin', :as => :destroy_promotion_admin, :via => :any
+  get '/promotions/:id/duplicate',  to: 'promotions#duplicate', :as => :duplicate_promotion, :via => :any
+  get '/promotions/:id/duplicate_admin',  to: 'promotions#duplicate_admin', :as => :duplicate_promotion_admin, :via => :any
+  get '/promotions/:merchant_id/current',  to: 'promotions#current', :as => :current_promotion, :via => :any
 
-  match '/causes/new_admin',  to: 'causes#new_admin', :as => :new_cause_admin 
-  match '/causes/create_admin',  to: 'causes#create_admin'
-  match '/causes/index_admin',  to: 'causes#index_admin', :as => :causes_admin 
-  match '/causes/:id/edit_admin',  to: 'causes#edit_admin', :as => :edit_cause_admin 
-  match '/causes/:id/update_admin',  to: 'causes#update_admin'
-  match '/causes/:id/destroy_admin',  to: 'causes#destroy_admin', :as => :destroy_cause_admin
+  get '/causes/new_admin',  to: 'causes#new_admin', :as => :new_cause_admin , :via => :any
+  post '/causes/create_admin',  to: 'causes#create_admin', :via => :any
+  get '/causes/index_admin',  to: 'causes#index_admin', :as => :causes_admin , :via => :any
+  get '/causes/:id/edit_admin',  to: 'causes#edit_admin', :as => :edit_cause_admin , :via => :any
+  patch '/causes/:id/update_admin',  to: 'causes#update_admin', :via => :any
+  delete '/causes/:id/destroy_admin',  to: 'causes#destroy_admin', :as => :destroy_cause_admin, :via => :any
 
-  match '/singles/new_admin',  to: 'singles#new_admin', :as => :new_single_admin 
-  match '/singles/create_admin',  to: 'singles#create_admin'
-  match '/singles/index_admin',  to: 'singles#index_admin', :as => :singles_admin 
-  match '/singles/:id/edit_admin',  to: 'singles#edit_admin', :as => :edit_single_admin 
-  match '/singles/:id/update_admin',  to: 'singles#update_admin'
-  match '/singles/:id/destroy_admin',  to: 'singles#destroy_admin', :as => :destroy_single_admin
+  get '/singles/new_admin',  to: 'singles#new_admin', :as => :new_single_admin , :via => :any
+  post '/singles/create_admin',  to: 'singles#create_admin', :via => :any
+  get '/singles/index_admin',  to: 'singles#index_admin', :as => :singles_admin , :via => :any
+  get '/singles/:id/edit_admin',  to: 'singles#edit_admin', :as => :edit_single_admin , :via => :any
+  patch '/singles/:id/update_admin',  to: 'singles#update_admin', :via => :any
+  delete '/singles/:id/destroy_admin',  to: 'singles#destroy_admin', :as => :destroy_single_admin, :via => :any
 
-  match '/donations/index_admin',  to: 'donations#index_admin', :as => :donations_admin 
-  match '/donations/show_admin/:id',  to: 'donations#show_admin', :as => :donation_admin 
+  get '/donations/index_admin',  to: 'donations#index_admin', :as => :donations_admin , :via => :any
+  get '/donations/show_admin/:id',  to: 'donations#show_admin', :as => :donation_admin , :via => :any
 
   resources :roles
   resources :merchants
@@ -68,20 +68,17 @@ Myapplication::Application.routes.draw do
   resources :events
   resources :groups
   resources :singles
+  resources :contact_messages, only: :create
   
   root to: 'static_pages#landing'
 
-  match '/home',    to: 'static_pages#home'
-  match '/help',    to: 'static_pages#help'
-  match '/about',   to: 'static_pages#about'
-  match '/contact', to: 'static_pages#contact'
-  match '/signup',  to: 'devise/registrations#new'
-  #match '/new_merchant',  to: 'merchants#new'
-  match '/new-merchant',  to: 'merchants#new'
-  match '/create_promotion',  to: 'promotions#new'
-  match '/create-promotion',  to: 'promotions#new'
-  match '/user/sign_out', to: 'devise/sessions#destroy'
-
+  get '/home',    to: 'static_pages#home'
+  get '/help',    to: 'static_pages#help'
+  get '/about',   to: 'static_pages#about'
+  get '/contact', to: 'static_pages#contact'
+  get '/signup',  to: 'devise/registrations#new'
+  get '/create_promotion',  to: 'promotions#new'
+  delete '/user/sign_out', to: 'devise/sessions#destroy'
 
 
   devise_for :users
