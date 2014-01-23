@@ -60,10 +60,10 @@
 	<b>Description: </b><%= link_to promotion.description, @editpath %><br/>
 	<b>Button Style: </b><%= link_to promotion.button.name, @editpath %><br/>
 	<b>Widget Location: </b><%= link_to @k, @editpath %><br/>
-	<b>Merchant Pct: </b><%= link_to @a, @editpath %>&nbsp;&nbsp;
-	<b>Supporter Pct: </b><%= link_to @c, @editpath %>&nbsp;&nbsp;
-	<b>Buyer Pct: </b><%= link_to @d, @editpath %><br/>
-	<b>Preferred Cause: </b><%= link_to @b, @editpath %><br/>
+	<b>Merchant Pct: </b><%= link_to promotion.try(:merchant_pct), @editpath %>&nbsp;&nbsp;
+	<b>Supporter Pct: </b><%= link_to promotion.try(:supporter_pct), @editpath %>&nbsp;&nbsp;
+	<b>Buyer Pct: </b><%= link_to promotion.try(:buyer_pct), @editpath %><br/>
+	<b>Preferred Cause: </b><%= link_to promotion.cause.try(:name), @editpath %><br/>
 	<b>Channels</b><% for channel in promotion.channels %>
 		<b>:&nbsp;</b><%= link_to channel.name, @editpath %>&nbsp;
 	<% end %><br/>
@@ -90,8 +90,8 @@
 	<b>Email Body Template </b><%= link_to promotion.email_body_template, @editpath %><br/>
 	<b>Email Body </b><%= link_to promotion.email_body, @editpath %><br/>
 	<b>Start Date: </b><%= link_to promotion.start_date, @editpath %>&nbsp;&nbsp;
-	<b>End Date: </b><%= link_to @f, @editpath %>&nbsp;&nbsp;
-	<b>Priority: </b><%= link_to @e, @editpath %>&nbsp;&nbsp;
+	<b>End Date: </b><%= link_to promotion.try(:end_date), @editpath %>&nbsp;&nbsp;
+	<b>Priority: </b><%= link_to promotion.try(:priority), @editpath %>&nbsp;&nbsp;
 	<b>Disabled: </b><%= link_to @h, @editpath %><br/>
 	<% @current = Current.get_current_promotion(Date.today,promotion.merchant) %>
     <% @current_promotion = @current[:promotion] %>
