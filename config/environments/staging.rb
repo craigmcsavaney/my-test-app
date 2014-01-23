@@ -20,7 +20,7 @@ Myapplication::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-    # following added by craig, supposedly required to be false on Heroku
+  # following added by craig, supposedly required to be false on Heroku
   config.assets.initialize_on_precompile = false 
 
   # Defaults to nil and saved in location specified by config.assets.prefix
@@ -63,6 +63,9 @@ Myapplication::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # added by craig as part of rails 4.0 upgrade:
+  config.eager_load = false
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)

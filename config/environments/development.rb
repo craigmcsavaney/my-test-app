@@ -7,7 +7,8 @@ Myapplication::Application.configure do
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # deprecated in rails 4.0:
+  # config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -27,7 +28,8 @@ Myapplication::Application.configure do
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
-  config.active_record.auto_explain_threshold_in_seconds = 0.5
+  # deprecated in rails 4.0:
+  #config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Do not compress assets
   config.assets.compress = false
@@ -39,6 +41,9 @@ Myapplication::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {:address => 'localhost', :port => '1025'}
+
+  # added by craig as part of rails 4.0 upgrade:
+  config.eager_load = false
   
   # following is configuration to send development emails via Gmail
   # config.action_mailer.smtp_settings = {

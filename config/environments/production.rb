@@ -64,6 +64,9 @@ Myapplication::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  # added by craig as part of rails 4.0 upgrade:
+  config.eager_load = false
+
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
