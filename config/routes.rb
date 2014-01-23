@@ -1,13 +1,13 @@
 Myapplication::Application.routes.draw do
   namespace :api do
     namespace :v1 do
-      match 'serve/:merchant_id', to: 'api#serve', :as => :serve, format: 'json', :via => :any
-      match 'view/:merchant_id', to: 'api#view', :as => :view, format: 'json', :via => :any
-      match 'update/:merchant_id', to: 'api#update', :as => :update, format: 'json', :via => :any
-      match 'causes/:merchant_id', to: 'api#causes', :as => :causes, format: 'json', :via => :any
-      match 'events/:merchant_id', to: 'api#events', :as => :events, format: 'json', :via => :any
-      match 'sale', to: 'api#sale', :as => :sale, format: 'json', :via => :any
-      match 'content', to: 'api#content', :as => :content, format: 'json', :via => :any
+      get 'serve/:merchant_id', to: 'api#serve', :as => :serve, format: 'json'
+      get 'view/:merchant_id', to: 'api#view', :as => :view, format: 'json'
+      get 'update/:merchant_id', to: 'api#update', :as => :update, format: 'json'
+      get 'causes/:merchant_id', to: 'api#causes', :as => :causes, format: 'json'
+      get 'events/:merchant_id', to: 'api#events', :as => :events, format: 'json'
+      get 'sale', to: 'api#sale', :as => :sale, format: 'json'
+      get 'content', to: 'api#content', :as => :content, format: 'json'
     end
   end
 
