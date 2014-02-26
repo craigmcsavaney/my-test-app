@@ -1957,7 +1957,7 @@ function CBSale(amount,transaction_id) {
 
             var windowName = "causebutton_twitter_share_window";
 
-            var windowSpecs = "width=550,height=258,resizable=0,scrollbars=0";
+            var windowSpecs = "width=550,height=258,resizable=0,scrollbars=0,menubar=0,toolbar=0,status=0,location=0,titlebar=0";
 
             window.open(apiCall, windowName, windowSpecs);
 
@@ -1999,7 +1999,7 @@ function CBSale(amount,transaction_id) {
 
             var windowName = "causebutton_facebook_share_window";
 
-            var windowSpecs = "width=640,height=370,resizable=0,scrollbars=0";
+            var windowSpecs = "width=640,height=370,resizable=0,scrollbars=0,menubar=0,toolbar=0,status=0,location=0,titlebar=0";
 
             window.open(apiCall, windowName, windowSpecs);
 
@@ -2028,7 +2028,7 @@ function CBSale(amount,transaction_id) {
 
             var windowName = "causebutton_pinterest_share_window";
 
-            var windowSpecs = "width=665,height=350,resizable=0,scrollbars=0";
+            var windowSpecs = "width=665,height=350,resizable=0,scrollbars=0,menubar=0,toolbar=0,status=0,location=0,titlebar=0";
 
             window.open(apiCall, windowName, windowSpecs);
 
