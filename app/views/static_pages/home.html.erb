@@ -94,10 +94,10 @@
 			    //$collapse.collapse('toggle');
 			    if ($collapse.hasClass('in')) {
 			    	$collapse.removeClass('in');
-			    	$collapse.css({'height':'0px'});
+			    	$collapse.css({'height':'0px','display':'none'});
 			    } else {
 			    	$collapse.addClass('in');
-			    	$collapse.css({'height':'auto'});
+			    	$collapse.css({'height':'auto','display':'table'});
 			    }
 			    var $square = $this.closest('.collapse-group').find('.fa-plus-square, .fa-minus-square-o');
 			    $square.toggleClass("fa-plus-square fa-minus-square-o");

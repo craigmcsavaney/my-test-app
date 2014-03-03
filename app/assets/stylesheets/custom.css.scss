@@ -303,6 +303,10 @@ select#promotion_start_date_1i,  select#promotion_start_date_2i, select#promotio
   color: grey;
 }
 
+.collapse-group .collapse {
+  display: none;
+}
+
 #contact-us-form label, #contact-us-form input, #contact-us-form textarea {
   line-height: 18px;
   font-size: 1.0em;
