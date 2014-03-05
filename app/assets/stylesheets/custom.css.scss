@@ -140,6 +140,24 @@ p {
   }
 }
 
+#header-logo {
+  float: left;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+  height: 34px;
+  padding: 6px;
+  margin: 5px;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.navbar .nav {
+  margin-top:5px;
+}
+
+
 /* footer */
 
 footer {
