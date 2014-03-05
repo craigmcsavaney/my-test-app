@@ -1,88 +1,115 @@
 <% provide(:title, 'Home') %>
-<div class="container">
-	<div class="span9">
-		<img width="800" src="<%= image_path('horizontal.svg') %>" style="margin: 50px auto 0px; display: block;">
-		<div style="text-align:center; display: block;">
-			<h3>connecting companies, customers, and causes.&nbsp;&nbsp;for good.</h3>
+<div style="background:rgba(255,255,255,1);padding:125px 0px 125px 0px;">
+	<div class="container">
+		<div class="span9">
+			<img width="800" src="<%= image_path('horizontal.svg') %>" style="margin: 0 auto; display: block;">
+			<div style="text-align:center; display: block;">
+				<h3>connecting companies, customers, and causes.&nbsp;&nbsp;for good.</h3>
+			</div>
 		</div>
-		<br/><br/>
-		<h2 style="margin: 0 auto; display: block;">View this video to learn about CauseButton ...</h2><br/>
-		<iframe style="margin: 0 auto; display: block;" width="853" height="520" src="//www.youtube.com/embed/bZC8G6Eprdc?rel=0" frameborder="0" allowfullscreen></iframe>
-		<br/><br/>
-		<h3>Questions from customers</h3>
-		<br/>
-		<%= faq "Who decides how much the donation to the cause will be?","The merchant that displays the Cause Button has complete control over the amount of the donation they're offering to make, and what you'll need to do to make that donation happen." %>
-		<br/>
-		<%= faq "If I make a purchase after I share a post to one of my social networks, will my purchase cause a donation?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
-		<br/>
-		<%= faq "Do I have to make a purchase or spend any money to support my cause?","Nope. No purchase, no fee, no donation, nothing. All the donations come directly from the merchants who display the CauseButton." %>
-		<br/>
-		<%= faq "Do I have to create an account?","Nope, there's no need to create an account. You might want to so you can see all the donations you've caused, but it's completely optional." %>
-		<br/>
-		<%= faq "How can I find out when I cause donations?","Easy - enter your email address in the CauseButton pop-up and we'll send you an email whenever you cause a donation." %>
-		<br/>
-		<%= faq "What if the cause I select won't accept donations from this merchant?","If a donation can't be delivered to the cause you selected for any reason, that donation will always go to the merchant's preferred cause. Donations are never kept by CauseButton." %>
-		<br/>
-		<%= faq "How many causes can I choose from?","You can choose from over 1.5 million registered charities in the US." %>
-		<br/>
-		<%= faq "What if a cause I love isn't registered in the US?","They won't be in our database, but if they contact us we can add them." %>
-		<br/>
-		<%= faq "Does CauseButton charge a fee to make all this cool stuff happen?","Yes. Merchants pay us for hosting their CauseButton promotions, and we withold a small transaction processing fee from each donation (cause movin' money around isn't free yet). The processing fee varies depending on whether we disburse the donation by check or electronically, and that choice can be made by the charity." %>
-		<br/>
-		<h3>Questions from companies</h3>
-		<br/>
-		<%= faq "How hard is it to add a CauseButton to my website?","It's easy.  Just cut and paste three lines of code and you're done." %>
-		<br/>
-		<%= faq "How much does it cost to use CauseButton?","Our fee is based on the type of customer activity you're trying to reward, and is always a very small transaction-based fee.  Contact Us below to learn more." %>
-		<br/>
-		<%= faq "What are some common ways companies use the CauseButton?","Companies most often use CauseButton to reward customers for social network promotion, creating an account, completing an incomplete profile, completing a survey, updating or changing payment methods, renewing memberships or subscriptions, upgrading from free to paid product versions, and similar activities." %>
-		<br/>
-		<h3>Questions from causes</h3>
-		<br/>
-		<%= faq "How can we increase the amount of CauseButton donations we receive?","The best way is to contact companies that you already work with and tell them that you will encourage your supporters to visit their website and purchase their products if they agree to make you their preferred cause for their CauseButton campaigns." %>
-		<br/>
-		<%= faq "How can we get our donations more quickly and with lower transfer fees?","If you can receive donations through Dwolla, we can get them to you faster, and the transfer fee is lower.  Contact us and we'll get it all set up." %>
-		<br/>
-		<%= faq "How can we tell if we're in your database of causes?","Easy - if you're one of the 1.6 million federally registered non-profits in the US and you have been issued an EIN, you're in our database.  If you're not in our database, please contact us." %>
-		<br/>
-		<br/>
-		<h3>Contact Us</h3>
-		<br/>
-		<div class='collapse-group contact-message row'>
-      		<div class='span1'><i class='fa fa-plus-square fa-2x'></i></div>
-      		<div class='span8'><span class='question'>Contact Us Form</span>
-        		<div class='collapse'>
-			      	<%= form_for @message, :html => { :id => 'contact-us-form' } do |f| %>
-				        <%= render 'shared/error_messages', object: f.object %>
-				        <br/>
-
-				        <label>First Name<span style='color:red;'>*</span></label>
-				        <%= f.text_field :first_name, :required => true %>
-
-				        <label>Last Name<span style='color:red;'>*</span></label>
-				        <%= f.text_field :last_name, :required => true %>
-
-				        <%= f.label :phone %>
-				        <%= f.text_field :phone %>
-
-				        <label>Email<span style='color:red;'>*</span></label>
-				        <%= f.text_field :email, :required => true %>
-
-				        <label>Message<span style='color:red;'>*</span></label>
-				        <%= f.text_area :message, :required => true, :maxlength => 1000, :rows => 5 %>
-
-				        <br/>
-				        <%= recaptcha_tags %>
-				        <br/>
-
-				        <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
-				        <%= f.submit "Clear Form", :type => "reset", class: "btn btn-large btn-primary" %>
-				    <% end %>		
-        		</div>
-      		</div>
-    	</div>
 	</div>
-</div><!-- /.container -->
+</div>
+<div style="background:rgba(255,255,255,1);padding:10px 0px 10px 0px;">
+	<div class="container">
+		<div class="span9">
+			<br/><br/>
+			<h2 style="margin: 0 auto; display: block;">View this video to learn about CauseButton ...</h2><br/>
+			<iframe style="margin: 0 auto; display: block;" width="853" height="520" src="//www.youtube.com/embed/LfyClKXHtnI?rel=0" frameborder="0" allowfullscreen></iframe>
+		</div>
+	</div>
+</div>
+<div style="background:rgba(255,255,255,1);padding:10px 0px 10px 0px;">
+	<div class="container">
+		<div class="span9">
+			<h3>Questions from customers</h3>
+			<br/>
+			<%= faq "Who decides how much the donation to the cause will be?","The merchant that displays the Cause Button has complete control over the amount of the donation they're offering to make, and what you'll need to do to make that donation happen." %>
+			<br/>
+			<%= faq "If I make a purchase after I share a post to one of my social networks, will my purchase cause a donation?","Yes, your purchase will cause the merchant to make a donation to the selected cause or cause group, but only if you've shared a post with at least one of your social networks." %>
+			<br/>
+			<%= faq "Do I have to make a purchase or spend any money to support my cause?","Nope. No purchase, no fee, no donation, nothing. All the donations come directly from the merchants who display the CauseButton." %>
+			<br/>
+			<%= faq "Do I have to create an account?","Nope, there's no need to create an account. You might want to so you can see all the donations you've caused, but it's completely optional." %>
+			<br/>
+			<%= faq "How can I find out when I cause donations?","Easy - enter your email address in the CauseButton pop-up and we'll send you an email whenever you cause a donation." %>
+			<br/>
+			<%= faq "What if the cause I select won't accept donations from this merchant?","If a donation can't be delivered to the cause you selected for any reason, that donation will always go to the merchant's preferred cause. Donations are never kept by CauseButton." %>
+			<br/>
+			<%= faq "How many causes can I choose from?","You can choose from over 1.5 million registered charities in the US." %>
+			<br/>
+			<%= faq "What if a cause I love isn't registered in the US?","They won't be in our database, but if they contact us we can add them." %>
+			<br/>
+			<%= faq "Does CauseButton charge a fee to make all this cool stuff happen?","Yes. Merchants pay us for hosting their CauseButton promotions, and we withold a small transaction processing fee from each donation (cause movin' money around isn't free yet). The processing fee varies depending on whether we disburse the donation by check or electronically, and that choice can be made by the charity." %>
+		</div>
+	</div>
+</div>
+<div style="background:rgba(255,255,255,1);padding:10px 0px 10px 0px;">
+	<div class="container">
+		<div class="span9">
+			<h3>Questions from companies</h3>
+			<br/>
+			<%= faq "How hard is it to add a CauseButton to my website?","It's easy.  Just cut and paste three lines of code and you're done." %>
+			<br/>
+			<%= faq "How much does it cost to use CauseButton?","Our fee is based on the type of customer activity you're trying to reward, and is always a very small transaction-based fee.  Contact Us below to learn more." %>
+			<br/>
+			<%= faq "What are some common ways companies use the CauseButton?","Companies most often use CauseButton to reward customers for social network promotion, creating an account, completing an incomplete profile, completing a survey, updating or changing payment methods, renewing memberships or subscriptions, upgrading from free to paid product versions, and similar activities." %>
+		</div>
+	</div>
+</div>
+<div style="background:rgba(255,255,255,1);padding:10px 0px 10px 0px;">
+	<div class="container">
+		<div class="span9">
+			<h3>Questions from causes</h3>
+			<br/>
+			<%= faq "How can we increase the amount of CauseButton donations we receive?","The best way is to contact companies that you already work with and tell them that you will encourage your supporters to visit their website and purchase their products if they agree to make you their preferred cause for their CauseButton campaigns." %>
+			<br/>
+			<%= faq "How can we get our donations more quickly and with lower transfer fees?","If you can receive donations through Dwolla, we can get them to you faster, and the transfer fee is lower.  Contact us and we'll get it all set up." %>
+			<br/>
+			<%= faq "How can we tell if we're in your database of causes?","Easy - if you're one of the 1.6 million federally registered non-profits in the US and you have been issued an EIN, you're in our database.  If you're not in our database, please contact us." %>
+		</div>
+	</div>
+</div>
+<div style="background:rgba(255,255,255,1);padding:10px 0px 10px 0px;">
+	<div class="container">
+		<div class="span9">
+			<h3>Contact Us</h3>
+			<br/>
+			<div class='collapse-group contact-message row'>
+	      		<div class='span1'><i class='fa fa-plus-square fa-2x'></i></div>
+	      		<div class='span8'><span class='question'>Contact Us Form</span>
+	        		<div class='collapse'>
+				      	<%= form_for @message, :html => { :id => 'contact-us-form' } do |f| %>
+					        <%= render 'shared/error_messages', object: f.object %>
+					        <br/>
+
+					        <label>First Name<span style='color:red;'>*</span></label>
+					        <%= f.text_field :first_name, :required => true %>
+
+					        <label>Last Name<span style='color:red;'>*</span></label>
+					        <%= f.text_field :last_name, :required => true %>
+
+					        <%= f.label :phone %>
+					        <%= f.text_field :phone %>
+
+					        <label>Email<span style='color:red;'>*</span></label>
+					        <%= f.text_field :email, :required => true %>
+
+					        <label>Message<span style='color:red;'>*</span></label>
+					        <%= f.text_area :message, :required => true, :maxlength => 1000, :rows => 5 %>
+
+					        <br/>
+					        <%= recaptcha_tags %>
+					        <br/>
+
+					        <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
+					        <%= f.submit "Clear Form", :type => "reset", class: "btn btn-large btn-primary" %>
+					    <% end %>		
+	        		</div>
+	      		</div>
+	    	</div>
+		</div>
+	</div><!-- /.container -->
+</div>
 
 <% content_for :js do %>
 	<script type="text/javascript">
