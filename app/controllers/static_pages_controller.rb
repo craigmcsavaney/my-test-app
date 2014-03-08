@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-	layout false, only: :landing
+	# layout false, only: :landing  moved this down to the individual methods that don't use layout
 
   	def home
       # create new message object for the contact_message form on the home page
@@ -28,13 +28,17 @@ class StaticPagesController < ApplicationController
   	end
 
   	def about
-  	#TestMailer.welcome_email2.deliver
   	end
 
   	def contact
   	end
 
     def landing
+      render :layout => false
+    end
+
+    def facebook_success
+      render :layout => false
     end
 
 end
