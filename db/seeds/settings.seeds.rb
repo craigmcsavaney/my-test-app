@@ -20,7 +20,7 @@ puts 'Preparing to create seed Settings'
       banner_template_8: "Share with your friends and we'll donate {{supporter_pct}}% to the cause of your choice, plus we'll donate an additional {{merchant_pct}}% to the {{merchant_cause}}!", 
       fb_link_label: "The Caption", 
       fb_caption: "Click Me",
-      fb_redirect_url: "http://www.example.com",
+      fb_redirect_url: "https://www.causebutton.com/facebook-success",
       fb_thumb_url: "http://www.example.com",
       fb_msg_template_1: "fb msg template 1",
       fb_msg_template_2: "fb msg template 2",
