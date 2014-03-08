@@ -1401,7 +1401,8 @@ function CBSale(amount,transaction_id) {
 
                         // *** REDIRECT_URL MUST BE FOR THE SAME DOMAIN THAT FB APP IS REGISTERED TO ***
                         // *** HARDCODING HERE FOR NOW *** //s
-                        redirect_uri = "http://causebutton.com/index.html?xyz=123";
+                        // redirect_uri = "http://causebutton.com/index.html?xyz=123";
+                        redirect_uri = "https://causebutton.com/facebook-success";
 
                         // This is the app_id for the Facebook Causebutton app: 
                         var app_id = "1412032855697890";
