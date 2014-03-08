@@ -77,6 +77,7 @@ Myapplication::Application.routes.draw do
   get '/about',   to: 'static_pages#about'
   get '/contact', to: 'static_pages#contact'
   get '/signup',  to: 'devise/registrations#new'
+  get '/facebook-success', to: 'static_pages#facebook_success'
   get '/create_promotion',  to: 'promotions#new'
   delete '/user/sign_out', to: 'devise/sessions#destroy'
 
