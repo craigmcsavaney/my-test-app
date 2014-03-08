@@ -101,10 +101,10 @@
 			<br/><br/>
 
 	        <%= f.label :button_id, "Button Style For This Promotion" %>
-	        <%= select_tag 'promotion[button_id]', options_from_collection_for_select(Button.all, :id, :name, @promotion.button_id), prompt: "use the default widget location for this merchant" %>
+	        <%= select_tag 'promotion[button_id]', options_from_collection_for_select(Button.all, :id, :name, @promotion.button_id), prompt: "use the default button style for this merchant" %>
 
 	        <%= f.label :widget_position_id, "Widget Location for this promotion (will be overridden if page-specific locations are implemented)" %>
-	        <%= select_tag 'promotion[widget_position_id]', options_from_collection_for_select(WidgetPosition.all, :id, :name, @promotion.widget_position_id), prompt: "use the default button style for this merchant" %>
+	        <%= select_tag 'promotion[widget_position_id]', options_from_collection_for_select(WidgetPosition.all, :id, :name, @promotion.widget_position_id), prompt: "use the default widget location for this merchant" %>
 
 			<div class="collapse-group">
 				<div class="row">
@@ -234,7 +234,15 @@
 		    <%= f.label :fb_redirect_url, "Facebook Redirect URL" %>
 			<%= f.text_field :fb_redirect_url, readonly: true %>
 
-		    <%= f.label :fb_thumb_url, "Facebook Thumbnail Image URL" %>
+			<div class="collapse-group">
+				<div class="row">
+					<div class="span2"><%= f.label :fb_thumb_url, "Facebook Thumbnail Image URL" %></div>
+					<div class="span5">
+						<a class="btn-small more-button" href="#">more &raquo;</a>
+					</div>
+				</div>
+				<p class="collapse">This is the image that will appear in the FaceBook Post next to the Link Label, Caption, and Message.  It should be no less than 200px x 200px and no larger than 600px x 600px, and should be square.  If it is not square, Facebook will  </p>
+			</div>
 			<%= f.text_field :fb_thumb_url %>
 
 			<div class="collapse-group">
