@@ -19,7 +19,7 @@ module NotDeleteable
 
   def self.included(base)
     base.class_eval do
-      default_scope where( :deleted => false )
+      default_scope { where( :deleted => false ) }
     end
   end
 end
