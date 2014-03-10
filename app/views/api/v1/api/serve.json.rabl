@@ -1,6 +1,6 @@
 object @serve
 attributes :id => :serve_id
-attributes :session_id, :viewed
+attributes :session_id, :viewed, :created_at
 
 node do |serve|
 	if !serve.user.nil?
