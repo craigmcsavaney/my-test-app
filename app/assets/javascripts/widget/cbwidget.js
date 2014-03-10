@@ -524,7 +524,7 @@ function CBSale(amount,transaction_id) {
                     timeout: 30000,
                     dataType: "jsonp",
                     success: function(data) {
-                        ServeData = data; 
+                        ServeData = data;
 
                         if (ServeData.error) {
         
@@ -554,9 +554,11 @@ function CBSale(amount,transaction_id) {
                 // First, get the number of minutes until the expiration of the current serve
                 var expire_mins = GetExpireMins();
 
-                // Now, set the session cookie and the serve cookie
+                // Now, set the session cookie and the serve cookie. Note that currently, session
+                // cookie set to expire in 24 hours (1440 mins).  Planning to move this to a
+                // configurable parameter at some point.
 
-                SetCookie("cbwsession", ServeData.session_id, 30, "/");
+                SetCookie("cbwsession", ServeData.session_id, 1440, "/");
                 SetCookie("cbwserve", ServeData.serve_id, expire_mins, "/"); 
 
             }
