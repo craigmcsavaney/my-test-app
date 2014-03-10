@@ -397,6 +397,21 @@
 
 			<div class="collapse-group">
 				<div class="row">
+					<div class="span4"><%= f.label :pin_image_url, "Pinterest Image URL" %></div>
+					<div class="span3">
+						<a class="btn-small more-button" href="#">&#9660; more</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span6 offset1 collapse">
+						<p>This is the image that will appear on Pinterest.  It should be at least 750px wide and can be any height. </p>
+					</div>
+				</div>
+			</div>
+			<%= f.text_field :pin_image_url %>
+
+			<div class="collapse-group">
+				<div class="row">
 					<div class="span4"><%= f.label :linkedin_msg, "LinkedIn Message" %></div>
 					<div class="span3">
 						<a class="btn-small more-button" href="#">&#9660; more</a>
