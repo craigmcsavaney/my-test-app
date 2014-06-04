@@ -169,6 +169,21 @@
 
 			<div class="collapse-group">
 				<div class="row">
+					<div class="span4"><%= f.label :title, "Promotion Title" %></div>
+					<div class="span3">
+						<a class="btn-small more-button" href="#">&#9660; more</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span6 offset1 collapse">
+						<p>The Promotion Title appears on the widget in bold type and must be short.  A longer description of the promotion appears in the Banner section just below the Title.</p>
+					</div>
+				</div>
+			</div>
+			<%= f.text_field :title, readonly: @served %>
+
+			<div class="collapse-group">
+				<div class="row">
 					<div class="span4"><%= f.label :banner, "CauseButton Banner" %></div>
 					<div class="span3">
 						<a class="btn-small more-button" href="#">&#9660; more</a>
