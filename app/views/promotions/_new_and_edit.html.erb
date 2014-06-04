@@ -95,7 +95,7 @@
 			<% 		@initial_value = "" %>
 			<% end %>
 
-			<%= radio_button_tag 'promotion[cause_type]', "event", @default1, id: "event_radio_button" %><%= label_tag(:cause_type_event, "Choose an event", id: "event_radio_button_label") %>
+			<%= radio_button_tag 'promotion[cause_type]', "event", @default1, id: "event_radio_button" %><%= label_tag(:cause_type_event, "Choose from a short list of trending causes", id: "event_radio_button_label") %>
 
 			<%= select_tag 'promotion[event_uid]', options_from_collection_for_select(Event.where("end_date is ? or end_date > ?",nil,Time.now).all, :uid, :name, @initial_value), readonly: @served, id: "events", include_blank: true %>
 			<br/><br/>
@@ -112,7 +112,7 @@
 			<% 		@value = "" %>
 			<% end %>
 
-			<%= radio_button_tag 'promotion[cause_type]', "single", @default2, id: "single_cause_radio_button" %><%= label_tag(:cause_type_single, "Choose a single cause", id: "single_cause_radio_button_label") %>
+			<%= radio_button_tag 'promotion[cause_type]', "single", @default2, id: "single_cause_radio_button" %><%= label_tag(:cause_type_single, "Choose your favorite cause or charity by name", id: "single_cause_radio_button_label") %>
 			<%= f.hidden_field :fg_uuid, value: @value, readonly: @served %>
 			<br/><br/>
 
