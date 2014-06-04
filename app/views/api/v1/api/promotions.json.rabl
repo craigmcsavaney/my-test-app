@@ -1,5 +1,5 @@
 object @promotion
-attributes :name, :id, :banner, :landing_page
+attributes :title, :banner, :landing_page
 
 node :button_html do |promotion|
 	promotion.button.html
