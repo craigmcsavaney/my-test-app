@@ -24,14 +24,16 @@ module Api
                 # referral.
 
                 # Finally, we check to see if the causebutton.com user cookie is set.  
-                # If it is, we get the value and check to see if this is an invited but 
-                # not confirmed user, or a confirmed (but not logged out) user.  If a user 
-                # logs out, the user cookie should be destroyed.  If there is a valid user
-                # and this is a new serve, we user the user's email when creating the new
+                # If it is, and if it contains a valid user email value, 
+                # we find the associated user_id and use it when creating the new
                 # serve.  If there is no valid user and this is a new serve, we create the
-                # serve with no email.  If we are serving up an existing serve, we use the
-                # email already associated with the serve, even if it is blank (as that
+                # serve with no user.  If we are serving up an existing serve, we use the
+                # user already associated with the serve, even if it is blank (as that
                 # may be intentional).
+
+                # TODO: We should probably check the status of the user associated with the email
+                # in the user cookie so see if they have confirmed their account, if they are
+                # logged in, etc.
 
                 # The json response will always include a value for the purchase path, 
                 # identified as pur_path.  This value must always be used to update the
@@ -178,11 +180,10 @@ module Api
                     # This means the visitor is returning to the same site, but was referred here
                     # by someone new.
                     when path_valid && !path_same
-                        # We're going to create a new serve for this visitor using the new path information (which exists because the path is valid) and copy over the cause and email info from the previous serve if possible.  TO DO: if the previous serve wasn't viewed, we'll delete it and all its shares.
+                        # We're going to create a new serve for this visitor using the new path information (which exists because the path is valid) and copy over the cause and user info from the previous serve if possible.  TO DO: if the previous serve wasn't viewed, we'll delete it and all its shares.
                         @old = Serve.find(params[:serve_id])
                         @referring_share = Share.find_by_link_id(params[:path])
-                        @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
-                        # @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id)
+                        @serve = Serve.create(promotion_id: @promotion.id, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
 
                         #if !@old.viewed?
                             # delete the old serve and its associated shares
@@ -194,11 +195,10 @@ module Api
                         # serve hasn't been viewed yet, we'll just update it with the new promotion
                         # and a new session_id.
                         # If the serve has been viewed, we'll create a new serve and copy over the
-                        # cause, email, user_id, and referring_share info if possible.
+                        # cause, user_id, and referring_share info if possible.
                         @old = Serve.find(params[:serve_id])
                         if @old.viewed?
-                            @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @old.referring_share_id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
-                            # @serve = Serve.create(promotion_id: @promotion.id, email: @old.email, referring_share_id: @old.referring_share_id, current_cause_id: @old.current_cause_id)
+                            @serve = Serve.create(promotion_id: @promotion.id, referring_share_id: @old.referring_share_id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
                         else
                             session_id = Serve.new_session_id
                             Serve.find(params[:serve_id]).update_attributes(promotion_id: @promotion.id, session_id: session_id)
@@ -269,16 +269,11 @@ module Api
                         return
                 end
 
-                # ************* should be able to delete the following
-
-                # next, check to see if an email was passed in and if it is different than the email in the current serve record.  If it is different, set the @email[:email_changed] flag to true and set the @email[:email] variable to the new email address.  Otherwise, set the flag to false and the email variable to the current value of the email
-                #@email = Serve.email_changed?(@serve,params[:email])
-
-                # ************* should be able to delete the preceeding
-
-                # next, check to see if an email was passed in and if it is different than the email associated with the user in the current serve record.  If it is different, set the @user[:user_changed] flag to true and set the @user[:user_id] variable to the new user_id.  Otherwise, set the flag to false and the user_id variable to the current value of the serve user_id.
+                # next, check to see if an email was passed in and if it is different than the email associated with the user in the current serve record.  If it is different, the @user[:user_changed] flag will be set to true and the @user[:user_id] variable will be set to the new user_id.  Otherwise, the flag will be set to false and the user_id variable will be set to the current value of the serve user_id.
                 @user = Serve.user_changed?(@serve,params[:email])
-                if @user[:type] == "new"
+
+                # next, update the permanent user cookie if the email that was passed in results in the creation of a new user or if the email that was passed in is different than the current value of the user email stored in the cookie.  Note that if the user updates email to "", the cookie will be updated with no email value as well. 
+                if @user[:type] == "new" || cookies.signed[:user] != params[:email]
                     cookies.permanent.signed[:user] = params[:email]
                 end
 
@@ -311,7 +306,7 @@ module Api
                     # first, mark the Purchase share for this serve as confirmed:
                     #Serve.post_to_channel(@serve,Channel.find_by_name('Email'))
                     Serve.post_to_channel(@serve,Channel.find_by_name('Purchase'))
-                    # next, update the Serve attributes to reflect the new email, current_cause_id, or both
+                    # next, update the Serve attributes to reflect the new email (which means a new user), current_cause_id, or both
                     @serve.update_attributes(current_cause_id: @cause[:cause_id], user_id: @user[:user_id])
                     # finally, create a new share for the purchase channel
                     #Share.create_share(@serve,Channel.find_by_name('Email'))
