@@ -955,7 +955,17 @@ function CBSale(amount,transaction_id) {
                     dataType: "jsonp",
                     success: function(data) {
                         UpdateData = data;
-                    },
+
+                        if (UpdateData.error) {
+        
+                            alert("Oops! Please refresh this page, then try again.");
+                            $("#cbw-widget").removeClass("widget-show");
+                            $("#cbw-widget").addClass("widget-hide");
+                            $("#cbw-cause-select").select2("close");
+                            $("#cbw-fgcause-select").select2("close");
+
+                        }
+                                            },
                     error: function(data, status, xhr) {
 
                         // should probably be silent to user...
