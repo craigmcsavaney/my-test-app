@@ -9,8 +9,8 @@ class Cause < ActiveRecord::Base
 	validates :name, :presence => {message: ":: Oops - looks like there's been a problem.  Please try choosing a different cause.  Sorry 'bout that."}
   validates :uid, presence: true, uniqueness: { case_sensitive: true }
 
-	has_and_belongs_to_many :users
-  has_and_belongs_to_many :groups
+	has_and_belongs_to_many :users, join_table: :causes_users
+  has_and_belongs_to_many :groups, join_table: :causes_groups
 	has_many :promotions
 	has_many :shares
 	has_many :serves
