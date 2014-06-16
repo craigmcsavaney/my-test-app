@@ -22,7 +22,7 @@ widget_positions_list = [
 puts 'Preparing to create seed Widget Positions'
 
 widget_positions_list.each do |name, description, order|
-  WidgetPosition.find_or_create_by_name( name, description: description, order: order )
+  WidgetPosition.find_or_create_by!(name: name, description: description, order: order )
 end
 
 puts 'All seed Widget Positions found or created'

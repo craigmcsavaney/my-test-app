@@ -17,7 +17,7 @@ roles_list = [
 puts 'Preparing to create seed Roles'
 
 roles_list.each do |name, description|
-  Role.find_or_create_by_name( name, description: description )
+  Role.find_or_create_by!(name: name, description: description )
 end
 
 puts 'All seed Roles found or created'

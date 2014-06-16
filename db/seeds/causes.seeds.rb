@@ -111,7 +111,7 @@ cause_list = [
 puts 'Preparing to create seed Causes'
 
 cause_list.each do |name|
-  Cause.find_or_create_by_name(name)
+  Cause.find_or_create_by!(name: name)
 end
 
 puts 'All seed Causes found or created'

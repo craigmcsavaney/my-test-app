@@ -15,7 +15,7 @@ button_types_list = [
 puts 'Preparing to create seed Button Types'
 
 button_types_list.each do |name, description|
-  ButtonType.find_or_create_by_name( name, description: description )
+  ButtonType.find_or_create_by!(name: name, description: description )
 end
 
 puts 'All seed Button Types found or created'
