@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140613203329) do
+ActiveRecord::Schema.define(version: 20140616154140) do
 
   create_table "button_types", force: true do |t|
     t.string   "name",                        null: false
@@ -89,14 +89,16 @@ ActiveRecord::Schema.define(version: 20140613203329) do
 
   create_table "channels", force: true do |t|
     t.string   "name"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "awesm_id"
     t.string   "description"
     t.boolean  "deleted"
-    t.boolean  "visible",     default: true
-    t.boolean  "active",      default: true
-    t.string   "url_prefix",  default: ""
+    t.boolean  "visible",                default: true
+    t.boolean  "active",                 default: true
+    t.string   "url_prefix",             default: ""
+    t.string   "font_awesome_icon_name", default: ""
+    t.integer  "display_order"
   end
 
   add_index "channels", ["name"], name: "index_channels_on_name", unique: true, using: :btree

@@ -39,7 +39,7 @@ node do |serve|
 end
 
 node :display_order do |serve|
-	serve.promotion.channels.where("active = ? and visible = ?", true, true).order('name').pluck(:name)
+	serve.promotion.channels.where("active = ? and visible = ?", true, true).order('display_order').pluck(:font_awesome_icon_name)
 end
 
 node do |serve|
