@@ -53,6 +53,10 @@ Widget custom styles, all namespaced .cbw
 	display: block !important;
 }
 
+ .cbw-cause-radio-button-box.widget-show {
+	display: inline-block !important;
+}
+
 .cbw #cbw-widget .widget-hide, .cbw #cbw-widget.widget-hide, .cbw #cbw-widget .cbw-cause-radio-button-box.widget-hide {
 	display: none !important;
 }
