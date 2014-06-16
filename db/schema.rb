@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610141033) do
+ActiveRecord::Schema.define(version: 20140613203329) do
 
   create_table "button_types", force: true do |t|
     t.string   "name",                        null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20140610141033) do
     t.string   "fg_uuid",                 default: ""
     t.integer  "fg_type_id"
     t.string   "alias",                   default: ""
-    t.string   "abstract",                default: ""
+    t.text     "abstract"
     t.integer  "ein"
     t.string   "fg_parent_uuid",          default: ""
     t.string   "address_line_1",          default: ""

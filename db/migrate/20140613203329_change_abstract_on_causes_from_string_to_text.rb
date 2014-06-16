@@ -1,8 +1,13 @@
 class ChangeAbstractOnCausesFromStringToText < ActiveRecord::Migration
   	def up
       	# simple and straightforward
-      	# note that text field can't have a default value
+      	# note that text field can't have a default value, and for some
+        # reason postgres wont allow conversion from a string
+        # field with a default directly to a text field without a 
+        # default, so first we must drop the default on the string
+        # field.
         change_column :causes, :abstract, :string, default: nil
+        # now we can convert to text
   		change_column :causes, :abstract, :text
     end
 
