@@ -49,11 +49,11 @@ Widget custom styles, all namespaced .cbw
           box-shadow: 0px 0px 10px 3px #666666 !important; /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
 }
 
-.cbw #cbw-widget .widget-show, .cbw #cbw-widget.widget-show, .cbw #cbw-widget .cbw-cause-radio-button-box.widget-show {
+.cbw #cbw-widget .widget-show, .cbw #cbw-widget.widget-show {
 	display: block !important;
 }
 
- .cbw-cause-radio-button-box.widget-show {
+.cbw #cbw-widget .cbw-cause-radio-button-box.widget-show {
 	display: inline-block !important;
 }
 
