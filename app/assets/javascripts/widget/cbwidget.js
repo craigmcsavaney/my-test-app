@@ -318,6 +318,8 @@ function CBSale(amount,transaction_id) {
             // added reset styles to cbwidget.css
             AddStylesheet('cbw-css-sel2', CBAssetsBase + "select2.css");
             AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
+            AddStylesheet('cbw-googlefonts', "http://fonts.googleapis.com/css?family=Montserrat:400,700");
+            AddStylesheet('font-awesome', "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
             // get the parameters passed into the page so that we can carry these forward if necessary
             // for example, as part of the process of determining the landing page or promotion id
@@ -483,9 +485,20 @@ function CBSale(amount,transaction_id) {
 
             }
 
-            /* LoadServeData - given merchant_id, load the initial server data for active promotion
-             * This will eventually replace the LoadPromotionData call
-             */
+            /* ---------------------------------------------------------------------------------
+             * LoadServeData(referring_path)
+             * ---------------------------------------------------------------------------------
+             * This function calls the serve method of the Causebutton API and retrieves the correct
+             * pledge information.  Referring Path is optional and is used to identify the parent
+             * serve if one exists.  Merchant ID is a global variable and, and the session and
+             * serve information is read from cookies if it exists.  If no prior serve exists,
+             * the server finds the current pledge and serves that.
+             *
+             * TO DO: add the ability to pass in the pledge id, which we will get as a url 
+             * param.  This will allow us to serve up specific pledges for a given customer based
+             * on custom links we give to them for promotional purposes.  When present, the pledge
+             * ID should probably take precedence over existing session and serve identifiers.
+             * --------------------------------------------------------------------------------- */
             function LoadServeData(referring_path) {
 
                 var method = "serve";
@@ -624,18 +637,28 @@ function CBSale(amount,transaction_id) {
                     $("#cbw-email-ctl-grp").addClass("widget-show");
                 }
 
-                // Populate the promotion text dictated by the server
-                $("#cbw-promo-text").text(ServeData.promotion.banner);
-
                 // Add the logo image
-                $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
+                // $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
 
                 // Add the logo link target
                 $("#cbw-heading-logo-link").attr('href', CBBase);
 
+                // Populate the pledge title text supplied by the server
+                $("#cbw-pledge-title").text(ServeData.promotion.title);
+
+                // Populate the promotion text supplied by the server
+                $("#cbw-promo-text").text(ServeData.promotion.banner);
+
+                // Populate the default cause name supplied by the server
+                $("#default-cause-control-text").text(ServeData.promotion.default_cause_name);
+
+                // Populate the currently selected cause name supplied by the server
+                $("#cbw-currently-selected-cause").text(ServeData.cause_name);
+
                 // Populate the active channels for current merchant/promotion
 
-                var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='" + CBAssetsBase + "chn_icons/icon-{0}-off.png'/>"
+                // var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='" + CBAssetsBase + "chn_icons/icon-{0}-off.png'/>"
+                var channel_pattern = "<div class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}'><span class='fa-stack fa-lg cbw-channel-icon'><i class='fa fa-circle fa-stack-2x channel-icon channel-icon-off'></i><i class='fa fa-{0} fa-stack-1x fa-inverse'></i></span></div>";
 
                 var channel_div = $("#cbw-channels");
 
@@ -650,22 +673,43 @@ function CBSale(amount,transaction_id) {
                     if (chname != "purchase") {
 
                     //    channel_div.append(channel_pattern.replace(/\{0\}/g, channels[i].name.toLowerCase()).replace(/\{1\}/g, i));
-                        channel_div.append(channel_pattern.replace(/\{0\}/g, channels[i].toLowerCase()).replace(/\{1\}/g, i));
+                        //channel_div.append(channel_pattern.replace(/\{0\}/g, channels[i].toLowerCase()).replace(/\{1\}/g, i));
+                        channel_div.append(channel_pattern.replace(/\{0\}/g, chname).replace(/\{1\}/g, i));
                     }
                 }            
 
                 // assign variable name to the fgcause selector
                 var fgcause_select = $("#cbw-fgcause-select");
 
+                // check to see if the loaded cause from the serve api response for this serve is the same as the default cause for the associated promotion.  If it is, set the radio button value to default (so the default value is checked when the widget opens), then delete the seed values for the single and group cause selectors.
+                if (ServeData.promotion.default_cause_uid == ServeData.cause_uid) {
+                    $("[name=cause-type-radio]").val(["default"]);
+                    ServeData.fg_uuid = "";
+                    ServeData.event_uid = "";
+                } else {
+                    // check the proper radio button based on the cause_type
+                    // $("[name=cause-type-radio]").val([ServeData.cause_type]);
+                    // check to see if the selected cause is a single.  If it is, select that button:
+                    if (ServeData.cause_type == "single") {
+                        $("[name=cause-type-radio]").val(["single"]);
+                    } else {
+                        // set the radio button to the default selection.  We'll check for matches
+                        // with trending causes after we load them.
+                        $("[name=cause-type-radio]").val(["default"]);
+                    }
+                }
+
                 // set the initial values of the fgcause selector
                 fgcause_select.attr('value', ServeData.fg_uuid);
 
                 // check the proper radio button based on the cause_type
-                $("[name=cause-type-radio]").val([ServeData.cause_type]);
+                // now handled in the section above that checks to see if the serve cause is the same
+                // as the default promotion cause
+                // $("[name=cause-type-radio]").val([ServeData.cause_type]);
 
                 // make the fgcause selector a Select2 selector
                 fgcause_select.select2({
-                    placeholder: 'Click here to find a cause',
+                    placeholder: 'Start typing here...',
                     minimumInputLength: 3,
                     multiple: false,
                     id: 'organization_uuid',
@@ -820,15 +864,62 @@ function CBSale(amount,transaction_id) {
                 // });
                 // Data for the select2 below comes from the response to the Events api
                 // and must be in the format [{"uid":"","name":"","group_name":""},{repeat}]
-                $("#cbw-cause-select").select2({
-                    placeholder: 'Click here to select a group of causes',
-                    data:{ results: EventData, text: 'name' },
-                    id: 'uid',
-                    formatSelection: eventFormatSelection,
-                    formatResult: eventFormatResult
-                });
-                // // set the initial value of the event picklist
-                $("#cbw-cause-select").select2("val", ServeData.event_uid);
+
+                // Following code worked for loading events into a Select2 combo box.  Stuff above is junk.
+                // $("#cbw-cause-select").select2({
+                //     placeholder: 'Click here to select a group of causes',
+                //     data:{ results: EventData, text: 'name' },
+                //     id: 'uid',
+                //     formatSelection: eventFormatSelection,
+                //     formatResult: eventFormatResult
+                // });
+                // // // set the initial value of the event picklist
+                // $("#cbw-cause-select").select2("val", ServeData.event_uid);
+
+
+                var trending_cause_pattern = "#cbw-trending-cause-{0}";
+                var trending_cause_text_pattern = "#trending-cause-{0}-text";
+
+                var events_div = $("#cbw-events");
+
+                for (var i in EventData) {
+
+                    // first, replace the instance index in the patterns with the current index value:
+                    var trending_cause = trending_cause_pattern.replace(/\{0\}/g, i);
+                    var trending_cause_text = trending_cause_text_pattern.replace(/\{0\}/g, i);
+
+                    // next, insert the trending cause name in the appropriate element
+                    $(trending_cause_text).text(EventData[i].name);
+
+                    //now, un-hide this radio button selection
+                    $(trending_cause).removeClass("widget-hide");
+                    $(trending_cause).addClass("widget-show");
+
+                    // check to see if the selected cause matches this trending cause.  If it does,
+                    // select this radio button.  Note that if the selected cause is not a "single", the 
+                    // "default" selection is checked when entering this for loop.  If no match is made 
+                    // while looping, the default selection will be checked when done.
+
+                    if (EventData[i].uid == ServeData.cause_uid) {
+                        $("[name=cause-type-radio]").val([i]);
+                    }
+
+                    // This is a crude way of ensuring that we don't attempt to load more than three
+                    // trending causes, because the html content template only has three placeholders.
+                    if (i==2) {
+                        break;
+                    }
+
+                }
+
+                // finally, if there are any events in the EventData set, remove the hide class and
+                // replace it with the show class for the div that contains all the trending causes
+                if (EventData) {
+
+                    $("#cbw-cause-select-ctrl-grp").removeClass("widget-hide");
+                    $("#cbw-cause-select-ctrl-grp").addClass("widget-show");
+                }            
+
 
             }
 
@@ -903,15 +994,56 @@ function CBSale(amount,transaction_id) {
             function UpdateServe(path, callback) {
 
                 // Check to see if the email checkbox is checked.  If it is,
-                // use the value of the email input box.  If not, use null
-                // for the email value.
+                // then check to see if there is an error on the email.  If there is an error,
+                // use the existing email value, otherwise use the new value.
+                // If the email checkbox is not checked, use null for the email value.
                 if ($("#cbw-email-checkbox").prop('checked')) {
-                    var email = $("#cbw-email-input").val();
+                    if ($("#cbw-email-ctl-grp").hasClass('error')) {
+                        var email = ServeData.email;
+                    } else {
+                        var email = $("#cbw-email-input").val();
+                    }
                 } else {
                     var email = "";
                 }
-                var event_uid = $("#cbw-cause-select").select2("val");
-                var fg_uuid = $("#cbw-fgcause-select").select2("val");
+
+                //var event_uid = $("#cbw-cause-select").select2("val");
+                var fg_uuid = "";
+                var event_uid = "";
+                var cause_type = "";
+                var selector_value = $("input[name='cause-type-radio']:checked").val();
+
+                // Check to see which cause radio button is checked, then get
+                // the appropriate cause values:
+                switch (selector_value) {
+                    case 'default':
+                        cause_type = ServeData.promotion.default_cause_type;
+                        switch (cause_type) {
+                            case 'single':
+                                fg_uuid = ServeData.promotion.default_fg_uuid;
+                                break;
+                            case 'event':
+                                event_uid = ServeData.promotion.default_event_uid;
+                                break;
+                        }
+                        break;
+                    case 'single':
+                        fg_uuid = $("#cbw-fgcause-select").select2("val");
+                        cause_type = "single";
+                        break;
+                    case '0':
+                        event_uid = EventData[selector_value].uid;
+                        cause_type = "event";
+                        break;
+                    case '1':
+                        event_uid = EventData[selector_value].uid;
+                        cause_type = "event";
+                        break;
+                    case '2':
+                        event_uid = EventData[selector_value].uid;
+                        cause_type = "event";
+                        break;
+                }                
 
                 var method = "update";
 
@@ -931,16 +1063,26 @@ function CBSale(amount,transaction_id) {
                 // replace an existing email in database with null.
                 ajxDataObj.email = email;
 
-                if (event_uid) {
-                    ajxDataObj.event_uid = event_uid;
-                }
+                // if ($("input[name='cause-type-radio']:checked").val()) {
+                //     ajxDataObj.cause_type = $("input[name='cause-type-radio']:checked").val();
+                // }
 
-                if (fg_uuid) {
-                    ajxDataObj.fg_uuid = fg_uuid;
-                }
+                // check to see if there is an error on the fgcause selector.  If there is
+                // do not send any cause selection parameters back with this update request
 
-                if ($("input[name='cause-type-radio']:checked").val()) {
-                    ajxDataObj.cause_type = $("input[name='cause-type-radio']:checked").val();
+                if (!$("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+
+                    if (event_uid) {
+                        ajxDataObj.event_uid = event_uid;
+                    }
+
+                    if (fg_uuid) {
+                        ajxDataObj.fg_uuid = fg_uuid;
+                    }
+
+                    if (selector_value && cause_type && cause_type != "") {
+                        ajxDataObj.cause_type = cause_type;
+                    }
                 }
 
                 if (path) {
@@ -987,6 +1129,8 @@ function CBSale(amount,transaction_id) {
                 ServeData.cause_type = UpdateData.cause_type;
                 ServeData.fg_uuid = UpdateData.fg_uuid;
                 ServeData.event_uid = UpdateData.event_uid;
+                ServeData.cause_name = UpdateData.cause_name;
+                ServeData.cause_uid = UpdateData.cause_uid;
 
                 // Replace the links with new ones from server
 
@@ -995,6 +1139,9 @@ function CBSale(amount,transaction_id) {
                     ServeData.paths[i] = UpdateData.paths[i];
 
                 };
+
+                // Populate the currently selected cause name supplied by the server
+                $("#cbw-currently-selected-cause").text(ServeData.cause_name);
 
                 // Now Check to see if the purchase channel is active and if it is, get the path and use it to update
                 // the AWESM cookies and the AWESM.parentAwesm global variable
@@ -1244,9 +1391,14 @@ function CBSale(amount,transaction_id) {
 
             function CloseChannel() {
 
-                new_img = SelectedChannel.attr('src').replace('-on.png','-off.png');
+                // new_img = SelectedChannel.attr('src').replace('-on.png','-off.png');
 
-                SelectedChannel.attr('src', new_img);   
+                // SelectedChannel.attr('src', new_img);
+
+                SelectedChannel.find(".channel-icon").removeClass("channel-icon-on");
+                SelectedChannel.find(".channel-icon").removeClass("channel-icon-hover");
+                SelectedChannel.find(".channel-icon").addClass("channel-icon-off");
+                SelectedChannel.removeClass("channel-selected");
 
                 $("#cbw-share-msg-ctrl-grp").removeClass("widget-show");
                 $("#cbw-share-msg-ctrl-grp").addClass("widget-hide");
@@ -1257,28 +1409,33 @@ function CBSale(amount,transaction_id) {
 
             function OpenChannel() {
 
-                var new_img;
+                SelectedChannel.find(".channel-icon").removeClass("channel-icon-off");
+                SelectedChannel.find(".channel-icon").removeClass("channel-icon-hover");
+                SelectedChannel.find(".channel-icon").addClass("channel-icon-on");
+                SelectedChannel.addClass("channel-selected");
 
-                if (SelectedChannel.attr('src').indexOf('-off.png') >= 0) {
-                    // if the current image is the -off image, replace it with the -on image
+                // var new_img;
 
-                    new_img = SelectedChannel.attr('src').replace('-off.png','-on.png');
+                // if (SelectedChannel.attr('src').indexOf('-off.png') >= 0) {
+                //     // if the current image is the -off image, replace it with the -on image
 
-                } else if (SelectedChannel.attr('src').indexOf('-over.png') >= 0) {
-                    //  if the current image is the -over image, replace it with the -on image
+                //     new_img = SelectedChannel.attr('src').replace('-off.png','-on.png');
 
-                    new_img = SelectedChannel.attr('src').replace('-over.png','-on.png');
+                // } else if (SelectedChannel.attr('src').indexOf('-over.png') >= 0) {
+                //     //  if the current image is the -over image, replace it with the -on image
 
-                } else {
-                    // if the current image is neither the -off nor the -over image, do nothing
+                //     new_img = SelectedChannel.attr('src').replace('-over.png','-on.png');
 
-                    new_img = SelectedChannel.attr('src');
+                // } else {
+                //     // if the current image is neither the -off nor the -over image, do nothing
 
-                }
+                //     new_img = SelectedChannel.attr('src');
 
-                SelectedChannel.attr('src', new_img);   
+                // }
 
-                var chidx = SelectedChannel.attr('idx');
+                // SelectedChannel.attr('src', new_img);   
+
+                // var chidx = SelectedChannel.attr('idx');
 
                 // following rem'd out to disable user field editing:
 
@@ -1382,11 +1539,24 @@ function CBSale(amount,transaction_id) {
                 // that should be used for the next share, not this one.
                 var channel_path = GetChannelPath(ServeData.paths[chname]);
                 var cause_name;
-                if ($("input[name='cause-type-radio']:checked").val() == "event") {
-                    cause_name = $("#cbw-cause-select").select2('data').group_name;
-                } else {
-                    cause_name = $("#cbw-fgcause-select").select2('data').organization_name;
-                }
+                var selector_value = $("input[name='cause-type-radio']:checked").val()
+                switch (selector_value) {
+                    case 'default':
+                        cause_name = ServeData.promotion.default_cause_name;
+                        break;
+                    case 'single':
+                        cause_name = $("#cbw-fgcause-select").select2('data').organization_name;
+                        break;
+                    case '0':
+                        cause_name = EventData[selector_value].name;
+                        break;
+                    case '1':
+                        cause_name = EventData[selector_value].name;
+                        break;
+                    case '2':
+                        cause_name = EventData[selector_value].name;
+                        break;
+                };
 
                 // following rem'd to disable user field editing:
                 // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
@@ -1533,17 +1703,18 @@ function CBSale(amount,transaction_id) {
              * -------------------------------------------------------- */
             function CheckCauseAndCauseType () {
 
-                if (!$("#cbw-cause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "event") {
-                    $("#cbw-cause-select-ctrl-grp").addClass('error');
-                    // $("#cbw-cause-select-error-message").show();
-                    $("#cbw-cause-select-error-message").removeClass("widget-hide");
-                    $("#cbw-cause-select-error-message").addClass("widget-show");
-                } else {
-                    $("#cbw-cause-select-ctrl-grp").removeClass('error');
-                    // $("#cbw-cause-select-error-message").hide();
-                    $("#cbw-cause-select-error-message").removeClass("widget-show");
-                    $("#cbw-cause-select-error-message").addClass("widget-hide");
-                }
+                // Following rem'd because we're no longer using a Select2 to pick cause groups
+                // if (!$("#cbw-cause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "event") {
+                //     $("#cbw-cause-select-ctrl-grp").addClass('error');
+                //     // $("#cbw-cause-select-error-message").show();
+                //     $("#cbw-cause-select-error-message").removeClass("widget-hide");
+                //     $("#cbw-cause-select-error-message").addClass("widget-show");
+                // } else {
+                //     $("#cbw-cause-select-ctrl-grp").removeClass('error');
+                //     // $("#cbw-cause-select-error-message").hide();
+                //     $("#cbw-cause-select-error-message").removeClass("widget-show");
+                //     $("#cbw-cause-select-error-message").addClass("widget-hide");
+                // }
                 if (!$("#cbw-fgcause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "single") {
                     $("#cbw-fgcause-select-ctrl-grp").addClass('error');
                     // $("#cbw-fgcause-select-error-message").show();
@@ -1615,30 +1786,50 @@ function CBSale(amount,transaction_id) {
 
             });
 
-            $(document).on('mouseenter', '.cbw-channel-toggle', function() {
+            // $(document).on('mouseenter', '.cbw-channel-toggle', function() {
 
-                if ($(this).attr('src').indexOf('-off.png') >= 0) {
+            //     if ($(this).attr('src').indexOf('-off.png') >= 0) {
 
-                    var src = $(this).attr('src').replace('-off.png','-over.png');
+            //         var src = $(this).attr('src').replace('-off.png','-over.png');
                     
-                    $(this).attr('src', src);
+            //         $(this).attr('src', src);
 
-                }
-            });
+            //     }
+            // });
+
+            // $(document).on('mouseleave', '.cbw-channel-toggle', function() {
+
+            //     if ($(this).attr('src').indexOf('-over.png') >= 0) {
+
+            //         var src = $(this).attr('src').replace('-over.png','-off.png');
+                    
+            //         $(this).attr('src', src);
+
+            //     }
+            // });
 
             $(document).on('mouseleave', '.cbw-channel-toggle', function() {
 
-                if ($(this).attr('src').indexOf('-over.png') >= 0) {
-
-                    var src = $(this).attr('src').replace('-over.png','-off.png');
-                    
-                    $(this).attr('src', src);
-
+                if (!$(this).hasClass("channel-selected")) {
+                    $(this).find(".channel-icon").removeClass("channel-icon-hover");
+                    $(this).find(".channel-icon").addClass("channel-icon-off");
                 }
             });
 
+            $(document).on('mouseenter', '.cbw-channel-toggle', function() {
+
+                if (!$(this).hasClass("channel-selected")) {
+                    $(this).find(".channel-icon").removeClass("channel-icon-off");
+                    $(this).find(".channel-icon").addClass("channel-icon-hover");
+                }
+
+            });
+
+
+
+
             /* --------------------------------------------------------
-             * Email checkbox toggle hanlder
+             * Email checkbox toggle hanlders
              * --------------------------------------------------------
              * This event handler toggles visibility of the email
              * input control when the checkbox value is changed.  It
@@ -1664,8 +1855,24 @@ function CBSale(amount,transaction_id) {
                     $("#cbw-email-ctl-grp").removeClass("widget-show");
                     $("#cbw-email-ctl-grp").addClass("widget-hide");
                 }
-                //$("#cbw-email-ctl-grp").toggle();
             });        
+
+            /* --------------------------------------------------------
+             * This event toggles the email checkbox when the
+             * text associated with the checkbox is clicked.  Both the checkbox
+             * and the text need to be in the same parent class.  Then it
+             * fires the checkbox change method to trigger the event above.
+             * -------------------------------------------------------- */
+            $(document).on("click", ".cbw-email-checkbox-text", function() {
+                var checked = $('#cbw-email-checkbox').prop("checked");
+                if (checked) {
+                    $('#cbw-email-checkbox').prop("checked", false);
+                } else {
+                    $('#cbw-email-checkbox').prop("checked", true);
+                }
+                $('#cbw-email-checkbox').change();
+            });
+ 
 
             $(window).resize(function() {
 
@@ -1719,20 +1926,26 @@ function CBSale(amount,transaction_id) {
              * --------------------------------------------------------
              * Toggle image from/to selected/unselected version
              * Show or Hide the appropriate channel-specific fields based 
-             * on the data from the served promotion
+             * on the data from the served promotion.  This hanlder
+             * checks to see if the email is invalid and if it does it
+             * blinks the email error message.  We no longer need to check
+             * the event selector because it is no longer a Select2
+             * combo box, and we shouldn't need to check the fgcause 
+             * selector as it should be impossible to get to the 
+             * main view with an fgcause error.
              * -------------------------------------------------------- */
             $(document).on('click', '.cbw-channel-toggle', function() {
 
-                var was_an_error1 = false;
-                var was_an_error2 = false;
+                // var was_an_error1 = false;
+                // var was_an_error2 = false;
                 var was_an_error3 = false;
 
-                if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-                    was_an_error1 = true;
-                }
-                if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-                    was_an_error2 = true;
-                }
+                // if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                //     was_an_error1 = true;
+                // }
+                // if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                //     was_an_error2 = true;
+                // }
                 if ($("#cbw-email-ctl-grp").hasClass('error')) {
                     was_an_error3 = true;
                 }
@@ -1740,18 +1953,18 @@ function CBSale(amount,transaction_id) {
                 CheckCauseAndCauseType();
                 CheckEmailValid();
 
-                if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
-                    if (was_an_error1) {
-                        BlinkErrorMessage("#cbw-cause-select-ctrl-grp");
-                    }
-                    return
-                }
-                if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-                    if (was_an_error2) {
-                        BlinkErrorMessage("#cbw-fgcause-select-ctrl-grp");
-                    }
-                    return
-                }
+                // if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                //     if (was_an_error1) {
+                //         BlinkErrorMessage("#cbw-cause-select-ctrl-grp");
+                //     }
+                //     return
+                // }
+                // if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                //     if (was_an_error2) {
+                //         BlinkErrorMessage("#cbw-fgcause-select-ctrl-grp");
+                //     }
+                //     return
+                // }
                 if ($("#cbw-email-ctl-grp").hasClass('error')) {
                     if (was_an_error3) {
                         BlinkErrorMessage("#cbw-email-ctl-grp");
@@ -1761,7 +1974,8 @@ function CBSale(amount,transaction_id) {
 
                 if (SelectedChannel) {
 
-                    if ($(this).attr('src') == SelectedChannel.attr('src')) {
+                    if ($(this).hasClass("channel-selected")) {
+                    // if ($(this).attr('src') == SelectedChannel.attr('src')) {
 
                         // following rem'd as part of disabling user field editing
                         // the share_msg box never opens, there's no real reason
@@ -1786,7 +2000,8 @@ function CBSale(amount,transaction_id) {
 
                         SelectedChannel = $(this);
 
-                        SelectChannel();
+                        // this doesn't do anything anymore
+                        // SelectChannel();
 
                         OpenChannel();
 
@@ -1796,7 +2011,8 @@ function CBSale(amount,transaction_id) {
 
                     SelectedChannel = $(this);
 
-                    SelectChannel();
+                    // this doesn't do anything anymore
+                    // SelectChannel();
 
                     OpenChannel();
                 }
@@ -1819,7 +2035,7 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-cause-type-event").prop('checked', true);
                 $("#cbw-cause-type-single").prop('checked', false);
                 if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-                    CheckCauseAndCauseType;
+                    CheckCauseAndCauseType();
                 }
                 // following rem'd to disable user field editing:
                 // var share_msg = $("#cbw-share-msg").val();
@@ -1847,7 +2063,7 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-cause-type-single").prop('checked', true);
                 $("#cbw-cause-type-event").prop('checked', false);
                 if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-                    CheckCauseAndCauseType;
+                    CheckCauseAndCauseType();
                 }
                 // following rem'd to disable user field editing:
                 // var share_msg = $("#cbw-share-msg").val();
@@ -1892,12 +2108,11 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-widget").addClass("widget-hide");
                 $("#cbw-cause-select").select2("close");
                 $("#cbw-fgcause-select").select2("close");
-                // finally, update the serve if there are no errors on the email
-                // or cause and event selectors:
-                if (!$("#cbw-email-ctl-grp, #cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) 
-                    {
-                    UpdateServe("", MergeServeUpdateData);
-                }
+
+                // finally, update the serve.  If there are errors on the email
+                // or cause selectors they will be filtered out by the
+                // UpdateServe method:
+                UpdateServe("", MergeServeUpdateData);
             });
 
             /* --------------------------------------------------------
@@ -1914,41 +2129,106 @@ function CBSale(amount,transaction_id) {
                 CheckEmailValid();
             });
 
-            /* --------------------------------------------------------
-             * Select2 Handlers
-             * --------------------------------------------------------
-             * These event handlers ensure that both the event and the
-             * single cause Select2 selectors aren't both open at the
-             * same time, and check email validity.
-             * -------------------------------------------------------- */
-            $(document).on("select2-opening", "#cbw-cause-select", function() {
-                $("#cbw-fgcause-select").select2("close");
-                CheckEmailValid();   
-                if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-                    CheckCauseAndCauseType();
-                }
-            });
-            $(document).on("select2-opening", "#cbw-fgcause-select", function() {
-                $("#cbw-cause-select").select2("close");   
-                CheckEmailValid();
-                if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
-                    CheckCauseAndCauseType();
-                }
-            });
+            // Following rem'd because we only have one Select2 on the widget
+            // now, so no need to make sure only one is open at a time.
+            //
+            // /* --------------------------------------------------------
+            //  * Select2 Handlers
+            //  * --------------------------------------------------------
+            //  * These event handlers ensure that both the event and the
+            //  * single cause Select2 selectors aren't both open at the
+            //  * same time, and check email validity.
+            //  * -------------------------------------------------------- */
+            // $(document).on("select2-opening", "#cbw-cause-select", function() {
+            //     $("#cbw-fgcause-select").select2("close");
+            //     CheckEmailValid();   
+            //     if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+            //         CheckCauseAndCauseType();
+            //     }
+            // });
+            // $(document).on("select2-opening", "#cbw-fgcause-select", function() {
+            //     $("#cbw-cause-select").select2("close");   
+            //     CheckEmailValid();
+            //     if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+            //         CheckCauseAndCauseType();
+            //     }
+            // });
 
             /* --------------------------------------------------------
-             * Cause_type radio button handlers
+             * Cause radio button error handlers
              * --------------------------------------------------------
              * These handlers check for cause and email input errors.
              * -------------------------------------------------------- */
             $(document).on("change", "input[name='cause-type-radio']:checked", function() {
                 CheckEmailValid();   
-                if ($("#cbw-cause-select-ctrl-grp, #cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
                     CheckCauseAndCauseType();
                 }
             });
 
-        }); // end jquery.documentready
+            /* --------------------------------------------------------
+             * Cause radio button text selection handlers
+             * --------------------------------------------------------
+             * These handlers check the correct radio button when the
+             * text associated with that button is checked.  Both the radio button
+             * and the text need to be in the same parent class.
+             * -------------------------------------------------------- */
+            $(document).on("click", ".cbw-cause-radio-button-box", function() {
+                $(this).find('.cause-select-radio').prop("checked", true);
+            });
+
+            /* --------------------------------------------------------
+             * Change Cause Handlers 
+             * --------------------------------------------------------
+             * This hides all the main widget content and opens the
+             * cause selector box when the change cause link is clicked.
+             * -------------------------------------------------------- */
+            $(document).on('click', '.cbw #cbw-change-cause-label', function() {
+
+                $(".cbw .main").removeClass("widget-show");
+                $(".cbw .main").addClass("widget-hide");
+                $("#cbw-cause-selector").removeClass("widget-hide");
+                $("#cbw-cause-selector").addClass("widget-show");
+
+            });
+
+            /* --------------------------------------------------------
+             * This event is fired with the user clicks the done button from
+             * the change selector.  If first checks to see if there is an error
+             * on the fgcause selector, and if there is it sets the error 
+             * condition and returns.  If there is no error, it hides 
+             * the cause selector, shows the main page, and calls the update
+             * method of the api.  When the update method returns, the new
+             * cause will be returned and written into the currently selected
+             * cause value.
+             * -------------------------------------------------------- */
+            $(document).on('click', '.cbw #cbw-cause-selector-done-button', function() {
+
+                // Check to see if the email is valid.  If it is not, this will
+                // set the error condition, which is important to prevent
+                // the email from trying to update when the cause updates.
+                CheckEmailValid();
+
+                // Check to see if there is an error on the fgcause selector.
+                CheckCauseAndCauseType();
+                if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                    return;
+                }
+
+                $(".cbw .main").removeClass("widget-hide");
+                $(".cbw .main").addClass("widget-show");
+                $("#cbw-cause-selector").removeClass("widget-show");
+                $("#cbw-cause-selector").addClass("widget-hide");
+
+                // finally, update the serve.  If there is an error on the email
+                // it will be filtered out by the UpdateServe method (note that
+                // if there is an error on the fgcause selector we won't make
+                // it to here.
+                UpdateServe("", MergeServeUpdateData);
+            });
+
+
+       }); // end jquery.documentready
 
         /*** NOTE - ANY FUNCTIONS DEFINED OUT HERE WILL NOT HAVE ACCESS TO JQUERY PROPERLY DUE TO jQuery.noConflict(true) ***/
 

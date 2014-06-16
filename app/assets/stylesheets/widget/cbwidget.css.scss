@@ -36,32 +36,79 @@ Widget custom styles, all namespaced .cbw
 .cbw #cbw-widget {
 	width: 350px !important;
 	height: auto !important;
-	border: 1px solid #003399 !important;
-	background-color: #0E76BC !important;
-	border-radius: 6px !important;
 	position: fixed !important;
 	z-index: 9999 !important;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-family: 'Montserrat', sans-serif !important;
     color: #333333 !important;
     line-height: 20px !important;
     font-size: 14px !important;
 }
 
-.cbw #cbw-widget .widget-show, .cbw #cbw-widget.widget-show {
+.cbw #cbw-widget.box_shadow {
+  -webkit-box-shadow: 0px 0px 10px 3px #666666 !important; /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
+          box-shadow: 0px 0px 10px 3px #666666 !important; /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
+}
+
+.cbw #cbw-widget .widget-show, .cbw #cbw-widget.widget-show, .cbw #cbw-widget .cbw-cause-radio-button-box.widget-show {
 	display: block !important;
 }
 
-.cbw #cbw-widget .widget-hide, .cbw #cbw-widget.widget-hide {
+.cbw #cbw-widget .widget-hide, .cbw #cbw-widget.widget-hide, .cbw #cbw-widget .cbw-cause-radio-button-box.widget-hide {
 	display: none !important;
 }
 
-.cbw #cbw-cause-select-ctrl-grp, .cbw #cbw-fgcause-select-ctrl-grp {
-	display: table !important;
+.cbw #cbw-heading {
+	background-color: #73C9BE !important;
+	height: 14px !important;
+	padding: 20px 0px 26px 20px !important;
 }
 
-.cbw #cbw-widget .cbw-control-group {
-	margin: 0 4px !important;
+.cbw #cbw-heading-logo {
+	display: inline !important;
 }
+
+.cbw #cbw-heading-logo-img {
+    border: 1px solid #FFFFFF !important;
+    border-radius: 5px 5px 5px 5px !important;
+    height: 20px !important;
+    padding: 3px 5px !important;
+}
+
+.cbw #cbw-heading-logo-link {
+	cursor: pointer !important;
+	color: #ffffff !important;
+    font-size: 14px !important;
+    line-height: 14px !important;
+}
+
+.cbw #cbw-heading-close {
+	float: right !important;
+	margin: 0 20px 0 0 !important;
+	color: #ffffff !important;
+	cursor: pointer !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.cbw #cbw-heading-close:hover, .cbw #cbw-heading-logo-link:hover {
+	text-shadow: 0 0 10px #FFFFFF !important;
+}
+
+.cbw #cbw-welcome-user-message {
+	padding-left: 100px !important;
+	font-weight: normal !important;
+	font-size: small !important;
+}
+
+.cbw #cbw-user-name-change {
+	font-size: 7pt !important;
+}
+
+.cbw #cbw-body-normal {
+	background-color: #ffffff !important;
+	padding: 20px !important;
+}
+
 .cbw #cbw-widget .cbw-control-group.error input {
 	border-color: red !important;
 }
@@ -88,42 +135,186 @@ Widget custom styles, all namespaced .cbw
 	font-weight: bold !important;
 }
 
-.cbw #cbw-heading {
-	background-color: #0E76BC !important;
-	padding-left: 4px !important;
-	height: 31px !important;
-	padding-top: 4px !important;
-	border-radius: 6px 6px 0px 0px !important;
-	border-bottom: 1px solid #003399 !important;
+.cbw #cbw-pledge-title, .cbw #cbw-cause-selector-title {
+	font-size: 12pt !important;
+	margin: 0 0 10px !important;
+	color: #666666 !important;
+}
+
+.cbw #cbw-promo-text {
+	font-size: 9pt !important;
+	margin: 0 !important;
+	color: #929497 !important;
+	line-height: 11pt !important;
+}
+
+.cbw .cbw-horiz-line {
+	border-top: 1px solid #929497 !important;
+	margin: 15px 0 15px !important;
+}
+
+.cbw .cbw-or {
+	background: none repeat scroll 0 0 #FFFFFF !important;
+	margin: -11px auto !important;
+	text-align: center !important;
+	width: 70px !important;
+}
+
+.cbw #cbw-widget #currently-selected-cause-label, .cbw #cbw-widget #cbw-channels-grp-label {
+	padding-bottom: 3px !important;
+}
+
+.cbw #cbw-widget .cbw-currently-selected-cause-text, .cbw #cbw-widget #cbw-channels-grp-text {
+	color: #929497 !important;
+	width: 100% !important;
+	padding-top: 3px !important;
+	text-align: left !important;
+	font-weight: normal !important;
+	font-size: 10pt !important;
+	line-height: 12pt !important;
+}
+
+.cbw #cbw-widget #cbw-change-cause-label {
+	width: 100% !important;
+	text-align: center !important;
+	font-size: 9pt !important;
+	font-weight: normal !important;
+	color: #73C9BE !important;
+	cursor: pointer !important;
+}
+
+.cbw #cbw-widget .cbw-radio-button-label {
+	color: #58595B !important;
+	width: 100% !important;
+	cursor: default !important;
+	float: left !important;
+	text-align: left !important;
+	font-weight: bold !important;
+	font-size: 10pt !important;
+	line-height: 10pt !important;
+	padding-bottom: 10px !important;
+}
+
+.cbw #cbw-widget .cbw-cause-radio-button-box, .cbw #cbw-widget .cbw-email-checkbox-box {
+	display: inline-block !important;
+	width: 100% !important;
+	color: #929497 !important;
+	cursor: pointer !important;
+}
+
+.cbw #cbw-widget .cbw-radio-button, .cbw #cbw-widget .cbw-email-checkbox {
+	width: 7% !important;
+	float: left !important;
+	line-height: 12pt !important;
+}
+
+.cbw .cause-select-radio {
+	margin-top: 5px !important;
+	vertical-align: top !important;
+	float: left !important;
+}
+
+.cbw #cbw-widget .cbw-radio-button-text, .cbw #cbw-widget .cbw-email-checkbox-text {
+	width: 93% !important;
+	float: right !important;
+	padding-top: 3px !important;
+	text-align: left !important;
+	font-weight: normal !important;
+	font-size: 10pt !important;
+	line-height: 12pt !important;
+}
+
+.cbw #cbw-widget .cbw-cause-radio-button-box:hover, .cbw #cbw-widget .cbw-email-checkbox-box:hover, .cbw #cbw-widget #cbw-change-cause-label:hover {
+	text-shadow: 0 0 2px #73C9BE !important;
+	color: #666666 !important;
+}
+
+.cbw #cbw-widget #cbw-cause-selector-done-button {
+	background-color: #73C9BE !important;
+	border-radius: 8px !important; /* Android 2.1+, Chrome, Firefox 4+, IE 9+, iOS 4+, Opera 10.50+, Safari 5+ */
+  	/* useful if you don't want a bg color from leaking outside the border: */
+  	background-clip: padding-box !important; /* Android 2.2+, Chrome, Firefox 4+, IE 9+, iOS 4+, Opera 10.50+, Safari 4+ */
+  	height: 26px !important;
+  	text-align: center !important;
+  	color: #ffffff !important;
+  	padding-top: 5px !important;
+  	cursor: pointer !important;
+}
+
+.cbw #cbw-widget #cbw-cause-selector-done-button:hover {
+	text-shadow: 0 0 10px #FFFFFF !important;
+	background-color: #5BC4B5 !important;
+}
+
+.cbw #cbw-email-checkbox-ctl-grp.cbw-control-group {
+	height: 23px !important;
+}
+
+.cbw #cbw-email-checkbox-text {
+	margin-top: 3px !important;
+	padding-right: 5px !important;
+}
+
+.cbw #cbw-email-input {
+	/*margin-bottom: 10px !important;*/
+	/*float: left !important;*/
+	width: 100% !important;
+	background-color: #FFFFFF !important;
+    border: 1px solid #AAAAAA !important;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset !important;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s !important;
+    height: 26px !important;
+    background-clip: padding-box !important;
+    background-image: -moz-linear-gradient(center bottom , #EEEEEE 0%, #FFFFFF 50%) !important;
+    color: #444444 !important;
+    /*display: block !important;*/
+    /*overflow: hidden !important;*/
+    text-align: center !important;
+    padding: 0 !important;
+    font-size: 9pt !important;
+    margin: 0px !important;
 }
 
 .cbw .cbw-channel-toggle {
-	margin-right: 5px !important;
+	margin: 10px 5px 5px 0 !important;
 	cursor: pointer !important;
-	margin-bottom: 5px !important;
 	vertical-align: baseline !important;
+	float: left !important;
+}
+
+.cbw .channel-icon-off {
+	color: #73C9BE !important;
+}
+
+.cbw .channel-icon-hover {
+	color: #377F75 !important;
+}
+
+.cbw .channel-icon-on {
+	color: #377F75 !important
 }
 
 .cbw #cbw-share-msg-ctrl-grp textarea {
 	font-size: 9pt !important;
 }
 
-.cbw #cbw-promo-text {
-	font-size: 11pt !important;
-	text-align: justify !important;
-	padding: 0 4px 0 !important;
-	margin: 0 !important;
+/*
+.cbw #cbw-channels-grp.cbw-control-group {
+	border: 1px solid #0E76BD !important;
+	border-radius: 5px !important;
+	text-align: center !important;
+	background-color: #E3F0F8 !important;
+	height: auto !important;
 }
+*/
 
-.cbw #cbw-welcome-user-message {
-	padding-left: 100px !important;
-	font-weight: normal !important;
-	font-size: small !important;
+/*
+.cbw #cbw-channels-grp-label.cbw-control-label {
+	text-align: center !important;
+	font-size: 1.2em !important;
 }
-
-.cbw #cbw-user-name-change {
-	font-size: 7pt !important;
-}
+*/
 
 .cbw #cbw-links.cbw-control-group {
 	text-align: center !important;
@@ -134,95 +325,6 @@ Widget custom styles, all namespaced .cbw
 	font-size: 8pt !important;
 	cursor: pointer !important;
 } 
-
-.cbw #cbw-widget.box_shadow {
-  -webkit-box-shadow: 0px 0px 10px 3px #666666 !important; /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
-          box-shadow: 0px 0px 10px 3px #666666 !important; /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
-}
-
-.cbw #cbw-body-normal {
-	background-color: #ffffff !important;
-	border-radius: 0 0 6px 6px !important;
-	padding: 5px !important;
-}
-
-.cbw #cbw-email-input {
-	margin-bottom: 10px !important;
-	float: left !important;
-	width: 330px !important;
-	background-color: #FFFFFF !important;
-    border: 1px solid #AAAAAA !important;
-    border-radius: 4px !important;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset !important;
-    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s !important;
-    height: 26px !important;
-    background-clip: padding-box !important;
-    background-image: -moz-linear-gradient(center bottom , #EEEEEE 0%, #FFFFFF 50%) !important;
-    color: #444444 !important;
-    display: block !important;
-    overflow: hidden !important;
-    text-align: center !important;
-    padding: 0 !important;
-    font-size: 9pt !important;
-}
-
-.cbw #cbw-heading-logo {
-	display: inline !important;
-}
-
-.cbw #cbw-heading-logo-link {
-	cursor: pointer !important;
-}
-
-.cbw #cbw-heading-close {
-	float: right !important;
-	padding-top: 4px !important;
-	margin: 0 10px 0 0 !important;
-	color: #ffffff !important;
-	cursor: pointer !important;
-    font-size: 20px !important;
-    font-weight: bold !important;
-    line-height: 20px !important;
-}
-
-.cbw #cbw-heading-close:hover {
-	text-shadow: 0 0 10px #FFFFFF !important;
-}
-
-.cbw #cbw-heading-logo-img {
-    border: 1px solid #FFFFFF !important;
-    border-radius: 5px 5px 5px 5px !important;
-    height: 20px !important;
-    padding: 3px 5px !important;
-}
-
-.cbw #cbw-email-checkbox-ctl-grp.cbw-control-group {
-	margin-bottom:0 !important;
-	height: 28px !important;
-}
-
-.cbw #cbw-email-checkbox-text {
-	margin-top: 3px !important;
-	padding-right: 5px !important;
-}
-
-.cbw #cbw-email-checkbox-label {
-    display: block !important;
-    padding-top: 5px !important;
-}
-
-.cbw #cbw-email-checkbox {
-	margin-bottom: 5px !important;
-	cursor: pointer !important;
-}
-
-.cbw #cbw-channels-grp.cbw-control-group {
-	border: 1px solid #0E76BD !important;
-	border-radius: 5px !important;
-	text-align: center !important;
-	background-color: #E3F0F8 !important;
-	height: auto !important;
-}
 
 .cbw #cbw-links-info-text {
 	font-size: .8em !important;
@@ -244,37 +346,21 @@ Widget custom styles, all namespaced .cbw
     margin-bottom: 4px !important;
 }
 
-.cbw #cause-sel-control-text, .cbw #fgcause-sel-control-text {
-	color: #999999 !important;
-	font-style: italic !important;
-	font-weight: normal !important;
-}
-
 .cbw .cbw-link {
     color: #0088CC !important;
     text-decoration: none !important;
 }
 
-.cbw .cause-select-radio {
-	margin-top: 5px !important;
-	cursor: pointer !important;
-	vertical-align: top !important;
-}
-
-.cbw #cbw-channels-grp-label.cbw-control-label {
-	text-align: center !important;
-	font-size: 1.2em !important;
-}
-
-.cbw #cbw-email-input-error-message, .cbw #cbw-cause-select-error-message, .cbw #cbw-fgcause-select-error-message {
+.cbw #cbw-email-input-error-message, .cbw #cbw-fgcause-select-error-message {
 	margin: 0 0 2px 2% !important;
 	color: red !important;
 	text-align: center !important;
 	font-size: .9em !important;
 }
 
-.cbw .cbw-select2, .cbw .cbw-fg-select2 {
-	width: 97% !important;
+.cbw .cbw-fg-select2 {
+	width: 93% !important;
+	float: right !important;
 }
 
 /*
@@ -288,7 +374,8 @@ Select2 styles that override the styles in select2.css and should be .cbw namesp
 
 .cbw .select2-container .select2-choice {
 	font-size: 9pt !important;
-	width: 322px !important;
+	/*width: 322px !important;*/
+	width: 280px !important;
 }
 
 /*
@@ -301,7 +388,8 @@ Select2 styles that override the styles in select2.css and should not be .cbw na
 	line-height: 20px !important;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
     color: #333333 !important;
-    width: 332px !important;
+    /*width: 332px !important;*/
+    width: 290px !important;
 }
 
 #select2-drop.select2-drop.select2-with-searchbox.select2-drop-active .select2-search {
