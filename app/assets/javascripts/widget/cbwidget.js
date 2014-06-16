@@ -658,24 +658,27 @@ function CBSale(amount,transaction_id) {
                 // Populate the active channels for current merchant/promotion
 
                 // var channel_pattern = "<img class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}' src='" + CBAssetsBase + "chn_icons/icon-{0}-off.png'/>"
-                var channel_pattern = "<div class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}'><span class='fa-stack fa-lg cbw-channel-icon'><i class='fa fa-circle fa-stack-2x channel-icon channel-icon-off'></i><i class='fa fa-{0} fa-stack-1x fa-inverse'></i></span></div>";
+                var channel_pattern = "<div class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}'><span class='fa-stack fa-lg cbw-channel-icon'><i class='fa fa-circle fa-stack-2x channel-icon channel-icon-off'></i><i class='fa fa-{2} fa-stack-1x fa-inverse'></i></span></div>";
 
                 var channel_div = $("#cbw-channels");
 
                 var channels = ServeData.display_order;
 
                 for (var i in channels) {
+                    // Note that this section depends on ServeData.display_order including a two element hash in the format 
+                    // ["Channel name","Font Awesome Icon Name"] for each channel that is returned.
+                    // This is not great design and should be changed to name-value pairs sometime.
+                    var chname = channels[i][0].toLowerCase();
+                    var font_awesome_icon_name = channels[i][1];
 
-                    //var chname = channels[i].name.toLowerCase();
-                    var chname = channels[i].toLowerCase();
-
-                    // purchase is a special channel - ignore this one from user perspective
+                    // purchase is a special channel - ignore this one from user perspective as no channel should be displayed
                     if (chname != "purchase") {
 
                     //    channel_div.append(channel_pattern.replace(/\{0\}/g, channels[i].name.toLowerCase()).replace(/\{1\}/g, i));
                         //channel_div.append(channel_pattern.replace(/\{0\}/g, channels[i].toLowerCase()).replace(/\{1\}/g, i));
-                        channel_div.append(channel_pattern.replace(/\{0\}/g, chname).replace(/\{1\}/g, i));
+                        channel_div.append(channel_pattern.replace(/\{0\}/g, chname).replace(/\{1\}/g, i).replace(/\{2\}/g, font_awesome_icon_name));
                     }
+
                 }            
 
                 // assign variable name to the fgcause selector
