@@ -8,6 +8,7 @@ class Promotion < ActiveRecord::Base
 
     belongs_to :merchant, counter_cache: true
     has_and_belongs_to_many :channels,
+      join_table: :channels_promotions,
       before_add: :habtm_update_uid,
       before_remove: :habtm_update_uid
     belongs_to :cause
