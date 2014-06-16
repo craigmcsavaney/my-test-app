@@ -14,8 +14,8 @@
 /log/*.log
 /tmp
 
-# Ignore all unused files.
-*/unused
+# Ignore all files in directories named "unused".
+unused/
 
 # Ignore other unneeded files.
 doc/
