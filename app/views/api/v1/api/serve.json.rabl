@@ -27,7 +27,7 @@ node do |serve|
 end
 
 node do |serve|
-	if Cause.find(serve.default_cause_id) == 'Single'
+	if Cause.find(serve.default_cause_id).type == 'Single'
 		{ :default_cause_type => "single", 
 		  :default_fg_uuid => Cause.find(serve.default_cause_id).fg_uuid, 
 		  :default_event_uid => "",
