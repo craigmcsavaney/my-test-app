@@ -17,7 +17,7 @@ class ChangeAbstractOnCausesFromStringToText < ActiveRecord::Migration
         add_column :causes, :temp_abstract, :string, default: ""
 
         # use #find_each to load only part of the table into memory
-        Cause.find_each do |cause|
+        Cause.all.each do |cause|
             temp_abstract = cause.abstract
             # test if the new value will fit into the truncated field
             if cause.abstract.length > 255
