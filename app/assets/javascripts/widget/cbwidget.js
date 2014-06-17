@@ -72,6 +72,7 @@ function CBSale(amount,transaction_id) {
     var PagePosition; // this is the widget position passed in as a param with the script src url
     var WidgetPosition; // Holds the calculated widget position value
     var SelectedChannel;
+    var CBCauseID = ""; // this is the cause ID passed in as a param with the page url
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -325,18 +326,24 @@ function CBSale(amount,transaction_id) {
             // for example, as part of the process of determining the landing page or promotion id
             var params = getUrlVars();
 
-            // set the ReferingPath variable equal to blank.  Ensures the param will be passed with the api call.
+            // set the ReferringPath variable equal to blank.  This will be updated with a real param in
+            // GetReferringPathAndCause if one exists, otherwise it ensures the param will be passed
+            // with the api call.
             ReferringPath = "";
 
+            // set the CBCauseID variable equal to blank.  Ensures the param will be passed with the api call.
+            CBCauseID = "";
+
             // set the FilteredParamString variable equal to blank.  This will only change if the params.length
-            // is > 0, which will call GetReferringPath(params).
+            // is > 0, which will result in a call to GetReferringPathAndCause(params).
             FilteredParamString = "";
 
-            // now check to see if the page url params contains a referral path.  If it does, the FilteredParamString 
-            // variable will be populated with all the params except the referral path params, and the ReferringPath
-            // variable will be set to the correct param path.
+            // now check to see if the page url params contains a referral path or a cause ID.  If it does,
+            // the FilteredParamString variable will be populated with all the params except the referral 
+            // path params and/or the cause ID, and the ReferringPath and CBCauseID variables will be set 
+            // to the correct values.
             if (params.length > 0) {
-                GetReferringPath(params);
+                GetReferringPathAndCause(params);
                 CBPurchasePath = ReferringPath;
             }
 
@@ -430,13 +437,13 @@ function CBSale(amount,transaction_id) {
             }
 
             /* ---------------------------------------------------------------------------------
-             * GetReferringPath(params)
+             * GetReferringPathAndCause(params)
              * ---------------------------------------------------------------------------------
              * Searches through the params array for referral path values with names that
              * match the sources of paths.  Currently supporting two variations of Awe.sm links
              * and 'cblink' links.
              * --------------------------------------------------------------------------------- */
-            function GetReferringPath (params) {
+            function GetReferringPathAndCause (params) {
 
                 var h1, h2;
                 FilteredParamString = '?';
@@ -449,8 +456,10 @@ function CBSale(amount,transaction_id) {
                         ReferringPath = decodeURIComponent(h2).substring(13);
                     } else if (h1 == 'cblink') {
                         ReferringPath = h2;
+                    } else if (h1 == 'cbcause') {
+                        CBCauseID = h2;
                     } else {
-                        if (i != 0) {
+                        if (FilteredParamString != '?') {
                             FilteredParamString += "&";
                         }
                         FilteredParamString += h1 + "=" + h2
@@ -490,8 +499,8 @@ function CBSale(amount,transaction_id) {
              * ---------------------------------------------------------------------------------
              * This function calls the serve method of the Causebutton API and retrieves the correct
              * pledge information.  Referring Path is optional and is used to identify the parent
-             * serve if one exists.  Merchant ID is a global variable and, and the session and
-             * serve information is read from cookies if it exists.  If no prior serve exists,
+             * serve if one exists.  Merchant ID  and CBCause ID are global variables, and the session and
+             * serve information are read from cookies if they exists.  If no prior serve exists,
              * the server finds the current pledge and serves that.
              *
              * TO DO: add the ability to pass in the pledge id, which we will get as a url 
@@ -527,6 +536,10 @@ function CBSale(amount,transaction_id) {
                 
                 if (referring_path) {
                     ajxDataObj.path = referring_path;
+                }
+
+                if (CBCauseID) {
+                    ajxDataObj.cbcause_id = CBCauseID;
                 }
 
                 //var reqObj = $.ajax({
@@ -645,8 +658,14 @@ function CBSale(amount,transaction_id) {
                 // Populate the pledge title text supplied by the server
                 $("#cbw-pledge-title").text(ServeData.promotion.title);
 
+                // replace variables in the promotion text supplied by the server
+                var banner = ServeData.promotion.banner
+                banner = banner.replace("{{merchant_cause}}", ServeData.default_cause_name);
+                banner = banner.replace(/\sthe\sTHE\s/g, " THE ");
+                banner = banner.replace(/\sthe\sthe\s/g, " the ");
+
                 // Populate the promotion text supplied by the server
-                $("#cbw-promo-text").text(ServeData.promotion.banner);
+                $("#cbw-promo-text").text(banner);
 
                 // Populate the default cause name supplied by the server
                 $("#default-cause-control-text").text(ServeData.default_cause_name);
@@ -1566,6 +1585,12 @@ function CBSale(amount,transaction_id) {
                 // now replace the supporter_cause placeholder with the currently 
                 // selected event or cause name.
                 share_msg = share_msg.replace("{{supporter_cause}}", cause_name);
+                // now replace the merchant_cause placeholder with the merchant's default cause 
+                share_msg = share_msg.replace("{{merchant_cause}}", ServeData.default_cause_name);
+                // get rid of duplicate the's for causes that start with "THE" or "the"
+                share_msg = share_msg.replace(/\sthe\sTHE\s/g, " THE ");
+                share_msg = share_msg.replace(/\sthe\sthe\s/g, " the ");
+
                 // Now update the serve, which will record the cause or event associated
                 // with this share.  This is done asynchronously so the channel will
                 // open right away.
@@ -1590,9 +1615,6 @@ function CBSale(amount,transaction_id) {
 
                         // This is the app_id for the Facebook Causebutton app: 
                         var app_id = "1412032855697890";
-
-                        link_label = link_label.replace("{{merchant}}", ServeData.merchant.name);
-                        link_label = link_label.replace("{{supporter_cause}}", cause_name);
 
                         if (sel_channel.thumb_url) {
 
