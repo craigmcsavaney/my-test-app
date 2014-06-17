@@ -99,9 +99,9 @@ class Template < ActiveRecord::Base
         message = message.gsub(/\{\{merchant_pct\}\}/, promotion.merchant_pct.to_s)
       end
 
-      if message.include? "{{merchant_cause}}" and promotion.cause != nil
-        message = message.gsub(/\{\{merchant_cause\}\}/, promotion.cause.name)
-      end
+      # if message.include? "{{merchant_cause}}" and promotion.cause != nil
+      #   message = message.gsub(/\{\{merchant_cause\}\}/, promotion.cause.name)
+      # end
 
       if message.include? "{{supporter_pct}}"
         message = message.gsub(/\{\{supporter_pct\}\}/, promotion.supporter_pct.to_s)
