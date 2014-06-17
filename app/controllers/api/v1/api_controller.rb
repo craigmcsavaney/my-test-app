@@ -61,20 +61,20 @@ module Api
                 # Set the check_date to today.  Used to search for valid promotions
                 check_date = Date.today
 
-                # Get merchant's current promotion. If no valid promotion exists, return an error
-                @current = Current.get_current_promotion(check_date,merchant)
-                if @current[:promotion] == nil
-                    # No current promotion found
-                    render 'api/v1/api/errors/no_valid_promotion'
-                    return
-                end
-
                 # next, check to see if a valid session_id (one that is associated with
                 # the current merchant) was passed in.  If so, serve the promotion associated
                 # with this session_id
                 if Serve.session_valid?(params[:session_id],merchant)
                     @serve = Serve.find_by_session_id(params[:session_id])
                     render 'serve'
+                    return
+                end
+
+                # Get merchant's current promotion. If no valid promotion exists, return an error
+                @current = Current.get_current_promotion(check_date,merchant)
+                if @current[:promotion] == nil
+                    # No current promotion found
+                    render 'api/v1/api/errors/no_valid_promotion'
                     return
                 end
 
