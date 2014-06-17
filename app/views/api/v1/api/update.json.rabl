@@ -11,24 +11,20 @@ node do |serve|
 end
 
 node do |serve|
-	if serve.cause.type == 'Single'
+	if Cause.find(serve.current_cause_id).type == 'Single'
 		{ :cause_type => "single", 
-		  :fg_uuid => serve.cause.fg_uuid, 
+		  :fg_uuid => Cause.find(serve.current_cause_id).fg_uuid, 
 		  :event_uid => "",
-		  :cause_name => serve.cause.name,
-		  :cause_uid => serve.cause.uid }
+		  :cause_uid => Cause.find(serve.current_cause_id).uid,
+		  :cause_name => Cause.find(serve.current_cause_id).name }
 	else
 		{ :cause_type => "event", 
 		  :fg_uuid => "", 
-		  :event_uid => serve.cause.event.uid,
-		  :cause_name => serve.cause.event.name,
-		  :cause_uid => serve.cause.event.uid }
+		  :event_uid => Cause.find(serve.current_cause_id).event.uid,
+		  :cause_uid => Cause.find(serve.current_cause_id).event.uid,
+		  :cause_name => Cause.find(serve.current_cause_id).event.name }
 	end
 end
-
-#node :current_cause_id do |serve|
-#	serve.cause.uid
-#end	
 
 node do |serve|
  { :paths => partial("api/v1/api/share_links", :object => serve) }

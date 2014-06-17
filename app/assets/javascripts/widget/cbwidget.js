@@ -596,7 +596,6 @@ function CBSale(amount,transaction_id) {
 
                 // update the CBPurchasePath global variable to contain the current purchase path value
                 PurchasePathUpdate(purchase_path);
-                console.log(CBPurchasePath);
             }
 
             /* ---------------------------------------------------------------------------------
@@ -650,7 +649,7 @@ function CBSale(amount,transaction_id) {
                 $("#cbw-promo-text").text(ServeData.promotion.banner);
 
                 // Populate the default cause name supplied by the server
-                $("#default-cause-control-text").text(ServeData.promotion.default_cause_name);
+                $("#default-cause-control-text").text(ServeData.default_cause_name);
 
                 // Populate the currently selected cause name supplied by the server
                 $("#cbw-currently-selected-cause").text(ServeData.cause_name);
@@ -685,7 +684,7 @@ function CBSale(amount,transaction_id) {
                 var fgcause_select = $("#cbw-fgcause-select");
 
                 // check to see if the loaded cause from the serve api response for this serve is the same as the default cause for the associated promotion.  If it is, set the radio button value to default (so the default value is checked when the widget opens), then delete the seed values for the single and group cause selectors.
-                if (ServeData.promotion.default_cause_uid == ServeData.cause_uid) {
+                if (ServeData.default_cause_uid == ServeData.cause_uid) {
                     $("[name=cause-type-radio]").val(["default"]);
                     ServeData.fg_uuid = "";
                     ServeData.event_uid = "";
@@ -903,7 +902,7 @@ function CBSale(amount,transaction_id) {
                     // "default" selection is checked when entering this for loop.  If no match is made 
                     // while looping, the default selection will be checked when done.
 
-                    if (EventData[i].uid == ServeData.cause_uid) {
+                    if (EventData[i].uid == ServeData.cause_uid && ServeData.default_cause_uid != ServeData.cause_uid) {
                         $("[name=cause-type-radio]").val([i]);
                     }
 
@@ -1020,13 +1019,13 @@ function CBSale(amount,transaction_id) {
                 // the appropriate cause values:
                 switch (selector_value) {
                     case 'default':
-                        cause_type = ServeData.promotion.default_cause_type;
+                        cause_type = ServeData.default_cause_type;
                         switch (cause_type) {
                             case 'single':
-                                fg_uuid = ServeData.promotion.default_fg_uuid;
+                                fg_uuid = ServeData.default_fg_uuid;
                                 break;
                             case 'event':
-                                event_uid = ServeData.promotion.default_event_uid;
+                                event_uid = ServeData.default_event_uid;
                                 break;
                         }
                         break;
@@ -1545,7 +1544,7 @@ function CBSale(amount,transaction_id) {
                 var selector_value = $("input[name='cause-type-radio']:checked").val()
                 switch (selector_value) {
                     case 'default':
-                        cause_name = ServeData.promotion.default_cause_name;
+                        cause_name = ServeData.default_cause_name;
                         break;
                     case 'single':
                         cause_name = $("#cbw-fgcause-select").select2('data').organization_name;

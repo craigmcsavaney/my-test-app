@@ -93,7 +93,7 @@ class Sale < ActiveRecord::Base
 			Donation.create(
 				sale_id: self.id,
 				merchant_id: self.serve.merchant.id,
-				cause_id: self.serve.promotion.cause_id,
+				cause_id: self.serve.default_cause_id,
 				chosen_by: "merchant",
 				amount_cents: (self.amount_cents * ((self.serve.promotion.merchant_pct).to_f/100)).round,
 				supporter_id: supporter_id,

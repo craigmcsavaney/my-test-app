@@ -11,18 +11,34 @@ node do |serve|
 end
 
 node do |serve|
-	if serve.cause.type == 'Single'
+	if Cause.find(serve.current_cause_id).type == 'Single'
 		{ :cause_type => "single", 
-		  :fg_uuid => serve.cause.fg_uuid, 
+		  :fg_uuid => Cause.find(serve.current_cause_id).fg_uuid, 
 		  :event_uid => "",
-		  :cause_uid => serve.cause.uid,
-		  :cause_name => serve.cause.name }
+		  :cause_uid => Cause.find(serve.current_cause_id).uid,
+		  :cause_name => Cause.find(serve.current_cause_id).name }
 	else
 		{ :cause_type => "event", 
 		  :fg_uuid => "", 
-		  :event_uid => serve.cause.event.uid,
-		  :cause_uid => serve.cause.event.uid,
-		  :cause_name => serve.cause.event.name }
+		  :event_uid => Cause.find(serve.current_cause_id).event.uid,
+		  :cause_uid => Cause.find(serve.current_cause_id).event.uid,
+		  :cause_name => Cause.find(serve.current_cause_id).event.name }
+	end
+end
+
+node do |serve|
+	if Cause.find(serve.default_cause_id) == 'Single'
+		{ :default_cause_type => "single", 
+		  :default_fg_uuid => Cause.find(serve.default_cause_id).fg_uuid, 
+		  :default_event_uid => "",
+		  :default_cause_name => Cause.find(serve.default_cause_id).name,
+		  :default_cause_uid => Cause.find(serve.default_cause_id).uid }
+	else
+		{ :default_cause_type => "event", 
+		  :default_fg_uuid => "", 
+		  :default_event_uid => Cause.find(serve.default_cause_id).event.uid,
+		  :default_cause_name => Cause.find(serve.default_cause_id).event.name,
+		  :default_cause_uid => Cause.find(serve.default_cause_id).event.uid }
 	end
 end
 

@@ -3,11 +3,12 @@ class Serve < ActiveRecord::Base
   include NotDeleteable
 	versioned
 
-	attr_accessible :promotion_id, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :user_id
+	attr_accessible :promotion_id, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :user_id, :default_cause_id
 
   belongs_to :promotion, counter_cache: true
   belongs_to :share, foreign_key: "referring_share_id"
   belongs_to :cause, foreign_key: "current_cause_id"
+  belongs_to :cause, foreign_key: "default_cause_id"
   belongs_to :user
   has_many :shares
   has_many :sales, through: :shares
@@ -20,6 +21,7 @@ class Serve < ActiveRecord::Base
 	validates :promotion, presence: true
 	validates :promotion_id, presence: true
   validates :cause, presence: true
+  validates :default_cause_id, presence: true
   validates :current_cause_id, presence: true
 
   after_validation :replace_nils, :get_current_cause
@@ -41,7 +43,7 @@ class Serve < ActiveRecord::Base
         @cause_changed = false
         @cause_id = serve.current_cause_id
       # check to see if the new current cause is the same as the old current cause
-      when serve.cause.id == new_cause_id 
+      when serve.current_cause_id == new_cause_id 
         @cause_changed = false
         @cause_id = serve.current_cause_id
       # since both are not blank or nil and they are not the same, they must be different
@@ -98,7 +100,7 @@ class Serve < ActiveRecord::Base
 
   def get_current_cause
     if self.current_cause_id.nil?
-      self.current_cause_id = self.promotion.cause_id
+      self.current_cause_id = self.default_cause_id
     end
   end
 

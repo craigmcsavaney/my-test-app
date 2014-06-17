@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140616154140) do
+ActiveRecord::Schema.define(version: 20140616225649) do
 
   create_table "button_types", force: true do |t|
     t.string   "name",                        null: false
@@ -258,6 +258,7 @@ ActiveRecord::Schema.define(version: 20140616154140) do
     t.string   "session_id"
     t.integer  "current_cause_id"
     t.integer  "user_id"
+    t.integer  "default_cause_id",                   null: false
   end
 
   create_table "settings", force: true do |t|

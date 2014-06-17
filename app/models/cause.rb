@@ -13,7 +13,8 @@ class Cause < ActiveRecord::Base
   has_and_belongs_to_many :groups, join_table: :causes_groups
 	has_many :promotions
 	has_many :shares
-	has_many :serves
+	has_many :serves, foreign_key: "current_cause_id"
+  has_many :serves, foreign_key: "default_cause_id"
 
 	def self.not_exists?(id)
 		self.find(id)

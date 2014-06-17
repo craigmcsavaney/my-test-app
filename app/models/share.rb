@@ -149,10 +149,10 @@ class Share < ActiveRecord::Base
   def self.get_cause(share)
     if !share.cause.nil?
       cause = share.cause
-    elsif !share.serve.cause.nil?
-      cause = share.serve.cause
+    elsif !share.serve.current_cause_id.nil?
+      cause = share.serve.current_cause_id
     else
-      cause = share.promotion.cause
+      cause = share.serve.default_cause_id
     end
   end
 

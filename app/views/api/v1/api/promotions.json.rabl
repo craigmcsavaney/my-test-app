@@ -17,23 +17,6 @@ node :cause_selector do |promotion|
 	end
 end
 
-node do |promotion|
-	if promotion.cause.type == 'Single'
-		{ :default_cause_type => "single", 
-		  :default_fg_uuid => promotion.cause.fg_uuid, 
-		  :default_event_uid => "",
-		  :default_cause_name => promotion.cause.name,
-		  :default_cause_uid => promotion.cause.uid }
-	else
-		{ :default_cause_type => "event", 
-		  :default_fg_uuid => "", 
-		  :default_event_uid => promotion.cause.event.uid,
-		  :default_cause_name => promotion.cause.event.name,
-		  :default_cause_uid => promotion.cause.event.uid }
-	end
-end
-
-
 #attributes :fb_msg, :fb_link_label, :fb_caption, :fb_redirect_url, :fb_thumb_url, if: lambda { |m| m.channel_ids.include?(Channel.find_by_name('Facebook').id) } 
 
 #node do |promotion|

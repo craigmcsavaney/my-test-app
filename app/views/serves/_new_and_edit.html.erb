@@ -37,6 +37,8 @@
         <%= f.label :current_cause_id, "Current Cause ID" %>
         <%= select_tag 'serve[current_cause_id]', options_from_collection_for_select(Cause.all, :id, :id, @serve.current_cause_id ) %>
 
+        <%= f.label :default_cause_id, "Default Cause ID (Note that this can be different from the Cause associated with the Promotion)" %>
+        <%= select_tag 'serve[default_cause_id]', options_from_collection_for_select(Cause.all, :id, :id, @serve.default_cause_id ) %>
 
         <br/><br/>
 
