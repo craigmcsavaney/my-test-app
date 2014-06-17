@@ -4,7 +4,7 @@ module Api
             def serve
                 # This is the main api method that serves all the intial widget load information.
                 # This call accepts the following inputs: merchant_id, callback, [session_id], 
-                # [serve_id], and [path].  merchant_id and callback are required on all calls 
+                # [serve_id], [cbcause_id], and [path].  merchant_id and callback are required on all calls 
                 # and an error message will be returned if either is missing.  Remember that 
                 # the merchant_id is a uid.
 
@@ -22,6 +22,10 @@ module Api
                 # determine if the user referred themselves back to the same site using
                 # one of their own share links.  If so, we don't treat this as a new
                 # referral.
+
+                # If a referring cause value (cbcause) can be obtained from the referring url, 
+                # it will be passed in and used to set or update the default cause value
+                # for the resulting serve. 
 
                 # Finally, we check to see if the causebutton.com user cookie is set.  
                 # If it is, and if it contains a valid user email value, 
@@ -192,19 +196,21 @@ module Api
                         @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, user_id: user_id)
                         # @serve = Serve.create(promotion_id: @promotion.id)
 
-                    # Second case, when serve_id is invalid and path is valid.
-                    # Typically, this is a first time, referred visitor
+                    # Second case, when serve_id is invalid and path is valid. Typically, this is a first time,
+                    # referred visitor.  Since they are referred, we use the default cause of the serve
+                    # from the referring share as the default cause for the new serve.
                     # If they happen to show up with a valid cbcause, use it to set the default cause for the
                     # new serve.  However, this is highly unlikely and should never happen in normal use.
                     when !serve_valid && path_valid
-                        if !cbcause.nil?
-                            new_cause_id = cbcause.id
-                        else
-                            new_cause_id = @promotion.cause_id
-                        end
                         # create a new serve using the current promotion and the share_id associated with the path
                         # first, get the share associated with the referring path
                         @referring_share = Share.find_by_link_id(params[:path])
+                        # now check to see if there's a valid cbcause and if so use it as the default cause
+                        if !cbcause.nil?
+                            new_cause_id = cbcause.id
+                        else
+                            new_cause_id = @referring_share.serve.default_cause_id
+                        end
                         # now, create the new serve
                         @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @referring_share.id, user_id: user_id)
                         # @serve = Serve.create(promotion_id: @promotion.id, referring_share_id: @referring_share.id)
