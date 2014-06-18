@@ -82,7 +82,7 @@ Myapplication::Application.routes.draw do
   delete '/user/sign_out', to: 'devise/sessions#destroy'
 
 
-  devise_for :users
+  devise_for :users, :controllers => { :passwords => "passwords" }
   resources :users, only: [:edit, :update, :index]
 
 
