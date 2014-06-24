@@ -236,6 +236,12 @@ Widget custom styles, all namespaced .cbw
 	top: 20px !important;
 	right: 20px !important;
 	color: #73C9BE !important;
+	cursor: pointer !important;
+}
+
+.cbw #cbw-widget #cbw-cause-selector-close:hover {
+	text-shadow: 0 0 2px #73C9BE !important;
+	color: #377F75 !important;
 }
 
 .cbw #cbw-widget .cbw-radio-button-label {
