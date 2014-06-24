@@ -9,7 +9,7 @@ node :content do
 				<div id="cbw-heading-logo">
 					<a id="cbw-heading-logo-link" target="_blank">
 						<!--<img id="cbw-heading-logo-img">-->
-						CauseButton
+						causebutton
 					</a>
 				</div>
 				<span id="cbw-welcome-user-message" class="widget-hide">Welcome&nbsp;

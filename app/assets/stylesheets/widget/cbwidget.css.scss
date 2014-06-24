@@ -72,7 +72,10 @@ Widget custom styles, all namespaced .cbw
 }
 
 .cbw #cbw-heading-logo {
-	display: inline !important;
+	border: 2px solid #FFFFFF !important;
+    border-radius: 5px !important;
+    display: inline !important;
+    padding: 3px 5px !important;	
 }
 
 .cbw #cbw-heading-logo-img {
