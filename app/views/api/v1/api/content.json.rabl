@@ -42,7 +42,7 @@ node :content do
 								</div>
 							</div>
 						</div>
-						<div id="cbw-change-cause-label">
+						<div id="cbw-change-cause-label" class="cbw-link-text">
 							(click to change)
 						</div>
 					</div>
@@ -158,8 +158,9 @@ node :content do
 						<textarea id="cbw-share-msg" rows="3" placeholder="Enter Text To Share"></textarea>
 					</div>
 				</div>
-				<div id="cbw-links" class="cbw-control-group widget-hide">
-	    			<div id="cbw-links-info-toggle" class="cbw-link">more info</div>
+				<div id="cbw-links" class="cbw-control-group">
+	    			<div id="cbw-links-info-toggle" class="cbw-link widget-hide">more info</div>
+	    			<a id="cbw-links-causebutton-url" class="cbw-link cbw-link-text"></a>
 				</div>
 				<div id="cbw-links-info" class="widget-hide cbw-control-group"" >
 	    			<textarea id="cbw-links-info-text" rows="10">content placeholder</textarea>

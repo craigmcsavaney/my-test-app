@@ -60,6 +60,7 @@ function CBSale(amount,transaction_id) {
     var ScriptsCounter;
     var CBAssetsBase;
     var CBBase;
+    var CBHome = "http://causebutton.com";  // link to causebutton home page
     var ReferringPath;
     var FilteredParamString;  // original param string minus all referring path param(s)
     var ServeData;
@@ -649,10 +650,19 @@ function CBSale(amount,transaction_id) {
                 // $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
 
                 // Add the logo link target
-                $("#cbw-heading-logo-link").attr('href', CBBase);
+                $("#cbw-heading-logo-link").attr('href', CBHome);
 
                 // Populate the pledge title text supplied by the server
                 $("#cbw-pledge-title").text(ServeData.promotion.title);
+
+                // Add the footer causebutton url link target
+                $("#cbw-links-causebutton-url").attr('href', CBHome);
+
+                // Add the footer causebutton url link target
+                $("#cbw-links-causebutton-url").attr('target', "_blank");
+
+                // Populate the footer causebutton url link text
+                $("#cbw-links-causebutton-url").text("causebutton.com");
 
                 // replace variables in the promotion text supplied by the server
                 var banner = ServeData.promotion.banner
@@ -1735,7 +1745,7 @@ function CBSale(amount,transaction_id) {
              * serve with the new cause (if one exists).
              * -------------------------------------------------------- */
             function CloseCauseSelector () {
-                $("#cbw-cause-selector").fadeOut(100);
+                $("#cbw-cause-selector").fadeOut();
                 // Check to see if the email is valid.  If it is not, this will
                 // set the error condition, which is important to prevent
                 // the email from trying to update when the cause updates.
@@ -2255,7 +2265,7 @@ function CBSale(amount,transaction_id) {
             var windowName = "causebutton_facebook_share_window";
 
             var windowSpecs = "width=640,height=370,resizable=0,scrollbars=0,menubar=0,toolbar=0,status=0,location=0,titlebar=0";
-
+            
             window.open(apiCall, windowName, windowSpecs);
 
         }

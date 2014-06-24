@@ -114,7 +114,7 @@ Widget custom styles, all namespaced .cbw
 
 .cbw #cbw-body-normal {
 	background-color: #ffffff !important;
-	padding: 40px !important;
+	padding: 40px 40px 10px 40px !important;
 	position: relative !important;
 	border-radius: 0 0 10px 10px !important;
 }
@@ -194,7 +194,7 @@ Widget custom styles, all namespaced .cbw
     background-clip: padding-box !important;
     background-image: -moz-linear-gradient(center bottom , #EEEEEE 0%, #FFFFFF 50%) !important;
 }
-.cbw #cbw-widget #cbw-currently-selected-cause-inner-box:hover {
+.cbw #cbw-widget #cbw-currently-selected-cause-text:hover {
 	text-shadow: 0 0 2px #73C9BE !important;
 	color: #666666 !important;
 }
@@ -215,7 +215,11 @@ Widget custom styles, all namespaced .cbw
 .cbw #cbw-widget #cbw-change-cause-label {
 	width: 100% !important;
 	text-align: center !important;
-	font-size: 9pt !important;
+	height: 10px !important;
+}
+
+.cbw #cbw-widget .cbw-link-text {
+	font-size: 8pt !important;
 	font-weight: normal !important;
 	color: #73C9BE !important;
 	cursor: pointer !important;
@@ -228,7 +232,7 @@ Widget custom styles, all namespaced .cbw
 	border-radius: 10px !important;
 	width: 270px !important;
 	padding: 40px !important;
-	display: none;
+	display: none; /* don't make this important */
 }
 
 .cbw #cbw-widget #cbw-cause-selector-close {
@@ -292,7 +296,7 @@ Widget custom styles, all namespaced .cbw
 	margin-top: 6px !important;
 }
 
-.cbw #cbw-widget .cbw-cause-radio-button-box:hover, .cbw #cbw-widget .cbw-email-checkbox-box:hover, .cbw #cbw-widget #cbw-change-cause-label:hover {
+.cbw #cbw-widget .cbw-cause-radio-button-box:hover, .cbw #cbw-widget .cbw-email-checkbox-box:hover, .cbw #cbw-widget .cbw-link-text:hover {
 	text-shadow: 0 0 2px #73C9BE !important;
 	color: #666666 !important;
 }
@@ -414,14 +418,10 @@ Widget custom styles, all namespaced .cbw
 	font-size: 9pt !important;
 }
 
-.cbw #cbw-links.cbw-control-group {
+.cbw #cbw-widget #cbw-links.cbw-control-group {
 	text-align: center !important;
 	line-height: 10px !important;
-	margin-bottom: 3px !important;
-	margin-top: 5px !important;
-	color: #666666 !important;
-	font-size: 8pt !important;
-	cursor: pointer !important;
+	margin-top: 30px !important;
 } 
 
 .cbw #cbw-links-info-text {
