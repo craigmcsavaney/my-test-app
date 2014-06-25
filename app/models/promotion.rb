@@ -160,10 +160,10 @@ class Promotion < ActiveRecord::Base
     end
 
     def get_templates
-      if self.banner_template == "" || self.supporter_pct_changed? || self.buyer_pct_changed? || self.merchant_pct_changed?
+      if self.banner_template == ""
         self.banner_template = Template.get_banner_template(self)
       end
-      if self.facebook_msg_template == "" || self.supporter_pct_changed? || self.buyer_pct_changed? || self.merchant_pct_changed?
+      if self.facebook_msg_template == ""
         self.facebook_msg_template = Template.get_facebook_msg_template(self)
       end
       if self.twitter_msg_template == ""
@@ -187,7 +187,7 @@ class Promotion < ActiveRecord::Base
     end
 
     def replace_variables
-      variables_changed = self.supporter_pct_changed? || self.buyer_pct_changed? || self.merchant_id_changed? || self.cause_id_changed? || self.merchant_pct_changed?
+      variables_changed = self.supporter_pct_changed? || self.buyer_pct_changed? || self.merchant_id_changed? || self.merchant_pct_changed?
       if self.banner_template_changed? or variables_changed
         self.banner = Template.replace_template_variables(self.banner_template,self)
       end
