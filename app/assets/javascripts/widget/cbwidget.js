@@ -1533,11 +1533,19 @@ function CBSale(amount,transaction_id) {
                 // otherwise, use the default url associated with this promotion. 
                 if (URLTarget == "local") {
                     // get the local page URL minus the params
-                    path = window.location.href.slice(window.location.href.indexOf('?') + 1);
-                    // now add the FilteredParamString if it exists, otherwise just add the '?' which will
+                    var path = window.location.href;
+                    var n = path.indexOf('?');
+                    // following takes the substring of the path up to n if it exists (meaning there
+                    // is a '?' in the path), or the entire string if there is no '?'
+                    path = path.substring(0, n != -1 ? n : s.length);
+
+                    // now add the FilteredParamString if it contains additional parameters that need
+                    // to be added back to the URLTarget, otherwise just add the '?' which will
                     // preceed the new link param.  The FilteredParamString is the
-                    // original param string from this page's URL minus the referring path params.
-                    if (FilteredParamString != "") {
+                    // original param string from this page's URL minus the referring path param 
+                    // and the CBCause param. Note that a Filtered Param String  == '?' is equivalent
+                    // to an empty string and is treated as such.
+                    if (FilteredParamString != "?") {
                         path += FilteredParamString + "&";
                     } else {
                         path += "?";
