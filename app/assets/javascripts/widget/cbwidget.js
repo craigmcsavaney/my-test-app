@@ -1655,11 +1655,8 @@ function CBSale(amount,transaction_id) {
 
                     case 'pinterest':
 
-                        // image is currently hardcoded on the server so replacing here with hardcoded one for testing purposes
+                        PostToPinterest(sel_channel.url_prefix, channel_path, share_msg, sel_channel.image_url);
 
-                        var image_url = "http://phil.causebutton.com/cbproto/img/funky_astronaut.png";
-
-                        PostToPinterest(sel_channel.url_prefix, channel_path, share_msg, image_url);
                         break;
 
                     case 'email':
