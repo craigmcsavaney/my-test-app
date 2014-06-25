@@ -53,7 +53,7 @@ class Ability
             end
             # Promotion permissions
             can [:index, :create], Promotion
-            can [:edit, :update, :delete, :show], Promotion do |promotion|
+            can [:edit, :update, :delete, :show, :duplicate], Promotion do |promotion|
                 promotion.merchant.users.include?(user)
             end
             # Single permissions
