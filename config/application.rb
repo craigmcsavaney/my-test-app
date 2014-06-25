@@ -67,16 +67,8 @@ module Myapplication
     # parameters by using an attr_accessible or attr_protected declaration.
     config.active_record.whitelist_attributes = true
 
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-
-    # From Heroku, guidance on fixing asset compile error in production: 
-    # "While precompiling assets, in Rails 3.x, you can prevent initializing your application and
-    # connecting to the database by ensuring that the following line is in your config/application.rb:"
-    config.assets.initialize_on_precompile = false
 
     config.assets.precompile += %w( holder.js select2.js select2.min.js select2_locale_en.js cbwidget.js select2.min.js select2.css cbwidget.css )
     config.secret_key_base = 'f610e803705c6045a6525af28d317b732731f9151d5410be83a063dd6c983e4966ece0975fb26bba8a2f8137d2b102e88d29ab8a947deb128c0bbf9bdaae29d6'

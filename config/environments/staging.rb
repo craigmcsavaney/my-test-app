@@ -51,7 +51,7 @@ Myapplication::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( holder.js select2.js select2.min.js select2_locale_en.js widget/cbwidget.js widget/bootstrap.min.js widget/select2.js widget/select2.min.js widget/select2_locale_en.js widget/cbw-bootstrap.css widget/select2.css widget/cbwidget.css )
+  # config.assets.precompile += %w( holder.js select2.js select2.min.js select2_locale_en.js widget/cbwidget.js widget/bootstrap.min.js widget/select2.js widget/select2.min.js widget/select2_locale_en.js widget/cbw-bootstrap.css widget/select2.css widget/cbwidget.css )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -67,7 +67,7 @@ Myapplication::Application.configure do
   config.active_support.deprecation = :notify
 
   # added by craig as part of rails 4.0 upgrade:
-  config.eager_load = false
+  config.eager_load = true
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
