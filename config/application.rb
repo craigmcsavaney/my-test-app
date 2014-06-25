@@ -4,9 +4,11 @@ require 'rails/all'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  # Bundler.require(*Rails.groups(:assets => %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
+  # Newer, simpler method for Rails 4:
+  Bundler.require(:default, Rails.env)
 end
 
 module Myapplication
@@ -75,5 +77,9 @@ module Myapplication
     # "While precompiling assets, in Rails 3.x, you can prevent initializing your application and
     # connecting to the database by ensuring that the following line is in your config/application.rb:"
     config.assets.initialize_on_precompile = false
+
+    config.assets.precompile += %w( holder.js select2.js select2.min.js select2_locale_en.js widget/cbwidget.js widget/bootstrap.min.js widget/select2.js widget/select2.min.js widget/select2_locale_en.js widget/cbw-bootstrap.css widget/select2.css widget/cbwidget.css )
+    config.secret_key_base = 'f610e803705c6045a6525af28d317b732731f9151d5410be83a063dd6c983e4966ece0975fb26bba8a2f8137d2b102e88d29ab8a947deb128c0bbf9bdaae29d6'
+
   end
 end

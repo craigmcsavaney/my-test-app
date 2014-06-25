@@ -41,6 +41,7 @@ gem 'activeresource', '~>4.0.0.beta1'
 gem 'protected_attributes', '~>1.0.1'
 gem 'rails-observers', '~>0.1.1'
 gem 'rails-perftest', '~>0.0.2'
+gem 'sprockets_better_errors'
 
 # Following gem added because this is the version Devise 3.2.2 needs at the moment:
 gem 'activesupport', '4.0.2'
