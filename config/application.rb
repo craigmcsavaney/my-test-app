@@ -78,8 +78,9 @@ module Myapplication
     # connecting to the database by ensuring that the following line is in your config/application.rb:"
     config.assets.initialize_on_precompile = false
 
-    config.assets.precompile += %w( holder.js select2.js select2.min.js select2_locale_en.js widget/cbwidget.js widget/bootstrap.min.js widget/select2.js widget/select2.min.js widget/select2_locale_en.js widget/cbw-bootstrap.css widget/select2.css widget/cbwidget.css )
+    config.assets.precompile += %w( holder.js select2.js select2.min.js select2_locale_en.js cbwidget.js select2.min.js select2.css cbwidget.css )
     config.secret_key_base = 'f610e803705c6045a6525af28d317b732731f9151d5410be83a063dd6c983e4966ece0975fb26bba8a2f8137d2b102e88d29ab8a947deb128c0bbf9bdaae29d6'
-
+    config.assets.paths << Rails.root.join('app', 'assets', 'javascripts','widget')
+    config.assets.paths << Rails.root.join('app', 'assets', 'stylesheets','widget')
   end
 end
