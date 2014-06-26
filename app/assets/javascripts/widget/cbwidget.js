@@ -42,7 +42,6 @@ function CBSale(amount,transaction_id) {
             complete: function(jqXHR, textStatus) {
             }
         })
-
     })
 }
 
