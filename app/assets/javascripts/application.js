@@ -13,3 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require jquery.smartmenus.min
+//= require jquery.smartmenus.bootstrap.min
