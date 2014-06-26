@@ -1,9 +1,12 @@
 @import "bootstrap";
-@import "bootstrap-responsive";
 
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
+
+$grayDark: #666666;
+
+$grayDarker: #333333;
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -79,7 +82,7 @@ h2 {
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: $grayLight;
+  color: $grayMediumLight;
 }
 
 p {
@@ -157,6 +160,10 @@ p {
   margin-top:5px;
 }
 
+#nav-menus a {
+  color: #999999;
+}
+
 
 /* footer */
 
@@ -164,7 +171,7 @@ footer {
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
-  color: $grayLight;
+  color: $grayMediumLight;
   a {
     color: $gray;
     &:hover { 
@@ -287,9 +294,9 @@ input {
   li {
     overflow: auto;
     padding: 10px 0;
-    border-top: 1px solid $grayLighter;
+    border-top: 1px solid $grayMediumLight;
     &:last-child {
-      border-bottom: 1px solid $grayLighter;
+      border-bottom: 1px solid $grayMediumLight;
     }
   }
 }

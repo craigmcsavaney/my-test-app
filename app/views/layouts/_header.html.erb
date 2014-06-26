@@ -1,15 +1,16 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
+<header>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-menus">
+        <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
       <%= link_to image_tag('cb-white-ltblue-15x123.svg', title: 'Home', id: 'header-logo'), home_path %>
-      <nav>
-        <div class="nav-collapse collapse">
-          <ul class="nav pull-right">
+      <div>
+        <div id="nav-menus" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav pull-right">
             <% if 1!=1 %>
               <li><%= link_to "Home",    home_path %></li>
               <li><%= link_to "Help",    help_path %></li>
@@ -21,9 +22,9 @@
             <% if !signed_in? %>
                 <li><%= link_to "Login", new_user_session_path %></li>
               <% else %>
-                <li id="fat-menu" class="dropdown">
+                <li id="user-menu" class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    My Account <b class="caret"></b>
+                    My Account<!-- <b class="caret"></b>-->
                   </a>
                   <ul class="dropdown-menu">
                     <% if (can?(:show, Merchant)) %>
@@ -81,9 +82,9 @@
                 </li>
             <% end %>
             <% if can? :view_admin_menu, User %>
-              <li id="fat-menu" class="dropdown">
+              <li id="admin-menu" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  Admin <b class="caret"></b>
+                  Admin <!--<b class="caret"></b>-->
                 </a>
                 <ul class="dropdown-menu">
                   <% if (can?(:show_admin, Merchant)) %>
@@ -232,7 +233,7 @@
             <% end %>
           </ul>
         </div>
-      </nav>
+      </div>
     </div>
-  </div>
+  </nav>
 </header>
