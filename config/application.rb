@@ -70,7 +70,7 @@ module Myapplication
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.1'
 
-    config.assets.precompile += %w( glyphicons-halflings.png holder.js select2.js select2.min.js select2_locale_en.js cbwidget.js select2.min.js select2.css cbwidget.css )
+    config.assets.precompile += %w( holder.js select2.js select2.min.js select2_locale_en.js cbwidget.js select2.min.js select2.css cbwidget.css )
     config.secret_key_base = 'f610e803705c6045a6525af28d317b732731f9151d5410be83a063dd6c983e4966ece0975fb26bba8a2f8137d2b102e88d29ab8a947deb128c0bbf9bdaae29d6'
     # config.assets.paths << Rails.root.join('app', 'assets', 'javascripts','widget')
     # config.assets.paths << Rails.root.join('app', 'assets', 'stylesheets','widget')
