@@ -462,6 +462,10 @@ function CBSale(amount,transaction_id) {
                         FilteredParamString += h1 + "=" + h2
                     }
                 }
+                // If the Filtered Param String still just contains ?, reset it to a blank string
+                if (FilteredParamString == '?') {
+                    FilteredParamString = "";
+                }
             }
 
             /* ---------------------------------------------------------------------------------
@@ -1536,15 +1540,15 @@ function CBSale(amount,transaction_id) {
                     var n = path.indexOf('?');
                     // following takes the substring of the path up to n if it exists (meaning there
                     // is a '?' in the path), or the entire string if there is no '?'
-                    path = path.substring(0, n != -1 ? n : s.length);
+                    path = path.substring(0, n != -1 ? n : path.length);
 
                     // now add the FilteredParamString if it contains additional parameters that need
                     // to be added back to the URLTarget, otherwise just add the '?' which will
                     // preceed the new link param.  The FilteredParamString is the
                     // original param string from this page's URL minus the referring path param 
-                    // and the CBCause param. Note that a Filtered Param String  == '?' is equivalent
-                    // to an empty string and is treated as such.
-                    if (FilteredParamString != "?") {
+                    // and the CBCause param. Note that if the FilteredParamString is not null, it
+                    // will start with a ?.
+                    if (FilteredParamString != "") {
                         path += FilteredParamString + "&";
                     } else {
                         path += "?";
