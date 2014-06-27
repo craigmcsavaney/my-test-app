@@ -502,6 +502,7 @@ module Api
                     #Share.create_share(@serve,@share.channel)
                 else
                     render 'api/v1/api/errors/path_invalid'
+                    return
                 end
 
                 render 'success'
