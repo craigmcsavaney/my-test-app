@@ -496,16 +496,25 @@ module Api
                 if Share.path_valid_for_this_merchant?(params[:path],merchant)
                     # the path is valid, so get the current share
                     share = Share.find_by_link_id(params[:path])
-                    # Now, mark the posted channel as confirmed, then create a new path for this channel
-                    Sale.create(share_id: share.id, amount: params[:amount].to_f, transaction_id: params[:transaction_id]);
-                    #Serve.post_to_channel(@serve,@share.channel)
-                    #Share.create_share(@serve,@share.channel)
                 else
                     render 'api/v1/api/errors/path_invalid'
                     return
                 end
 
-                render 'success'
+                # next, check to see if the serve associated with this share has either been shared or has a 
+                # referrer.  If either is true, post this sale, but if neither is true we skip it.  
+                if Serve.shared?(share.serve) || Serve.referred?(share.serve)
+                    # This is a qualifying purchase, so create the sale record
+                    Sale.create(share_id: share.id, amount: params[:amount].to_f, transaction_id: params[:transaction_id]);
+                    render 'success'
+                    return
+                else
+                    render 'api/v1/api/errors/disqualified_sale'
+                    return
+                end
+                
+                # the following error should never be raised:
+                render 'api/v1/api/errors/unrecognized_case'
                 return
             end
 
