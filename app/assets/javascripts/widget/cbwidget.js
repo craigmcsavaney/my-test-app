@@ -1,11 +1,12 @@
 var CBApiBase;
 var CBMerchantID;
-var CBPurchasePath;
 
 function CBSale(amount,transaction_id) {
 
     CBjQ = window.jQuery;
     CBjQ(document).ready(function($CB) {
+
+        var path = GetCookie("cbwpath");
 
         var method = "sale";
 
@@ -15,8 +16,8 @@ function CBSale(amount,transaction_id) {
             ajxDataObj.merchant_id = CBMerchantID;
         }
 
-        if (CBPurchasePath) {
-            ajxDataObj.path = CBPurchasePath;
+        if (path) {
+            ajxDataObj.path = path;
         }
 
         if (amount) {
@@ -27,22 +28,78 @@ function CBSale(amount,transaction_id) {
             ajxDataObj.transaction_id = transaction_id;
         }
 
-        var data_url = CBApiBase + method;
+        //  Make sure the path, amount, and merchant are present and not blank.
+        //  These are mandatory inputs.  Invalid values will be sorted out by
+        //  the server.
+        if (path && path != "" && amount && amount != "" && CBMerchantID && CBMerchantID != "") {
 
-        var reqObj = $CB.ajax({
-            type: 'POST',
-            url: data_url,
-            data: ajxDataObj,
-            timeout: 30000,
-            dataType: "jsonp",
-            success: function(data) {
-            },
-            error: function(data, status, xhr) {
-            },
-            complete: function(jqXHR, textStatus) {
-            }
-        })
+            var data_url = CBApiBase + method;
+
+            var reqObj = $CB.ajax({
+                type: 'POST',
+                url: data_url,
+                data: ajxDataObj,
+                timeout: 30000,
+                dataType: "jsonp",
+                success: function(data) {
+                },
+                error: function(data, status, xhr) {
+                },
+                complete: function(jqXHR, textStatus) {
+                }
+
+            })
+
+        }
+
     })
+
+    function GetCookie(check_name) {
+      
+        // first we'll split this cookie up into name/value pairs
+        // note: document.cookie only returns name=value, not the other components
+        var a_all_cookies = document.cookie.split( ';' );
+        var a_temp_cookie = '';
+        var cookie_name = '';
+        var cookie_value = '';
+        var b_cookie_found = false; // set boolean t/f default f
+
+        for ( i = 0; i < a_all_cookies.length; i++ ) {
+
+            // now we'll split apart each name=value pair
+            a_temp_cookie = a_all_cookies[i].split( '=' );
+
+            // and trim left/right whitespace while we're at it
+            cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
+
+            // if the extracted name matches passed check_name
+            if ( cookie_name == check_name ) {
+
+                b_cookie_found = true;
+                // we need to handle case where cookie has no value but exists (no = sign, that is):
+                if ( a_temp_cookie.length > 1 ) {
+
+                    cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+
+                }
+                // note that in cases where cookie is initialized but no value, null is returned
+                return cookie_value;
+                break;
+            }
+
+            a_temp_cookie = null;
+            cookie_name = '';
+
+        }
+
+        if ( !b_cookie_found ) {
+
+            return null;
+
+        }
+
+    }
+
 }
 
 /*
@@ -222,7 +279,7 @@ function CBSale(amount,transaction_id) {
         scr = scripts[ScriptsCounter];
 
         // If there is a next script to load, create the script tag, otherwise
-        // call the main() function.
+        // call the PreMain() function.
 
         if (scr) {
 
@@ -230,9 +287,54 @@ function CBSale(amount,transaction_id) {
         
         } else {
 
-            // This is the last script in the page, call main()
-            main();
+            // This is the last script in the page, call PreMain()
+            PreMain();
         }
+    }
+
+    /* ----------------------------------------------------------------------- 
+     * PreMain()
+     * ----------------------------------------------------------------------- 
+     * This function contains all the remaining script that can be executed
+     * without jQuery.  Once we get into script that requires jQuery we
+     * have to enter main(), which is called at the end of this script.
+     *************************************************************************/
+    function PreMain() {
+        // Dynamically load the pre-requisite and local stylesheets
+
+        //AddStylesheet('cbw-reset', CBAssetsBase + "cbwreset.css");
+        // added reset styles to cbwidget.css
+        AddStylesheet('cbw-css-sel2', CBAssetsBase + "select2.css");
+        AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
+        AddStylesheet('cbw-googlefonts', "http://fonts.googleapis.com/css?family=Montserrat:400,700");
+        AddStylesheet('font-awesome', "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+
+        // get the parameters passed into the page so that we can carry these forward if necessary
+        // for example, as part of the process of determining the landing page or promotion id
+        var params = getUrlVars();
+
+        // set the ReferringPath variable equal to blank.  This will be updated with a real param in
+        // GetReferringPathAndCause if one exists, otherwise it ensures the param will be passed
+        // with the api call.
+        ReferringPath = "";
+
+        // set the CBCauseID variable equal to blank.  Ensures the param will be passed with the api call.
+        // This will be updated with a real param in GetReferringPathAndCause if one exists.
+        CBCauseID = "";
+
+        // set the FilteredParamString variable equal to blank.  This will only change if the params.length
+        // is > 0, which will result in a call to GetReferringPathAndCause(params).
+        FilteredParamString = "";
+
+        // now check to see if the page url params contains a referral path or a cause ID.  If it does,
+        // the FilteredParamString variable will be populated with all the params except the referral 
+        // path params and/or the cause ID, and the ReferringPath and CBCauseID variables will be set 
+        // to the correct values.
+        if (params.length > 0) {
+            GetReferringPathAndCause(params);
+        }
+
+        main();  
     }
 
     /* ----------------------------------------------------------------------- 
@@ -302,7 +404,8 @@ function CBSale(amount,transaction_id) {
      * --------------------------------------------------------------------------------------------------------
      * This is the main function that will perform most of the functionality of the cause widget creation
      * It will *only* be called after the necessary scripts have been loaded in the prescribed order in the
-     * main anonymous function. It will be called by the script load handler of the last script to load
+     * main anonymous function. It is called by the PreMain script which is called by the load handler 
+     * after the last script is loaded
      * -------------------------------------------------------------------------------------------------------- */
     function main() {
 
@@ -313,40 +416,6 @@ function CBSale(amount,transaction_id) {
          * jQuery indicates that the page is 'ready'. Put all code that requires jQuery in here!
          * -------------------------------------------------------------------------------------------------------- */
         jQuery(document).ready(function($) {
-
-            // Dynamically load the pre-requisite and local stylesheets
-
-            //AddStylesheet('cbw-reset', CBAssetsBase + "cbwreset.css");
-            // added reset styles to cbwidget.css
-            AddStylesheet('cbw-css-sel2', CBAssetsBase + "select2.css");
-            AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
-            AddStylesheet('cbw-googlefonts', "http://fonts.googleapis.com/css?family=Montserrat:400,700");
-            AddStylesheet('font-awesome', "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
-
-            // get the parameters passed into the page so that we can carry these forward if necessary
-            // for example, as part of the process of determining the landing page or promotion id
-            var params = getUrlVars();
-
-            // set the ReferringPath variable equal to blank.  This will be updated with a real param in
-            // GetReferringPathAndCause if one exists, otherwise it ensures the param will be passed
-            // with the api call.
-            ReferringPath = "";
-
-            // set the CBCauseID variable equal to blank.  Ensures the param will be passed with the api call.
-            CBCauseID = "";
-
-            // set the FilteredParamString variable equal to blank.  This will only change if the params.length
-            // is > 0, which will result in a call to GetReferringPathAndCause(params).
-            FilteredParamString = "";
-
-            // now check to see if the page url params contains a referral path or a cause ID.  If it does,
-            // the FilteredParamString variable will be populated with all the params except the referral 
-            // path params and/or the cause ID, and the ReferringPath and CBCauseID variables will be set 
-            // to the correct values.
-            if (params.length > 0) {
-                GetReferringPathAndCause(params);
-                CBPurchasePath = ReferringPath;
-            }
 
             // This is the id value of the div to which the entire widget will be appended.
             // This used to be #cb-widget-replace but now the widget is appended to the body tag.
@@ -367,8 +436,9 @@ function CBSale(amount,transaction_id) {
                 // write cookies and load the purchase path variable.
                 $.when(LoadServeData(ReferringPath)).done(function(a) {
 
-                    WriteCookies();
-                    LoadPurchasePath();
+                    $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
+                        ReportConversion();
+                    });
 
                 });
 
@@ -379,8 +449,8 @@ function CBSale(amount,transaction_id) {
                 // merge the serve data into the widget html, and merge the button html.
                 $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
 
-                    WriteCookies();
-                    LoadPurchasePath();
+                    //WriteCookies();
+                    //PurchasePathUpdate(ServeData.paths["purchase"]);
                     MergeServeData(div);
                     MergeButtons();
 
@@ -400,72 +470,43 @@ function CBSale(amount,transaction_id) {
                     
                     } 
 
+                    // Write the session, serve, and path cookies.  Then check for and report conversions
+                    $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
+                        ReportConversion();
+                    });
+
                     Loaded = true;
 
                 });
 
             }
 
+
             /*
              * HELPER FUNCTIONS 
              */
 
             /* ---------------------------------------------------------------------------------
-             * AddStylesheet(id, href)
+             * ReportConversion()
              * ---------------------------------------------------------------------------------
-             * Adds a stylesheet <link> element to the current page with the specified
-             * id and href
-             *
-             * @id   = id attribute to use on the generated link tag
-             * @href = href (source of css file) to use for generated link tag
+             * Check to see if there is a conversion to report on this page.  If so, collect
+             * the conversion attributes and call the CBSale function.
              * --------------------------------------------------------------------------------- */
-            function AddStylesheet(id, href) {
+            function ReportConversion() {
 
-                var head = document.getElementsByTagName('head')[0];
-                var link = document.createElement('link');
+                // Check to see if there are any elements on the page that include
+                // the .cbw-conversion-success class. If there are, and if there is only
+                // one such element, then we need to get the conversion amount and transaction
+                // ID values from attributes of that element and call the CBSale method to
+                // report the conversion to the database. 
 
-                link.id = id;
-                link.rel = 'stylesheet';
-                link.type = 'text/css';
-                link.href = href;
-                link.media = 'all';
-                
-                head.appendChild(link);
-            }
+                if ($(".cbw-conversion-success").length == 1) {
 
-            /* ---------------------------------------------------------------------------------
-             * GetReferringPathAndCause(params)
-             * ---------------------------------------------------------------------------------
-             * Searches through the params array for referral path values with names that
-             * match the sources of paths.  Currently supporting two variations of Awe.sm links
-             * and 'cblink' links.
-             * --------------------------------------------------------------------------------- */
-            function GetReferringPathAndCause (params) {
-
-                var h1, h2;
-                FilteredParamString = '?';
-                for (var i = 0, l = params.length; i < l; i++) {
-                    h1 = params[i];
-                    h2 = params[h1];
-                    if (h1 == 'awesm' && h2 && h2.indexOf('awe.sm_') == 0) {
-                        ReferringPath = h2.substring(7);
-                    } else if (h1 == 'fb_ref' && h2 && h2.indexOf('awesm') == 0) {
-                        ReferringPath = decodeURIComponent(h2).substring(13);
-                    } else if (h1 == 'cblink') {
-                        ReferringPath = h2;
-                    } else if (h1 == 'cbcause') {
-                        CBCauseID = h2;
-                    } else {
-                        if (FilteredParamString != '?') {
-                            FilteredParamString += "&";
-                        }
-                        FilteredParamString += h1 + "=" + h2
-                    }
+                    var cbw_conversion_amount = $(".cbw-conversion-success").attr('cbw-conversion-amount');
+                    var cbw_transaction_id = $(".cbw-conversion-success").attr('cbw-transaction-id');
+                    CBSale(cbw_conversion_amount,cbw_transaction_id);
                 }
-                // If the Filtered Param String still just contains ?, reset it to a blank string
-                if (FilteredParamString == '?') {
-                    FilteredParamString = "";
-                }
+
             }
 
             /* ---------------------------------------------------------------------------------
@@ -503,11 +544,6 @@ function CBSale(amount,transaction_id) {
              * serve if one exists.  Merchant ID  and CBCause ID are global variables, and the session and
              * serve information are read from cookies if they exists.  If no prior serve exists,
              * the server finds the current pledge and serves that.
-             *
-             * TO DO: add the ability to pass in the pledge id, which we will get as a url 
-             * param.  This will allow us to serve up specific pledges for a given customer based
-             * on custom links we give to them for promotional purposes.  When present, the pledge
-             * ID should probably take precedence over existing session and serve identifiers.
              * --------------------------------------------------------------------------------- */
             function LoadServeData(referring_path) {
 
@@ -588,28 +624,6 @@ function CBSale(amount,transaction_id) {
                 SetCookie("cbwsession", ServeData.session_id, 1440, "/");
                 SetCookie("cbwserve", ServeData.serve_id, expire_mins, "/"); 
 
-            }
-
-            /* ---------------------------------------------------------------------------------
-             * LoadPurchasePath()
-             * ---------------------------------------------------------------------------------
-             * Loads the current Purchase Path after the Serve data is loaded.
-             * --------------------------------------------------------------------------------- */
-            function LoadPurchasePath() {
-                // Check and see if this serve has already been viewed.  If it has, update the 
-                // CBPurchasePath with the current purchase path.  Otherwise, the path doesn't 
-                // get updated until the CBW is actually viewed.
-
-                var purchase_path = "";
-
-                if (ServeData.viewed == true) {
-                    if (ServeData.paths['purchase']) {
-                        purchase_path = ServeData.paths["purchase"];
-                    }
-                }
-
-                // update the CBPurchasePath global variable to contain the current purchase path value
-                PurchasePathUpdate(purchase_path);
             }
 
             /* ---------------------------------------------------------------------------------
@@ -1184,75 +1198,6 @@ function CBSale(amount,transaction_id) {
 
             }
 
-            function GetCookie(check_name) {
-              
-              // first we'll split this cookie up into name/value pairs
-              // note: document.cookie only returns name=value, not the other components
-              var a_all_cookies = document.cookie.split( ';' );
-              var a_temp_cookie = '';
-              var cookie_name = '';
-              var cookie_value = '';
-              var b_cookie_found = false; // set boolean t/f default f
-
-              for ( i = 0; i < a_all_cookies.length; i++ )
-              {
-                // now we'll split apart each name=value pair
-                a_temp_cookie = a_all_cookies[i].split( '=' );
-
-                // and trim left/right whitespace while we're at it
-                cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
-
-                // if the extracted name matches passed check_name
-                if ( cookie_name == check_name )
-                {
-                  b_cookie_found = true;
-                  // we need to handle case where cookie has no value but exists (no = sign, that is):
-                  if ( a_temp_cookie.length > 1 )
-                  {
-                    cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
-                  }
-                  // note that in cases where cookie is initialized but no value, null is returned
-                  return cookie_value;
-                  break;
-                }
-                a_temp_cookie = null;
-                cookie_name = '';
-              }
-              if ( !b_cookie_found )
-              {
-                return null;
-              }
-            }
-
-            function SetCookie(name, value, expires, path, domain, secure )
-            {
-              // set time, it's in milliseconds
-              var today = new Date();
-
-              today.setTime(today.getTime());
-
-              /* expires in 'expires' minutes */
-              if (expires) {
-                expires = expires * 1000 * 60;
-              }
-              
-              var expires_date = new Date(today.getTime() + (expires));
-
-              document.cookie = name + "=" + escape(value) +
-              ((expires) ? ";expires=" + expires_date.toGMTString() : "") +
-              ((path) ? ";path=" + path : "") +
-              ((domain) ? ";domain=" + domain : "") +
-              ((secure) ? ";secure" : "");
-            }
-
-            // this deletes the cookie when called
-            function DeleteCookie( name, path, domain ) {
-              if ( Get_Cookie( name ) ) document.cookie = name + "=" +
-              ( ( path ) ? ";path=" + path : "") +
-              ( ( domain ) ? ";domain=" + domain : "" ) +
-              ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
-            }
-
             /* ---------------------------------------------------------------------------------
              * PurchasePathUpdate(path)
              * ---------------------------------------------------------------------------------
@@ -1262,11 +1207,13 @@ function CBSale(amount,transaction_id) {
              * --------------------------------------------------------------------------------- */
             function PurchasePathUpdate(path) {
      
-                // Set the value of the global variable CBPurchasePath equal to the purchase path
+                // Set or update the path cookie with the current purchase path
                 if (path) {
-                    CBPurchasePath = (path);
+                    // First, get the number of minutes until the expiration of the current serve
+                    var expire_mins = GetExpireMins();
+                    // Now set the path cookie ...
+                    SetCookie("cbwpath", path, expire_mins, "/");
                 }  
-
             }
 
             /* ---------------------------------------------------------------------------------
@@ -2376,6 +2323,133 @@ function CBSale(amount,transaction_id) {
 
         }
         return vars;
+    }
+
+    /* ---------------------------------------------------------------------------------
+     * AddStylesheet(id, href)
+     * ---------------------------------------------------------------------------------
+     * Adds a stylesheet <link> element to the current page with the specified
+     * id and href
+     *
+     * @id   = id attribute to use on the generated link tag
+     * @href = href (source of css file) to use for generated link tag
+     * --------------------------------------------------------------------------------- */
+    function AddStylesheet(id, href) {
+
+        var head = document.getElementsByTagName('head')[0];
+        var link = document.createElement('link');
+
+        link.id = id;
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = href;
+        link.media = 'all';
+        
+        head.appendChild(link);
+    }
+
+    function GetCookie(check_name) {
+      
+      // first we'll split this cookie up into name/value pairs
+      // note: document.cookie only returns name=value, not the other components
+      var a_all_cookies = document.cookie.split( ';' );
+      var a_temp_cookie = '';
+      var cookie_name = '';
+      var cookie_value = '';
+      var b_cookie_found = false; // set boolean t/f default f
+
+      for ( i = 0; i < a_all_cookies.length; i++ )
+      {
+        // now we'll split apart each name=value pair
+        a_temp_cookie = a_all_cookies[i].split( '=' );
+
+        // and trim left/right whitespace while we're at it
+        cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
+
+        // if the extracted name matches passed check_name
+        if ( cookie_name == check_name )
+        {
+          b_cookie_found = true;
+          // we need to handle case where cookie has no value but exists (no = sign, that is):
+          if ( a_temp_cookie.length > 1 )
+          {
+            cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+          }
+          // note that in cases where cookie is initialized but no value, null is returned
+          return cookie_value;
+          break;
+        }
+        a_temp_cookie = null;
+        cookie_name = '';
+      }
+      if ( !b_cookie_found )
+      {
+        return null;
+      }
+    }
+
+    function SetCookie(name, value, expires, path, domain, secure )
+    {
+      // set time, it's in milliseconds
+      var today = new Date();
+
+      today.setTime(today.getTime());
+
+      /* expires in 'expires' minutes */
+      if (expires) {
+        expires = expires * 1000 * 60;
+      }
+      
+      var expires_date = new Date(today.getTime() + (expires));
+
+      document.cookie = name + "=" + escape(value) +
+      ((expires) ? ";expires=" + expires_date.toGMTString() : "") +
+      ((path) ? ";path=" + path : "") +
+      ((domain) ? ";domain=" + domain : "") +
+      ((secure) ? ";secure" : "");
+    }
+
+    // this deletes the cookie when called
+    function DeleteCookie( name, path, domain ) {
+      if ( Get_Cookie( name ) ) document.cookie = name + "=" +
+      ( ( path ) ? ";path=" + path : "") +
+      ( ( domain ) ? ";domain=" + domain : "" ) +
+      ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
+    }
+
+    /* ---------------------------------------------------------------------------------
+     * GetReferringPathAndCause(params)
+     * ---------------------------------------------------------------------------------
+     * Searches through the params array for referral path values with names that
+     * match the sources of paths.  Currently supporting two variations of Awe.sm links
+     * and 'cblink' links.
+     * --------------------------------------------------------------------------------- */
+    function GetReferringPathAndCause (params) {
+
+        var h1, h2;
+        FilteredParamString = '?';
+        for (var i = 0, l = params.length; i < l; i++) {
+            h1 = params[i];
+            h2 = params[h1];
+            if (h1 == 'awesm' && h2 && h2.indexOf('awe.sm_') == 0) {
+                ReferringPath = h2.substring(7);
+            } else if (h1 == 'fb_ref' && h2 && h2.indexOf('awesm') == 0) {
+                ReferringPath = decodeURIComponent(h2).substring(13);
+            } else if (h1 == 'cblink') {
+                ReferringPath = h2;
+            } else if (h1 == 'cbcause') {
+                CBCauseID = h2;
+            } else {
+                if (FilteredParamString != '?') {
+                    FilteredParamString += "&";
+                }
+                FilteredParamString += h1 + "=" + h2
+            }
+        }
+        // If the Filtered Param String still just contains ?, reset it to a blank string
+        if (FilteredParamString == '?') {
+            FilteredParamString = "";
+        }
     }
 
 })(); // immediately call our anonymous function here...
