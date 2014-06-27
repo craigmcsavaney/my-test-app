@@ -155,4 +155,8 @@ class Serve < ActiveRecord::Base
     serve.shares.where("confirmed = ? and channel_id <> ?", true, Channel.find_by_name("Purchase")).count > 0
   end
 
+  def self.referred?(serve)
+    !serve.share.nil?
+  end
+
 end
