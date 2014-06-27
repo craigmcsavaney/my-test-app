@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
 	before_filter :set_return_page
-  	protect_from_forgery
+	# following addition of "with: :null_session" might fix the problem Devise has with
+	# protect_from_forgery.  If not, will need to modify other controllers to skip verification
+	# of the authenticity token.
+  	protect_from_forgery with: :null_session
 
   	rescue_from CanCan::AccessDenied do |exception|
     	redirect_to root_url, :alert => exception.message
