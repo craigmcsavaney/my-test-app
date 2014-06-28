@@ -5,9 +5,9 @@
 			<% @showpath = donation_path(donation) %>
 	<% end %>
 	<div class="row">
-	<div class="span2"><%= link_to donation.merchant.name, @showpath %></div>
-	<div class="span3"><%= link_to donation.cause.name, @showpath %></div>
-	<div class="span3"><%= link_to donation.created_at.to_formatted_s(:long), @showpath %></div>
-	<div class="span1">$<%= link_to donation.amount, @showpath %></div>
+	<div class="col-sm-4"><%= link_to donation.merchant.name, @showpath %></div>
+	<div class="col-sm-4"><%= link_to donation.cause.name, @showpath %></div>
+	<div class="col-sm-2"><%= link_to donation.created_at.to_formatted_s(:long), @showpath %></div>
+	<div class="col-sm-2">$<%= link_to donation.amount, @showpath %></div>
 	</div>
 </li>
