@@ -25,12 +25,30 @@ class Current < ActiveRecord::Base
       @message = "There are no promotions for the selected merchant with channels assigned"
       return {promotion: nil, message: @message}
     end
-    # We know that there are one more promotions with channels assigned, so check for valid dates
+
+    # We know that there are one or more enabled promotions with channels assigned, so check 
+    # so see if any of these are serveable (!unservable)
+    # Now get the array of all servable promotions
+    @promotion1 = [] 
+    @promotions.each do |promotion|
+      @promotion1 << promotion if (!promotion.unservable or promotion.unservable.nil?)
+    end
+    @promotions = []
+    @promotions = @promotion1
+    # If there are no servable promotions, exit
+    if @promotions.count == 0
+        @message = "The selected merchant's promotions are all unservable"
+        return {promotion: nil, message: @message}
+    end
+
+    # We know that there are one more enabled promotions with channels assigned that are servable, so check
+    # for valid dates
     # Now get the array of all promotions valid on the check_date
     @promotion1 = [] 
     @promotions.each do |promotion|
       @promotion1 << promotion if ((promotion.start_date < check_date) and ((promotion.end_date.nil?) or (promotion.end_date > check_date)))
     end
+    @promotions = []
     @promotions = @promotion1
     # Now check to see if there are zero or only one date-wise valid promotions and return
     if @promotions.count == 1
@@ -56,6 +74,7 @@ class Current < ActiveRecord::Base
     @promotions.each do |promotion|
       @promotion1 << promotion if promotion.priority >= @maxpriority
     end
+    @promotions = []
     @promotions = @promotion1    
     # Now check to see if there is only one current promotions remaining and return
     if @promotions.count == 1
@@ -98,6 +117,7 @@ class Current < ActiveRecord::Base
             return {promotion: @closest.first, message: @message}
           else
             # There must be more than one promotion that shares closest end_date
+            @promotions = []
             @promotions = @closest
         end
         # If there were no @nonnils, processing will continue using the original
@@ -127,6 +147,7 @@ class Current < ActiveRecord::Base
         return {promotion: @most_recent.first, message: @message}
       else
         # There must be more than one promotion that shares the most recent end_date
+        @promotions = []
         @promotions = @most_recent
     end
     # We know there must still be multiple valid promotions with the same priority, end_dates, and

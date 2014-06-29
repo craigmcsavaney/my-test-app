@@ -51,6 +51,11 @@
 		<% @deletepath = promotion %>
 		<% @duplicatepath = duplicate_promotion_path(promotion) %>
 	<% end %>
+	<% if promotion.unservable? %>
+		<% @l = "Yes" %>
+		<% else %>
+		<% @l = "no" %>
+	<% end %>
 	<b>Promotion Name: </b><%= link_to promotion.name, @editpath %>&nbsp;&nbsp;
 	<b>Merchant Name: </b><%= link_to promotion.merchant.name, @editpath %><br/>
 	<b>Promotion Title: </b><%= promotion.title %><br/>
@@ -93,7 +98,8 @@
 	<b>Start Date: </b><%= link_to promotion.start_date, @editpath %>&nbsp;&nbsp;
 	<b>End Date: </b><%= link_to promotion.try(:end_date), @editpath %>&nbsp;&nbsp;
 	<b>Priority: </b><%= link_to promotion.try(:priority), @editpath %>&nbsp;&nbsp;
-	<b>Disabled: </b><%= link_to @h, @editpath %><br/>
+	<b>Disabled: </b><%= link_to @h, @editpath %>
+	<b>Unservable: </b><%= link_to @l, @editpath %><br/>
 	<% @current = Current.get_current_promotion(Date.today,promotion.merchant) %>
     <% @current_promotion = @current[:promotion] %>
     <% if @current[:promotion].nil? %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140616225649) do
+ActiveRecord::Schema.define(version: 20140628222321) do
 
   create_table "button_types", force: true do |t|
     t.string   "name",                        null: false
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(version: 20140616225649) do
     t.integer  "widget_position_id"
     t.integer  "event_id"
     t.string   "title",                                                         null: false
+    t.boolean  "unservable"
   end
 
   add_index "promotions", ["merchant_id"], name: "index_promotions_on_merchant_id", using: :btree

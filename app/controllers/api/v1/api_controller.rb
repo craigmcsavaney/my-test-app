@@ -97,8 +97,16 @@ module Api
                     else 
                         # this is the case where either no cbcause was passed in, or where it is
                         # the same as the default cause associated with this serve
-                        render 'serve'
-                        return
+                        # Now we need to check and see if this serve is still servable.  If it
+                        # is we will serve it, but if not we continue.  Note that if we continue
+                        # and there is a valid serve id passed in, if the serve has not been viewed we simply
+                        # replace the promotion pointer in the serve record with the promotion
+                        # id of the new current promotion and leave the serve id the same.  However,
+                        # if the serve has been viewed, a new serve will be created.
+                        if !@serve.promotion.unservable? or @serve.promotion.unservable.nil?
+                            render 'serve'
+                            return
+                        end
                     end
                 end
 
