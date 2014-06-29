@@ -159,4 +159,21 @@ class Serve < ActiveRecord::Base
     !serve.share.nil?
   end
 
+  def self.servable?(serve)
+    if serve.promotion.unservable == nil
+      true
+    elsif serve.promotion.unservable == false
+      true
+    elsif serve.promotion.unservable == true
+      false
+    else
+      true
+    end
+    # If the promotion has been deleted or the serve can't find the promotion for any reason,
+    # we will rescue this function and return false so that this serve won't be served again
+    rescue
+      false
+  end
+
+
 end

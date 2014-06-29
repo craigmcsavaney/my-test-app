@@ -103,7 +103,7 @@ module Api
                         # replace the promotion pointer in the serve record with the promotion
                         # id of the new current promotion and leave the serve id the same.  However,
                         # if the serve has been viewed, a new serve will be created.
-                        if !@serve.promotion.unservable? or @serve.promotion.unservable.nil?
+                        if Serve.servable?(@serve)
                             render 'serve'
                             return
                         end
