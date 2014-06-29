@@ -117,7 +117,7 @@
 		</div>
 		<div class="span7">
 			<% if promotion.serves.where("viewed = ?", true).any? %>
-				This promotion has already been viewed by guests on your website - only the start date, end date, priority, and disabled status can be edited now.  To make any additional changes, you must first create a copy of this promotion by clicking the 'duplicate' link below.  Then you can change anything on the duplicated promotion.
+				This promotion has already been viewed by guests on your website - only the description, end date, priority, disabled status, and unservable status can be edited now.  To make any additional changes, you must first create a copy of this promotion by going to the 'My Promotions' page and duplicating the promotion.  Then you can change anything on the duplicated promotion.
 			<% end %>
 		</div>
 	</div>
