@@ -88,9 +88,11 @@ module Api
                             # this is the case where cbcause was passed in but is different
                             # than the default cause for the serve associated with this session.
                             # Create a new serve using old serve stuff with the new
-                            # default cause, then return the new serve
+                            # default cause, and use the new cause as the current cause
+                            # Then return the new serve.
                             @old = @serve
-                            @serve = Serve.create(promotion_id: @old.promotion.id, default_cause_id: cbcause.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
+                            # @serve = Serve.create(promotion_id: @old.promotion.id, default_cause_id: cbcause.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
+                            @serve = Serve.create(promotion_id: @old.promotion.id, default_cause_id: cbcause.id, current_cause_id: cbcause.id, user_id: @old.user_id)
                             render 'serve'
                             return
                         end
