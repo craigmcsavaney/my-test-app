@@ -59,8 +59,13 @@ textarea {
   padding-left: 0;
 }
 
-.class-index .row {
-  margin-right: 0;
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+#error_explanation {
+  width: 100% !important;
 }
 
 /* typography */
