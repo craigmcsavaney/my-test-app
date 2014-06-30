@@ -686,6 +686,8 @@ function CBSale(amount,transaction_id) {
                 banner = banner.replace("{{merchant_cause}}", ServeData.default_cause_name);
                 banner = banner.replace(/\sthe\sTHE\s/g, " THE ");
                 banner = banner.replace(/\sthe\sthe\s/g, " the ");
+                banner = banner.replace(/\sthe\sA\s/g, " A ");
+                banner = banner.replace(/\sthe\sa\s/g, " A ");
 
                 // Populate the promotion text supplied by the server
                 $("#cbw-promo-text").text(banner);
@@ -1564,6 +1566,8 @@ function CBSale(amount,transaction_id) {
                 // get rid of duplicate the's for causes that start with "THE" or "the"
                 share_msg = share_msg.replace(/\sthe\sTHE\s/g, " THE ");
                 share_msg = share_msg.replace(/\sthe\sthe\s/g, " the ");
+                share_msg = share_msg.replace(/\sthe\sA\s/g, " A ");
+                share_msg = share_msg.replace(/\sthe\sa\s/g, " A ");
 
                 // Now update the serve, which will record the cause or event associated
                 // with this share.  This is done asynchronously so the channel will
