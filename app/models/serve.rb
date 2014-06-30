@@ -3,7 +3,7 @@ class Serve < ActiveRecord::Base
   include NotDeleteable
 	versioned
 
-	attr_accessible :promotion_id, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :user_id, :default_cause_id
+	attr_accessible :promotion_id, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :user_id, :default_cause_id, :serve_count, :session_count
 
   belongs_to :promotion, counter_cache: true
   belongs_to :share, foreign_key: "referring_share_id"
@@ -16,19 +16,23 @@ class Serve < ActiveRecord::Base
   delegate :email, to: :user, allow_nil: true
 
 
-  before_validation :get_current_cause
+  before_validation :get_current_cause, :get_session_id
+  before_validation :initialize_session_count, on: :create
+  before_validation :update_session_count, on: :update
 
 	validates :promotion, presence: true
 	validates :promotion_id, presence: true
   validates :cause, presence: true
   validates :default_cause_id, presence: true
   validates :current_cause_id, presence: true
+  validates :serve_count, presence: true
+  validates :session_count, presence: true
 
   after_validation :replace_nils, :get_current_cause
 
 	after_commit :create_all_shares, on: :create
 
-  before_save :get_session_id
+  #before_save :get_session_id
 
   def self.cause_changed?(serve,new_cause_id)
     # check to see if the new cause is different from the current cause value.
@@ -101,6 +105,16 @@ class Serve < ActiveRecord::Base
   def get_current_cause
     if self.current_cause_id.nil?
       self.current_cause_id = self.default_cause_id
+    end
+  end
+
+  def initialize_session_count
+    self.session_count = 1
+  end
+
+  def update_session_count
+    if self.session_id_changed?
+      self.session_count = self.session_count + 1
     end
   end
 

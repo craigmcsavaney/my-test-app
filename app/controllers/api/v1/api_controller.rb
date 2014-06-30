@@ -92,7 +92,7 @@ module Api
                             # Then return the new serve.
                             @old = @serve
                             # @serve = Serve.create(promotion_id: @old.promotion.id, default_cause_id: cbcause.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
-                            @serve = Serve.create(promotion_id: @old.promotion.id, default_cause_id: cbcause.id, current_cause_id: cbcause.id, user_id: @old.user_id)
+                            @serve = Serve.create(promotion_id: @old.promotion.id, default_cause_id: cbcause.id, current_cause_id: cbcause.id, user_id: @old.user_id, serve_count: 1)
                             render 'serve'
                             return
                         end
@@ -106,6 +106,7 @@ module Api
                         # id of the new current promotion and leave the serve id the same.  However,
                         # if the serve has been viewed, a new serve will be created.
                         if Serve.servable?(@serve)
+                            @serve.update_attributes(serve_count: @serve.serve_count + 1)
                             render 'serve'
                             return
                         end
@@ -203,7 +204,7 @@ module Api
                             new_cause_id = @promotion.cause_id
                         end
                         # create a new serve using the current promotion
-                        @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, user_id: user_id)
+                        @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, user_id: user_id, serve_count: 1)
                         # @serve = Serve.create(promotion_id: @promotion.id)
 
                     # Second case, when serve_id is invalid and path is valid. Typically, this is a first time,
@@ -222,7 +223,7 @@ module Api
                             new_cause_id = @referring_share.serve.default_cause_id
                         end
                         # now, create the new serve
-                        @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @referring_share.id, user_id: user_id)
+                        @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @referring_share.id, user_id: user_id, serve_count: 1)
                         # @serve = Serve.create(promotion_id: @promotion.id, referring_share_id: @referring_share.id)
 
                     # Third case, when the serve is valid (implied, as the not valid cases are handled above)
@@ -242,6 +243,7 @@ module Api
                         session_id = Serve.new_session_id
                         Serve.find(params[:serve_id]).update_attributes(session_id: session_id, default_cause_id: new_cause_id)
                         @serve = Serve.find(params[:serve_id]) # reload the old serve with the new session_id
+                        @serve.update_attributes(serve_count: @serve.serve_count + 1)
 
                     # Fourth case, when the serve is valid (implied, as the not valid cases are handled above) but the incoming path is new (and valid)
                     # This means the visitor is returning to the same site, but was referred here
@@ -257,7 +259,7 @@ module Api
                             new_cause_id = @old.default_cause_id
                         end
                         @referring_share = Share.find_by_link_id(params[:path])
-                        @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
+                        @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id, serve_count: 1)
 
                         #if !@old.viewed?
                             # delete the old serve and its associated shares
@@ -279,11 +281,12 @@ module Api
                             new_cause_id = @old.default_cause_id
                         end
                         if @old.viewed?
-                            @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @old.referring_share_id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
+                            @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @old.referring_share_id, current_cause_id: @old.current_cause_id, user_id: @old.user_id, serve_count: 1)
                         else
                             session_id = Serve.new_session_id
                             Serve.find(params[:serve_id]).update_attributes(promotion_id: @promotion.id, session_id: session_id, default_cause_id: new_cause_id)
                             @serve = Serve.find(params[:serve_id])
+                            @serve.update_attributes(serve_count: @serve.serve_count + 1)
                         end
                     else
                         render 'api/v1/api/errors/unrecognized_case'
