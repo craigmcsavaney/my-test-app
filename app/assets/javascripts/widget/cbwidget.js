@@ -131,6 +131,7 @@ function CBSale(amount,transaction_id) {
     var SelectedChannel;
     var CBCauseID = ""; // this is the cause ID passed in as a param with the page url
     var CurrentCauseRadioButtonVal;
+    var SessionChanged = false; // used when deciding whether to serve a modal or not
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -308,6 +309,7 @@ function CBSale(amount,transaction_id) {
         AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
         AddStylesheet('cbw-googlefonts', "http://fonts.googleapis.com/css?family=Montserrat:400,700");
         AddStylesheet('font-awesome', "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+        AddStylesheet('cbw-css-modal', CBAssetsBase + "jquery.modal.css");
 
         // get the parameters passed into the page so that we can carry these forward if necessary
         // for example, as part of the process of determining the landing page or promotion id
@@ -477,14 +479,82 @@ function CBSale(amount,transaction_id) {
 
                     Loaded = true;
 
+                    ShowModal();
+
                 });
 
             }
 
-
             /*
              * HELPER FUNCTIONS 
              */
+
+            /* ---------------------------------------------------------------------------------
+             * ShowModal()
+             * ---------------------------------------------------------------------------------
+             * Check to see if this is one of the first three sessions of this serve, or if the
+             * session has changed (which will happen if a serve becomes unservable or if a visitor
+             * returns from a new CBCause link).  If so, then either serve up the modal with the
+             * generic message, or if there is a CBCauseId, insert the cause into the message.
+             * Finally, set the cbwmodal cookie to skip to skip showing the modal for 24 hours.
+             * --------------------------------------------------------------------------------- */
+            function ShowModal() {
+
+                // first, check to see if we should serve the modal.  Modals get served any time 
+                // the session_count is less than or equal to three, except when both the cbwmodal cookie
+                // value is "skip" and the session hasn't changed.
+                if (ServeData.session_count <= 3 && (GetCookie("cbwmodal") != "skip" || SessionChanged)) {
+
+                    var modal_message = "We're donating up to 20% of our sales to the {{placeholder}}, and you don't need to buy a thing.  Click the CauseButton on any page to learn more.";
+
+                    // now check to see if a cblink value was passed in and if so, use the default cause
+                    // for this serve in the modal message
+                    if (CBCauseID && CBCauseID != "") {
+                        modal_message = modal_message.replace("{{placeholder}}", ServeData.default_cause_name);
+                        modal_message = modal_message.replace(/\sthe\sTHE\s/g, " THE ");
+                        modal_message = modal_message.replace(/\sthe\sthe\s/g, " the ");
+                        modal_message = modal_message.replace(/\sthe\sA\s/g, " A ");
+                        modal_message = modal_message.replace(/\sthe\sa\s/g, " A ");
+                    } else {
+                        // otherwise, just use the standard messaging
+                        modal_message = modal_message.replace("{{placeholder}}", "charitable cause of your choice");
+                    }
+                    
+                    // add the div that contains the modal, then add the text, css, and close button to the modal div
+                    $("<div id=\"cbw-modal-div\">").html( "<div id='cbw-modal-1' class='modal'></div>" ).appendTo(div);
+                    $("#cbw-modal-1").text( modal_message );
+                    $("#cbw-modal-1").css({
+                        position: 'fixed',
+                        top: "50%",
+                        left: "50%",
+                        marginTop: - ($("#cbw-modal-1").outerHeight() / 2),
+                        marginLeft: - ($("#cbw-modal-1").outerWidth() / 2),
+                        zIndex: 10000
+                    });
+                    closeButton = $('<a href="#close-modal" rel="modal:close" class="close-modal">' + 'close text' + '</a>');
+                    $("#cbw-modal-1").append(closeButton);
+                    
+                    // now add the tranparant background div and give it the correct styles
+                    $("<div id=\"cbw-modal-blocker-div\">").html('<div class="jquery-modal blocker"></div>').appendTo(div);
+                    $("#cbw-modal-blocker-div").css({
+                        top: 0, right: 0, bottom: 0, left: 0,
+                        width: "100%", height: "100%",
+                        position: "fixed",
+                        zIndex: 9999,
+                        background: "#000",
+                        opacity: .75
+                    });
+
+                    // show the modal dialog
+                    $('#cbw-modal-1').show();
+
+                    // finally, set the cbwmodal cookie value to skip so this modal doesn't get shown 
+                    // for this serve for at least another 24 hours
+                    SetCookie("cbwmodal", "skip", 1440, "/");
+
+                }
+
+            }
 
             /* ---------------------------------------------------------------------------------
              * ReportConversion()
@@ -621,6 +691,11 @@ function CBSale(amount,transaction_id) {
                 // cookie set to expire in 24 hours (1440 mins).  Planning to move this to a
                 // configurable parameter at some point.
 
+                if (GetCookie("cbwsession") != ServeData.session_id) {
+                    SessionChanged = true;
+                } else {
+                    SessionChanged = false;
+                }
                 SetCookie("cbwsession", ServeData.session_id, 1440, "/");
                 SetCookie("cbwserve", ServeData.serve_id, expire_mins, "/"); 
 
@@ -2157,6 +2232,13 @@ function CBSale(amount,transaction_id) {
                     }
                 }        
             });
+
+            $(document).on('click.modal', 'a[rel="modal:close"]', function(event) {
+                $("#cbw-modal-blocker-div").remove();
+                $("#cbw-modal-1").hide();
+
+            });
+
 
 
        }); // end jquery.documentready
