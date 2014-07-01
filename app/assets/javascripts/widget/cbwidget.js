@@ -132,6 +132,7 @@ function CBSale(amount,transaction_id) {
     var CBCauseID = ""; // this is the cause ID passed in as a param with the page url
     var CurrentCauseRadioButtonVal;
     var SessionChanged = false; // used when deciding whether to serve a modal or not
+    var AutoButton; // this is the url auto button value passed in as a param with the script src url
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -170,6 +171,9 @@ function CBSale(amount,transaction_id) {
             case 'cbw-position':
                 PagePosition = hash[1];
                 break;
+            case 'cbw-auto-button':
+                AutoButton = hash[1];
+                break;
         }
     }
 
@@ -178,6 +182,9 @@ function CBSale(amount,transaction_id) {
 
     // following validates the input target.  Returns the input if valid or an empty string if not.
     PageTarget = ValidateTarget(PageTarget);
+
+    // following validates the input auto button setting.  Returns the input if valid or an empty string if not.
+    AutoButton = ValidateAutoButton(AutoButton);
 
     // Chain load the scripts here in the order listed below...
     // when the last script in the chain is loaded, main() will be called
@@ -401,6 +408,32 @@ function CBSale(amount,transaction_id) {
         return target;
     }
 
+    /* ---------------------------------------------------------------------------------
+     * ValidateAutoButton(autobutton)
+     * ---------------------------------------------------------------------------------
+     * This function is called to validate a widget url auto button input.  If the autobutton
+     * input is valid, it is returned, otherwise null is returned.  At the moment, the
+     * only valid inputs are "left", "right", and "none", but at some point we may allow 
+     * additional values.  Note that if a valid value is present it will override the value
+     * returned from the serve api.
+     * --------------------------------------------------------------------------------- */
+    function ValidateAutoButton(autobutton) {
+
+        var autobutton_valid = false;
+        var arr = [ "left", "right", "none" ];
+
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == autobutton) {
+                autobutton_valid = true;
+            }
+        }
+
+        if (!autobutton_valid) {
+            autobutton = "";
+        }
+        return autobutton;
+    }
+
     /* --------------------------------------------------------------------------------------------------------
      * main()
      * --------------------------------------------------------------------------------------------------------
@@ -481,6 +514,8 @@ function CBSale(amount,transaction_id) {
 
                     ShowModal();
 
+                    ShowAutoButton();
+
                 });
 
             }
@@ -488,6 +523,57 @@ function CBSale(amount,transaction_id) {
             /*
              * HELPER FUNCTIONS 
              */
+
+            /* ---------------------------------------------------------------------------------
+             * ShowAutoButton()
+             * ---------------------------------------------------------------------------------
+             * Check at the page level and at the merchant level to see if the auto button should
+             * be displayed, an if so whether it should be on the left or the right of the page.
+             * --------------------------------------------------------------------------------- */
+            function ShowAutoButton() {
+                // first, check to see if the AutoButton variable is blank.  This will be the case
+                // when no valid value has been passed in with the widget load script url.  When
+                // this is the case, get the auto_button value from the api serve response and use it.
+                // Otherwise, use the page value from the load script url.
+                if (AutoButton == "") {
+                    AutoButton = ServeData.merchant.auto_button;
+                }
+
+                // Now, check to see if the AutoButton value is either left or right.  If it is none
+                // or blank we skip the AutoButton entirely.
+                if (AutoButton == "left" || AutoButton == "right") {
+                    $("<div id=\"cbw-button-div\">").html( "<div id='cbw-button-side' class='cbw-button-side cbw-main-btn'></div>" ).appendTo(div);
+                    $("#cbw-button-side").append( "<img id='cbw-button-side-img1' class='cbw-button-side-img'>" );
+                    $("#cbw-button-side-img1").attr('src', CBAssetsBase + 'cause-86x40.png');
+
+                    switch (AutoButton) {
+                        case "left":
+                            $("#cbw-button-side").css({
+                                position: 'fixed',
+                                top: "50%",
+                                left: "0px",
+                                marginTop: - ($("#cbw-button-side").outerHeight() / 2),
+                                marginLeft: - ($("#cbw-button-side-img1").width()),
+                                zIndex: 9998
+                            });
+                            $("#cbw-button-side").animate({ "marginLeft": "+=86px" }, "slow");
+                        break;
+
+                        case "right":
+                            $("#cbw-button-side").css({
+                                position: 'fixed',
+                                top: "50%",
+                                right: "0px",
+                                marginTop: - ($("#cbw-button-side").outerHeight() / 2),
+                                marginRight: - ($("#cbw-button-side-img1").width()),
+                                zIndex: 9998
+                            });
+                            $("#cbw-button-side").animate({ "marginRight": "+=86px" }, "slow");
+                        break;
+
+                    }
+                }
+            }
 
             /* ---------------------------------------------------------------------------------
              * ShowModal()

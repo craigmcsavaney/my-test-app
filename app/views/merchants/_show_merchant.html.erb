@@ -15,6 +15,9 @@
 	<% if merchant.widget_position_id? %>
 		<% @d = merchant.widget_position.name %>
 	<% end %>
+	<% if merchant.auto_button_id? %>
+		<% @e = merchant.auto_button.name %>
+	<% end %>
 	<% if params[:action] == "show" %>
 		<% @editpath = edit_merchant_path(merchant) %>
 		<% @deletepath = merchant %>
@@ -29,6 +32,7 @@
 	<b>Link to Logo: </b><%= link_to @b, @editpath %><br/>
 	<b>Default Button Style: </b><%= link_to @c, @editpath %><br/>
 	<b>Default Widget Location: </b><%= link_to @d, @editpath %><br/>
+	<b>Auto Button Location: </b><%= link_to @e, @editpath %><br/>
 	<b>Users</b><% for user in merchant.users %>
 	<b>:&nbsp;</b><%= link_to user.email, @editpath %>&nbsp;
 	<% end %><br/>  

@@ -27,6 +27,9 @@
 		        <%= f.label :widget_position_id, "Default Widget Location (can be overridden at the promotion or page level)" %>
 		        <%= select_tag 'merchant[widget_position_id]', options_from_collection_for_select(WidgetPosition.all, :id, :name, @merchant.widget_position_id), prompt: "choose the default placement of your CauseButton widget" %>
 
+		        <%= f.label :auto_button_id, "Default Auto Button setting (can be overridden by the script tag variable at the page level)" %>
+		        <%= select_tag 'merchant[auto_button_id]', options_from_collection_for_select(AutoButton.all, :id, :name, @merchant.auto_button_id), prompt: "choose the placement of your CauseButton Auto Button" %>
+
 		      	<%= f.label :uid, "Unique Identifier (UID)" %>
 		      	<%= f.text_field :uid, readonly: true, placeholder: "this will be assigned automatically" %>
 

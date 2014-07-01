@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630164546) do
+ActiveRecord::Schema.define(version: 20140701141914) do
 
   create_table "button_types", force: true do |t|
     t.string   "name",                        null: false
@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(version: 20140630164546) do
     t.string   "uid"
     t.integer  "button_id"
     t.integer  "widget_position_id"
+    t.integer  "auto_button_id"
   end
 
   add_index "merchants", ["name"], name: "index_merchants_on_name", unique: true, using: :btree

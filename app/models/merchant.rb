@@ -2,13 +2,14 @@ class Merchant < ActiveRecord::Base
 	include NotDeleteable
 	versioned
 
-	attr_accessible :name, :user_ids, :website, :button_id, :logo_link, :uid, :deleted, :widget_position_id
+	attr_accessible :name, :user_ids, :website, :button_id, :logo_link, :uid, :deleted, :widget_position_id, :auto_button_id
 
 	has_and_belongs_to_many :users
 	has_many :promotions, dependent: :destroy
 	has_many :serves, through: :promotions
 	belongs_to :button
 	belongs_to :widget_position
+	belongs_to :auto_button
 
 	before_validation :generate_uid
 
