@@ -197,8 +197,8 @@
                     <li class="dropdown-submenu">
                       <a tabindex="-1" href="#">Roles</a>
                       <ul class="dropdown-menu">
-                        <li><%= link_to_if(can?(:create, Role), "Create Role", new_sale_path) {} %></li>
-                        <li><%= link_to_if(can?(:index, Role), "View Roles (#{Role.count})", sales_path) {} %></li>
+                        <li><%= link_to_if(can?(:create, Role), "Create Role", new_role_path) {} %></li>
+                        <li><%= link_to_if(can?(:index, Role), "View Roles (#{Role.count})", roles_path) {} %></li>
                       </ul>
                     </li>
                   <% end %>
