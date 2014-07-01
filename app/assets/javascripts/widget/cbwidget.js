@@ -552,7 +552,7 @@ function CBSale(amount,transaction_id) {
                                 position: 'fixed',
                                 top: "50%",
                                 left: "0px",
-                                marginTop: - ($("#cbw-button-side").outerHeight() / 2),
+                                marginTop: - ($("#cbw-button-side-img1").height() / 2),
                                 marginLeft: - ($("#cbw-button-side-img1").width()),
                                 zIndex: 9998
                             });
@@ -564,7 +564,7 @@ function CBSale(amount,transaction_id) {
                                 position: 'fixed',
                                 top: "50%",
                                 right: "0px",
-                                marginTop: - ($("#cbw-button-side").outerHeight() / 2),
+                                marginTop: - ($("#cbw-button-side-img1").height() / 2),
                                 marginRight: - ($("#cbw-button-side-img1").width()),
                                 zIndex: 9998
                             });
