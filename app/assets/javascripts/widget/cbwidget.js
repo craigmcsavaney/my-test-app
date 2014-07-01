@@ -505,7 +505,7 @@ function CBSale(amount,transaction_id) {
                 // value is "skip" and the session hasn't changed.
                 if (ServeData.session_count <= 3 && (GetCookie("cbwmodal") != "skip" || SessionChanged)) {
 
-                    var modal_message = "We're donating up to 20% of our sales to the {{placeholder}}, and you don't need to buy a thing.  Click the CauseButton on any page to learn more.";
+                    var modal_message = "<span style='font-size:24px;font-weight:bold;'>Big News!</span><br/>We're donating up to 20% of our sales to the {{placeholder}}, and you don't need to buy a thing!  Click <img id='cbw-modal-message-img1' class='cbw-modal-message-img'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img'> on any page to learn more.";
 
                     // now check to see if a cblink value was passed in and if so, use the default cause
                     // for this serve in the modal message
@@ -522,7 +522,8 @@ function CBSale(amount,transaction_id) {
                     
                     // add the div that contains the modal, then add the text, css, and close button to the modal div
                     $("<div id=\"cbw-modal-div\">").html( "<div id='cbw-modal-1' class='modal'></div>" ).appendTo(div);
-                    $("#cbw-modal-1").text( modal_message );
+                    $("#cbw-modal-1").append( modal_message);
+                    //$("#cbw-modal-1").text( modal_message );
                     $("#cbw-modal-1").css({
                         position: 'fixed',
                         top: "50%",
@@ -531,8 +532,16 @@ function CBSale(amount,transaction_id) {
                         marginLeft: - ($("#cbw-modal-1").outerWidth() / 2),
                         zIndex: 10000
                     });
+                    //$("#cbw-modal-1").append("<img id='cbw-modal-message-img1' class='cbw-modal-message-img'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img'> on any page to learn more.");
+                    //$("#cbw-modal-1").append("<img id='cbw-modal-message-img2' class='cbw-modal-message-img'>");
+                    //$("#cbw-modal-1").append("more text here");
                     closeButton = $('<a href="#close-modal" rel="modal:close" class="close-modal">' + 'close text' + '</a>');
                     $("#cbw-modal-1").append(closeButton);
+
+                    // $("#cbw-modal-message-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
+                    $("#cbw-modal-message-img1").attr('src', CBAssetsBase + 'causebutton-160x40.png');
+                    $("#cbw-modal-message-img2").attr('src', CBAssetsBase + 'cause-86x40.png');
+                    $(".cbw-modal-message-img").css("height","30");
                     
                     // now add the tranparant background div and give it the correct styles
                     $("<div id=\"cbw-modal-blocker-div\">").html('<div class="jquery-modal blocker"></div>').appendTo(div);
