@@ -11,6 +11,8 @@ roles_list = [
   [ "UserAdmin", "can manage all resources owned by all users" ],
   [ "User", "can manage only user-owned resources" ],
   [ "EventAdmin", "can manage Cause Groups and Events" ],
+  [ "Merchant", "can create and manage merchants and promotions" ],
+  [ "CauseAdmin", "can own and manage causes" ],
 
 ]
 

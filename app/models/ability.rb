@@ -46,6 +46,13 @@ class Ability
         end
 
         if user.role? :user
+            # Donation permissions
+            can [:index, :show], Donation do |donation|
+                donation.users.include?(user)
+            end
+        end
+
+        if user.role? :merchant
             # Merchant permissions
             can [:index, :create], Merchant
             can [:edit, :update, :delete, :show], Merchant do |merchant|
@@ -56,16 +63,14 @@ class Ability
             can [:edit, :update, :delete, :show, :duplicate], Promotion do |promotion|
                 promotion.merchant.users.include?(user)
             end
+        end
+
+        if user.role? :cause_admin
             # Single permissions
             can [:index, :create], Single
             can [:edit, :update, :delete, :show], Single do |single|
                 single.users.include?(user)
             end
-            # Donation permissions
-            can [:index, :show], Donation do |donation|
-                donation.users.include?(user)
-            end
-
         end
 
     end
