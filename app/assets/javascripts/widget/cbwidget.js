@@ -952,21 +952,26 @@ console.log("e");
                     // purchase is a special channel - ignore this one from user perspective as no channel should be displayed
                     if (chname != "purchase") {
                         channel_div.append(channel_pattern.replace(/\{0\}/g, chname).replace(/\{1\}/g, i).replace(/\{2\}/g, font_awesome_icon_name));
+console.log("f");
                     }
-
+console.log("g");
                 }            
+console.log("h");
 
                 // assign variable name to the fgcause selector
                 var fgcause_select = $("#cbw-fgcause-select");
+console.log("i");
 
                 // check to see if the loaded cause from the serve api response for this serve is the same as the default cause for the associated promotion.  If it is, set the radio button value to default (so the default value is checked when the widget opens), then delete the seed values for the single and group cause selectors.
                 if (ServeData.default_cause_uid == ServeData.cause_uid) {
+console.log("j");
                     $("[name=cause-type-radio]").val(["default"]);
                     // Update the CurrentCauseRadioButtonVal with radio button value associated with this selection
                     CurrentCauseRadioButtonVal = "default";
                     ServeData.fg_uuid = "";
                     ServeData.event_uid = "";
                 } else {
+console.log("k");
                     // check to see if the selected cause is a single.  If it is, select that button:
                     if (ServeData.cause_type == "single") {
                         $("[name=cause-type-radio]").val(["single"]);
@@ -980,12 +985,10 @@ console.log("e");
                         CurrentCauseRadioButtonVal = "default";
                     }
                 }
-console.log("f");
 
                 // set the initial values of the fgcause selector
                 fgcause_select.attr('value', ServeData.fg_uuid);
 
-console.log("g");
                 // make the fgcause selector a Select2 selector
                 fgcause_select.select2({
                     placeholder: 'Start typing here...',
@@ -1035,7 +1038,6 @@ console.log("g");
                     nextSearchTerm: function (selectedObject, currentSearchTerm) {return currentSearchTerm;},
                     escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
                 });
-console.log("h");
 
             }
 
