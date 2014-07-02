@@ -193,7 +193,8 @@ function CBSale(amount,transaction_id) {
     // script in the list will be skipped.
 
     var scripts = [
-        {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
+    //    {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
+        {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js", "custom_load": JQueryCustomLoad },
         {"name": "Select2", "src": CBAssetsBase + "select2.min.js"},
     ];
 
@@ -204,7 +205,8 @@ function CBSale(amount,transaction_id) {
 
     //Start Loading Scripts
 
-    if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.10.1') {
+    //if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.10.1') {
+    if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.11.1') {
 
         // Load our version of jQuery and start chain here...
         CreateScriptTag(scripts[0].name, scripts[0].src);   
@@ -356,7 +358,7 @@ function CBSale(amount,transaction_id) {
      *************************************************************************/
     function JQueryCustomLoad(params) {
 
-        //jQuery = window.jQuery.noConflict(true);
+        jQuery = window.jQuery.noConflict(true);
     }
     
     /* ---------------------------------------------------------------------------------
