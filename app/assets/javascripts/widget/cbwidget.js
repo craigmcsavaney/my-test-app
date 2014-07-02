@@ -941,8 +941,11 @@ console.log("e");
                 var channel_div = $("#cbw-channels");
 
                 var channels = ServeData.display_order;
+                console.log(channels.length);
 
-                for (var i in channels) {
+                //for (var i in channels) {
+                for (var i = 0, i < channels.length; i++) {
+                    console.log(i);
                     // Note that this section depends on ServeData.display_order including a two element hash in the format 
                     // ["Channel name","Font Awesome Icon Name"] for each channel that is returned.
                     // This is not great design and should be changed to name-value pairs sometime.
