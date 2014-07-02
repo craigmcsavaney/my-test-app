@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
 	# layout false, only: :landing  moved this down to the individual methods that don't use layout
-
+  before_action :authenticate_user!
   	def home
       # create new message object for the contact_message form on the home page
       @message = ContactMessage.new
