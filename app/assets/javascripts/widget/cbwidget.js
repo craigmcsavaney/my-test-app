@@ -356,7 +356,7 @@ function CBSale(amount,transaction_id) {
      *************************************************************************/
     function JQueryCustomLoad(params) {
 
-        jQuery = window.jQuery.noConflict(true);
+        //jQuery = window.jQuery.noConflict(true);
     }
     
     /* ---------------------------------------------------------------------------------
