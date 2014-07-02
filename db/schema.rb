@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140701141914) do
+ActiveRecord::Schema.define(version: 20140701212314) do
 
   create_table "button_types", force: true do |t|
     t.string   "name",                        null: false
@@ -264,6 +264,8 @@ ActiveRecord::Schema.define(version: 20140701141914) do
     t.integer  "serve_count",                        null: false
     t.integer  "session_count",                      null: false
   end
+
+  add_index "serves", ["session_id"], name: "index_serves_on_session_id", unique: true, using: :btree
 
   create_table "settings", force: true do |t|
     t.datetime "created_at",              null: false
