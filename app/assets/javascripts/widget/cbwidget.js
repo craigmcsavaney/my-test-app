@@ -936,6 +936,9 @@ function CBSale(amount,transaction_id) {
                 var channel_div = $cb("#cbw-channels");
 
                 var channels = ServeData.display_order;
+                console.log(channels);
+                console.log(channels[0][0]);
+                console.log(channels[0][1]);
 
                 for (var i in channels) {
                     // Note that this section depends on ServeData.display_order including a two element hash in the format 
