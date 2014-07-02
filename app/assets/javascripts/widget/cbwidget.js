@@ -316,7 +316,7 @@ function CBSale(amount,transaction_id) {
         // added reset styles to cbwidget.css
         AddStylesheet('cbw-css-sel2', CBAssetsBase + "select2.css");
         AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
-        AddStylesheet('cbw-googlefonts', "http://fonts.googleapis.com/css?family=Montserrat:400,700");
+        AddStylesheet('cbw-googlefonts', "https://fonts.googleapis.com/css?family=Montserrat:400,700");
         AddStylesheet('font-awesome', "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
         AddStylesheet('cbw-css-modal', CBAssetsBase + "jquery.modal.css");
 
@@ -980,10 +980,12 @@ console.log("e");
                         CurrentCauseRadioButtonVal = "default";
                     }
                 }
+console.log("f");
 
                 // set the initial values of the fgcause selector
                 fgcause_select.attr('value', ServeData.fg_uuid);
 
+console.log("g");
                 // make the fgcause selector a Select2 selector
                 fgcause_select.select2({
                     placeholder: 'Start typing here...',
@@ -1033,6 +1035,7 @@ console.log("e");
                     nextSearchTerm: function (selectedObject, currentSearchTerm) {return currentSearchTerm;},
                     escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
                 });
+console.log("h");
 
             }
 
@@ -1073,27 +1076,21 @@ console.log("e");
              * --------------------------------------------------------------------------------- */
             function LoadEventsData(session_id, serve_id) {
 
-console.log("f");
                 var method = "events";
 
-console.log("g");
                 var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // pass these values back into the server on the AJAX call so that we can get proper values in return
-console.log("h");
                 var ajxDataObj = new Object();
 
-console.log("i");
                 if (session_id) {
                     ajxDataObj.session_id = session_id;
                 }
 
-console.log("j");
                 if (serve_id) {
                     ajxDataObj.serve_id = serve_id;
                 }
 
-console.log("k");
                 return $.ajax({
                     type: 'POST',
                     url: data_url,
@@ -1103,7 +1100,6 @@ console.log("k");
                     success: function(data) {
                          EventData = data;
 
-console.log("l");
                         if (EventData.error) {
         
                             alert("API error: " + EventData.error);
