@@ -132,7 +132,7 @@ function CBSale(amount,transaction_id) {
     var CBCauseID = ""; // this is the cause ID passed in as a param with the page url
     var CurrentCauseRadioButtonVal;
     var SessionChanged = false; // used when deciding whether to serve a modal or not
-    var AutoButton; // this is the url auto button value passed in as a param with the script src url
+    var AutoButton = ""; // this is the url auto button value passed in as a param with the script src url
  
     // iterate through the loaded scripts looking for the current one (must specify id on the tag for this to work)
     // an alternative implementation would be to look for 'cbwidget.js' in the title which would fail if we were to
@@ -488,18 +488,13 @@ function CBSale(amount,transaction_id) {
 
                     //WriteCookies();
                     //PurchasePathUpdate(ServeData.paths["purchase"]);
-console.log("a");
                     MergeServeData(div);
-console.log("b");
                     MergeButtons();
-console.log("c");
 
                     // When the event data is finished loading, merge the event data into the widget.
                     $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
 
-console.log("d");
                         MergeEventsData();
-console.log("e");
 
                     });
 
@@ -507,8 +502,8 @@ console.log("e");
                     // cause display block in the widget.  Otherwise, load the cause data.
                     if (!ServeData.promotion.cause_selector) {
 
-                        $(".cbw-currently-selected-cause").removeClass("widget-show");
-                        $(".cbw-currently-selected-cause").addClass("widget-hide");
+                        $(".cbw-currently-selected-cause").removeClass("cbw-widget-show");
+                        $(".cbw-currently-selected-cause").addClass("cbw-widget-hide");
                     
                     } 
 
@@ -573,8 +568,8 @@ console.log("e");
             //         // cause display block in the widget.  Otherwise, load the cause data.
             //         if (!ServeData.promotion.cause_selector) {
 
-            //             $(".cbw-currently-selected-cause").removeClass("widget-show");
-            //             $(".cbw-currently-selected-cause").addClass("widget-hide");
+            //             $(".cbw-currently-selected-cause").removeClass("cbw-widget-show");
+            //             $(".cbw-currently-selected-cause").addClass("cbw-widget-hide");
                     
             //         } 
 
@@ -895,8 +890,8 @@ console.log("e");
 
                     $("#cbw-email-input").val(ServeData.email);
                     $("#cbw-email-checkbox").prop('checked',true);
-                    $("#cbw-email-ctl-grp").removeClass("widget-hide");
-                    $("#cbw-email-ctl-grp").addClass("widget-show");
+                    $("#cbw-email-ctl-grp").removeClass("cbw-widget-hide");
+                    $("#cbw-email-ctl-grp").addClass("cbw-widget-show");
                 }
 
                 // Add the logo image
@@ -941,11 +936,9 @@ console.log("e");
                 var channel_div = $("#cbw-channels");
 
                 var channels = ServeData.display_order;
-                console.log(channels.length);
 
                 //for (var i in channels) {
                 for (var i = 0; i < channels.length; i++) {
-                    console.log(i);
                     // Note that this section depends on ServeData.display_order including a two element hash in the format 
                     // ["Channel name","Font Awesome Icon Name"] for each channel that is returned.
                     // This is not great design and should be changed to name-value pairs sometime.
@@ -955,26 +948,20 @@ console.log("e");
                     // purchase is a special channel - ignore this one from user perspective as no channel should be displayed
                     if (chname != "purchase") {
                         channel_div.append(channel_pattern.replace(/\{0\}/g, chname).replace(/\{1\}/g, i).replace(/\{2\}/g, font_awesome_icon_name));
-console.log("f");
                     }
-console.log("g");
                 }            
-console.log("h");
 
                 // assign variable name to the fgcause selector
                 var fgcause_select = $("#cbw-fgcause-select");
-console.log("i");
 
                 // check to see if the loaded cause from the serve api response for this serve is the same as the default cause for the associated promotion.  If it is, set the radio button value to default (so the default value is checked when the widget opens), then delete the seed values for the single and group cause selectors.
                 if (ServeData.default_cause_uid == ServeData.cause_uid) {
-console.log("j");
                     $("[name=cause-type-radio]").val(["default"]);
                     // Update the CurrentCauseRadioButtonVal with radio button value associated with this selection
                     CurrentCauseRadioButtonVal = "default";
                     ServeData.fg_uuid = "";
                     ServeData.event_uid = "";
                 } else {
-console.log("k");
                     // check to see if the selected cause is a single.  If it is, select that button:
                     if (ServeData.cause_type == "single") {
                         $("[name=cause-type-radio]").val(["single"]);
@@ -1151,8 +1138,8 @@ console.log("k");
                     $(trending_cause_text).text(EventData[i].name);
 
                     //now, un-hide this radio button selection
-                    $(trending_cause).removeClass("widget-hide");
-                    $(trending_cause).addClass("widget-show");
+                    $(trending_cause).removeClass("cbw-widget-hide");
+                    $(trending_cause).addClass("cbw-widget-show");
 
                     // check to see if the selected cause matches this trending cause.  If it does,
                     // select this radio button.  Note that if the selected cause is not a "single", the 
@@ -1177,8 +1164,8 @@ console.log("k");
                 // replace it with the show class for the div that contains all the trending causes
                 if (EventData) {
 
-                    $("#cbw-cause-select-ctrl-grp").removeClass("widget-hide");
-                    $("#cbw-cause-select-ctrl-grp").addClass("widget-show");
+                    $("#cbw-cause-select-ctrl-grp").removeClass("cbw-widget-hide");
+                    $("#cbw-cause-select-ctrl-grp").addClass("cbw-widget-show");
                 }            
 
 
@@ -1362,8 +1349,8 @@ console.log("k");
                         if (UpdateData.error) {
         
                             alert("Oops! Please refresh this page, then try again.");
-                            $("#cbw-widget").removeClass("widget-show");
-                            $("#cbw-widget").addClass("widget-hide");
+                            $("#cbw-widget").removeClass("cbw-widget-show");
+                            $("#cbw-widget").addClass("cbw-widget-hide");
                             $("#cbw-cause-select").select2("close");
                             $("#cbw-fgcause-select").select2("close");
 
@@ -1641,8 +1628,8 @@ console.log("k");
                 SelectedChannel.removeClass("channel-selected");
 
                 // Hide the share message editor for this channel
-                $("#cbw-share-msg-ctrl-grp").removeClass("widget-show");
-                $("#cbw-share-msg-ctrl-grp").addClass("widget-hide");
+                $("#cbw-share-msg-ctrl-grp").removeClass("cbw-widget-show");
+                $("#cbw-share-msg-ctrl-grp").addClass("cbw-widget-hide");
 
                 // Reposition the widget to account for its new size
                 PositionWidget('reposition');
@@ -1919,14 +1906,14 @@ console.log("k");
                 if (!EmailValid($('#cbw-email-input').val())) {
                     $("#cbw-email-ctl-grp").addClass('error');
                     // $("#cbw-email-input-error-message").show();
-                    $("#cbw-email-input-error-message").removeClass("widget-hide");
-                    $("#cbw-email-input-error-message").addClass("widget-show");
+                    $("#cbw-email-input-error-message").removeClass("cbw-widget-hide");
+                    $("#cbw-email-input-error-message").addClass("cbw-widget-show");
                     //BlinkErrorMessage("#cbw-email-input-error-message");
                 } else {
                     $("#cbw-email-ctl-grp").removeClass('error');
                     // $("#cbw-email-input-error-message").hide();
-                    $("#cbw-email-input-error-message").removeClass("widget-show");
-                    $("#cbw-email-input-error-message").addClass("widget-hide");
+                    $("#cbw-email-input-error-message").removeClass("cbw-widget-show");
+                    $("#cbw-email-input-error-message").addClass("cbw-widget-hide");
                     //$("#cbw-user-name").replaceWith(email);
                 }
 
@@ -1948,6 +1935,7 @@ console.log("k");
              * serve with the new cause (if one exists).
              * -------------------------------------------------------- */
             function CloseCauseSelector () {
+                $("#cbw-fgcause-select").select2("close");
                 $("#cbw-cause-selector").fadeOut();
                 // Check to see if the email is valid.  If it is not, this will
                 // set the error condition, which is important to prevent
@@ -2018,8 +2006,8 @@ console.log("k");
                 if ($("#cbw-widget").css('display') == "none") {
                     RegisterWidgetView();
                     //$("#cbw-widget").toggle();
-                    $("#cbw-widget").removeClass("widget-hide");
-                    $("#cbw-widget").addClass("widget-show");
+                    $("#cbw-widget").removeClass("cbw-widget-hide");
+                    $("#cbw-widget").addClass("cbw-widget-show");
                 }
 
                 PositionWidget('initial');
@@ -2070,11 +2058,11 @@ console.log("k");
                 }
 
                 if ($("#cbw-email-ctl-grp").css('display') == "none") {
-                    $("#cbw-email-ctl-grp").removeClass("widget-hide");
-                    $("#cbw-email-ctl-grp").addClass("widget-show");
+                    $("#cbw-email-ctl-grp").removeClass("cbw-widget-hide");
+                    $("#cbw-email-ctl-grp").addClass("cbw-widget-show");
                 } else {
-                    $("#cbw-email-ctl-grp").removeClass("widget-show");
-                    $("#cbw-email-ctl-grp").addClass("widget-hide");
+                    $("#cbw-email-ctl-grp").removeClass("cbw-widget-show");
+                    $("#cbw-email-ctl-grp").addClass("cbw-widget-hide");
                 }
             });        
 
@@ -2126,14 +2114,14 @@ console.log("k");
 
                 if (display == "none") {
 
-                    $("#cbw-links-info").removeClass("widget-hide");
-                    $("#cbw-links-info").addClass("widget-show");
+                    $("#cbw-links-info").removeClass("cbw-widget-hide");
+                    $("#cbw-links-info").addClass("cbw-widget-show");
                     $("#cbw-links-info-toggle").html("less info"); 
 
                 } else {
 
-                    $("#cbw-links-info").removeClass("widget-show");
-                    $("#cbw-links-info").addClass("widget-hide");
+                    $("#cbw-links-info").removeClass("cbw-widget-show");
+                    $("#cbw-links-info").addClass("cbw-widget-hide");
                     $("#cbw-links-info-toggle").html("more info");
 
                 }
@@ -2155,12 +2143,12 @@ console.log("k");
              * -------------------------------------------------------- */
             $(document).on('click', '.cbw-channel-toggle', function() {
 
-                $(".cbw #cbw-widget #cbw-channels-grp").removeClass("widget-show");
-                $(".cbw #cbw-widget #cbw-channels-grp").addClass("widget-hide");
-                $(".cbw #cbw-widget #cbw-share-again").removeClass("widget-hide");
-                $(".cbw #cbw-widget #cbw-share-again").addClass("widget-show");
-                $(".cbw #cbw-widget .email").removeClass("widget-hide");
-                $(".cbw #cbw-widget .email").addClass("widget-show");
+                $(".cbw #cbw-widget #cbw-channels-grp").removeClass("cbw-widget-show");
+                $(".cbw #cbw-widget #cbw-channels-grp").addClass("cbw-widget-hide");
+                $(".cbw #cbw-widget #cbw-share-again").removeClass("cbw-widget-hide");
+                $(".cbw #cbw-widget #cbw-share-again").addClass("cbw-widget-show");
+                $(".cbw #cbw-widget .email").removeClass("cbw-widget-hide");
+                $(".cbw #cbw-widget .email").addClass("cbw-widget-show");
 
 
                 // var was_an_error1 = false;
@@ -2301,8 +2289,8 @@ console.log("k");
                 CheckEmailValid();
                 // next, hide the widget and close any open select2 selectors
                 // $("#cbw-widget").hide();
-                $("#cbw-widget").removeClass("widget-show");
-                $("#cbw-widget").addClass("widget-hide");
+                $("#cbw-widget").removeClass("cbw-widget-show");
+                $("#cbw-widget").addClass("cbw-widget-hide");
                 $("#cbw-fgcause-select").select2("close");
 
                 // Finally, call CloseCallSelector().  This will close the
@@ -2319,12 +2307,12 @@ console.log("k");
              * -------------------------------------------------------- */
             $(document).on('click', '.cbw #cbw-widget #cbw-share-again-button', function() {
 
-                $(".cbw #cbw-widget #cbw-channels-grp").removeClass("widget-hide");
-                $(".cbw #cbw-widget #cbw-channels-grp").addClass("widget-show");
-                $(".cbw #cbw-widget #cbw-share-again").removeClass("widget-show");
-                $(".cbw #cbw-widget #cbw-share-again").addClass("widget-hide");
-                $(".cbw #cbw-widget .email").removeClass("widget-show");
-                $(".cbw #cbw-widget .email").addClass("widget-hide");
+                $(".cbw #cbw-widget #cbw-channels-grp").removeClass("cbw-widget-hide");
+                $(".cbw #cbw-widget #cbw-channels-grp").addClass("cbw-widget-show");
+                $(".cbw #cbw-widget #cbw-share-again").removeClass("cbw-widget-show");
+                $(".cbw #cbw-widget #cbw-share-again").addClass("cbw-widget-hide");
+                $(".cbw #cbw-widget .email").removeClass("cbw-widget-show");
+                $(".cbw #cbw-widget .email").addClass("cbw-widget-hide");
             });
 
             /* --------------------------------------------------------

@@ -52,22 +52,22 @@ Widget custom styles, all namespaced .cbw
           background-clip: padding-box !important;
 }
 
-.cbw #cbw-widget .widget-show, .cbw #cbw-widget.widget-show {
+.cbw #cbw-widget .cbw-widget-show, .cbw #cbw-widget.cbw-widget-show {
 	display: block !important;
 }
 
-.cbw #cbw-widget .cbw-cause-radio-button-box.widget-show {
+.cbw #cbw-widget .cbw-cause-radio-button-box.cbw-widget-show {
 	display: inline-block !important;
 }
 
-.cbw #cbw-widget .widget-hide, .cbw #cbw-widget.widget-hide, .cbw #cbw-widget .cbw-cause-radio-button-box.widget-hide {
+.cbw #cbw-widget .cbw-widget-hide, .cbw #cbw-widget.cbw-widget-hide, .cbw #cbw-widget .cbw-cause-radio-button-box.cbw-widget-hide {
 	display: none !important;
 }
 
 .cbw #cbw-heading {
 	background-color: #73C9BE !important;
-	height: 14px !important;
-	padding: 20px 0px 26px 20px !important;
+	height: 19px !important;
+	padding: 15px 0px 26px 15px !important;
 	border-radius: 15px 15px 0 0 !important;
 }
 
@@ -75,7 +75,8 @@ Widget custom styles, all namespaced .cbw
 	border: 2px solid #FFFFFF !important;
     border-radius: 14px !important;
     display: inline !important;
-    padding: 3px 8px !important;	
+    padding: 3px 8px !important;
+    float: left !important;	
 }
 
 .cbw #cbw-heading-logo-img {
@@ -93,7 +94,7 @@ Widget custom styles, all namespaced .cbw
 
 .cbw #cbw-heading-close {
 	float: right !important;
-	margin: 0 20px 0 0 !important;
+	margin: 5px 25px 0 0 !important;
 	color: #ffffff !important;
 	cursor: pointer !important;
     font-size: 20px !important;
@@ -196,9 +197,11 @@ Widget custom styles, all namespaced .cbw
     background-clip: padding-box !important;
     background-image: -moz-linear-gradient(center bottom , #EEEEEE 0%, #FFFFFF 50%) !important;
 }
-.cbw #cbw-widget #cbw-currently-selected-cause-text:hover {
+/*.cbw #cbw-widget #cbw-currently-selected-cause-text:hover {*/
+.cbw #cbw-widget #cbw-currently-selected-cause-radio-button-box:hover {
 	text-shadow: 0 0 2px #73C9BE !important;
 	color: #666666 !important;
+	cursor: pointer !important;
 }
 
 
