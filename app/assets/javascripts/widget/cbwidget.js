@@ -449,14 +449,14 @@ function CBSale(amount,transaction_id) {
         /* --------------------------------------------------------------------------------------------------------
          * jQuery(document).ready(function($)
          * --------------------------------------------------------------------------------------------------------
-         * This is the equivalent of the typical $cb(document).ready(function() {}) call that is called when 
+         * This is the equivalent of the typical $(document).ready(function() {}) call that is called when 
          * jQuery indicates that the page is 'ready'. Put all code that requires jQuery in here!
          * -------------------------------------------------------------------------------------------------------- */
-        jQuery(document).ready(function($cb) {
+        jQuery(document).ready(function($) {
 
             // This is the id value of the div to which the entire widget will be appended.
             // This used to be #cb-widget-replace but now the widget is appended to the body tag.
-            var div = $cb("body");
+            var div = $("body");
 
             // Now check to see if there are any elements on the page that include
             // either the .cbw-btn class or the .cbw-main-btn class.  (Remember that this
@@ -466,14 +466,14 @@ function CBSale(amount,transaction_id) {
             // we need to build the widget and append it to the page body.  If there aren't,
             // we only need to retrieve the serve data. 
 
-            if ($cb(".cbw-main-btn, .cbw-btn").length == 0) {
+            if ($(".cbw-main-btn, .cbw-btn").length == 0) {
 
                 // This is the case where the widget does not need to get built.
                 // When the loading of the serve data is complete, just need to
                 // write cookies and load the purchase path variable.
-                $cb.when(LoadServeData(ReferringPath)).done(function(a) {
+                $.when(LoadServeData(ReferringPath)).done(function(a) {
 
-                    $cb.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
+                    $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
                         ReportConversion();
                     });
 
@@ -484,17 +484,22 @@ function CBSale(amount,transaction_id) {
                 // Get the widget html template and load the serve data.  When both 
                 // of these are complete, write cookies, load the purchase path variable, 
                 // merge the serve data into the widget html, and merge the button html.
-                $cb.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
+                $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
 
                     //WriteCookies();
                     //PurchasePathUpdate(ServeData.paths["purchase"]);
+console.log("a");
                     MergeServeData(div);
+console.log("b");
                     MergeButtons();
+console.log("c");
 
                     // When the event data is finished loading, merge the event data into the widget.
-                    $cb.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
+                    $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
 
+console.log("d");
                         MergeEventsData();
+console.log("e");
 
                     });
 
@@ -502,13 +507,13 @@ function CBSale(amount,transaction_id) {
                     // cause display block in the widget.  Otherwise, load the cause data.
                     if (!ServeData.promotion.cause_selector) {
 
-                        $cb(".cbw-currently-selected-cause").removeClass("widget-show");
-                        $cb(".cbw-currently-selected-cause").addClass("widget-hide");
+                        $(".cbw-currently-selected-cause").removeClass("widget-show");
+                        $(".cbw-currently-selected-cause").addClass("widget-hide");
                     
                     } 
 
                     // Write the session, serve, and path cookies.  Then check for and report conversions
-                    $cb.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
+                    $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
                         ReportConversion();
                     });
 
@@ -532,9 +537,9 @@ function CBSale(amount,transaction_id) {
             // // Note that the widget html is possibly being loaded unnecessarily, but
             // // it loads synchronously with the serve data and loads faster than the
             // // serve data, so it's probably OK for the moment.
-            // $cb.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
+            // $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
 
-            //     $cb.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
+            //     $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
             //         ReportConversion();
             //     });
 
@@ -552,13 +557,13 @@ function CBSale(amount,transaction_id) {
             //     // containing the .cbw-btn class, but this happens later in the execution of the
             //     // script so we have to look for .cbw-btn classes here.) Also check to see if the Auto Button should be displayed.  If so, then
             //     // we need to build the widget and append it to the page body.  If there aren't, we're done.
-            //     if ($cb(".cbw-main-btn, .cbw-btn").length == 0 || AutoButton == "left" || AutoButton == "right") {
+            //     if ($(".cbw-main-btn, .cbw-btn").length == 0 || AutoButton == "left" || AutoButton == "right") {
 
             //         MergeServeData(div);
             //         MergeButtons();
 
             //         // When the event data is finished loading, merge the event data into the widget.
-            //         $cb.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
+            //         $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
 
             //             MergeEventsData();
 
@@ -568,8 +573,8 @@ function CBSale(amount,transaction_id) {
             //         // cause display block in the widget.  Otherwise, load the cause data.
             //         if (!ServeData.promotion.cause_selector) {
 
-            //             $cb(".cbw-currently-selected-cause").removeClass("widget-show");
-            //             $cb(".cbw-currently-selected-cause").addClass("widget-hide");
+            //             $(".cbw-currently-selected-cause").removeClass("widget-show");
+            //             $(".cbw-currently-selected-cause").addClass("widget-hide");
                     
             //         } 
 
@@ -603,33 +608,33 @@ function CBSale(amount,transaction_id) {
                 // Now, check to see if the AutoButton value is either left or right.  If it is none
                 // or blank we skip the AutoButton entirely.
                 if (AutoButton == "left" || AutoButton == "right") {
-                    $cb("<div id=\"cbw-button-div\">").html( "<div id='cbw-button-side' class='cbw-button-side cbw-main-btn'></div>" ).appendTo(div);
-                    $cb("#cbw-button-side").append( "<img id='cbw-button-side-img1' class='cbw-button-side-img'>" );
-                    $cb("#cbw-button-side-img1").attr('src', CBAssetsBase + 'cause-86x40.png');
+                    $("<div id=\"cbw-button-div\">").html( "<div id='cbw-button-side' class='cbw-button-side cbw-main-btn'></div>" ).appendTo(div);
+                    $("#cbw-button-side").append( "<img id='cbw-button-side-img1' class='cbw-button-side-img'>" );
+                    $("#cbw-button-side-img1").attr('src', CBAssetsBase + 'cause-86x40.png');
 
                     switch (AutoButton) {
                         case "left":
-                            $cb("#cbw-button-side").css({
+                            $("#cbw-button-side").css({
                                 position: 'fixed',
                                 top: "50%",
                                 left: "0px",
-                                marginTop: - ($cb("#cbw-button-side-img1").height() / 2),
-                                marginLeft: - ($cb("#cbw-button-side-img1").width()),
+                                marginTop: - ($("#cbw-button-side-img1").height() / 2),
+                                marginLeft: - ($("#cbw-button-side-img1").width()),
                                 zIndex: 9998
                             });
-                            $cb("#cbw-button-side").animate({ "marginLeft": "+=86px" }, "slow");
+                            $("#cbw-button-side").animate({ "marginLeft": "+=86px" }, "slow");
                         break;
 
                         case "right":
-                            $cb("#cbw-button-side").css({
+                            $("#cbw-button-side").css({
                                 position: 'fixed',
                                 top: "50%",
                                 right: "0px",
-                                marginTop: - ($cb("#cbw-button-side-img1").height() / 2),
-                                marginRight: - ($cb("#cbw-button-side-img1").width()),
+                                marginTop: - ($("#cbw-button-side-img1").height() / 2),
+                                marginRight: - ($("#cbw-button-side-img1").width()),
                                 zIndex: 9998
                             });
-                            $cb("#cbw-button-side").animate({ "marginRight": "+=86px" }, "slow");
+                            $("#cbw-button-side").animate({ "marginRight": "+=86px" }, "slow");
                         break;
 
                     }
@@ -668,31 +673,31 @@ function CBSale(amount,transaction_id) {
                     }
                     
                     // add the div that contains the modal, then add the text, css, and close button to the modal div
-                    $cb("<div id=\"cbw-modal-div\">").html( "<div id='cbw-modal-1' class='modal'></div>" ).appendTo(div);
-                    $cb("#cbw-modal-1").append( modal_message);
-                    //$cb("#cbw-modal-1").text( modal_message );
-                    $cb("#cbw-modal-1").css({
+                    $("<div id=\"cbw-modal-div\">").html( "<div id='cbw-modal-1' class='modal'></div>" ).appendTo(div);
+                    $("#cbw-modal-1").append( modal_message);
+                    //$("#cbw-modal-1").text( modal_message );
+                    $("#cbw-modal-1").css({
                         position: 'fixed',
                         top: "50%",
                         left: "50%",
-                        marginTop: - ($cb("#cbw-modal-1").outerHeight() / 2),
-                        marginLeft: - ($cb("#cbw-modal-1").outerWidth() / 2),
+                        marginTop: - ($("#cbw-modal-1").outerHeight() / 2),
+                        marginLeft: - ($("#cbw-modal-1").outerWidth() / 2),
                         zIndex: 10000
                     });
-                    //$cb("#cbw-modal-1").append("<img id='cbw-modal-message-img1' class='cbw-modal-message-img'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img'> on any page to learn more.");
-                    //$cb("#cbw-modal-1").append("<img id='cbw-modal-message-img2' class='cbw-modal-message-img'>");
-                    //$cb("#cbw-modal-1").append("more text here");
-                    closeButton = $cb('<a href="#close-modal" rel="modal:close" class="close-modal">' + 'close text' + '</a>');
-                    $cb("#cbw-modal-1").append(closeButton);
+                    //$("#cbw-modal-1").append("<img id='cbw-modal-message-img1' class='cbw-modal-message-img'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img'> on any page to learn more.");
+                    //$("#cbw-modal-1").append("<img id='cbw-modal-message-img2' class='cbw-modal-message-img'>");
+                    //$("#cbw-modal-1").append("more text here");
+                    closeButton = $('<a href="#close-modal" rel="modal:close" class="close-modal">' + 'close text' + '</a>');
+                    $("#cbw-modal-1").append(closeButton);
 
-                    // $cb("#cbw-modal-message-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
-                    $cb("#cbw-modal-message-img1").attr('src', CBAssetsBase + 'causebutton-160x40.png');
-                    $cb("#cbw-modal-message-img2").attr('src', CBAssetsBase + 'cause-86x40.png');
-                    $cb(".cbw-modal-message-img").css("height","30");
+                    // $("#cbw-modal-message-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
+                    $("#cbw-modal-message-img1").attr('src', CBAssetsBase + 'causebutton-160x40.png');
+                    $("#cbw-modal-message-img2").attr('src', CBAssetsBase + 'cause-86x40.png');
+                    $(".cbw-modal-message-img").css("height","30");
                     
                     // now add the tranparant background div and give it the correct styles
-                    $cb("<div id=\"cbw-modal-blocker-div\">").html('<div class="jquery-modal blocker"></div>').appendTo(div);
-                    $cb("#cbw-modal-blocker-div").css({
+                    $("<div id=\"cbw-modal-blocker-div\">").html('<div class="jquery-modal blocker"></div>').appendTo(div);
+                    $("#cbw-modal-blocker-div").css({
                         top: 0, right: 0, bottom: 0, left: 0,
                         width: "100%", height: "100%",
                         position: "fixed",
@@ -702,7 +707,7 @@ function CBSale(amount,transaction_id) {
                     });
 
                     // show the modal dialog
-                    $cb('#cbw-modal-1').show();
+                    $('#cbw-modal-1').show();
 
                     // finally, set the cbwmodal cookie value to skip so this modal doesn't get shown 
                     // for this serve for at least another 24 hours
@@ -726,10 +731,10 @@ function CBSale(amount,transaction_id) {
                 // ID values from attributes of that element and call the CBSale method to
                 // report the conversion to the database. 
 
-                if ($cb(".cbw-conversion-success").length == 1) {
+                if ($(".cbw-conversion-success").length == 1) {
 
-                    var cbw_conversion_amount = $cb(".cbw-conversion-success").attr('cbw-conversion-amount');
-                    var cbw_transaction_id = $cb(".cbw-conversion-success").attr('cbw-transaction-id');
+                    var cbw_conversion_amount = $(".cbw-conversion-success").attr('cbw-conversion-amount');
+                    var cbw_transaction_id = $(".cbw-conversion-success").attr('cbw-transaction-id');
                     CBSale(cbw_conversion_amount,cbw_transaction_id);
                 }
 
@@ -743,7 +748,7 @@ function CBSale(amount,transaction_id) {
              * --------------------------------------------------------------------------------- */
             function GetWidgetHTML() {
 
-                return $cb.ajax({
+                return $.ajax({
                     type: 'POST',
                     url: CBApiBase + "content",
                     timeout: 30000,
@@ -805,8 +810,8 @@ function CBSale(amount,transaction_id) {
                     ajxDataObj.cbcause_id = CBCauseID;
                 }
 
-                //var reqObj = $cb.ajax({
-                return $cb.ajax({
+                //var reqObj = $.ajax({
+                return $.ajax({
                     type: 'POST',
                     url: data_url,
                     data: ajxDataObj,
@@ -865,12 +870,12 @@ function CBSale(amount,transaction_id) {
             function MergeButtons() {
 
                 // add the button html to every element on the page that includes class cbw-btn.  
-                $cb(".cbw-btn").append(ServeData.promotion.button_html);
+                $(".cbw-btn").append(ServeData.promotion.button_html);
 
                 // Now add the class cbw-main-btn to every element on the page to which we
                 // just added the button html.  This turns the element into a "button"
                 // that can open the widget.
-                $cb(".cbw-btn").addClass('cbw-main-btn')
+                $(".cbw-btn").addClass('cbw-main-btn')
 
             }
 
@@ -884,33 +889,33 @@ function CBSale(amount,transaction_id) {
 
                 // append the widget html to the input div
 
-                $cb("<div id=\"cbw-main-div\">").html( WidgetData.content ).appendTo(div);
+                $("<div id=\"cbw-main-div\">").html( WidgetData.content ).appendTo(div);
 
                 if (ServeData.email) {
 
-                    $cb("#cbw-email-input").val(ServeData.email);
-                    $cb("#cbw-email-checkbox").prop('checked',true);
-                    $cb("#cbw-email-ctl-grp").removeClass("widget-hide");
-                    $cb("#cbw-email-ctl-grp").addClass("widget-show");
+                    $("#cbw-email-input").val(ServeData.email);
+                    $("#cbw-email-checkbox").prop('checked',true);
+                    $("#cbw-email-ctl-grp").removeClass("widget-hide");
+                    $("#cbw-email-ctl-grp").addClass("widget-show");
                 }
 
                 // Add the logo image
-                // $cb("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
+                // $("#cbw-heading-logo-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
 
                 // Add the logo link target
-                $cb("#cbw-heading-logo-link").attr('href', CBHome);
+                $("#cbw-heading-logo-link").attr('href', CBHome);
 
                 // Populate the pledge title text supplied by the server
-                $cb("#cbw-pledge-title").text(ServeData.promotion.title);
+                $("#cbw-pledge-title").text(ServeData.promotion.title);
 
                 // Add the footer causebutton url link target
-                $cb("#cbw-links-causebutton-url").attr('href', CBHome);
+                $("#cbw-links-causebutton-url").attr('href', CBHome);
 
                 // Add the footer causebutton url link target
-                $cb("#cbw-links-causebutton-url").attr('target', "_blank");
+                $("#cbw-links-causebutton-url").attr('target', "_blank");
 
                 // Populate the footer causebutton url link text
-                $cb("#cbw-links-causebutton-url").text("causebutton.com");
+                $("#cbw-links-causebutton-url").text("causebutton.com");
 
                 // replace variables in the promotion text supplied by the server
                 var banner = ServeData.promotion.banner
@@ -921,24 +926,21 @@ function CBSale(amount,transaction_id) {
                 banner = banner.replace(/\sthe\sa\s/g, " A ");
 
                 // Populate the promotion text supplied by the server
-                $cb("#cbw-promo-text").text(banner);
+                $("#cbw-promo-text").text(banner);
 
                 // Populate the default cause name supplied by the server
-                $cb("#default-cause-control-text").text(ServeData.default_cause_name);
+                $("#default-cause-control-text").text(ServeData.default_cause_name);
 
                 // Populate the currently selected cause name supplied by the server
-                $cb("#cbw-currently-selected-cause-text").text(ServeData.cause_name);
+                $("#cbw-currently-selected-cause-text").text(ServeData.cause_name);
 
                 // Populate the active channels for current merchant/promotion
 
                 var channel_pattern = "<div class='cbw-channel-toggle' nidx='{1}' idx='{0}' id='cbw-{0}'><span class='fa-stack fa-lg cbw-channel-icon'><i class='fa fa-circle fa-stack-2x channel-icon channel-icon-off'></i><i class='fa fa-{2} fa-stack-1x fa-inverse'></i></span></div>";
 
-                var channel_div = $cb("#cbw-channels");
+                var channel_div = $("#cbw-channels");
 
                 var channels = ServeData.display_order;
-                console.log(channels);
-                console.log(channels[0][0]);
-                console.log(channels[0][1]);
 
                 for (var i in channels) {
                     // Note that this section depends on ServeData.display_order including a two element hash in the format 
@@ -955,11 +957,11 @@ function CBSale(amount,transaction_id) {
                 }            
 
                 // assign variable name to the fgcause selector
-                var fgcause_select = $cb("#cbw-fgcause-select");
+                var fgcause_select = $("#cbw-fgcause-select");
 
                 // check to see if the loaded cause from the serve api response for this serve is the same as the default cause for the associated promotion.  If it is, set the radio button value to default (so the default value is checked when the widget opens), then delete the seed values for the single and group cause selectors.
                 if (ServeData.default_cause_uid == ServeData.cause_uid) {
-                    $cb("[name=cause-type-radio]").val(["default"]);
+                    $("[name=cause-type-radio]").val(["default"]);
                     // Update the CurrentCauseRadioButtonVal with radio button value associated with this selection
                     CurrentCauseRadioButtonVal = "default";
                     ServeData.fg_uuid = "";
@@ -967,13 +969,13 @@ function CBSale(amount,transaction_id) {
                 } else {
                     // check to see if the selected cause is a single.  If it is, select that button:
                     if (ServeData.cause_type == "single") {
-                        $cb("[name=cause-type-radio]").val(["single"]);
+                        $("[name=cause-type-radio]").val(["single"]);
                         // Update the CurrentCauseRadioButtonVal with radio button value associated with this selection
                         CurrentCauseRadioButtonVal = "single";
                     } else {
                         // set the radio button to the default selection.  We'll check for matches
                         // with trending causes after we load them.
-                        $cb("[name=cause-type-radio]").val(["default"]);
+                        $("[name=cause-type-radio]").val(["default"]);
                         // Update the CurrentCauseRadioButtonVal with radio button value associated with this selection
                         CurrentCauseRadioButtonVal = "default";
                     }
@@ -1015,9 +1017,9 @@ function CBSale(amount,transaction_id) {
                         // the input tag has a value attribute preloaded that points to a preselected cause's id
                         // this function resolves that id attribute to an object that select2 can render
                         // using its formatResult renderer - that way the cause name is shown preselected
-                        var id=$cb(element).val();
+                        var id=$(element).val();
                         if (id!=="") {
-                            $cb.ajax({
+                            $.ajax({
                                 dataType: 'jsonp',
                                 contentType: 'application/json',
                                 jsonp: 'jsonpfunc',
@@ -1071,22 +1073,28 @@ function CBSale(amount,transaction_id) {
              * --------------------------------------------------------------------------------- */
             function LoadEventsData(session_id, serve_id) {
 
+console.log("f");
                 var method = "events";
 
+console.log("g");
                 var data_url = CBApiBase + method + "/" + CBMerchantID;
 
                 // pass these values back into the server on the AJAX call so that we can get proper values in return
+console.log("h");
                 var ajxDataObj = new Object();
 
+console.log("i");
                 if (session_id) {
                     ajxDataObj.session_id = session_id;
                 }
 
+console.log("j");
                 if (serve_id) {
                     ajxDataObj.serve_id = serve_id;
                 }
 
-                return $cb.ajax({
+console.log("k");
+                return $.ajax({
                     type: 'POST',
                     url: data_url,
                     data: ajxDataObj,
@@ -1095,6 +1103,7 @@ function CBSale(amount,transaction_id) {
                     success: function(data) {
                          EventData = data;
 
+console.log("l");
                         if (EventData.error) {
         
                             alert("API error: " + EventData.error);
@@ -1129,7 +1138,7 @@ function CBSale(amount,transaction_id) {
                 var trending_cause_pattern = "#cbw-trending-cause-{0}";
                 var trending_cause_text_pattern = "#trending-cause-{0}-text";
 
-                var events_div = $cb("#cbw-events");
+                var events_div = $("#cbw-events");
 
                 for (var i in EventData) {
 
@@ -1138,11 +1147,11 @@ function CBSale(amount,transaction_id) {
                     var trending_cause_text = trending_cause_text_pattern.replace(/\{0\}/g, i);
 
                     // next, insert the trending cause name in the appropriate element
-                    $cb(trending_cause_text).text(EventData[i].name);
+                    $(trending_cause_text).text(EventData[i].name);
 
                     //now, un-hide this radio button selection
-                    $cb(trending_cause).removeClass("widget-hide");
-                    $cb(trending_cause).addClass("widget-show");
+                    $(trending_cause).removeClass("widget-hide");
+                    $(trending_cause).addClass("widget-show");
 
                     // check to see if the selected cause matches this trending cause.  If it does,
                     // select this radio button.  Note that if the selected cause is not a "single", the 
@@ -1150,7 +1159,7 @@ function CBSale(amount,transaction_id) {
                     // while looping, the default selection will be checked when done.
 
                     if (EventData[i].uid == ServeData.cause_uid && ServeData.default_cause_uid != ServeData.cause_uid) {
-                        $cb("[name=cause-type-radio]").val([i]);
+                        $("[name=cause-type-radio]").val([i]);
                         // Update the CurrentCauseRadioButtonVal with radio button value associated with this selection
                         CurrentCauseRadioButtonVal = i;
                     }
@@ -1167,8 +1176,8 @@ function CBSale(amount,transaction_id) {
                 // replace it with the show class for the div that contains all the trending causes
                 if (EventData) {
 
-                    $cb("#cbw-cause-select-ctrl-grp").removeClass("widget-hide");
-                    $cb("#cbw-cause-select-ctrl-grp").addClass("widget-show");
+                    $("#cbw-cause-select-ctrl-grp").removeClass("widget-hide");
+                    $("#cbw-cause-select-ctrl-grp").addClass("widget-show");
                 }            
 
 
@@ -1206,7 +1215,7 @@ function CBSale(amount,transaction_id) {
                     ajxDataObj.session_id = cbwSessionCookie;
                 }
 
-                var reqObj = $cb.ajax({
+                var reqObj = $.ajax({
                     type: 'POST',
                     url: data_url,
                     data: ajxDataObj,
@@ -1248,21 +1257,21 @@ function CBSale(amount,transaction_id) {
                 // then check to see if there is an error on the email.  If there is an error,
                 // use the existing email value, otherwise use the new value.
                 // If the email checkbox is not checked, use null for the email value.
-                if ($cb("#cbw-email-checkbox").prop('checked')) {
-                    if ($cb("#cbw-email-ctl-grp").hasClass('error')) {
+                if ($("#cbw-email-checkbox").prop('checked')) {
+                    if ($("#cbw-email-ctl-grp").hasClass('error')) {
                         var email = ServeData.email;
                     } else {
-                        var email = $cb("#cbw-email-input").val();
+                        var email = $("#cbw-email-input").val();
                     }
                 } else {
                     var email = "";
                 }
 
-                //var event_uid = $cb("#cbw-cause-select").select2("val");
+                //var event_uid = $("#cbw-cause-select").select2("val");
                 var fg_uuid = "";
                 var event_uid = "";
                 var cause_type = "";
-                var selector_value = $cb("input[name='cause-type-radio']:checked").val();
+                var selector_value = $("input[name='cause-type-radio']:checked").val();
 
                 // Check to see which cause radio button is checked, then get
                 // the appropriate cause values:
@@ -1279,7 +1288,7 @@ function CBSale(amount,transaction_id) {
                         }
                         break;
                     case 'single':
-                        fg_uuid = $cb("#cbw-fgcause-select").select2("val");
+                        fg_uuid = $("#cbw-fgcause-select").select2("val");
                         cause_type = "single";
                         break;
                     case '0':
@@ -1314,14 +1323,14 @@ function CBSale(amount,transaction_id) {
                 // replace an existing email in database with null.
                 ajxDataObj.email = email;
 
-                // if ($cb("input[name='cause-type-radio']:checked").val()) {
-                //     ajxDataObj.cause_type = $cb("input[name='cause-type-radio']:checked").val();
+                // if ($("input[name='cause-type-radio']:checked").val()) {
+                //     ajxDataObj.cause_type = $("input[name='cause-type-radio']:checked").val();
                 // }
 
                 // check to see if there is an error on the fgcause selector.  If there is
                 // do not send any cause selection parameters back with this update request
 
-                if (!$cb("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                if (!$("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
 
                     if (event_uid) {
                         ajxDataObj.event_uid = event_uid;
@@ -1340,7 +1349,7 @@ function CBSale(amount,transaction_id) {
                     ajxDataObj.path = path;
                 }
 
-                var reqObj = $cb.ajax({
+                var reqObj = $.ajax({
                     type: 'POST',
                     url: data_url,
                     data: ajxDataObj,
@@ -1352,10 +1361,10 @@ function CBSale(amount,transaction_id) {
                         if (UpdateData.error) {
         
                             alert("Oops! Please refresh this page, then try again.");
-                            $cb("#cbw-widget").removeClass("widget-show");
-                            $cb("#cbw-widget").addClass("widget-hide");
-                            $cb("#cbw-cause-select").select2("close");
-                            $cb("#cbw-fgcause-select").select2("close");
+                            $("#cbw-widget").removeClass("widget-show");
+                            $("#cbw-widget").addClass("widget-hide");
+                            $("#cbw-cause-select").select2("close");
+                            $("#cbw-fgcause-select").select2("close");
 
                         }
                                             },
@@ -1385,7 +1394,7 @@ function CBSale(amount,transaction_id) {
 
                 // Update the CurrentCauseRadioButtonVal with radio button value associated with the
                 // current, newly changed selected cause
-                CurrentCauseRadioButtonVal = $cb("[name=cause-type-radio]:checked").val();
+                CurrentCauseRadioButtonVal = $("[name=cause-type-radio]:checked").val();
 
                 // Replace the links with new ones from server
                 for (var i in ServeData.paths) {
@@ -1394,7 +1403,7 @@ function CBSale(amount,transaction_id) {
                 };
 
                 // Populate the currently selected cause name supplied by the server
-                $cb("#cbw-currently-selected-cause-text").text(ServeData.cause_name);
+                $("#cbw-currently-selected-cause-text").text(ServeData.cause_name);
 
                 // Now Check to see if the purchase channel is active and if it is, get the path and use it to update
                 // the AWESM cookies and the AWESM.parentAwesm global variable
@@ -1462,14 +1471,14 @@ function CBSale(amount,transaction_id) {
                 // repositioning of the widget due to window resizing, otherwise it should be
                 // 'reposition' for all subsequent widget positioning.
 
-                var widget_width = $cb("#cbw-widget").width();
-                var widget_hgt = $cb("#cbw-widget").height();
+                var widget_width = $("#cbw-widget").width();
+                var widget_hgt = $("#cbw-widget").height();
 
-                var win_hgt = $cb(window).height();
-                var win_width = $cb(window).width();
+                var win_hgt = $(window).height();
+                var win_width = $(window).width();
 
-                var widget_left = $cb("#cbw-widget").position().left;
-                var widget_top = $cb("#cbw-widget").position().top;
+                var widget_left = $("#cbw-widget").position().left;
+                var widget_top = $("#cbw-widget").position().top;
                 var widget_bottom = widget_top + widget_hgt;
                 var widget_right = widget_left + widget_width;
 
@@ -1477,80 +1486,80 @@ function CBSale(amount,transaction_id) {
 
                     case 'top-left':
 
-                        $cb("#cbw-widget").css('top', '1px');
-                        $cb("#cbw-widget").css('left', '1px');
-                        $cb("#cbw-widget").css('bottom', '');
-                        $cb("#cbw-widget").css('right', '');
+                        $("#cbw-widget").css('top', '1px');
+                        $("#cbw-widget").css('left', '1px');
+                        $("#cbw-widget").css('bottom', '');
+                        $("#cbw-widget").css('right', '');
                         break;
 
                     case 'top-center':
 
-                        $cb("#cbw-widget").css('top', '1px');
-                        $cb("#cbw-widget").css('left', ((win_width-widget_width)/2));
-                        $cb("#cbw-widget").css('bottom', '');
-                        $cb("#cbw-widget").css('right', '');
+                        $("#cbw-widget").css('top', '1px');
+                        $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                        $("#cbw-widget").css('bottom', '');
+                        $("#cbw-widget").css('right', '');
                         break;
 
                     case 'top-right':
 
-                        $cb("#cbw-widget").css('top', '1px');
-                        $cb("#cbw-widget").css('right', '1px');
-                        $cb("#cbw-widget").css('bottom', '');
-                        $cb("#cbw-widget").css('left', '');
+                        $("#cbw-widget").css('top', '1px');
+                        $("#cbw-widget").css('right', '1px');
+                        $("#cbw-widget").css('bottom', '');
+                        $("#cbw-widget").css('left', '');
                         break;
 
                     case 'left-center':
 
                         if (type == "initial") {
-                            $cb("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                            $cb("#cbw-widget").css('left', '1px');
-                            $cb("#cbw-widget").css('bottom', '');
-                            $cb("#cbw-widget").css('right', '');
+                            $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                            $("#cbw-widget").css('left', '1px');
+                            $("#cbw-widget").css('bottom', '');
+                            $("#cbw-widget").css('right', '');
                         }
                         break;
 
                     case 'center':
 
                         if (type == "initial") {
-                            $cb("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                            $cb("#cbw-widget").css('left', ((win_width-widget_width)/2));
-                            $cb("#cbw-widget").css('bottom', '');
-                            $cb("#cbw-widget").css('right', '');
+                            $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                            $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                            $("#cbw-widget").css('bottom', '');
+                            $("#cbw-widget").css('right', '');
                         }
                         break;
 
                     case 'right-center':
 
                         if (type == "initial") {
-                            $cb("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                            $cb("#cbw-widget").css('right', '1px');
-                            $cb("#cbw-widget").css('bottom', '');
-                            $cb("#cbw-widget").css('left', '');
+                            $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                            $("#cbw-widget").css('right', '1px');
+                            $("#cbw-widget").css('bottom', '');
+                            $("#cbw-widget").css('left', '');
                         }
                         break;
 
                     case 'bottom-left':
 
-                        $cb("#cbw-widget").css('bottom', '1px');
-                        $cb("#cbw-widget").css('left', '1px');
-                        $cb("#cbw-widget").css('top', '');
-                        $cb("#cbw-widget").css('right', '');
+                        $("#cbw-widget").css('bottom', '1px');
+                        $("#cbw-widget").css('left', '1px');
+                        $("#cbw-widget").css('top', '');
+                        $("#cbw-widget").css('right', '');
                         break;
 
                     case 'bottom-center':
 
-                        $cb("#cbw-widget").css('bottom', '1px');
-                        $cb("#cbw-widget").css('left', ((win_width-widget_width)/2));
-                        $cb("#cbw-widget").css('top', '');
-                        $cb("#cbw-widget").css('right', '');
+                        $("#cbw-widget").css('bottom', '1px');
+                        $("#cbw-widget").css('left', ((win_width-widget_width)/2));
+                        $("#cbw-widget").css('top', '');
+                        $("#cbw-widget").css('right', '');
                         break;
 
                     case 'bottom-right':
 
-                        $cb("#cbw-widget").css('bottom', '1px');
-                        $cb("#cbw-widget").css('right', '1px');
-                        $cb("#cbw-widget").css('top', '');
-                        $cb("#cbw-widget").css('left', '');
+                        $("#cbw-widget").css('bottom', '1px');
+                        $("#cbw-widget").css('right', '1px');
+                        $("#cbw-widget").css('top', '');
+                        $("#cbw-widget").css('left', '');
                         break;
 
                     default:
@@ -1559,10 +1568,10 @@ function CBSale(amount,transaction_id) {
                         // an invalid widget position value from the serve data.
 
                         if (type == "initial") {
-                            $cb("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                            $cb("#cbw-widget").css('right', '1px');   
-                            $cb("#cbw-widget").css('bottom', '');
-                            $cb("#cbw-widget").css('left', '');
+                            $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
+                            $("#cbw-widget").css('right', '1px');   
+                            $("#cbw-widget").css('bottom', '');
+                            $("#cbw-widget").css('left', '');
                         }
                 }
 
@@ -1570,13 +1579,13 @@ function CBSale(amount,transaction_id) {
                 // even when the window shrinks or the widget expands in such a way that it
                 // would become hidden. This way the widget can be closed by the user.
                 if (win_width < widget_width) {
-                    $cb("#cbw-widget").css('right', '1px');
-                    $cb("#cbw-widget").css('left', '');
+                    $("#cbw-widget").css('right', '1px');
+                    $("#cbw-widget").css('left', '');
                 }
 
                 if (win_hgt < widget_hgt) {
-                    $cb("#cbw-widget").css('top', '1px');
-                    $cb("#cbw-widget").css('bottom', '');
+                    $("#cbw-widget").css('top', '1px');
+                    $("#cbw-widget").css('bottom', '');
                 }
             }
 
@@ -1596,19 +1605,19 @@ function CBSale(amount,transaction_id) {
                     case 'right-center':
                     case 'bottom-right':
 
-                        $cb("#cbw-cause-selector").css('top', '-30px');
-                        $cb("#cbw-cause-selector").css('left', '-20px');
-                        $cb("#cbw-cause-selector").css('bottom', '');
-                        $cb("#cbw-cause-selector").css('right', '');
+                        $("#cbw-cause-selector").css('top', '-30px');
+                        $("#cbw-cause-selector").css('left', '-20px');
+                        $("#cbw-cause-selector").css('bottom', '');
+                        $("#cbw-cause-selector").css('right', '');
                         break;
 
                     default:
                         // set to be offset to the right and down for all other widget positions.
 
-                        $cb("#cbw-cause-selector").css('top', '-30px');
-                        $cb("#cbw-cause-selector").css('left', '20px');
-                        $cb("#cbw-cause-selector").css('bottom', '');
-                        $cb("#cbw-cause-selector").css('right', '');
+                        $("#cbw-cause-selector").css('top', '-30px');
+                        $("#cbw-cause-selector").css('left', '20px');
+                        $("#cbw-cause-selector").css('bottom', '');
+                        $("#cbw-cause-selector").css('right', '');
                         break;
                 }
 
@@ -1631,8 +1640,8 @@ function CBSale(amount,transaction_id) {
                 SelectedChannel.removeClass("channel-selected");
 
                 // Hide the share message editor for this channel
-                $cb("#cbw-share-msg-ctrl-grp").removeClass("widget-show");
-                $cb("#cbw-share-msg-ctrl-grp").addClass("widget-hide");
+                $("#cbw-share-msg-ctrl-grp").removeClass("widget-show");
+                $("#cbw-share-msg-ctrl-grp").addClass("widget-hide");
 
                 // Reposition the widget to account for its new size
                 PositionWidget('reposition');
@@ -1663,7 +1672,7 @@ function CBSale(amount,transaction_id) {
 
                 // } else {
 
-                //     $cb("#cbw-share-msg-ctrl-grp").show();
+                //     $("#cbw-share-msg-ctrl-grp").show();
 
                 //     PositionWidget('reposition');
                     
@@ -1681,13 +1690,13 @@ function CBSale(amount,transaction_id) {
 
                 // following rem'd out to disable user field editing:
 
-                // $cb("#cbw-share-msg").val("");
+                // $("#cbw-share-msg").val("");
 
                 // if (ServeData.channels[chidx].user_fields) {
 
                 //     var user_fields = ServeData.channels[chidx].user_fields;
 
-                //     var elem = $cb("#" + user_fields.elem_id);
+                //     var elem = $("#" + user_fields.elem_id);
                 //     var defval = user_fields.default; // default is either the default value or a reference to another field in JSON to take it from
                 //     var deftype = user_fields.def_type; // reference = take defval from another field, o/w take whatever is present in user_fields.defaults
 
@@ -1770,13 +1779,13 @@ function CBSale(amount,transaction_id) {
                 // that should be used for the next share, not this one.
                 var channel_path = GetChannelPath(ServeData.paths[chname]);
                 var cause_name;
-                var selector_value = $cb("input[name='cause-type-radio']:checked").val()
+                var selector_value = $("input[name='cause-type-radio']:checked").val()
                 switch (selector_value) {
                     case 'default':
                         cause_name = ServeData.default_cause_name;
                         break;
                     case 'single':
-                        cause_name = $cb("#cbw-fgcause-select").select2('data').organization_name;
+                        cause_name = $("#cbw-fgcause-select").select2('data').organization_name;
                         break;
                     case '0':
                         cause_name = EventData[selector_value].name;
@@ -1790,7 +1799,7 @@ function CBSale(amount,transaction_id) {
                 };
 
                 // following rem'd to disable user field editing:
-                // var share_msg = $cb("#cbw-share-msg").val() ? $cb("#cbw-share-msg").val() : sel_channel.msg;
+                // var share_msg = $("#cbw-share-msg").val() ? $("#cbw-share-msg").val() : sel_channel.msg;
                 var share_msg = sel_channel.msg;
                 // now replace the supporter_cause placeholder with the currently 
                 // selected event or cause name.
@@ -1889,7 +1898,7 @@ function CBSale(amount,transaction_id) {
              * -------------------------------------------------------- */
             function BlinkErrorMessage (selector) {
 
-                $cb(selector)
+                $(selector)
                         .fadeOut(200)
                         .fadeIn(200)
                         .fadeOut(200)
@@ -1906,18 +1915,18 @@ function CBSale(amount,transaction_id) {
              * -------------------------------------------------------- */
             function CheckEmailValid () {
 
-                if (!EmailValid($cb('#cbw-email-input').val())) {
-                    $cb("#cbw-email-ctl-grp").addClass('error');
-                    // $cb("#cbw-email-input-error-message").show();
-                    $cb("#cbw-email-input-error-message").removeClass("widget-hide");
-                    $cb("#cbw-email-input-error-message").addClass("widget-show");
+                if (!EmailValid($('#cbw-email-input').val())) {
+                    $("#cbw-email-ctl-grp").addClass('error');
+                    // $("#cbw-email-input-error-message").show();
+                    $("#cbw-email-input-error-message").removeClass("widget-hide");
+                    $("#cbw-email-input-error-message").addClass("widget-show");
                     //BlinkErrorMessage("#cbw-email-input-error-message");
                 } else {
-                    $cb("#cbw-email-ctl-grp").removeClass('error');
-                    // $cb("#cbw-email-input-error-message").hide();
-                    $cb("#cbw-email-input-error-message").removeClass("widget-show");
-                    $cb("#cbw-email-input-error-message").addClass("widget-hide");
-                    //$cb("#cbw-user-name").replaceWith(email);
+                    $("#cbw-email-ctl-grp").removeClass('error');
+                    // $("#cbw-email-input-error-message").hide();
+                    $("#cbw-email-input-error-message").removeClass("widget-show");
+                    $("#cbw-email-input-error-message").addClass("widget-hide");
+                    //$("#cbw-user-name").replaceWith(email);
                 }
 
                 PositionWidget('reposition');
@@ -1938,7 +1947,7 @@ function CBSale(amount,transaction_id) {
              * serve with the new cause (if one exists).
              * -------------------------------------------------------- */
             function CloseCauseSelector () {
-                $cb("#cbw-cause-selector").fadeOut();
+                $("#cbw-cause-selector").fadeOut();
                 // Check to see if the email is valid.  If it is not, this will
                 // set the error condition, which is important to prevent
                 // the email from trying to update when the cause updates.
@@ -1950,8 +1959,8 @@ function CBSale(amount,transaction_id) {
                 // need to reset the radio button value to one associated
                 // with the currently selected cause, which is stored in the
                 // global variable CurrentCauseRadioButtonVal
-                if (!$cb("#cbw-fgcause-select").select2("val") && $cb("input[name='cause-type-radio']:checked").val() == "single") {
-                    $cb("[name=cause-type-radio]").val([CurrentCauseRadioButtonVal]);
+                if (!$("#cbw-fgcause-select").select2("val") && $("input[name='cause-type-radio']:checked").val() == "single") {
+                    $("[name=cause-type-radio]").val([CurrentCauseRadioButtonVal]);
                 }
 
                 // finally, update the serve.  If there is an error on the email
@@ -1979,13 +1988,13 @@ function CBSale(amount,transaction_id) {
              * Loaded = true, which happens when the event, serve, and content
              * data is done loading.
              * -------------------------------------------------------- */
-            $cb(document).on('click', '.cbw-main-btn', function(event) {
+            $(document).on('click', '.cbw-main-btn', function(event) {
 
                 if (!Loaded) {
                     return;
                 }
 
-                var button_position = ValidatePosition($cb(this).attr('cbw-position'));
+                var button_position = ValidatePosition($(this).attr('cbw-position'));
 
                 if (button_position != '') {
                     WidgetPosition = button_position;
@@ -1995,7 +2004,7 @@ function CBSale(amount,transaction_id) {
                     WidgetPosition = ServeData.promotion.widget_position;
                 }
 
-                var button_target = ValidateTarget($cb(this).attr('cbw-url-target'));
+                var button_target = ValidateTarget($(this).attr('cbw-url-target'));
 
                 if (button_target != '') {
                     URLTarget = button_target;
@@ -2005,11 +2014,11 @@ function CBSale(amount,transaction_id) {
                     URLTarget = '';
                 }
 
-                if ($cb("#cbw-widget").css('display') == "none") {
+                if ($("#cbw-widget").css('display') == "none") {
                     RegisterWidgetView();
-                    //$cb("#cbw-widget").toggle();
-                    $cb("#cbw-widget").removeClass("widget-hide");
-                    $cb("#cbw-widget").addClass("widget-show");
+                    //$("#cbw-widget").toggle();
+                    $("#cbw-widget").removeClass("widget-hide");
+                    $("#cbw-widget").addClass("widget-show");
                 }
 
                 PositionWidget('initial');
@@ -2022,20 +2031,20 @@ function CBSale(amount,transaction_id) {
              * --------------------------------------------------------
              * description here
              * -------------------------------------------------------- */
-            $cb(document).on('mouseenter', '.cbw-channel-toggle', function() {
+            $(document).on('mouseenter', '.cbw-channel-toggle', function() {
 
-                if (!$cb(this).hasClass("channel-selected")) {
-                    $cb(this).find(".channel-icon").removeClass("channel-icon-off");
-                    $cb(this).find(".channel-icon").addClass("channel-icon-hover");
+                if (!$(this).hasClass("channel-selected")) {
+                    $(this).find(".channel-icon").removeClass("channel-icon-off");
+                    $(this).find(".channel-icon").addClass("channel-icon-hover");
                 }
 
             });
 
-            $cb(document).on('mouseleave', '.cbw-channel-toggle', function() {
+            $(document).on('mouseleave', '.cbw-channel-toggle', function() {
 
-                if (!$cb(this).hasClass("channel-selected")) {
-                    $cb(this).find(".channel-icon").removeClass("channel-icon-hover");
-                    $cb(this).find(".channel-icon").addClass("channel-icon-off");
+                if (!$(this).hasClass("channel-selected")) {
+                    $(this).find(".channel-icon").removeClass("channel-icon-hover");
+                    $(this).find(".channel-icon").addClass("channel-icon-off");
                 }
             });
 
@@ -2049,22 +2058,22 @@ function CBSale(amount,transaction_id) {
              * At the moment, an email value will be use in ServeUpdate
              * whether or not the email field is visible.
              * -------------------------------------------------------- */
-            $cb(document).on('change', '#cbw-email-checkbox', function() {
+            $(document).on('change', '#cbw-email-checkbox', function() {
 
-                if ($cb("#cbw-email-ctl-grp").hasClass('error')) {
+                if ($("#cbw-email-ctl-grp").hasClass('error')) {
 
-                    $cb("#cbw-email-input").val('');
+                    $("#cbw-email-input").val('');
 
-                    $cb("#cbw-email-ctl-grp").removeClass('error');
+                    $("#cbw-email-ctl-grp").removeClass('error');
 
                 }
 
-                if ($cb("#cbw-email-ctl-grp").css('display') == "none") {
-                    $cb("#cbw-email-ctl-grp").removeClass("widget-hide");
-                    $cb("#cbw-email-ctl-grp").addClass("widget-show");
+                if ($("#cbw-email-ctl-grp").css('display') == "none") {
+                    $("#cbw-email-ctl-grp").removeClass("widget-hide");
+                    $("#cbw-email-ctl-grp").addClass("widget-show");
                 } else {
-                    $cb("#cbw-email-ctl-grp").removeClass("widget-show");
-                    $cb("#cbw-email-ctl-grp").addClass("widget-hide");
+                    $("#cbw-email-ctl-grp").removeClass("widget-show");
+                    $("#cbw-email-ctl-grp").addClass("widget-hide");
                 }
             });        
 
@@ -2074,20 +2083,20 @@ function CBSale(amount,transaction_id) {
              * and the text need to be in the same parent class.  Then it
              * fires the checkbox change method to trigger the event above.
              * -------------------------------------------------------- */
-            $cb(document).on("click", "#cbw-email-checkbox-label", function() {
-                var checked = $cb('#cbw-email-checkbox').prop("checked");
+            $(document).on("click", "#cbw-email-checkbox-label", function() {
+                var checked = $('#cbw-email-checkbox').prop("checked");
                 if (checked) {
-                    $cb('#cbw-email-checkbox').prop("checked", false);
+                    $('#cbw-email-checkbox').prop("checked", false);
                 } else {
-                    $cb('#cbw-email-checkbox').prop("checked", true);
+                    $('#cbw-email-checkbox').prop("checked", true);
                 }
-                $cb('#cbw-email-checkbox').change();
+                $('#cbw-email-checkbox').change();
             });
  
 
-            $cb(window).resize(function() {
+            $(window).resize(function() {
 
-                var shown = $cb("#cbw-widget").css('display');
+                var shown = $("#cbw-widget").css('display');
 
                 if (shown != "none") {
 
@@ -2095,36 +2104,36 @@ function CBSale(amount,transaction_id) {
                 }
             });
 
-            $cb(document).on('click', '.cbw-exit-link', function() {
+            $(document).on('click', '.cbw-exit-link', function() {
 
                 CloseChannel();
 
             });
 
-            $cb(document).on('click', '.cbw-post-link', function() {
+            $(document).on('click', '.cbw-post-link', function() {
 
                 PostToChannel();
 
             });
 
-            $cb(document).on('click', '#cbw-links-info-toggle', function() {
+            $(document).on('click', '#cbw-links-info-toggle', function() {
 
-                var display = $cb("#cbw-links-info").css('display');
+                var display = $("#cbw-links-info").css('display');
 
 
-                //$cb("#cbw-links-info").toggle();
+                //$("#cbw-links-info").toggle();
 
                 if (display == "none") {
 
-                    $cb("#cbw-links-info").removeClass("widget-hide");
-                    $cb("#cbw-links-info").addClass("widget-show");
-                    $cb("#cbw-links-info-toggle").html("less info"); 
+                    $("#cbw-links-info").removeClass("widget-hide");
+                    $("#cbw-links-info").addClass("widget-show");
+                    $("#cbw-links-info-toggle").html("less info"); 
 
                 } else {
 
-                    $cb("#cbw-links-info").removeClass("widget-show");
-                    $cb("#cbw-links-info").addClass("widget-hide");
-                    $cb("#cbw-links-info-toggle").html("more info");
+                    $("#cbw-links-info").removeClass("widget-show");
+                    $("#cbw-links-info").addClass("widget-hide");
+                    $("#cbw-links-info-toggle").html("more info");
 
                 }
 
@@ -2143,45 +2152,45 @@ function CBSale(amount,transaction_id) {
              * selector as it should be impossible to get to the 
              * main view with an fgcause error.
              * -------------------------------------------------------- */
-            $cb(document).on('click', '.cbw-channel-toggle', function() {
+            $(document).on('click', '.cbw-channel-toggle', function() {
 
-                $cb(".cbw #cbw-widget #cbw-channels-grp").removeClass("widget-show");
-                $cb(".cbw #cbw-widget #cbw-channels-grp").addClass("widget-hide");
-                $cb(".cbw #cbw-widget #cbw-share-again").removeClass("widget-hide");
-                $cb(".cbw #cbw-widget #cbw-share-again").addClass("widget-show");
-                $cb(".cbw #cbw-widget .email").removeClass("widget-hide");
-                $cb(".cbw #cbw-widget .email").addClass("widget-show");
+                $(".cbw #cbw-widget #cbw-channels-grp").removeClass("widget-show");
+                $(".cbw #cbw-widget #cbw-channels-grp").addClass("widget-hide");
+                $(".cbw #cbw-widget #cbw-share-again").removeClass("widget-hide");
+                $(".cbw #cbw-widget #cbw-share-again").addClass("widget-show");
+                $(".cbw #cbw-widget .email").removeClass("widget-hide");
+                $(".cbw #cbw-widget .email").addClass("widget-show");
 
 
                 // var was_an_error1 = false;
                 // var was_an_error2 = false;
                 var was_an_error3 = false;
 
-                // if ($cb("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                // if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
                 //     was_an_error1 = true;
                 // }
-                // if ($cb("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                // if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
                 //     was_an_error2 = true;
                 // }
-                if ($cb("#cbw-email-ctl-grp").hasClass('error')) {
+                if ($("#cbw-email-ctl-grp").hasClass('error')) {
                     was_an_error3 = true;
                 }
 
                 CheckEmailValid();
 
-                // if ($cb("#cbw-cause-select-ctrl-grp").hasClass('error')) {
+                // if ($("#cbw-cause-select-ctrl-grp").hasClass('error')) {
                 //     if (was_an_error1) {
                 //         BlinkErrorMessage("#cbw-cause-select-ctrl-grp");
                 //     }
                 //     return
                 // }
-                // if ($cb("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
+                // if ($("#cbw-fgcause-select-ctrl-grp").hasClass('error')) {
                 //     if (was_an_error2) {
                 //         BlinkErrorMessage("#cbw-fgcause-select-ctrl-grp");
                 //     }
                 //     return
                 // }
-                if ($cb("#cbw-email-ctl-grp").hasClass('error')) {
+                if ($("#cbw-email-ctl-grp").hasClass('error')) {
                     if (was_an_error3) {
                         BlinkErrorMessage("#cbw-email-ctl-grp");
                     }
@@ -2190,7 +2199,7 @@ function CBSale(amount,transaction_id) {
 
                 if (SelectedChannel) {
 
-                    if ($cb(this).hasClass("channel-selected")) {
+                    if ($(this).hasClass("channel-selected")) {
 
                         // following rem'd as part of disabling user field editing
                         // the share_msg box never opens, there's no real reason
@@ -2213,7 +2222,7 @@ function CBSale(amount,transaction_id) {
 
                         CloseChannel();
 
-                        SelectedChannel = $cb(this);
+                        SelectedChannel = $(this);
 
                         // this doesn't do anything anymore
                         // SelectChannel();
@@ -2224,7 +2233,7 @@ function CBSale(amount,transaction_id) {
 
                 } else {
 
-                    SelectedChannel = $cb(this);
+                    SelectedChannel = $(this);
 
                     // this doesn't do anything anymore
                     // SelectChannel();
@@ -2249,17 +2258,17 @@ function CBSale(amount,transaction_id) {
              * an error condition exists and will clear the error if
              * appropriate.
              * -------------------------------------------------------- */
-             $cb(document).on('change', '#cbw-fgcause-select', function(e) {
+             $(document).on('change', '#cbw-fgcause-select', function(e) {
 
-                 $cb("#cbw-cause-type-single").prop('checked', true);
+                 $("#cbw-cause-type-single").prop('checked', true);
 
             //     // following rem'd to disable user field editing:
-            //     // var share_msg = $cb("#cbw-share-msg").val();
+            //     // var share_msg = $("#cbw-share-msg").val();
             //     // var added = e.added.text;
             //     // var removed = e.removed.text;
             //     // if (share_msg) {
             //     //     share_msg = share_msg.replace(removed, added);
-            //     //     $cb("#cbw-share-msg").val(share_msg);
+            //     //     $("#cbw-share-msg").val(share_msg);
             //     // } 
             });
 
@@ -2270,7 +2279,7 @@ function CBSale(amount,transaction_id) {
              * post button in the display area for those fields, 
              * this handler simply calls the PostToChannel function.
              * -------------------------------------------------------- */
-            $cb(document).on('click', '#cbw-post-button', function() {
+            $(document).on('click', '#cbw-post-button', function() {
                 PostToChannel();
             });
 
@@ -2286,14 +2295,14 @@ function CBSale(amount,transaction_id) {
              * it will be hidden, and if the fgcause combo box is open,
              * it will be closed.
              * -------------------------------------------------------- */
-            $cb(document).on('click', '.cbw #cbw-widget #cbw-heading-close, .cbw #cbw-widget #cbw-share-again-done-button', function() {
+            $(document).on('click', '.cbw #cbw-widget #cbw-heading-close, .cbw #cbw-widget #cbw-share-again-done-button', function() {
 
                 CheckEmailValid();
                 // next, hide the widget and close any open select2 selectors
-                // $cb("#cbw-widget").hide();
-                $cb("#cbw-widget").removeClass("widget-show");
-                $cb("#cbw-widget").addClass("widget-hide");
-                $cb("#cbw-fgcause-select").select2("close");
+                // $("#cbw-widget").hide();
+                $("#cbw-widget").removeClass("widget-show");
+                $("#cbw-widget").addClass("widget-hide");
+                $("#cbw-fgcause-select").select2("close");
 
                 // Finally, call CloseCallSelector().  This will close the
                 // Cause Selector dialog if it is open, fix any fg cause
@@ -2307,14 +2316,14 @@ function CBSale(amount,transaction_id) {
              * This simply hides the share again buttons, reveals the
              * channel icons, and hides the email input box.
              * -------------------------------------------------------- */
-            $cb(document).on('click', '.cbw #cbw-widget #cbw-share-again-button', function() {
+            $(document).on('click', '.cbw #cbw-widget #cbw-share-again-button', function() {
 
-                $cb(".cbw #cbw-widget #cbw-channels-grp").removeClass("widget-hide");
-                $cb(".cbw #cbw-widget #cbw-channels-grp").addClass("widget-show");
-                $cb(".cbw #cbw-widget #cbw-share-again").removeClass("widget-show");
-                $cb(".cbw #cbw-widget #cbw-share-again").addClass("widget-hide");
-                $cb(".cbw #cbw-widget .email").removeClass("widget-show");
-                $cb(".cbw #cbw-widget .email").addClass("widget-hide");
+                $(".cbw #cbw-widget #cbw-channels-grp").removeClass("widget-hide");
+                $(".cbw #cbw-widget #cbw-channels-grp").addClass("widget-show");
+                $(".cbw #cbw-widget #cbw-share-again").removeClass("widget-show");
+                $(".cbw #cbw-widget #cbw-share-again").addClass("widget-hide");
+                $(".cbw #cbw-widget .email").removeClass("widget-show");
+                $(".cbw #cbw-widget .email").addClass("widget-hide");
             });
 
             /* --------------------------------------------------------
@@ -2322,10 +2331,10 @@ function CBSale(amount,transaction_id) {
              * --------------------------------------------------------
              * These handlers check for cause and email input errors. 
              * -------------------------------------------------------- */
-            $cb(document).on('click', '#cbw-email-checkbox-ctl-grp', function() {
+            $(document).on('click', '#cbw-email-checkbox-ctl-grp', function() {
                 CheckEmailValid();
             });
-            $cb(document).on('click', '#cbw-email-ctl-grp', function() {
+            $(document).on('click', '#cbw-email-ctl-grp', function() {
                 CheckEmailValid();
             });
 
@@ -2336,8 +2345,8 @@ function CBSale(amount,transaction_id) {
              * text associated with that button is checked.  Both the radio button
              * and the text need to be in the same parent class.
              * -------------------------------------------------------- */
-            $cb(document).on("click", ".cbw-cause-radio-button-box", function() {
-                $cb(this).find('.cause-select-radio').prop("checked", true);
+            $(document).on("click", ".cbw-cause-radio-button-box", function() {
+                $(this).find('.cause-select-radio').prop("checked", true);
             });
 
             /* --------------------------------------------------------
@@ -2345,11 +2354,11 @@ function CBSale(amount,transaction_id) {
              * --------------------------------------------------------
              * This opens the cause selector dialog when the change cause link is clicked.
              * -------------------------------------------------------- */
-            $cb(document).on('click', '.cbw #cbw-change-cause-label, .cbw #cbw-currently-selected-cause-radio-button-box', function(event) {
+            $(document).on('click', '.cbw #cbw-change-cause-label, .cbw #cbw-currently-selected-cause-radio-button-box', function(event) {
 
                 // first, set the proper position for the cause selector dialog
                 PositionCauseSelector();
-                $cb("#cbw-cause-selector").fadeIn();
+                $("#cbw-cause-selector").fadeIn();
 
                 // important to stop propogation of this event, otherwise it will
                 // trigger the listener below that closes the cause selector.
@@ -2367,7 +2376,7 @@ function CBSale(amount,transaction_id) {
              * cause will be returned and written into the currently selected
              * cause value.
              * -------------------------------------------------------- */
-            $cb(document).on('click', '.cbw #cbw-cause-selector-close', function(event) {
+            $(document).on('click', '.cbw #cbw-cause-selector-close', function(event) {
                 CloseCauseSelector();
             });
 
@@ -2384,17 +2393,17 @@ function CBSale(amount,transaction_id) {
              * cause will be returned and written into the currently selected
              * cause value.
              * -------------------------------------------------------- */
-            $cb(document).click(function(event) { 
-                if(!$cb(event.target).closest('#cbw-cause-selector').length) {
-                    if($cb('#cbw-cause-selector').is(":visible")) {
+            $(document).click(function(event) { 
+                if(!$(event.target).closest('#cbw-cause-selector').length) {
+                    if($('#cbw-cause-selector').is(":visible")) {
                         CloseCauseSelector();
                     }
                 }        
             });
 
-            $cb(document).on('click.modal', 'a[rel="modal:close"], .cbw-close-modal', function(event) {
-                $cb("#cbw-modal-blocker-div").remove();
-                $cb("#cbw-modal-1").hide();
+            $(document).on('click.modal', 'a[rel="modal:close"], .cbw-close-modal', function(event) {
+                $("#cbw-modal-blocker-div").remove();
+                $("#cbw-modal-1").hide();
 
             });
 
