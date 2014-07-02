@@ -944,7 +944,7 @@ console.log("e");
                 console.log(channels.length);
 
                 //for (var i in channels) {
-                for (var i = 0, i < channels.length; i++) {
+                for (var i = 0; i < channels.length; i++) {
                     console.log(i);
                     // Note that this section depends on ServeData.display_order including a two element hash in the format 
                     // ["Channel name","Font Awesome Icon Name"] for each channel that is returned.
