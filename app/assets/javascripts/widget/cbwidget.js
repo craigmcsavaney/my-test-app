@@ -466,94 +466,28 @@ function CBSale(amount,transaction_id) {
             // we need to build the widget and append it to the page body.  If there aren't,
             // we only need to retrieve the serve data. 
 
-            // if ($(".cbw-main-btn, .cbw-btn").length == 0) {
+            if ($(".cbw-main-btn, .cbw-btn").length == 0) {
 
-            //     // This is the case where the widget does not need to get built.
-            //     // When the loading of the serve data is complete, just need to
-            //     // write cookies and load the purchase path variable.
-            //     $.when(LoadServeData(ReferringPath)).done(function(a) {
+                // This is the case where the widget does not need to get built.
+                // When the loading of the serve data is complete, just need to
+                // write cookies and load the purchase path variable.
+                $.when(LoadServeData(ReferringPath)).done(function(a) {
 
-            //         $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
-            //             ReportConversion();
-            //         });
+                    $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
+                        ReportConversion();
+                    });
 
-            //     });
-
-            // } else {
-
-            //     // Get the widget html template and load the serve data.  When both 
-            //     // of these are complete, write cookies, load the purchase path variable, 
-            //     // merge the serve data into the widget html, and merge the button html.
-            //     $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
-
-            //         //WriteCookies();
-            //         //PurchasePathUpdate(ServeData.paths["purchase"]);
-            //         MergeServeData(div);
-            //         MergeButtons();
-
-            //         // When the event data is finished loading, merge the event data into the widget.
-            //         $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
-
-            //             MergeEventsData();
-
-            //         });
-
-            //         // If the cause selector for this promotion is false, hide the currently selected 
-            //         // cause display block in the widget.  Otherwise, load the cause data.
-            //         if (!ServeData.promotion.cause_selector) {
-
-            //             $(".cbw-currently-selected-cause").removeClass("widget-show");
-            //             $(".cbw-currently-selected-cause").addClass("widget-hide");
-                    
-            //         } 
-
-            //         // Write the session, serve, and path cookies.  Then check for and report conversions
-            //         $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
-            //             ReportConversion();
-            //         });
-
-            //         Loaded = true;
-
-            //         ShowModal();
-
-            //         ShowAutoButton();
-
-            //     });
-
-            // }
-
-
-            // Get the widget html template and load the serve data.  When both 
-            // of these are complete, write cookies, load the purchase path variable, 
-            // and report a conversion if one occurred.  Then check to see if it is
-            // necessary to finish building the widget (because a button will be
-            // shown on this page.)
-            //
-            // Note that the widget html is possibly being loaded unnecessarily, but
-            // it loads synchronously with the serve data and loads faster than the
-            // serve data, so it's probably OK for the moment.
-            $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
-
-                $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
-                    ReportConversion();
                 });
 
-                // check to see if the AutoButton variable is blank.  This will be the case
-                // when no valid value has been passed in with the widget load script url.  When
-                // this is the case, get the auto_button value from the api serve response and use it.
-                // Otherwise, use the page value from the load script url.
-                if (AutoButton == "") {
-                    AutoButton = ServeData.merchant.auto_button;
-                }
+            } else {
 
-                // Now check to see if there are any elements on the page that include
-                // either the .cbw-btn class or the .cbw-main-btn class (remember that this
-                // script injects a .cbw-main-btn class when it adds the button html to elements
-                // containing the .cbw-btn class, but this happens later in the execution of the
-                // script so we have to look for .cbw-btn classes here.) Also check to see if the Auto Button should be displayed.  If so, then
-                // we need to build the widget and append it to the page body.  If there aren't, we're done.
-                if ($(".cbw-main-btn, .cbw-btn").length == 0 || AutoButton == "left" || AutoButton == "right") {
+                // Get the widget html template and load the serve data.  When both 
+                // of these are complete, write cookies, load the purchase path variable, 
+                // merge the serve data into the widget html, and merge the button html.
+                $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
 
+                    //WriteCookies();
+                    //PurchasePathUpdate(ServeData.paths["purchase"]);
                     MergeServeData(div);
                     MergeButtons();
 
@@ -573,15 +507,81 @@ function CBSale(amount,transaction_id) {
                     
                     } 
 
+                    // Write the session, serve, and path cookies.  Then check for and report conversions
+                    $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
+                        ReportConversion();
+                    });
+
                     Loaded = true;
 
                     ShowModal();
 
                     ShowAutoButton();
 
-                }
+                });
 
-            });
+            }
+
+
+            // // Get the widget html template and load the serve data.  When both 
+            // // of these are complete, write cookies, load the purchase path variable, 
+            // // and report a conversion if one occurred.  Then check to see if it is
+            // // necessary to finish building the widget (because a button will be
+            // // shown on this page.)
+            // //
+            // // Note that the widget html is possibly being loaded unnecessarily, but
+            // // it loads synchronously with the serve data and loads faster than the
+            // // serve data, so it's probably OK for the moment.
+            // $.when(GetWidgetHTML(), LoadServeData(ReferringPath)).done(function(a,b) {
+
+            //     $.when(WriteCookies(),PurchasePathUpdate(ServeData.paths["purchase"])).done(function(a,b) {
+            //         ReportConversion();
+            //     });
+
+            //     // check to see if the AutoButton variable is blank.  This will be the case
+            //     // when no valid value has been passed in with the widget load script url.  When
+            //     // this is the case, get the auto_button value from the api serve response and use it.
+            //     // Otherwise, use the page value from the load script url.
+            //     if (AutoButton == "") {
+            //         AutoButton = ServeData.merchant.auto_button;
+            //     }
+
+            //     // Now check to see if there are any elements on the page that include
+            //     // either the .cbw-btn class or the .cbw-main-btn class (remember that this
+            //     // script injects a .cbw-main-btn class when it adds the button html to elements
+            //     // containing the .cbw-btn class, but this happens later in the execution of the
+            //     // script so we have to look for .cbw-btn classes here.) Also check to see if the Auto Button should be displayed.  If so, then
+            //     // we need to build the widget and append it to the page body.  If there aren't, we're done.
+            //     if ($(".cbw-main-btn, .cbw-btn").length == 0 || AutoButton == "left" || AutoButton == "right") {
+
+            //         MergeServeData(div);
+            //         MergeButtons();
+
+            //         // When the event data is finished loading, merge the event data into the widget.
+            //         $.when(LoadEventsData(ServeData.session_id, ServeData.serve_id)).done(function(a) {
+
+            //             MergeEventsData();
+
+            //         });
+
+            //         // If the cause selector for this promotion is false, hide the currently selected 
+            //         // cause display block in the widget.  Otherwise, load the cause data.
+            //         if (!ServeData.promotion.cause_selector) {
+
+            //             $(".cbw-currently-selected-cause").removeClass("widget-show");
+            //             $(".cbw-currently-selected-cause").addClass("widget-hide");
+                    
+            //         } 
+
+            //         Loaded = true;
+
+            //         ShowModal();
+
+            //         ShowAutoButton();
+
+            //     }
+
+            // });
 
 
 
