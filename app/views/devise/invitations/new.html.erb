@@ -1,12 +1,17 @@
-<h2><%= t "devise.invitations.new.header" %></h2>
+<% provide(:title, 'Send Invitation') %>
+<div class="container">
+	<div class="center hero-unit">
+		<h1><%= t "devise.invitations.new.header" %></h1>
 
-<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
-  <%= devise_error_messages! %>
+		<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
+		  <%= devise_error_messages! %>
 
-<% resource.class.invite_key_fields.each do |field| -%>
-  <p><%= f.label field %><br />
-  <%= f.text_field field %></p>
-<% end -%>
+		<% resource.class.invite_key_fields.each do |field| -%>
+		  <p><%= f.label field %><br />
+		  <%= f.text_field field %></p>
+		<% end -%>
 
-  <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
-<% end %>
+		  <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
+		<% end %>
+	</div>
+</div>
