@@ -7,6 +7,7 @@ class Merchant < ActiveRecord::Base
 	has_and_belongs_to_many :users
 	has_many :promotions, dependent: :destroy
 	has_many :serves, through: :promotions
+	has_many :donations
 	belongs_to :button
 	belongs_to :widget_position
 	belongs_to :auto_button
