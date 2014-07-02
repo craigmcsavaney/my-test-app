@@ -1,4 +1,7 @@
 Myapplication::Application.routes.draw do
+
+  root to: 'static_pages#home'
+
   namespace :api do
     namespace :v1 do
       get 'serve/:merchant_id', to: 'api#serve', :as => :serve, format: 'json'
@@ -70,8 +73,6 @@ Myapplication::Application.routes.draw do
   resources :singles
   resources :contact_messages, only: :create
   
-  root to: 'static_pages#landing'
-
   get '/home',    to: 'static_pages#home'
   get '/help',    to: 'static_pages#help'
   get '/about',   to: 'static_pages#about'
