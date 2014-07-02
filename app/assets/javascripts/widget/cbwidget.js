@@ -196,6 +196,7 @@ function CBSale(amount,transaction_id) {
     //    {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
         {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js", "custom_load": JQueryCustomLoad },
         {"name": "Select2", "src": CBAssetsBase + "select2.min.js"},
+        //{"name": "Select2", "src": CBAssetsBase + "select2.js"},
     ];
 
     // Set the ScriptsCounter to 0.  This is incremented as the scripts are loaded
@@ -358,7 +359,8 @@ function CBSale(amount,transaction_id) {
      *************************************************************************/
     function JQueryCustomLoad(params) {
 
-        jQuery = window.jQuery.noConflict(true);
+        // jQuery = window.jQuery.noConflict(true);
+        jq1111 = window.jQuery.noConflict(true);
     }
     
     /* ---------------------------------------------------------------------------------
@@ -452,7 +454,8 @@ function CBSale(amount,transaction_id) {
          * This is the equivalent of the typical $(document).ready(function() {}) call that is called when 
          * jQuery indicates that the page is 'ready'. Put all code that requires jQuery in here!
          * -------------------------------------------------------------------------------------------------------- */
-        jQuery(document).ready(function($) {
+        //jQuery(document).ready(function($) {
+        jq1111(document).ready(function($) {
 
             // This is the id value of the div to which the entire widget will be appended.
             // This used to be #cb-widget-replace but now the widget is appended to the body tag.
@@ -670,10 +673,8 @@ function CBSale(amount,transaction_id) {
                     // for this serve in the modal message
                     if (CBCauseID && CBCauseID != "") {
                         modal_message = modal_message.replace("{{placeholder}}", ServeData.default_cause_name);
-                        modal_message = modal_message.replace(/\sthe\sTHE\s/g, " THE ");
-                        modal_message = modal_message.replace(/\sthe\sthe\s/g, " the ");
-                        modal_message = modal_message.replace(/\sthe\sA\s/g, " A ");
-                        modal_message = modal_message.replace(/\sthe\sa\s/g, " A ");
+                        // Fix duplicate "the"s, and the "the a"s
+                        FixCauseNames(modal_message);
                     } else {
                         // otherwise, just use the standard messaging
                         modal_message = modal_message.replace("{{placeholder}}", "charitable cause of your choice");
@@ -927,10 +928,8 @@ function CBSale(amount,transaction_id) {
                 // replace variables in the promotion text supplied by the server
                 var banner = ServeData.promotion.banner
                 banner = banner.replace("{{merchant_cause}}", ServeData.default_cause_name);
-                banner = banner.replace(/\sthe\sTHE\s/g, " THE ");
-                banner = banner.replace(/\sthe\sthe\s/g, " the ");
-                banner = banner.replace(/\sthe\sA\s/g, " A ");
-                banner = banner.replace(/\sthe\sa\s/g, " A ");
+                // Fix duplicate "the"s, and the "the a"s
+                FixCauseNames(banner);
 
                 // Populate the promotion text supplied by the server
                 $("#cbw-promo-text").text(banner);
@@ -1806,11 +1805,8 @@ function CBSale(amount,transaction_id) {
                 share_msg = share_msg.replace("{{supporter_cause}}", cause_name);
                 // now replace the merchant_cause placeholder with the merchant's default cause 
                 share_msg = share_msg.replace("{{merchant_cause}}", ServeData.default_cause_name);
-                // get rid of duplicate the's for causes that start with "THE" or "the"
-                share_msg = share_msg.replace(/\sthe\sTHE\s/g, " THE ");
-                share_msg = share_msg.replace(/\sthe\sthe\s/g, " the ");
-                share_msg = share_msg.replace(/\sthe\sA\s/g, " A ");
-                share_msg = share_msg.replace(/\sthe\sa\s/g, " A ");
+                // Fix duplicate "the"s, and the "the a"s
+                FixCauseNames(share_msg);
 
                 // Now update the serve, which will record the cause or event associated
                 // with this share.  This is done asynchronously so the channel will
@@ -1888,6 +1884,23 @@ function CBSale(amount,transaction_id) {
                 } else {
                     return true
                 }
+            };
+
+            /* --------------------------------------------------------
+             * FixCauseNames (cause_text)
+             * --------------------------------------------------------
+             * Checks the format of the email.  Allows letters, numbers,
+             * dots and dashes before the @, same after the the @ and 
+             * before the ".", then 2-4 letters or numbers.  Returns true
+             * if valid, false if not.
+             * -------------------------------------------------------- */
+            function FixCauseNames (cause_text) {
+
+                cause_text = cause_text.replace(/\sthe\sTHE\s/g, " THE ");
+                cause_text = cause_text.replace(/\sthe\sthe\s/g, " the ");
+                cause_text = cause_text.replace(/\sthe\sA\s/g, " A ");
+                cause_text = cause_text.replace(/\sthe\sa\s/g, " A ");
+                return cause_text
             };
 
             /* --------------------------------------------------------
