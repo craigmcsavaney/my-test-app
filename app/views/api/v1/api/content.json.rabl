@@ -66,7 +66,7 @@ node :content do
 							</div>
 						</div>
 					</div>
-					<div class="cbw-horiz-line">
+					<div id="cbw-trending-causes-horiz-line" class="cbw-horiz-line cbw-widget-hide">
 						<div class="cbw-or">OR</div>
 					</div>
 					<div id="cbw-cause-select-ctrl-grp" class="cbw-control-group cbw-widget-hide">

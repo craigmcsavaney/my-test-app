@@ -1161,6 +1161,11 @@ function CBSale(amount,transaction_id) {
 
                 var trending_cause_pattern = "#cbw-trending-cause-{0}";
                 var trending_cause_text_pattern = "#trending-cause-{0}-text";
+                
+                // Set the show_trending_causes variable to false.  If there are any trending 
+                // causes in the Events array, this will get set to true and will be used to
+                // toggle the section visible after loading the trending causes.
+                var show_trending_causes = false;
 
                 var events_div = $("#cbw-events");
 
@@ -1176,6 +1181,7 @@ function CBSale(amount,transaction_id) {
                     //now, un-hide this radio button selection
                     $(trending_cause).removeClass("cbw-widget-hide");
                     $(trending_cause).addClass("cbw-widget-show");
+                    show_trending_causes = true;
 
                     // check to see if the selected cause matches this trending cause.  If it does,
                     // select this radio button.  Note that if the selected cause is not a "single", the 
@@ -1198,10 +1204,15 @@ function CBSale(amount,transaction_id) {
 
                 // finally, if there are any events in the EventData set, remove the hide class and
                 // replace it with the show class for the div that contains all the trending causes
-                if (EventData) {
+                console.log(EventData);
+                console.log(EventData.length());
+                if (show_trending_causes) {
 
                     $("#cbw-cause-select-ctrl-grp").removeClass("cbw-widget-hide");
                     $("#cbw-cause-select-ctrl-grp").addClass("cbw-widget-show");
+                    $("#cbw-trending-causes-horiz-line").removeClass("cbw-widget-hide");
+                    $("#cbw-trending-causes-horiz-line").addClass("cbw-widget-show");
+
                 }            
 
 
