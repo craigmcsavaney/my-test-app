@@ -2,6 +2,7 @@ class StaticPagesController < ApplicationController
 	# layout false, only: :landing  moved this down to the individual methods that don't use layout
   before_action :authenticate_user!, except: :facebook_success
   	def home
+      redirect_to donations_path
       # create new message object for the contact_message form on the home page
       @message = ContactMessage.new
       # check to see if message params were passed in and if they were, use the values
