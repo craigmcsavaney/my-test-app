@@ -1,8 +1,17 @@
-<p>Hello <%= @resource.email %>!</p>
+<p>Hi <%= @resource.email %>!</p>
 
-<p>Someone has invited you to <%= root_url %>, you can accept it through the link below.</p>
+<!--<p>Someone has invited you to <%= root_url %>, you can accept it through the link below.</p>-->
+<p>I'm Craig with CauseButton.  Your email address was submitted to us by someone participating in a CauseButton charitable giving initiative.  Hopefully that someone was you, but if it wasn't, you can just ignore this message.</p>
 
-<p><%= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @resource.invitation_token) %></p>
+<p>We'd be thrilled if you created an account with us, and we've sent you this invitation to make it really, really easy: just click the link below and add a password.  With a CauseButton account, you can check the status of the donations you've caused, create and manage CauseButton campaigns on your own websites, and manage the CauseButton accounts for charitable organizations you serve.</p>
 
-<p>If you don't want to accept the invitation, please ignore this email.<br />
-Your account won't be created until you access the link above and set your password.</p>
+<p>Here's the link:</p>
+
+<p><%= link_to 'Accept the invitation', accept_invitation_url(@resource, :invitation_token => @resource.invitation_token) %></p>
+
+<p>If you don't want to create a CauseButton account, that's cool too.  We'll still notify when you cause donations through your CauseButton-powered efforts, and your selected charities will still get their donations.  Your account won't be created until you access the link above and set your password, and we won't send you this invitation again, but you can always come back to our site and use this same email address to activate your account by clicking "Forgot your password?" on our Sign In page.</p>
+
+<p>Either way, thanks for using CauseButton!</p>
+
+<p>Team CauseButton</p>
+
