@@ -1519,19 +1519,21 @@ function CBSale(amount,transaction_id) {
                 var widget_bottom = widget_top + widget_hgt;
                 var widget_right = widget_left + widget_width;
 
+                var space = '5px';
+
                 switch (WidgetPosition) {
 
                     case 'top-left':
 
-                        $("#cbw-widget").css('top', '1px');
-                        $("#cbw-widget").css('left', '1px');
+                        $("#cbw-widget").css('top', space);
+                        $("#cbw-widget").css('left', space);
                         $("#cbw-widget").css('bottom', '');
                         $("#cbw-widget").css('right', '');
                         break;
 
                     case 'top-center':
 
-                        $("#cbw-widget").css('top', '1px');
+                        $("#cbw-widget").css('top', space);
                         $("#cbw-widget").css('left', ((win_width-widget_width)/2));
                         $("#cbw-widget").css('bottom', '');
                         $("#cbw-widget").css('right', '');
@@ -1539,8 +1541,8 @@ function CBSale(amount,transaction_id) {
 
                     case 'top-right':
 
-                        $("#cbw-widget").css('top', '1px');
-                        $("#cbw-widget").css('right', '1px');
+                        $("#cbw-widget").css('top', space);
+                        $("#cbw-widget").css('right', space);
                         $("#cbw-widget").css('bottom', '');
                         $("#cbw-widget").css('left', '');
                         break;
@@ -1549,7 +1551,7 @@ function CBSale(amount,transaction_id) {
 
                         if (type == "initial") {
                             $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                            $("#cbw-widget").css('left', '1px');
+                            $("#cbw-widget").css('left', space);
                             $("#cbw-widget").css('bottom', '');
                             $("#cbw-widget").css('right', '');
                         }
@@ -1569,7 +1571,7 @@ function CBSale(amount,transaction_id) {
 
                         if (type == "initial") {
                             $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                            $("#cbw-widget").css('right', '1px');
+                            $("#cbw-widget").css('right', space);
                             $("#cbw-widget").css('bottom', '');
                             $("#cbw-widget").css('left', '');
                         }
@@ -1577,15 +1579,15 @@ function CBSale(amount,transaction_id) {
 
                     case 'bottom-left':
 
-                        $("#cbw-widget").css('bottom', '1px');
-                        $("#cbw-widget").css('left', '1px');
+                        $("#cbw-widget").css('bottom', space);
+                        $("#cbw-widget").css('left', space);
                         $("#cbw-widget").css('top', '');
                         $("#cbw-widget").css('right', '');
                         break;
 
                     case 'bottom-center':
 
-                        $("#cbw-widget").css('bottom', '1px');
+                        $("#cbw-widget").css('bottom', space);
                         $("#cbw-widget").css('left', ((win_width-widget_width)/2));
                         $("#cbw-widget").css('top', '');
                         $("#cbw-widget").css('right', '');
@@ -1593,8 +1595,8 @@ function CBSale(amount,transaction_id) {
 
                     case 'bottom-right':
 
-                        $("#cbw-widget").css('bottom', '1px');
-                        $("#cbw-widget").css('right', '1px');
+                        $("#cbw-widget").css('bottom', space);
+                        $("#cbw-widget").css('right', space);
                         $("#cbw-widget").css('top', '');
                         $("#cbw-widget").css('left', '');
                         break;
@@ -1606,7 +1608,7 @@ function CBSale(amount,transaction_id) {
 
                         if (type == "initial") {
                             $("#cbw-widget").css('top', ((win_hgt-widget_hgt)/2));
-                            $("#cbw-widget").css('right', '1px');   
+                            $("#cbw-widget").css('right', space);   
                             $("#cbw-widget").css('bottom', '');
                             $("#cbw-widget").css('left', '');
                         }
@@ -1616,7 +1618,7 @@ function CBSale(amount,transaction_id) {
                 // even when the window shrinks or the widget expands in such a way that it
                 // would become hidden. This way the widget can be closed by the user.
                 if (win_width < widget_width) {
-                    $("#cbw-widget").css('right', '1px');
+                    $("#cbw-widget").css('right', space);
                     $("#cbw-widget").css('left', '');
                 }
 
