@@ -221,8 +221,9 @@ function CBSale(amount,transaction_id) {
         // Version of jQuery already loaded is fine
         // jQuery = window.jQuery;
         // Change alias to jq1111 as that is what main() and select2 now need.
-        // Should noConflict(true) be added to this?
-        jq1111 = window.jQuery;
+        // Should noConflict(true) be added to this?  Phil says yes.  Probably
+        // need to do some testing to make sure this works.
+        jq1111 = window.jQuery.noConflict();
 
         // Load starting with the second script (skip jQuery)
         CreateScriptTag(scripts[1].name, scripts[1].src);
