@@ -653,9 +653,9 @@ function CBSale(amount,transaction_id) {
                             $("#cbw-button-side").css({
                                 position: 'fixed',
                                 top: "50%",
-                                left: "0px",
-                                marginTop: - ($("#cbw-button-side-img1").height() / 2),
-                                marginLeft: - ($("#cbw-button-side-img1").width()),
+                                left: "0%",
+                                marginTop: - ($("#cbw-button-side-img1").outerHeight(true) / 2),
+                                marginLeft: - ($("#cbw-button-side-img1").outerWidth(true)),
                                 zIndex: 9998
                             });
                             $("#cbw-button-side").animate({ "marginLeft": "+=86px" }, "slow");
@@ -665,9 +665,9 @@ function CBSale(amount,transaction_id) {
                             $("#cbw-button-side").css({
                                 position: 'fixed',
                                 top: "50%",
-                                right: "0px",
-                                marginTop: - ($("#cbw-button-side-img1").height() / 2),
-                                marginRight: - ($("#cbw-button-side-img1").width()),
+                                right: "0%",
+                                marginTop: - ($("#cbw-button-side-img1").outerHeight(true) / 2),
+                                marginRight: - ($("#cbw-button-side-img1").outerWidth(true)),
                                 zIndex: 9998
                             });
                             $("#cbw-button-side").animate({ "marginRight": "+=86px" }, "slow");
@@ -1428,6 +1428,8 @@ function CBSale(amount,transaction_id) {
                 // Populate the currently selected cause name supplied by the server
                 $("#cbw-currently-selected-cause-text").text(ServeData.cause_name);
 
+                PositionSearchIcon();
+
                 // Now Check to see if the purchase channel is active and if it is, get the path and use it to update
                 // the AWESM cookies and the AWESM.parentAwesm global variable
 
@@ -2008,6 +2010,22 @@ function CBSale(amount,transaction_id) {
                 UpdateServe("", MergeServeUpdateData);
             };
 
+            /* --------------------------------------------------------
+             * function PositionSearchIcon()
+             * --------------------------------------------------------
+            * Position the currently-selected-cause-search-icon vertically
+            * in the middle of the currently selected cause box.  Note that
+            * the lineHeight property is expressed in multiples of line-heights,
+            * so this calculation finds the overall height of the text inside
+            * the box and divides it by the line-height of the text, then
+            * subtracts a small amount to adjust the icon upward a bit.
+             * -------------------------------------------------------- */
+            function PositionSearchIcon() {
+                $("#cbw-currently-selected-cause-search-icon").css({
+                    lineHeight: ($("#cbw-currently-selected-cause-text").outerHeight(true)/$("#cbw-currently-selected-cause-text").css('line-height').replace('px',''))-.1
+                });
+            };
+
             /*
              * EVENT HANDLER FUNCTIONS
              * -----------------------
@@ -2057,6 +2075,9 @@ function CBSale(amount,transaction_id) {
                     //$("#cbw-widget").toggle();
                     $("#cbw-widget").removeClass("cbw-widget-hide");
                     $("#cbw-widget").addClass("cbw-widget-show");
+
+                    PositionSearchIcon();
+
                 }
 
                 PositionWidget('initial');

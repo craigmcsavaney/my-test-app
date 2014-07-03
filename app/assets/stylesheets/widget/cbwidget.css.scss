@@ -31,7 +31,7 @@ reset styles
 }
 
 /*
-Modal custom styles
+Modal custom styles, all namespaced .cbw
 */
 
 .cbw #cbw-modal-1.modal {
@@ -253,8 +253,9 @@ Widget custom styles, all namespaced .cbw
 
 .cbw #cbw-widget #cbw-currently-selected-cause-search-icon {
 	float: right !important;
-	padding: 2px 3px 0 0 !important;
+	padding: 0 3px 0 0 !important;
 	color: #73C9BE !important;
+	vertical-align: middle !important;
 }
 
 .cbw #cbw-widget #cbw-change-cause-label {
