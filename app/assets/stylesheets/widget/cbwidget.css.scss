@@ -336,6 +336,7 @@ Widget custom styles, all namespaced .cbw
 .cbw #cbw-widget #trending-cause-0-text, .cbw #cbw-widget #trending-cause-1-text, .cbw #cbw-widget #trending-cause-2-text, .cbw #cbw-widget #default-cause-control-text {
 	float: left !important;
 	width: 93% !important;
+	text-align: left !important;
 }
 
 .cbw #cbw-widget #cbw-cause-type-single {
@@ -388,6 +389,7 @@ Widget custom styles, all namespaced .cbw
 	padding: 10px 0 13px !important;
 	text-align: left !important;
 	display: inline-block !important;
+	width: 100% !important;
 }
 
 .cbw #cbw-widget #cbw-share-again {
