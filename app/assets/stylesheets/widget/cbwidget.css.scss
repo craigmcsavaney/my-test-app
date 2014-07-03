@@ -30,6 +30,46 @@ reset styles
     border-spacing: 0 !important;
 }
 
+/*
+Modal custom styles
+*/
+
+.cbw #cbw-modal-1.modal {
+  	display: none;
+  	width: 400px !important;
+  	background: #fff !important;
+  	padding: 15px 30px !important;
+  	-webkit-border-radius: 8px !important;
+  	-moz-border-radius: 8px !important;
+  	-o-border-radius: 8px !important;
+  	-ms-border-radius: 8px !important;
+  	border-radius: 8px !important;
+  	-webkit-box-shadow: 0 0 10px #000 !important;
+  	-moz-box-shadow: 0 0 10px #000 !important;
+  	-o-box-shadow: 0 0 10px #000 !important;
+  	-ms-box-shadow: 0 0 10px #000 !important;
+  	box-shadow: 0 0 10px #000 !important;
+  	font-family: 'Montserrat', sans-serif !important;
+  	line-height: 20px !important;
+  	font-size: 14px !important;
+  	color: #333333 !important;
+}
+
+.cbw .cbw-modal-message-img {
+	vertical-align: middle !important;
+}
+
+.cbw #cbw-modal-1.modal a.close-modal {
+  	position: absolute !important;
+  	top: -12.5px !important;
+  	right: -12.5px !important;
+  	display: block !important;
+  	width: 30px !important;
+  	height: 30px !important;
+  	text-indent: -9999px !important;
+  	background: url(close.png) no-repeat 0 0 !important;
+}
+
 /* 
 Widget custom styles, all namespaced .cbw
 */

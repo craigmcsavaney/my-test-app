@@ -326,7 +326,6 @@ function CBSale(amount,transaction_id) {
         AddStylesheet('cbw-css', CBAssetsBase + "cbwidget.css");
         AddStylesheet('cbw-googlefonts', "https://fonts.googleapis.com/css?family=Montserrat:400,700");
         AddStylesheet('font-awesome', "//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
-        AddStylesheet('cbw-css-modal', CBAssetsBase + "jquery.modal.css");
 
         // get the parameters passed into the page so that we can carry these forward if necessary
         // for example, as part of the process of determining the landing page or promotion id
@@ -708,15 +707,13 @@ function CBSale(amount,transaction_id) {
                     }
                     
                     // add the div that contains the modal, then add the text, css, and close button to the modal div
-                    $("<div id=\"cbw-modal-div\">").html( "<div id='cbw-modal-1' class='modal'></div>" ).appendTo(div);
+                    $("<div id=\"cbw-modal-div\" class=\"cbw-reset cbw\">").html( "<div id='cbw-modal-1' class='modal'></div>" ).appendTo(div);
                     $("#cbw-modal-1").append( modal_message);
                     //$("#cbw-modal-1").text( modal_message );
                     $("#cbw-modal-1").css({
                         position: 'fixed',
-                        top: "50%",
-                        left: "50%",
-                        marginTop: - ($("#cbw-modal-1").outerHeight() / 2),
-                        marginLeft: - ($("#cbw-modal-1").outerWidth() / 2),
+                        top: ($(window).height() - $("#cbw-modal-1").height())/2,
+                        left: ($(window).width() - $("#cbw-modal-1").width())/2,
                         zIndex: 10000
                     });
                     //$("#cbw-modal-1").append("<img id='cbw-modal-message-img1' class='cbw-modal-message-img'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img'> on any page to learn more.");
