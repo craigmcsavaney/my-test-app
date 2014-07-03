@@ -189,14 +189,18 @@ function CBSale(amount,transaction_id) {
     // Chain load the scripts here in the order listed below...
     // when the last script in the chain is loaded, main() will be called
     // IMPORTANT: jQuery must be the first script in the list!!!!  If it is not
-    // and there is a copy of jQuery 1.10.1 already loaded, the first
+    // and there is a copy of jQuery 1.11.1 already loaded, the first
     // script in the list will be skipped.
 
     var scripts = [
-    //    {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js", "custom_load": JQueryCustomLoad },
         {"name": "jQuery", "src": "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js", "custom_load": JQueryCustomLoad },
+        // IMPORTANT: the Select2 js files (select2.js and select2.min.js) have been modified
+        // from thier original versions.  Instead of looking for the alias "jQuery", they
+        // look for an instance of jQuery loaded under the alias "jq1111", which is how
+        // we load jQuery in the CustomLoad function below and how we access it in the
+        // document.ready call in main().
         {"name": "Select2", "src": CBAssetsBase + "select2.min.js"},
-        //{"name": "Select2", "src": CBAssetsBase + "select2.js"},
+        // {"name": "Select2", "src": CBAssetsBase + "select2.js"},
     ];
 
     // Set the ScriptsCounter to 0.  This is incremented as the scripts are loaded
@@ -215,7 +219,10 @@ function CBSale(amount,transaction_id) {
     } else {
 
         // Version of jQuery already loaded is fine
-        jQuery = window.jQuery;
+        // jQuery = window.jQuery;
+        // Change alias to jq1111 as that is what main() and select2 now need.
+        // Should noConflict(true) be added to this?
+        jq1111 = window.jQuery;
 
         // Load starting with the second script (skip jQuery)
         CreateScriptTag(scripts[1].name, scripts[1].src);
@@ -358,7 +365,11 @@ function CBSale(amount,transaction_id) {
      * in the scripts array.
      *************************************************************************/
     function JQueryCustomLoad(params) {
-
+        // IMPORTANT: the Select2 js files (select2.js and select2.min.js) have been modified
+        // from thier original versions.  Instead of looking for the alias "jQuery", they
+        // look for an instance of jQuery loaded under the alias "jq1111", which is how
+        // we load jQuery in the CustomLoad function below and how we access it in the
+        // document.ready call in main().
         // jQuery = window.jQuery.noConflict(true);
         jq1111 = window.jQuery.noConflict(true);
     }
@@ -417,14 +428,14 @@ function CBSale(amount,transaction_id) {
      * ---------------------------------------------------------------------------------
      * This function is called to validate a widget url auto button input.  If the autobutton
      * input is valid, it is returned, otherwise null is returned.  At the moment, the
-     * only valid inputs are "left", "right", and "none", but at some point we may allow 
-     * additional values.  Note that if a valid value is present it will override the value
-     * returned from the serve api.
+     * only valid inputs are "left", "right", "none", and "test", but at some point we may allow 
+     * additional values.  Note that the values "none" and "test", when passed in via
+     * the load script url, will supercede values from the api response.
      * --------------------------------------------------------------------------------- */
     function ValidateAutoButton(autobutton) {
 
         var autobutton_valid = false;
-        var arr = [ "left", "right", "none" ];
+        var arr = [ "left", "right", "none", "test" ];
 
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] == autobutton) {
@@ -454,8 +465,13 @@ function CBSale(amount,transaction_id) {
          * This is the equivalent of the typical $(document).ready(function() {}) call that is called when 
          * jQuery indicates that the page is 'ready'. Put all code that requires jQuery in here!
          * -------------------------------------------------------------------------------------------------------- */
-        //jQuery(document).ready(function($) {
+        // IMPORTANT: the Select2 js files (select2.js and select2.min.js) have been modified
+        // from thier original versions.  Instead of looking for the alias "jQuery", they
+        // look for an instance of jQuery loaded under the alias "jq1111", which is how
+        // we load jQuery in the CustomLoad function above and how we access it in the
+        // document.ready call in main() that follows.
         jq1111(document).ready(function($) {
+        //jQuery(document).ready(function($) {
 
             // This is the id value of the div to which the entire widget will be appended.
             // This used to be #cb-widget-replace but now the widget is appended to the body tag.
@@ -545,6 +561,8 @@ function CBSale(amount,transaction_id) {
                 // when no valid value has been passed in with the widget load script url.  When
                 // this is the case, get the auto_button value from the api serve response and use it.
                 // Otherwise, use the page value from the load script url.
+                // Note that the values "none" and "test", when passed in via the load script url,
+                // will supercede values from the api response.
                 if (!AutoButton || AutoButton == "") {
                     AutoButton = ServeData.merchant.auto_button;
                 }
@@ -558,9 +576,11 @@ function CBSale(amount,transaction_id) {
                 // script injects a .cbw-main-btn class when it adds the button html to elements
                 // containing the .cbw-btn class, but this happens later in the execution of the
                 // script so we have to look for .cbw-btn classes here.) Also check to see if the
-                // Auto Button should be displayed.  If so, then
-                // we need to build the widget and append it to the page body.  If there aren't, we're done.
-                if ($(".cbw-main-btn, .cbw-btn").length >= 0 || AutoButton == "left" || AutoButton == "right") {
+                // Auto Button value is "left" or "right", indicating that it should be displayed.
+                // Finally, check to see if AutoButton == "test" and one of the autobutton test
+                // classes is present on the page.  If any of these is true, then
+                // we need to build the widget and append it to the page body. Otherwise, we're done.
+                if ($(".cbw-main-btn, .cbw-btn").length >= 0 || AutoButton == "left" || AutoButton == "right" || (AutoButton == "test" && $(".cbw-auto-button-test-left, .cbw-auto-button-test-right").length > 0)) {
 
                     MergeServeData(div);
                     MergeButtons();
@@ -614,6 +634,13 @@ function CBSale(amount,transaction_id) {
                 // // API.serve response.  Returns the value if valid or an empty string if not.
                 // AutoButton = ValidateAutoButton(AutoButton);
                 // console.log(AutoButton);
+                if (AutoButton == "test") {
+                    if ($(".cbw-auto-button-test-right").length > 0) {
+                        AutoButton = "right";
+                    } else if ($(".cbw-auto-button-test-left").length > 0) {
+                        AutoButton = "left";
+                    }
+                }
 
                 // Now, check to see if the AutoButton value is either left or right.  If it is none
                 // or blank we skip the AutoButton entirely.
