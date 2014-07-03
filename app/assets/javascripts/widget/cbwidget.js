@@ -580,7 +580,7 @@ function CBSale(amount,transaction_id) {
                 // Finally, check to see if AutoButton == "test" and one of the autobutton test
                 // classes is present on the page.  If any of these is true, then
                 // we need to build the widget and append it to the page body. Otherwise, we're done.
-                if ($(".cbw-main-btn, .cbw-btn").length >= 0 || AutoButton == "left" || AutoButton == "right" || (AutoButton == "test" && $(".cbw-auto-button-test-left, .cbw-auto-button-test-right").length > 0)) {
+                if ($(".cbw-main-btn, .cbw-btn").length > 0 || AutoButton == "left" || AutoButton == "right" || (AutoButton == "test" && $(".cbw-auto-button-test-left, .cbw-auto-button-test-right").length > 0)) {
 
                     MergeServeData(div);
                     MergeButtons();
