@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to image_tag('causebutton-white-on-teal.svg', title: 'Home', id: 'header-logo'), home_path %>
+      <%= link_to image_tag('causebutton-white-on-teal.svg', title: 'Home', id: 'header-logo'), "http://www.causebutton.com/wp" %>
       <div>
         <div id="nav-menus" class="navbar-collapse collapse">
           <ul class="nav navbar-nav pull-right">
@@ -20,9 +20,9 @@
               <% end %>  
             <% end %>
             <% if !signed_in? %>
-                <li><%= link_to "Login", new_user_session_path %></li>
+                <li class="cb-top-menu"></i><%= link_to ("<i class='fa fa-user fa-2x'></i> My Account").html_safe, new_user_session_path %></li>
               <% else %>
-                <li id="user-menu" class="dropdown">
+                <li id="user-menu" class="dropdown cb-top-menu">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     My Account<!-- <b class="caret"></b>-->
                   </a>
@@ -82,7 +82,7 @@
                 </li>
             <% end %>
             <% if can? :view_admin_menu, User %>
-              <li id="admin-menu" class="dropdown">
+              <li id="admin-menu" class="dropdown cb-top-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   Admin <!--<b class="caret"></b>-->
                 </a>
@@ -231,6 +231,8 @@
                 </ul>
               </li>
             <% end %>
+            <li class="cb-top-menu"><%= link_to ("<i class='fa fa-question fa-2x'></i> FAQs").html_safe,    "http://www.causebutton.com/wp/faq" %></li>
+            <li class="cb-top-menu"><%= link_to ("<i class='fa fa-envelope fa-2x'></i> Contact Us").html_safe, "http://www.causebutton.com/wp/contact" %></li>
           </ul>
         </div>
       </div>

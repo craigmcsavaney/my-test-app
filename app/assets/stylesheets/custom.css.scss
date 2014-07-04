@@ -25,7 +25,7 @@ html {
 }
 
 body {
-  padding-top: 60px;
+  padding-top: 90px;
   font-family: 'Montserrat', sans-serif !important;
 }
 
@@ -141,29 +141,10 @@ p {
 
 /* header */
 
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  line-height: 1;
-  &:hover {
-    color: white;
-    text-decoration: none;
-  }
-}
-
 #header-logo {
   float: left;
-  border: 2px solid #FFFFFF;
-  border-radius: 8px;
-  height: 34px;
-  padding: 6px;
-  margin: 5px;
+  width: 230px;
+  margin: 17px 0 13px 5px;
   &:hover {
     color: white;
     text-decoration: none;
@@ -172,12 +153,23 @@ p {
 
 .navbar .nav {
   margin-top:5px;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 #nav-menus a {
   color: #999999;
 }
 
+.navbar .nav li.cb-top-menu a {
+  line-height: 55px;
+  font-size: 14px;
+  padding: 12px 0 18px 35px;
+}
+
+.navbar .container {
+  padding-left: 0;
+  padding-right: 0;
+}
 
 /* footer */
 
