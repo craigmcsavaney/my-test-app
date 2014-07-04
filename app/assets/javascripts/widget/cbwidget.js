@@ -2317,9 +2317,6 @@ function CBSale(amount,transaction_id) {
             });
 
 
-            // Don't think we need this anymore, but might need to restore it
-            // if/when we restore share message editing.
-            //
             /* --------------------------------------------------------
              * FG Cause (single cause) Change Handler 
              * --------------------------------------------------------
