@@ -34,7 +34,7 @@ reset styles
 Modal custom styles, all namespaced .cbw
 */
 
-.cbw #cbw-modal-1.modal {
+.cbw #cbw-modal-1.cbw-modal {
   	display: none;
   	width: 400px !important;
   	background: #fff !important;
@@ -53,13 +53,14 @@ Modal custom styles, all namespaced .cbw
   	line-height: 20px !important;
   	font-size: 14px !important;
   	color: #333333 !important;
+  	box-sizing: content-box !important;
 }
 
 .cbw .cbw-modal-message-img {
 	vertical-align: middle !important;
 }
 
-.cbw #cbw-modal-1.modal a.close-modal {
+.cbw #cbw-modal-1.cbw-modal a.close-modal {
   	position: absolute !important;
   	top: -12.5px !important;
   	right: -12.5px !important;
