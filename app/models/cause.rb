@@ -15,6 +15,7 @@ class Cause < ActiveRecord::Base
 	has_many :shares
 	has_many :serves, foreign_key: "current_cause_id"
   has_many :serves, foreign_key: "default_cause_id"
+  has_many :donations
 
 	def self.not_exists?(id)
 		self.find(id)
