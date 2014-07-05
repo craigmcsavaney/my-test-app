@@ -10,7 +10,8 @@ class ApplicationController < ActionController::Base
   	end
 
 	def after_sign_in_path_for(resource)
-	    (session[:return_page].nil?) ? "/" : session[:return_page]
+	    #(session[:return_page].nil?) ? "/" : session[:return_page]
+	    donations_path
 	end
 
   	protected
