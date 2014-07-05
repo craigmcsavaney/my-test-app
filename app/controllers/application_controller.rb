@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
 	    donations_path
 	end
 
+	def after_sign_out_path_for(resource_or_scope)
+	  	#request.referrer
+	  	"http://www.causebutton.com"
+	end
+
   	protected
 	def set_return_page
 		unless request.referer.nil? || request.referer.include?('/users/sign')
