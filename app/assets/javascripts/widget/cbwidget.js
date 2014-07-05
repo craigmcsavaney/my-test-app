@@ -766,11 +766,13 @@ function CBSale(amount,transaction_id) {
                 // ID values from attributes of that element and call the CBSale method to
                 // report the conversion to the database. 
 
-                if ($(".cbw-conversion-success").length > 0) {
+                if ($(".cbw-conversion-success").length == 1) {
 
                     var cbw_conversion_amount = $(".cbw-conversion-success").attr('cbw-conversion-amount');
                     var cbw_transaction_id = $(".cbw-conversion-success").attr('cbw-transaction-id');
                     CBSale(cbw_conversion_amount,cbw_transaction_id);
+                } else if ($(".cbw-conversion-success").length > 1) {
+                    console.log("Too many elements with class .cbw-conversion-success on this page.  There can only be one.")
                 }
 
             }
