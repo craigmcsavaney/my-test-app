@@ -19,68 +19,6 @@
                 <li><%= link_to "Sign Up", new_user_registration_path  %></li>
               <% end %>  
             <% end %>
-            <% if !signed_in? %>
-                <li class="cb-top-menu"></i><%= link_to ("<i class='fa fa-user fa-2x'></i> My Account").html_safe, new_user_session_path %></li>
-              <% else %>
-                <li id="user-menu" class="dropdown cb-top-menu">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    My Account<!-- <b class="caret"></b>-->
-                  </a>
-                  <ul class="dropdown-menu">
-                    <% if (can?(:show, Merchant)) %>
-                      <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#">My Merchants</a>
-                        <ul class="dropdown-menu">
-                          <li><%= link_to_if(can?(:create, Merchant), "Create A Merchant", new_merchant_path) {} %></li>
-                          <% if !current_user.merchants.any? %>
-                              <li class="disabled">
-                            <% else %>
-                              <li>
-                            <% end %> 
-                          <%= link_to_if(can?(:index, Merchant), "View Merchants (#{current_user.merchants.size})", merchants_path) {} %></li>
-                        </ul>
-                      </li>
-                    <% end %>
-                    <% if (can?(:show, Promotion)) %>
-                      <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#">My Promotions</a>
-                        <ul class="dropdown-menu">
-                          <% if !current_user.merchants.any? %>
-                              <li class="disabled">
-                            <% else %>
-                              <li>
-                          <% end %> 
-                          <%= link_to_if(can?(:create, Promotion), "Create A Promotion", new_promotion_path) {} %></li>
-                          <% if !Promotion.exists?(merchant_id: current_user.merchants) %>
-                              <li class="disabled">
-                            <% else %>
-                              <li>
-                          <% end %>
-                          <%= link_to_if(can?(:index, Promotion), "View Promotions (#{Promotion.where(merchant_id: current_user.merchants).count})", promotions_path) {} %></li>
-                        </ul>
-                      </li>
-                    <% end %>
-                    <% if (can?(:show, Single)) %>
-                      <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#">My Causes</a>
-                        <ul class="dropdown-menu">
-                          <li><%= link_to_if(can?(:create, Single), "Create A Cause", new_single_path) {} %></li>
-                          <% if !current_user.singles.any? %>
-                              <li class="disabled">
-                            <% else %>
-                              <li>
-                          <% end %> 
-                          <%= link_to_if(can?(:index, Single), "View Causes (#{current_user.singles.count})", singles_path) {} %></li>
-                        </ul>
-                      </li>
-                    <% end %>
-                    <li><%= link_to_if(can?(:index, Donation), "Donations I've Caused", donations_path) {} %></li>
-                    <li class="divider"></li>
-                    <li><%= link_to "Settings", edit_user_registration_path(current_user) %></li>
-                    <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-                  </ul>
-                </li>
-            <% end %>
             <% if can? :view_admin_menu, User %>
               <li id="admin-menu" class="dropdown cb-top-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -230,6 +168,68 @@
                   <% end %>
                 </ul>
               </li>
+            <% end %>
+            <% if !signed_in? %>
+                <li class="cb-top-menu cb-navbar-top-menu-item-selected"><%= link_to ("<i class='fa fa-user fa-2x'></i> My Account").html_safe, new_user_session_path%></li>
+              <% else %>
+                <li id="user-menu" class="dropdown cb-top-menu cb-navbar-top-menu-item-selected">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class='fa fa-user fa-2x'></i> My Account<!-- <b class="caret"></b>-->
+                  </a>
+                  <ul class="dropdown-menu">
+                    <% if (can?(:show, Merchant)) %>
+                      <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">My Merchants</a>
+                        <ul class="dropdown-menu">
+                          <li><%= link_to_if(can?(:create, Merchant), "Create A Merchant", new_merchant_path) {} %></li>
+                          <% if !current_user.merchants.any? %>
+                              <li class="disabled">
+                            <% else %>
+                              <li>
+                            <% end %> 
+                          <%= link_to_if(can?(:index, Merchant), "View Merchants (#{current_user.merchants.size})", merchants_path) {} %></li>
+                        </ul>
+                      </li>
+                    <% end %>
+                    <% if (can?(:show, Promotion)) %>
+                      <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">My Promotions</a>
+                        <ul class="dropdown-menu">
+                          <% if !current_user.merchants.any? %>
+                              <li class="disabled">
+                            <% else %>
+                              <li>
+                          <% end %> 
+                          <%= link_to_if(can?(:create, Promotion), "Create A Promotion", new_promotion_path) {} %></li>
+                          <% if !Promotion.exists?(merchant_id: current_user.merchants) %>
+                              <li class="disabled">
+                            <% else %>
+                              <li>
+                          <% end %>
+                          <%= link_to_if(can?(:index, Promotion), "View Promotions (#{Promotion.where(merchant_id: current_user.merchants).count})", promotions_path) {} %></li>
+                        </ul>
+                      </li>
+                    <% end %>
+                    <% if (can?(:show, Single)) %>
+                      <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">My Causes</a>
+                        <ul class="dropdown-menu">
+                          <li><%= link_to_if(can?(:create, Single), "Create A Cause", new_single_path) {} %></li>
+                          <% if !current_user.singles.any? %>
+                              <li class="disabled">
+                            <% else %>
+                              <li>
+                          <% end %> 
+                          <%= link_to_if(can?(:index, Single), "View Causes (#{current_user.singles.count})", singles_path) {} %></li>
+                        </ul>
+                      </li>
+                    <% end %>
+                    <li><%= link_to_if(can?(:index, Donation), "Donations I've Caused", donations_path) {} %></li>
+                    <li class="divider"></li>
+                    <li><%= link_to "Settings", edit_user_registration_path(current_user) %></li>
+                    <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+                  </ul>
+                </li>
             <% end %>
             <li class="cb-top-menu"><%= link_to ("<i class='fa fa-question fa-2x'></i> FAQs").html_safe,    "http://www.causebutton.com/wp/faq" %></li>
             <li class="cb-top-menu"><%= link_to ("<i class='fa fa-envelope fa-2x'></i> Contact Us").html_safe, "http://www.causebutton.com/wp/contact" %></li>
