@@ -694,7 +694,9 @@ function CBSale(amount,transaction_id) {
                 // value is "skip" and the session hasn't changed.
                 if (ServeData.session_count <= 3 && (GetCookie("cbwmodal") != "skip" || SessionChanged)) {
 
-                    var modal_message = "<span style='font-size:24px;font-weight:bold;'>Big News!</span><br/>We're donating up to 20% of our sales to the {{placeholder}}, and you don't need to buy a thing!  Click <img id='cbw-modal-message-img1' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> on any page to learn more.";
+                    //var modal_message = "<span style='font-size:24px;font-weight:bold;'>Big News!</span><br/>We're donating up to 20% of our sales to the {{placeholder}}, and you don't need to buy a thing!  Click <img id='cbw-modal-message-img1' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> on any page to learn more.";
+
+                    var modal_message = "<span style='font-size:24px;font-weight:bold;'>Big News!</span><br/>We're donating up to 20% of our sales to the {{placeholder}}, and you don't need to buy a thing!  Click <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> on any page to learn more.";
 
                     // now check to see if a cblink value was passed in and if so, use the default cause
                     // for this serve in the modal message
