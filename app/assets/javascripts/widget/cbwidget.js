@@ -1175,7 +1175,7 @@ function CBSale(amount,transaction_id) {
 
                 var events_div = $("#cbw-events");
 
-                for (var i in EventData) {
+                for (var i = 0; i < EventData.length; i++) {
 
                     // first, replace the instance index in the patterns with the current index value:
                     var trending_cause = trending_cause_pattern.replace(/\{0\}/g, i);
@@ -1436,7 +1436,7 @@ function CBSale(amount,transaction_id) {
                 CurrentCauseRadioButtonVal = $("[name=cause-type-radio]:checked").val();
 
                 // Replace the links with new ones from server
-                for (var i in ServeData.paths) {
+                for (var i = 0; i < ServeData.paths.length; i++) {
                     // alert(i + " :: " + ServeData.paths[i] + " :: " + data.paths[i] );
                     ServeData.paths[i] = UpdateData.paths[i];
                 };
