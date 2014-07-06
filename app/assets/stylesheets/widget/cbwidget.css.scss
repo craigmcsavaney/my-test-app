@@ -60,7 +60,7 @@ Modal custom styles, all namespaced .cbw
 	vertical-align: middle !important;
 }
 
-.cbw #cbw-modal-1.cbw-modal a.close-modal {
+.cbw #cbw-modal-1.cbw-modal #cbw-close-modal-icon {
   	position: absolute !important;
   	top: -12.5px !important;
   	right: -12.5px !important;
@@ -69,6 +69,7 @@ Modal custom styles, all namespaced .cbw
   	height: 30px !important;
   	text-indent: -9999px !important;
   	background: url(close.png) no-repeat 0 0 !important;
+  	cursor: pointer !important;
 }
 
 /* 

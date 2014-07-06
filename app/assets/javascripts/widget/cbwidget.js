@@ -723,7 +723,8 @@ function CBSale(amount,transaction_id) {
                     //$("#cbw-modal-1").append("<img id='cbw-modal-message-img1' class='cbw-modal-message-img'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img'> on any page to learn more.");
                     //$("#cbw-modal-1").append("<img id='cbw-modal-message-img2' class='cbw-modal-message-img'>");
                     //$("#cbw-modal-1").append("more text here");
-                    closeButton = $('<a href="#close-modal" rel="cbw-modal:close" class="close-modal">' + 'close text' + '</a>');
+                    //closeButton = $('<a href="#close-modal" rel="cbw-modal:close" class="close-modal">' + 'close text' + '</a>');
+                    closeButton = $('<div id="cbw-close-modal-icon" class="cbw-close-modal"></div>');
                     $("#cbw-modal-1").append(closeButton);
 
                     // $("#cbw-modal-message-img").attr('src', CBAssetsBase + 'cb-white-ltblue-15x123.svg');
@@ -2474,7 +2475,7 @@ function CBSale(amount,transaction_id) {
                 }        
             });
 
-            $(document).on('click.cbw-modal', 'a[rel="cbw-modal:close"], .cbw-close-modal', function(event) {
+            $(document).on('click', '.cbw-close-modal', function(event) {
                 $("#cbw-modal-blocker-div").remove();
                 $("#cbw-modal-1").hide();
 
