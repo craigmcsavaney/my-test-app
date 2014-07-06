@@ -496,11 +496,12 @@ module Api
                         return
                 end
 
-                # next, check to ensure that the amount is numeric and does not include more than two digits after the decimal
+                # next, check to ensure that the amount is numeric and does not include more than two digits after the decimal.
+                # Remember that amount is actually a string
                 if !Sale.is_a_number?(params[:amount])
                         render 'api/v1/api/errors/amount_non-numeric'
                         return
-                    elsif !Sale.only_dollars_and_cents(params[:amount].to_f)
+                    elsif !Sale.only_dollars_and_cents(params[:amount])
                         render 'api/v1/api/errors/amount_invalid'
                         return
                 end

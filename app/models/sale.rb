@@ -26,7 +26,15 @@ class Sale < ActiveRecord::Base
   	end
 
   	def self.only_dollars_and_cents(amount)
-	    (100*amount) == (100*amount).to_i
+  		s = amount
+  		l = s.index('.')
+  		if s.length > l+2+1
+  			s[l+2+1,s.length].to_f == 0
+  		else
+  			true
+  		end
+
+	    #(100*amount) == (100*amount).to_i
   	end
 
   	# set_buyer_share_id determines if there is a buyer associated with this sale and if so, sets the buyer_share_id to the share_id associated with the purchase share, but only if this sale is associated with a serve that has been shared (meaning, the purchase was made by a user who had previously viewed the causebutton widget and shared to at least one channel).  Note that there can be a buyer associated with a sale without there being a buyer-directed donation.
