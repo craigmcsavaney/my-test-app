@@ -3,7 +3,8 @@ var CBMerchantID;
 
 function CBSale(amount,transaction_id) {
 
-    CBjQ = window.jQuery;
+//    CBjQ = window.jQuery;
+    CBjQ = window.jq1111;
     CBjQ(document).ready(function($CB) {
 
         var path = GetCookie("cbwpath");
