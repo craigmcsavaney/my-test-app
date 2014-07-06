@@ -773,7 +773,7 @@ function CBSale(amount,transaction_id) {
                     var cbw_transaction_id = $(".cbw-conversion-success").attr('cbw-transaction-id');
                     CBSale(cbw_conversion_amount,cbw_transaction_id);
                 } else if ($(".cbw-conversion-success").length > 1) {
-                    console.log("Too many elements with class .cbw-conversion-success on this page.  There can only be one.")
+                    console.log("Too many elements with class .cbw-conversion-success on this page.  There can only be one.");
                 }
 
             }
@@ -1209,8 +1209,6 @@ function CBSale(amount,transaction_id) {
 
                 // finally, if there are any events in the EventData set, remove the hide class and
                 // replace it with the show class for the div that contains all the trending causes
-                console.log(EventData);
-                console.log(EventData.length());
                 if (show_trending_causes) {
 
                     $("#cbw-cause-select-ctrl-grp").removeClass("cbw-widget-hide");
