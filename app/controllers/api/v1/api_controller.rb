@@ -518,10 +518,21 @@ module Api
                 # next, check to see if the serve associated with this share has either been shared or has a 
                 # referrer.  If either is true, post this sale, but if neither is true we skip it.  
                 if Serve.shared?(share.serve) || Serve.referred?(share.serve)
-                    # This is a qualifying purchase, so create the sale record
-                    Sale.create(share_id: share.id, amount: params[:amount].to_f, transaction_id: params[:transaction_id]);
-                    render 'success'
-                    return
+                    # This is a qualifying purchase.  Check to see if a record for this
+                    # sale already exists.  If so, return the duplicate sale response.  Otherwise,
+                    # create the sale record.
+                    # First, create a new sale record using the current sale amount.  This is necessary
+                    # in order to access the Money method of account_cents, which we need
+                    # to use in the find_by statement that follows:
+                    n = Sale.new(amount: params[:amount].to_f)
+                    if Sale.find_by(share_id: share.id, amount_cents: n.amount_cents, transaction_id: params[:transaction_id]).nil?
+                        Sale.create(share_id: share.id, amount: params[:amount].to_f, transaction_id: params[:transaction_id])
+                        render 'success'
+                        return
+                    else
+                        render 'api/v1/api/errors/duplicate_sale'
+                        return
+                    end
                 else
                     render 'api/v1/api/errors/disqualified_sale'
                     return
