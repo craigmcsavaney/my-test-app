@@ -74,5 +74,9 @@ module Myapplication
     config.secret_key_base = 'f610e803705c6045a6525af28d317b732731f9151d5410be83a063dd6c983e4966ece0975fb26bba8a2f8137d2b102e88d29ab8a947deb128c0bbf9bdaae29d6'
     config.assets.paths << Rails.root.join('app', 'assets', 'javascripts','widget')
     config.assets.paths << Rails.root.join('app', 'assets', 'stylesheets','widget')
+
+    config.action_mailer.default_options = {
+      from: '\'CauseButton\' <craig@causebutton.com>'
+    }
   end
 end

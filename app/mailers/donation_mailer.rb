@@ -1,5 +1,6 @@
 class DonationMailer < ActionMailer::Base
-	default from: 'craig@causebutton.com'
+	# this is the same as the default from address config'd in application.rb.  Probably unnecessary.	
+	default from: '\'CauseButton\' <craig@causebutton.com>'
  
   def donation_email(donation,email)
     @donation = donation
