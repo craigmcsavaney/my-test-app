@@ -39,7 +39,11 @@ class StaticPagesController < ApplicationController
     end
 
     def facebook_success
-      render :layout => false
+      if params[:post_id].nil?
+        render 'facebook_cancel', layout: false
+      else
+        render :layout => false
+      end
     end
 
 end
