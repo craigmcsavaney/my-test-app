@@ -1,10 +1,13 @@
 <li>
-  <% @b= @c= "" %>
+  <% @b= @c= @d= "" %>
   <% if share.cause_id? %>
     <% @b = share.cause_id %>
   <% end %>
   <% if share.post_id? %>
     <% @c = share.post_id %>
+  <% end %>
+  <% if !share.channel.nil? %>
+    <% @d = share.channel.name %>
   <% end %>
   <% if share.confirmed? %>
     <% @a = "Yes" %>
@@ -14,7 +17,8 @@
 	<% @editpath = edit_share_path(share) %>
   	<b><%= :id %>: </b><%= link_to share.id, @editpath %><br/>
   	<b><%= :serve_id %>: </b><%= link_to share.serve_id, @editpath %><br/>
-  	<b><%= :channel_id %>: </b><%= link_to share.channel_id, @editpath %><br/>
+  	<b><%= :channel_id %>: </b><%= link_to share.channel_id, @editpath %>&nbsp;&nbsp;&nbsp;
+    <b><%= :channel_name %>: </b><%= link_to @d, @editpath %><br/>
     <b><%= :cause_id %>: </b><%= link_to @b, @editpath %><br/>
     <b><%= :link_id %>: </b><%= link_to share.link_id, @editpath %><br/>
     <b><%= :confirmed %>: </b><%= link_to @a, @editpath %><br/>
