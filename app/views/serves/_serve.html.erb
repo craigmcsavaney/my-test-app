@@ -4,32 +4,37 @@
     <% else %>
     <% @a = "no" %>
   <% end %>
-  <% @b= @c= "" %>
+  <% @b= @c= @d= @e= @f= "" %>
   <% if serve.session_id? %>
     <% @c = serve.session_id %>
   <% end %>
-  <% if serve.user_id.nil? %>
-      <% @d = @e = "null" %>
-      <% else %>
+  <% if !serve.user_id.nil? %>
       <% @d = serve.user_id %>
       <% @e = serve.email %>
   <% end %>
+  <% if !serve.referring_share_id.nil? %>
+    <% @f = serve.referring_share_id %>
+  <% end %>
 	<% @editpath = edit_serve_path(serve) %>
-  	<b><%= :id %>: </b><%= link_to serve.id, @editpath %><br/>
-  	<b><%= :promotion_id %>: </b><%= link_to serve.promotion_id, @editpath %><br/>
-    <b><%= :name %>: </b><%= link_to serve.promotion.name, @editpath %><br/>
-    <b><%= :user_id %>: </b><%= link_to @d, @editpath %>&nbsp;&nbsp;
-    <b>User Email: </b><%= link_to @e, @editpath %><br/>
-    <b><%= :viewed %>: </b><%= link_to @a, @editpath %><br/>
-    <b><%= :session_id %>: </b><%= link_to @c, @editpath %><br/>
-    <b><%= :shares_count %>: </b><%= link_to serve.shares_count, @editpath %><br/>
-    <b><%= :current_cause_id %>: </b><%= link_to serve.current_cause_id, @editpath %><br/>
-    <b><%= :default_cause_id %>: </b><%= link_to serve.default_cause_id, @editpath %><br/>
-    <b><%= :referring_share_id %>: </b><%= link_to serve.referring_share_id, @editpath %><br/>
-  	<b><%= :created_at %>: </b><%= link_to serve.created_at, @editpath %><br/>
-  	<b><%= :updated_at %>: </b><%= link_to serve.updated_at, @editpath %><br/>
-    <b><%= :serve_count %>: </b><%= link_to serve.serve_count, @editpath %><br/>
-    <b><%= :session_count %>: </b><%= link_to serve.session_count, @editpath %><br/>
+  	<b><%= :serve_id %>: </b><%= serve.id %><br/>
+  	<b><%= :promotion_name %>: </b><%= serve.promotion.name %>&nbsp;&nbsp;&nbsp;  
+    <b><%= :promotion_id %>: </b><%= serve.promotion_id %>&nbsp;&nbsp;&nbsp; 
+    <b><%= link_to "View Promotion", promotion_path(serve.promotion_id) %><br/>
+    <b><%= :user_id %>: </b><%= @d %>&nbsp;&nbsp;&nbsp;
+    <b>User Email: </b><%=  @e %>&nbsp;&nbsp;&nbsp;<br/>
+    <b><%= :default_cause_id %>: </b><%= serve.default_cause_id %>&nbsp;&nbsp;&nbsp;
+    <b><%= :default_cause_name %>: </b><%= Cause.find(serve.default_cause_id).name %><br/>
+    <b><%= :current_cause_id %>: </b><%= serve.current_cause_id %>&nbsp;&nbsp;&nbsp;
+    <b><%= :current_cause_name %>: </b><%= Cause.find(serve.current_cause_id).name %><br/>
+    <b><%= :viewed %>: </b><%=  @a %>&nbsp;&nbsp;&nbsp;
+    <b><%= :session_id %>: </b><%= @c %>&nbsp;&nbsp;&nbsp;
+    <b><%= :session_count %>: </b><%= serve.session_count %><br/>
+    <b><%= :serve_count %>: </b><%= serve.serve_count %>&nbsp;&nbsp;&nbsp;
+    <b><%= :shares_count %>: </b><%= serve.shares_count %>&nbsp;&nbsp;&nbsp;
+    <b><%= link_to "View Shares", serve_shares_path(serve) %><br/>
+    <b><%= :referring_share_id %>: </b><%= @f %><br/>
+  	<b><%= :created_at %>: </b><%= serve.created_at %><br/>
+  	<b><%= :updated_at %>: </b><%= serve.updated_at %><br/>
 
 	<br/>
   	<b>Actions: </b><%= link_to "edit", @editpath %>&nbsp;&nbsp;

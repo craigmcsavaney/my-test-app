@@ -36,6 +36,11 @@ class SharesController < ApplicationController
   	@shares = Share.order('id asc').paginate(page: params[:page])
   end
 
+  def for_serve
+    @shares = Share.where(serve_id: params[:serve_id]).order('id asc').paginate(page: params[:page])
+    render 'index'
+  end
+
   def destroy
     Share.find(params[:id]).destroy
     flash[:success] = "Share deleted"

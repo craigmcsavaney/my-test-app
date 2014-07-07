@@ -55,6 +55,8 @@ Myapplication::Application.routes.draw do
   get '/donations/index_admin',  to: 'donations#index_admin', :as => :donations_admin
   get '/donations/show_admin/:id',  to: 'donations#show_admin', :as => :donation_admin
 
+  get '/serves/:serve_id/shares', to: 'shares#for_serve', :as => :serve_shares
+
   resources :roles
   resources :merchants
   resources :promotions
