@@ -1820,7 +1820,8 @@ function CBSale(amount,transaction_id) {
                 // !!!! Must set channel_path before running UpdateServe, because
                 // UpdateServe will get a new path for this channel, which is the path
                 // that should be used for the next share, not this one.
-                var channel_path = GetChannelPath(ServeData.paths[chname]);
+                var channel_link = ServeData.paths[chname];
+                var channel_path = GetChannelPath(channel_link);
                 var cause_name;
                 var selector_value = $("input[name='cause-type-radio']:checked").val()
                 switch (selector_value) {
@@ -1864,7 +1865,7 @@ function CBSale(amount,transaction_id) {
                         break;
                     
                     case 'facebook':
-                        var redirect_uri = sel_channel.redirect_url;
+                        var redirect_uri = sel_channel.redirect_url + '/' + channel_link;
                         var link_label = sel_channel.link_label;
                         var caption = sel_channel.caption;
                         var url_prefix = sel_channel.url_prefix;

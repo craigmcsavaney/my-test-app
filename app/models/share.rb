@@ -2,7 +2,7 @@ class Share < ActiveRecord::Base
 	include NotDeleteable
 	versioned
 
-	attr_accessible :serve_id, :channel_id, :link_id, :confirmed, :cause_id, :deleted
+	attr_accessible :serve_id, :channel_id, :link_id, :confirmed, :cause_id, :deleted, :post_id
 	
   # following retired with Awe.sm:
   # before_validation :get_awesome_path

@@ -42,7 +42,11 @@ class StaticPagesController < ApplicationController
       if params[:post_id].nil?
         render 'facebook_cancel', layout: false
       else
-        render :layout => false
+        if !params[:cblink].nil? && !Share.find_by(link_id: params[:cblink]).nil?
+          @share = Share.find_by(link_id: params[:cblink])
+          @share.update_attributes(post_id: params[:post_id])
+        end
+        render 'facebook_success', layout: false
       end
     end
 

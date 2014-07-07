@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140701212314) do
+ActiveRecord::Schema.define(version: 20140707015019) do
 
   create_table "button_types", force: true do |t|
     t.string   "name",                        null: false
@@ -313,6 +313,7 @@ ActiveRecord::Schema.define(version: 20140701212314) do
     t.datetime "updated_at",                  null: false
     t.integer  "cause_id"
     t.integer  "sales_count", default: 0
+    t.string   "post_id"
   end
 
   add_index "shares", ["link_id"], name: "index_shares_on_link_id", unique: true, using: :btree
