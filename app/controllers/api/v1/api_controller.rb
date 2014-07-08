@@ -70,48 +70,86 @@ module Api
                         cbcause = Cause.find_by_uid(params[:cbcause_id])
                 end
 
-                # Set the check_date to today.  Used to search for valid promotions
-                check_date = Date.today
+                # Check to see if a valid path was passed in.  If so, we may need to use it in the
+                # next section if it was accompanied by a new referring cause
+                path_valid = Share.path_valid?(params[:path])
 
-                # next, check to see if a valid session_id (one that is associated with
-                # the current merchant) was passed in.  If so, we then need to see if a cbcause
-                # was passed in as well and if it was we need to see if its the same as the
-                # default cause associated with this serve (which will happen when someone clicks
-                # the same link with a cbcause parameter several times to get to the target page) 
-                # or if it is different.  If no cbcause exists or if it is the same, we
-                # just serve up the serve associated with this session_id, but if it is different
-                # we need to create a new serve and use the cbcause that was passed in.
-                if Serve.session_valid?(params[:session_id],merchant)
-                    @serve = Serve.find_by_session_id(params[:session_id])
-                    if !cbcause.nil?
-                        if @serve.default_cause_id != cbcause.id
-                            # this is the case where cbcause was passed in but is different
-                            # than the default cause for the serve associated with this session.
-                            # Create a new serve using old serve stuff with the new
-                            # default cause, and use the new cause as the current cause
-                            # Then return the new serve.
-                            @old = @serve
-                            # @serve = Serve.create(promotion_id: @old.promotion.id, default_cause_id: cbcause.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id)
-                            @serve = Serve.create(promotion_id: @old.promotion.id, default_cause_id: cbcause.id, current_cause_id: cbcause.id, user_id: @old.user_id, serve_count: 1)
-                            render 'serve'
-                            return
-                        end
-                    else 
-                        # this is the case where either no cbcause was passed in, or where it is
-                        # the same as the default cause associated with this serve
-                        # Now we need to check and see if this serve is still servable.  If it
-                        # is we will serve it, but if not we continue.  Note that if we continue
-                        # and there is a valid serve id passed in, if the serve has not been viewed we simply
-                        # replace the promotion pointer in the serve record with the promotion
-                        # id of the new current promotion and leave the serve id the same.  However,
-                        # if the serve has been viewed, a new serve will be created.
-                        if Serve.servable?(@serve)
-                            @serve.update_attributes(serve_count: @serve.serve_count + 1)
-                            render 'serve'
-                            return
-                        end
-                    end
+                # Check to see if a valid session_id.
+                session_valid = Serve.session_valid?(params[:session_id],merchant)
+
+                # Check to see if valid serve_id was passed in.
+                serve_valid = !Serve.not_exists?(params[:serve_id])
+
+                # If either a valid serve or valid session was passed in, get the 
+                # promotion associated with this serve or session
+                case 
+                    when session_valid
+                        @old_serve = Serve.find_by_session_id(params[:session_id])
+                        servable = Serve.servable?(@old_serve)
+
+                    when serve_valid
+                        @old_serve = Serve.find(params[:serve_id])
+                        servable = Serve.servable?(@old_serve)
+
+                    else
+                        @old_serve = nil
+                        servable = false
+
                 end
+ 
+                # Once a visitor has clicked the cause button and we have created a serve and
+                # shares for them, it's possible that they may click one of the share links from
+                # the same browser to test it out.  In this case, they will appear to be coming
+                # from a new referrer but will have an existing valid serve.  We need to check
+                # the new path and see if it's associated with any of the shares 
+                # of the current serve.  If it is, we need to ignore it by treating it as
+                # an invalid path.
+                if !@old_serve.nil? && path_valid && @old_serve.shares.pluck(:link_id).include?(params[:path])
+                        path_valid = false
+                end
+
+                # Now determine if the referring path has changed for existing serves and valid 
+                # incoming paths. The only way this can be true is if a an old serve exists, a
+                # valid path exists, and they are different.  Otherwise, the path does not change
+                if !@old_serve.nil? && path_valid && @old_serve.share.link_id != params[:path]
+                    path_changed = true
+                else
+                    path_changed = false
+                end
+
+                # Check to see if the new cause is different from the default cause (if one exists)
+                # The only way this can be true is if an old serve exists, a valid cbcause exists,
+                # and they are different.  Otherwise, the cause does not change.
+                if !cbcause.nil? && !@old_serve.nil? && @old_serve.default_cause_id != cbcause.id
+                    cause_changed = true
+                else
+                    cause_changed = false
+                end
+
+                # Now, see if the current serve is still servable and the path and cause didn't
+                # change.  Otherwise, we'll have to continue with the longer
+                # and more expensive process of finding the current promotion, then creating 
+                # a new serve or updating the existing one.
+                if servable && !cause_changed && !path_changed
+                    # check to see if the session is still valid
+                    if session_valid
+                        # it is, so update the serve counter 
+                        @old_serve.update_attributes(serve_count: @old_serve.serve_count + 1)
+                        @serve = @old_serve
+                    else
+                        # it's not, so get a new session id and update the old serve with the
+                        # new session id and an updated serve count
+                        session_id = Serve.new_session_id
+                        @old_serve.update_attributes(session_id: session_id, serve_count: @old_serve.serve_count + 1)
+                        @serve = @old_serve
+                    end
+                    # now return the old serve
+                    render 'serve'
+                    return
+                end
+
+                # Set the check_date to today.  Used to search for valid current promotions
+                check_date = Date.today
 
                 # Get merchant's current promotion. If no valid promotion exists, return an error
                 @current = Current.get_current_promotion(check_date,merchant)
@@ -125,15 +163,6 @@ module Api
                 # promotion has been successfully identified.  Now set the promotion variable
                 # equal to the current promotion:
                 @promotion = @current[:promotion]
-                # Check to see if valid serve_id and path were passed in.
-                serve_valid = !Serve.not_exists?(params[:serve_id])
-                path_valid = Share.path_valid?(params[:path])
-                # Now determine if the current promotion is the same as the old promotion
-                if serve_valid && Serve.find(params[:serve_id]).promotion_id == @promotion.id
-                        promotion_same = true
-                    else
-                        promotion_same = false
-                end
 
                 # Now check the causebutton.com user cookie and if it exists, set the variable 
                 # user to the value of the cookie, which will be the email address of the user.
@@ -150,147 +179,85 @@ module Api
                     end
                 end
 
-                # Once a visitor has clicked the cause button and we have created a serve and
-                # shares for them, it's possible that they may click one of the share links to 
-                # test it out.  In this case, they will appear to be coming from a new referring
-                # url.  We need to check the url and see if it's associated with any of the shares 
-                # of the current serve.  If it is, we need to ignore it by treating it as
-                # an invalid path.
-                if serve_valid && path_valid && Serve.find(params[:serve_id]).shares.pluck(:link_id).include?(params[:path])
-                        path_valid = false
-                end
-
-                # Now determine if the referring path has changed for valid serves and valid paths
-                # First, check to see if the current serve and path are valid.  If either is invalid, mark the path_same as false.
-                if serve_valid && path_valid
-                        case 
-                            
-                            # First, check to see if the current serve came from a referral link.  If not, path_same should always be false
-                            when Serve.find(params[:serve_id]).share.nil?
-                                path_same = false
-                            
-                            # Next, check to see if the current serve referring path is equal to the referring path for the new serve request.
-                            when Serve.find(params[:serve_id]).share.link_id == params[:path]
-                                path_same = true
-
-                            # Finally, the current serve had a valid referral path which is different from the referring path for the new serve request.
-                                path_same = false
-
-                        end
-
-                    else
-
-                        path_same = false
-
-                end
-
-                # if serve_valid && path_valid && Serve.find(params[:serve_id]).share.link_id == params[:path]
-                #         path_same = true
-                # else
-                #         path_same = false
-                # end
-
-                # Now, using the serve, path, and promotion variables set above,
+                # Now, using the serve, path, promotion, and cause variables set above,
                 # examine the different cases and take appropriate actions to find, create,
                 # update, and serve the correct promotion to this visitor
                 case
-                    # First case, when serve_id and path weren't passed in or don't match
-                    # existing records.  Typically, this is a first time, non-referred visitor
+                    # First case, when serve_id and path weren't passed in or were invalid.  Typically,
+                    # this is a first time, non-referred visitor or one whose serve cookie has expired,
+                    # or one whose serve can't be matched to an existing serve record.
                     # If a valid cbcause was passed in, use it to set the default cause for the new serve
                     when !serve_valid && !path_valid
+                        # If a valid cbcause was passed in, use it to set the default cause for the new serve.
+                        # Otherwise, use the cause associated with the promotion
                         if !cbcause.nil?
                             new_cause_id = cbcause.id
                         else
                             new_cause_id = @promotion.cause_id
                         end
                         # create a new serve using the current promotion
+                        # Note that the current cause will be set to the default cause before validation
+                        # by the serve model
                         @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, user_id: user_id, serve_count: 1)
-                        # @serve = Serve.create(promotion_id: @promotion.id)
 
                     # Second case, when serve_id is invalid and path is valid. Typically, this is a first time,
                     # referred visitor.  Since they are referred, we use the default cause of the serve
                     # from the referring share as the default cause for the new serve.
-                    # If they happen to show up with a valid cbcause, use it to set the default cause for the
-                    # new serve.  However, this is highly unlikely and should never happen in normal use.
+                    # However, if they show up with a valid cbcause, use it to set the default cause for the
+                    # new serve.  
                     when !serve_valid && path_valid
                         # create a new serve using the current promotion and the share_id associated with the path
                         # first, get the share associated with the referring path
                         @referring_share = Share.find_by_link_id(params[:path])
                         # now check to see if there's a valid cbcause and if so use it as the default cause
+                        # Otherwise, use the referrer's default cause
                         if !cbcause.nil?
                             new_cause_id = cbcause.id
                         else
                             new_cause_id = @referring_share.serve.default_cause_id
                         end
-                        # now, create the new serve
+                        # Note that the current cause will be set to the default cause before validation
+                        # by the serve model.
+                        # Now, create the new serve
                         @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @referring_share.id, user_id: user_id, serve_count: 1)
-                        # @serve = Serve.create(promotion_id: @promotion.id, referring_share_id: @referring_share.id)
 
-                    # Third case, when the serve is valid (implied, as the not valid cases are handled above)
-                    # and the current promotion hasn't changed, but either the path is invalid or is the same
-                    # as the stored referring path.  In either case, this is a returning visitor who may have
-                    # viewed and interacted with the widget, and we going to serve up the previous Serve.  
-                    # If they happen co have a valid cbcause on this return visit, we're going to update the
-                    # serve with a new default cause.
-                    when promotion_same && (!path_valid || path_same)
-                        if !cbcause.nil?
-                            new_cause_id = cbcause.id
-                        else
-                            new_cause_id = Serve.find(params[:serve_id]).default_cause_id
-                        end
-                        # we're just going to serve up the old promotion here, but with a new session_id and
-                        # maybe a new default_cause_id if a valid one was passed in
-                        session_id = Serve.new_session_id
-                        Serve.find(params[:serve_id]).update_attributes(session_id: session_id, default_cause_id: new_cause_id)
-                        @serve = Serve.find(params[:serve_id]) # reload the old serve with the new session_id
-                        @serve.update_attributes(serve_count: @serve.serve_count + 1)
-
-                    # Fourth case, when the serve is valid (implied, as the not valid cases are handled above) but the incoming path is new (and valid)
-                    # This means the visitor is returning to the same site, but was referred here
-                    # by someone new.
-                    # If they happen to show up with a valid cbcause, use it to set the default cause for the
-                    # new serve.  However, this is highly unlikely and should never happen in normal use.
-                    when path_valid && !path_same
-                        # We're going to create a new serve for this visitor using the new path information (which exists because the path is valid) and copy over the cause and user info from the previous serve if possible.  TO DO: if the previous serve wasn't viewed, we'll delete it and all its shares.
-                        @old = Serve.find(params[:serve_id])
-                        if !cbcause.nil?
-                            new_cause_id = cbcause.id
-                        else
-                            new_cause_id = @old.default_cause_id
-                        end
-                        @referring_share = Share.find_by_link_id(params[:path])
-                        @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @referring_share.id, current_cause_id: @old.current_cause_id, user_id: @old.user_id, serve_count: 1)
-
-                        #if !@old.viewed?
-                            # delete the old serve and its associated shares
-                        #end
-
-                    # Fifth case, when the serve is valid (implied, as the not valid cases are handled above), the promotion has changed, and the path is either invalid or is the same as the stored referring path
-                    when !promotion_same && (!path_valid || path_same)
-                        # This is basically the case where the promotion has changed, so if the
-                        # serve hasn't been viewed yet, we'll just update it with the new promotion
-                        # and a new session_id.
-                        # If the serve has been viewed, we'll create a new serve and copy over the
-                        # cause, user_id, and referring_share info if possible.
-                        # In either case, if the visitor happens to show up with a valid cbcause, we'll use it to
-                        # either update the existing serve or to be the default cause for the new serve.
-                        @old = Serve.find(params[:serve_id])
-                        if !cbcause.nil?
-                            new_cause_id = cbcause.id
-                        else
-                            new_cause_id = @old.default_cause_id
-                        end
-                        if @old.viewed?
-                            @serve = Serve.create(promotion_id: @promotion.id, default_cause_id: new_cause_id, referring_share_id: @old.referring_share_id, current_cause_id: @old.current_cause_id, user_id: @old.user_id, serve_count: 1)
-                        else
-                            session_id = Serve.new_session_id
-                            Serve.find(params[:serve_id]).update_attributes(promotion_id: @promotion.id, session_id: session_id, default_cause_id: new_cause_id)
-                            @serve = Serve.find(params[:serve_id])
-                            @serve.update_attributes(serve_count: @serve.serve_count + 1)
-                        end
+                    # If we made it to this point, the serve is valid (implied, as the not valid cases
+                    # are handled above), so @old_serve exists, and the old serve may or may not be
+                    # servable and/or the cause changed and/or the referrer changed.
+                    # This section covers all of those possible combinations, and all of these will result
+                    # in a new serve being created using some elements of the old serve.
                     else
-                        render 'api/v1/api/errors/unrecognized_case'
-                        return
+                        # If the old promotion is not servable, use the new current promotion, otherwise use the
+                        # promotion associated with the old serve
+                        if !servable
+                            # use current promotion
+                            promotion_id = @promotion.id
+                        else
+                            # use promotion associated with old serve
+                            promotion_id = @old_serve.promotion_id
+                        end
+
+                        if path_changed
+                            # use the new path
+                            referring_share_id = Share.find_by_link_id(params[:path]).id 
+                        else
+                            # use the path associated with the old serve
+                            referring_share_id = @old_serve.referring_share_id
+                        end
+
+                        if cause_changed
+                            # use the new cause as the default and current causes
+                            default_cause_id = cbcause.id
+                            current_cause_id = cbcause.id
+                        else
+                            # use the default and current causes associated with the old serve
+                            default_cause_id = @old_serve.default_cause_id
+                            current_cause_id = @old_serve.current_cause_id
+                        end
+
+                        # now create the new serve using the appropriate values
+                        @serve = Serve.create(promotion_id: promotion_id, default_cause_id: default_cause_id, referring_share_id: referring_share_id, current_cause_id: current_cause_id, user_id: @old_serve.user_id, serve_count: 1)
+
                 end
                 puts @serve.id
                 render 'serve'
