@@ -81,7 +81,7 @@ module Api
                 serve_valid = !Serve.not_exists?(params[:serve_id])
 
                 # If either a valid serve or valid session was passed in, get the 
-                # promotion associated with this serve or session
+                # serve associated with this serve or session
                 case 
                     when session_valid
                         @old_serve = Serve.find_by_session_id(params[:session_id])
@@ -96,6 +96,17 @@ module Api
                         servable = false
 
                 end
+
+                # if an @old_serve exists, check to see if it has a referral share.  If it
+                # does, get the link id for that share, otherwise use nil.  This ensures
+                # that if there is no referral share the function doesn't blow up when 
+                # we try to fetch a non-existent link_id
+                if !@old_serve.nil? && !@old_serve.share.nil?
+                    old_referrer_link_id = @old_serve.share.link_id
+                else
+                    old_referrer_link_id = nil
+                end
+
  
                 # Once a visitor has clicked the cause button and we have created a serve and
                 # shares for them, it's possible that they may click one of the share links from
@@ -109,9 +120,9 @@ module Api
                 end
 
                 # Now determine if the referring path has changed for existing serves and valid 
-                # incoming paths. The only way this can be true is if a an old serve exists, a
+                # incoming paths. The only way this can be true is if an old serve exists, a
                 # valid path exists, and they are different.  Otherwise, the path does not change
-                if !@old_serve.nil? && path_valid && @old_serve.share.link_id != params[:path]
+                if !@old_serve.nil? && path_valid && old_referrer_link_id != params[:path]
                     path_changed = true
                 else
                     path_changed = false
