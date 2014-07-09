@@ -741,7 +741,7 @@ function CBSale(amount,transaction_id) {
                         width: "100%", height: "100%",
                         position: "fixed",
                         zIndex: 9999,
-                        background: "#666",
+                        background: "#333",
                         opacity: .75
                     });
 
