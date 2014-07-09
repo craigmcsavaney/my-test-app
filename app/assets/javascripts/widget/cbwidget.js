@@ -630,50 +630,51 @@ function CBSale(amount,transaction_id) {
                 // if (!AutoButton || AutoButton == "") {
                 //     AutoButton = ServeData.merchant.auto_button;
                 // }
-
-                // // following validates the auto button setting that might have been received from the
-                // // API.serve response.  Returns the value if valid or an empty string if not.
-                // AutoButton = ValidateAutoButton(AutoButton);
-                // console.log(AutoButton);
-                if (AutoButton == "test") {
-                    if ($(".cbw-auto-button-test-right").length > 0) {
-                        AutoButton = "right";
-                    } else if ($(".cbw-auto-button-test-left").length > 0) {
-                        AutoButton = "left";
+                if (!$('#cbw-modal-1').is(":visible")) {
+                    // // following validates the auto button setting that might have been received from the
+                    // // API.serve response.  Returns the value if valid or an empty string if not.
+                    // AutoButton = ValidateAutoButton(AutoButton);
+                    // console.log(AutoButton);
+                    if (AutoButton == "test") {
+                        if ($(".cbw-auto-button-test-right").length > 0) {
+                            AutoButton = "right";
+                        } else if ($(".cbw-auto-button-test-left").length > 0) {
+                            AutoButton = "left";
+                        }
                     }
-                }
 
-                // Now, check to see if the AutoButton value is either left or right.  If it is none
-                // or blank we skip the AutoButton entirely.
-                if (AutoButton == "left" || AutoButton == "right") {
-                    $("<div id=\"cbw-button-div\">").html( "<div id='cbw-button-side' class='cbw-button-side cbw-main-btn'></div>" ).appendTo(div);
-                    $("#cbw-button-side").append( "<img id='cbw-button-side-img1' class='cbw-button-side-img'>" );
-                    $("#cbw-button-side-img1").attr('src', CBAssetsBase + 'cause-86x40.png');
+                    // Now, check to see if the AutoButton value is either left or right.  If it is none
+                    // or blank we skip the AutoButton entirely.
+                    if (AutoButton == "left" || AutoButton == "right") {
+                        $("<div id=\"cbw-button-div\">").html( "<div id='cbw-button-side' class='cbw-button-side cbw-main-btn'></div>" ).appendTo(div);
+                        $("#cbw-button-side").append( "<img id='cbw-button-side-img1' class='cbw-button-side-img'>" );
+                        $("#cbw-button-side-img1").attr('src', CBAssetsBase + 'cause-86x40.png');
 
-                    switch (AutoButton) {
-                        case "left":
-                            $("#cbw-button-side").css({
-                                position: 'fixed',
-                                top: "50%",
-                                left: "0%",
-                                marginTop: - ($("#cbw-button-side-img1").outerHeight(true) / 2),
-                                marginLeft: - ($("#cbw-button-side-img1").outerWidth(true)),
-                                zIndex: 9998
-                            });
-                            $("#cbw-button-side").animate({ "marginLeft": "+=86px" }, "slow");
-                        break;
+                        switch (AutoButton) {
+                            case "left":
+                                $("#cbw-button-side").css({
+                                    position: 'fixed',
+                                    top: "50%",
+                                    left: "0%",
+                                    marginTop: - ($("#cbw-button-side-img1").outerHeight(true) / 2),
+                                    marginLeft: - ($("#cbw-button-side-img1").outerWidth(true)),
+                                    zIndex: 9998
+                                });
+                                $("#cbw-button-side").animate({ "marginLeft": "+=86px" }, "slow");
+                            break;
 
-                        case "right":
-                            $("#cbw-button-side").css({
-                                position: 'fixed',
-                                top: "50%",
-                                right: "0%",
-                                marginTop: - ($("#cbw-button-side-img1").outerHeight(true) / 2),
-                                marginRight: - ($("#cbw-button-side-img1").outerWidth(true)),
-                                zIndex: 9998
-                            });
-                            $("#cbw-button-side").animate({ "marginRight": "+=86px" }, "slow");
-                        break;
+                            case "right":
+                                $("#cbw-button-side").css({
+                                    position: 'fixed',
+                                    top: "50%",
+                                    right: "0%",
+                                    marginTop: - ($("#cbw-button-side-img1").outerHeight(true) / 2),
+                                    marginRight: - ($("#cbw-button-side-img1").outerWidth(true)),
+                                    zIndex: 9998
+                                });
+                                $("#cbw-button-side").animate({ "marginRight": "+=86px" }, "slow");
+                            break;
+                        }
 
                     }
                 }
@@ -697,17 +698,18 @@ function CBSale(amount,transaction_id) {
 
                     //var modal_message = "<span style='font-size:24px;font-weight:bold;'>Big News!</span><br/>We're donating up to 20% of our sales to the {{placeholder}}, and you don't need to buy a thing!  Click <img id='cbw-modal-message-img1' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> on any page to learn more.";
 
-                    var modal_message = "<span style='font-size:24px;font-weight:bold;'>Big News!</span><br/>We're donating up to 20% of our sales to the {{placeholder}}, and you don't need to buy a thing!  Click <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> on any page to learn more.";
+                    var modal_message1 = "<span style='font-size:24px;font-weight:bold;'>Welcome, friend of {{placeholder}}!</span><br/>We're donating up to 20% of our sales to the cause of your choice, and you don't need to buy a thing!  Click any <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> to learn more.";
 
+                    var modal_message2 = "<span style='font-size:24px;font-weight:bold;'>Big News!</span><br/>We're donating up to 20% of our sales to the charitable cause of your choice, and you don't need to buy a thing!  Click any <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> to learn more.";
                     // now check to see if a cblink value was passed in and if so, use the default cause
                     // for this serve in the modal message
                     if (CBCauseID && CBCauseID != "") {
-                        modal_message = modal_message.replace("{{placeholder}}", ServeData.default_cause_name);
+                        modal_message = modal_message1.replace("{{placeholder}}", ServeData.default_cause_name);
                         // Fix duplicate "the"s, and the "the a"s
-                        FixCauseNames(modal_message);
+                        // FixCauseNames(modal_message);
                     } else {
                         // otherwise, just use the standard messaging
-                        modal_message = modal_message.replace("{{placeholder}}", "charitable cause of your choice");
+                        modal_message = modal_message2;
                     }
                     
                     // add the div that contains the modal, then add the text, css, and close button to the modal div
@@ -739,7 +741,7 @@ function CBSale(amount,transaction_id) {
                         width: "100%", height: "100%",
                         position: "fixed",
                         zIndex: 9999,
-                        background: "#000",
+                        background: "#666",
                         opacity: .75
                     });
 
@@ -2479,6 +2481,7 @@ function CBSale(amount,transaction_id) {
             $(document).on('click', '.cbw-close-modal', function(event) {
                 $("#cbw-modal-blocker-div").remove();
                 $("#cbw-modal-1").hide();
+                ShowAutoButton();
 
             });
 

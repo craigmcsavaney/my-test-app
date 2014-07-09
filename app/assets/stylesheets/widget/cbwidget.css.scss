@@ -39,7 +39,8 @@ Modal custom styles, all namespaced .cbw
   	display: none;
   	width: 400px !important;
   	background: #fff !important;
-  	padding: 15px 30px !important;
+  	background: url(modal-background-1.gif) no-repeat 0 -100px !important;
+  	padding: 30px 40px !important;
   	-webkit-border-radius: 8px !important;
   	-moz-border-radius: 8px !important;
   	-o-border-radius: 8px !important;
@@ -49,11 +50,13 @@ Modal custom styles, all namespaced .cbw
   	-moz-box-shadow: 0 0 10px #000 !important;
   	-o-box-shadow: 0 0 10px #000 !important;
   	-ms-box-shadow: 0 0 10px #000 !important;
-  	box-shadow: 0 0 10px #000 !important;
+  	/*box-shadow: 0 0 10px #000 !important;*/
+  	/*box-shadow: 0 0 10px #38a193 !important;*/
   	font-family: 'Montserrat', sans-serif !important;
-  	line-height: 20px !important;
-  	font-size: 14px !important;
+  	line-height: 30px !important;
+  	font-size: 18px !important;
   	color: #333333 !important;
+  	border: 3px solid white !important;
 }
 
 .cbw .cbw-modal-message-img {
