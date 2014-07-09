@@ -19,7 +19,7 @@
   	<b><%= :serve_id %>: </b><%= serve.id %><br/>
   	<b><%= :promotion_name %>: </b><%= serve.promotion.name %>&nbsp;&nbsp;&nbsp;  
     <b><%= :promotion_id %>: </b><%= serve.promotion_id %>&nbsp;&nbsp;&nbsp; 
-    <b><%= link_to "View Promotion", promotion_path(serve.promotion_id) %><br/>
+    <b><%= link_to "View Promotion", promotion_path(serve.promotion_id) %></b><br/>
     <b><%= :user_id %>: </b><%= @d %>&nbsp;&nbsp;&nbsp;
     <b>User Email: </b><%=  @e %>&nbsp;&nbsp;&nbsp;<br/>
     <b><%= :default_cause_id %>: </b><%= serve.default_cause_id %>&nbsp;&nbsp;&nbsp;
@@ -31,7 +31,7 @@
     <b><%= :session_count %>: </b><%= serve.session_count %><br/>
     <b><%= :serve_count %>: </b><%= serve.serve_count %>&nbsp;&nbsp;&nbsp;
     <b><%= :shares_count %>: </b><%= serve.shares_count %>&nbsp;&nbsp;&nbsp;
-    <b><%= link_to "View Shares", serve_shares_path(serve) %><br/>
+    <b><%= link_to "View Shares", serve_shares_path(serve) %></b><br/>
     <b><%= :referring_share_id %>: </b><%= @f %><br/>
   	<b><%= :created_at %>: </b><%= serve.created_at %><br/>
   	<b><%= :updated_at %>: </b><%= serve.updated_at %><br/>
