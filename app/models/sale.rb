@@ -52,8 +52,8 @@ class Sale < ActiveRecord::Base
 				supporter_share_id = self.serve.share.id
 
 			# second case, when the purchase was made by a non-referred visitor that had viewed the CB Widget and had shared the promotion through at least one channel, but the promotion does not offer any buyer-directed incentive.  In this case, we give the buyer credit for being a supporter that basically referred themselves to the site.
-			when self.serve.promotion.buyer_pct == 0
-				supporter_share_id = self.share.id
+			# when self.serve.promotion.buyer_pct == 0
+			# 	supporter_share_id = self.share.id
 
 			# in the case where the buyer was not referred and did share the serve before making a purchase, but there is a buyer-directed donation associated with this promotion, we do not treat the buyer as a supporter.  The buyer will only get credit for the buyer contribution and there will be no supporter-directed contribution.  No action is necessary as the supporter_share_id is already nil.
 

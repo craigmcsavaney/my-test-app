@@ -46,7 +46,13 @@ class Donation < ActiveRecord::Base
 			if !self.buyer_id.nil?
 				DonationMailer.supporter_donation_buyer_email(self,self.buyer.email).deliver
 			end
-		elsif self.chosen_by == "supporter buyer" || self.chosen_by == "buyer"
+		elsif self.chosen_by == "supporter buyer"
+			# Send emails to the buyer associated with this donation.  Remember that the buyer is also the supporter because this is a self-referral after sharing, and there will be no supporter user so only need to send an email to the buyer user if present.  Note that the same email template is used as the one we send to buyers when a buyer donation occurs.
+			# if there is a buyer user associated with this donation, get their email and send the message.
+			if !self.buyer_id.nil?
+				DonationMailer.buyer_donation_buyer_email(self,self.buyer.email).deliver
+			end
+		elsif self.chosen_by == "buyer"
 			# Send emails to the supporter and/or buyer associated with this donation
 			# if there is a supporter user associated with this donation, get their email and send the message.
 			if !self.supporter_id.nil?
