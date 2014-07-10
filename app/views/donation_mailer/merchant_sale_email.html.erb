@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Congratulations!</h1>
+    <p>
+      Your CauseButton promotion just resulted in another sale!  Here are the donation details:
+
+      <% if @merchant_donation.amount_cents > 0 %>
+        Merchant-directed donation: $<%= (@merchant_donation.amount_cents/100).to_f > 0 %>
+        Merchant's selected Cause: <%= @merchant_donation.cause.name %>
+      <% end %>
+
+      <% if @supporter_donation.amount_cents > 0 %>
+        Supporter-directed donation: $<%= (@supporter_donation.amount_cents/100).to_f > 0 %>
+        Supporter's selected Cause: <%= @suppporter_donation.cause.name %>
+      <% end %>
+
+      <% if @buyer_donation.amount_cents > 0 %>
+        Buyer-directed donation: $<%= (@buyer_donation.amount_cents/100).to_f > 0 %>
+        BUyer's selected Cause: <%= @buyer_donation.cause.name %>
+      <% end %>
+
+      Total Donations for this sale: $<%= @total %>
+
+    </p>
+    <p>
+      To view this and all of your sales and their donations, go to <%= @url %>.
+    </p>
+  </body>
+</html>

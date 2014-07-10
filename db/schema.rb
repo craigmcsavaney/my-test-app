@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707015019) do
+ActiveRecord::Schema.define(version: 20140710215135) do
 
   create_table "button_types", force: true do |t|
     t.string   "name",                        null: false
@@ -246,7 +246,6 @@ ActiveRecord::Schema.define(version: 20140707015019) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.integer  "supporter_share_id"
-    t.integer  "buyer_share_id"
   end
 
   create_table "serves", force: true do |t|

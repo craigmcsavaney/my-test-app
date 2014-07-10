@@ -1,8 +1,0 @@
-You caused another donation!
-===============================================
- 
-Congratulations!
-
-Your<% if @donation.chosen_by != "supporter" %> purchase <% end %><% if @donation.chosen_by == "merchant" %>or<% end %><% if @donation.chosen_by != "buyer" %> promotional support <% end %>just caused <%= @donation.merchant.name %> to make a donation to <%= @donation.cause.name %> in the amount of $<%= @donation.amount %> on your behalf.
-
-To learn more about CauseButton, go to <%= @url %>.

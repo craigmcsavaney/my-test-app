@@ -11,7 +11,7 @@ class Share < ActiveRecord::Base
   belongs_to :serve, counter_cache: true
 	belongs_to :channel
   belongs_to :cause
-  has_many :serves
+  has_many :serves, foreign_key: "referring_share_id"
   has_many :sales
   delegate :promotion, :to => :serve, :allow_nil => true
 

@@ -26,18 +26,52 @@ class Donation < ActiveRecord::Base
 
 	private
 	def send_donation_email
-		if !self.chooser_id.nil?
-			DonationMailer.donation_email(self,self.chooser.email).deliver
-		elsif self.chosen_by = "merchant"
-			if !self.buyer_id.nil?
-				DonationMailer.donation_email(self,self.buyer.email).deliver
-			end
-
+		if self.chosen_by == "merchant"
+			# Send emails to the supporter and/or buyer associated with this donation
+			# if there is a supporter user associated with this donation, get their email and send the message.
 			if !self.supporter_id.nil?
-				DonationMailer.donation_email(self,self.supporter.email).deliver
+				DonationMailer.merchant_donation_supporter_email(self,self.supporter.email).deliver
+			end
+			# if there is a buyer user associated with this donation, get their email and send the message.
+			if !self.buyer_id.nil?
+				DonationMailer.merchant_donation_buyer_email(self,self.buyer.email).deliver
+			end
+		elsif self.chosen_by == "supporter"
+			# Send emails to the supporter and/or buyer associated with this donation
+			# if there is a supporter user associated with this donation, get their email and send the message.
+			if !self.supporter_id.nil?
+				DonationMailer.supporter_donation_supporter_email(self,self.supporter.email).deliver
+			end
+			# if there is a buyer user associated with this donation, get their email and send the message.
+			if !self.buyer_id.nil?
+				DonationMailer.supporter_donation_buyer_email(self,self.buyer.email).deliver
+			end
+		elsif self.chosen_by == "supporter buyer" || self.chosen_by == "buyer"
+			# Send emails to the supporter and/or buyer associated with this donation
+			# if there is a supporter user associated with this donation, get their email and send the message.
+			if !self.supporter_id.nil?
+				DonationMailer.buyer_donation_supporter_email(self,self.supporter.email).deliver
+			end
+			# if there is a buyer user associated with this donation, get their email and send the message.
+			if !self.buyer_id.nil?
+				DonationMailer.buyer_donation_buyer_email(self,self.buyer.email).deliver
 			end
 		end
 	end
+
+	# end
+	# 	if !self.chooser_id.nil?
+	# 		DonationMailer.donation_email(self,self.chooser.email).deliver
+	# 	elsif self.chosen_by == "merchant"
+	# 		if !self.buyer_id.nil?
+	# 			DonationMailer.donation_email(self,self.buyer.email).deliver
+	# 		end
+
+	# 		if !self.supporter_id.nil?
+	# 			DonationMailer.donation_email(self,self.supporter.email).deliver
+	# 		end
+	# 	end
+	# end
 
 
 end

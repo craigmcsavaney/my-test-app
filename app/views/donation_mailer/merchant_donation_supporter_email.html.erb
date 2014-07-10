@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Congratulations!</h1>
+    <p>
+      You shared your support for <%= @donation.merchant.name %> with your friends, and one of them has just made a purchase!  You caused <%= @donation.merchant.name %> to make a donation to <%= @donation.cause.name %> (the merchant's selected cause) in the amount of $<%= @donation.amount %> on your behalf.<br/>
+    </p>
+    <p>
+      To view this and all the donations you've caused, go to <%= @url %>.
+    </p>
+  </body>
+</html>

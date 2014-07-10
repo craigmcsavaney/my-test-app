@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Congratulations!</h1>
+    <p>
+      Your purchase at <%= @donation.merchant.name %> just caused <%= @donation.merchant.name %> to make a donation to <%= @donation.cause.name %> (the cause you selected) in the amount of $<%= @donation.amount %> on your behalf!<br/>
+    </p>
+    <p>
+      To view this and all the donations you've caused, go to <%= @url %>.
+    </p>
+  </body>
+</html>
