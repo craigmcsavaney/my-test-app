@@ -42,7 +42,8 @@ class DonationsController < ApplicationController
 
   def index
     @user = current_user
-    @donations = Donation.where("chooser_id = ? or buyer_id = ? or supporter_id = ?",@user.id,@user.id,@user.id).order('created_at desc').paginate(page: params[:page])
+    merchant_ids = @user.merchants.pluck(:id)
+    @donations = Donation.where("buyer_id = ? or supporter_id = ? or merchant_id in (?)",@user.id,@user.id,merchant_ids).order('created_at desc').paginate(page: params[:page])
   end
 
   def index_admin

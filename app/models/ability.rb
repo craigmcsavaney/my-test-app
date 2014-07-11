@@ -48,7 +48,8 @@ class Ability
         if user.role? :user
             # Donation permissions
             can [:index, :show], Donation do |donation|
-                donation.users.include?(user)
+                #donation.users.include?(user)
+                donation.buyer == user || donation.supporter == user or donation.merchant.users.include?(user)
             end
         end
 
