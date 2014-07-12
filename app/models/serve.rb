@@ -31,8 +31,17 @@ class Serve < ActiveRecord::Base
   after_validation :replace_nils, :get_current_cause
 
 	after_commit :create_all_shares, on: :create
+  after_commit :update_referral_counter, on: :create
 
   #before_save :get_session_id
+
+  def update_referral_counter
+    if !self.referring_share_id.nil?
+      referring_serve = Serve.find(self.share.serve)
+      old_referral_count = referring_serve.referral_count
+      referring_serve.update_attribute(:referral_count, old_referral_count + 1)
+    end
+  end
 
   def self.cause_changed?(serve,new_cause_id)
     # check to see if the new cause is different from the current cause value.

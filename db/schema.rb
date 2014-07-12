@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140710215135) do
+ActiveRecord::Schema.define(version: 20140712215805) do
 
   create_table "button_types", force: true do |t|
     t.string   "name",                        null: false
@@ -262,6 +262,7 @@ ActiveRecord::Schema.define(version: 20140710215135) do
     t.integer  "default_cause_id",                   null: false
     t.integer  "serve_count",                        null: false
     t.integer  "session_count",                      null: false
+    t.integer  "referral_count",     default: 0,     null: false
   end
 
   add_index "serves", ["session_id"], name: "index_serves_on_session_id", unique: true, using: :btree
