@@ -1,8 +1,9 @@
 class Share < ActiveRecord::Base
-	include NotDeleteable
+	#include NotDeleteable
 	versioned
 
-	attr_accessible :serve_id, :channel_id, :link_id, :confirmed, :cause_id, :deleted, :post_id
+	attr_accessible :serve_id, :channel_id, :link_id, :confirmed, :cause_id, :deleted, :post_id, :updated_at
+  # need access to :updated_at for the rake task
 	
   # following retired with Awe.sm:
   # before_validation :get_awesome_path

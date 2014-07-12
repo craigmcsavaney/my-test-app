@@ -1,6 +1,6 @@
 class Serve < ActiveRecord::Base
 	include SecureRandom
-  include NotDeleteable
+  #include NotDeleteable
 	versioned
 
 	attr_accessible :promotion_id, :referring_share_id, :viewed, :session_id, :current_cause_id, :id, :user_id, :default_cause_id, :serve_count, :session_count

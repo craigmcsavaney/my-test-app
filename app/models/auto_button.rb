@@ -5,4 +5,5 @@ class AutoButton < List
   	attr_accessible :name, :description, :order, :deleted
 
   	has_many :merchants
+
 end

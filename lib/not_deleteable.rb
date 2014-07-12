@@ -4,18 +4,13 @@ module NotDeleteable
       raise MissingMigrationException
     end
 
-
-#    self.update_attribute :deleted, true  this is the original line
     self.update_attributes( :deleted => true )
+#    self.update_attribute :deleted, true  this is the original line
   end
-
-
 
   def delete
     self.destroy
   end
-
-
 
   def self.included(base)
     base.class_eval do
