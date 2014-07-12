@@ -16,7 +16,7 @@ namespace :cleanup do
 	task :serves => :environment do
 		b = 0
 		Serve.all.each do |serve|
-			if serve.sales.count == 0 && serve.shares.count == 0 && ((!serve.viewed && serve.updated_at < Time.now-86400) || (!Serve.shared?(serve) && serve.updated_at < Date.today-31))
+			if serve.sales.count == 0 && serve.shares.count == 0 && !Serve.referred?(serve) && ((!serve.viewed && serve.updated_at < Time.now-86400) || (!Serve.shared?(serve) && serve.updated_at < Date.today-31))
 				b = b + 1
 				serve.destroy
 			end
@@ -54,7 +54,7 @@ namespace :cleanup do
 	task :serves_count => :environment do
 		b = 0
 		Serve.all.each do |serve|
-			if serve.sales.count == 0 && serve.shares.count == 0 && ((!serve.viewed && serve.updated_at < Time.now-86400) || (!Serve.shared?(serve) && serve.updated_at < Date.today-31))
+			if serve.sales.count == 0 && serve.shares.count == 0 && !Serve.referred?(serve) && ((!serve.viewed && serve.updated_at < Time.now-86400) || (!Serve.shared?(serve) && serve.updated_at < Date.today-31))
 				b = b + 1
 			end
 		end
