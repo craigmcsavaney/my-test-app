@@ -10,7 +10,7 @@ class Serve < ActiveRecord::Base
   belongs_to :cause, foreign_key: "current_cause_id"
   belongs_to :cause, foreign_key: "default_cause_id"
   belongs_to :user
-  has_many :shares
+  has_many :shares, dependent: :destroy
   has_many :sales, through: :shares
   delegate :merchant, to: :promotion, allow_nil: true
   delegate :email, to: :user, allow_nil: true
