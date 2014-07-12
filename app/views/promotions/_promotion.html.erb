@@ -115,7 +115,7 @@
 	<% else %>
 		This is not the current promotion for this merchant.  See promotion #<%= @current_promotion.id %><br/>
 	<% end %>	
-    <b><%= :serves_count %>: </b><%= @m %>&nbsp;&nbsp;&nbsp;
+    <b><%= :serves_count %>: </b><%= promotion.serves_count %>&nbsp;&nbsp;&nbsp;
     <% if @m > 0 %>
     <b><%= link_to "View Serves", promotion_serves_path(promotion) %></b>
     <% end %>
