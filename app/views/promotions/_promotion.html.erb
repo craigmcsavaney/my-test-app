@@ -56,8 +56,14 @@
 		<% else %>
 		<% @l = "no" %>
 	<% end %>
-	<b>Promotion Name: </b><%= link_to promotion.name, @editpath %>&nbsp;&nbsp;
-	<b>Merchant Name: </b><%= link_to promotion.merchant.name, @editpath %><br/>
+  	<% if promotion.serves.count == 0 %>
+    	<% @m = 0 %>
+    	<% else %>
+    	<% @m = promotion.serves.count %>
+  	<% end %>
+  	<b>Promotion Name: </b><%= link_to promotion.name, @editpath %>&nbsp;&nbsp;&nbsp;
+	<b>Merchant Name: </b><%= link_to promotion.merchant.name, @editpath %>&nbsp;&nbsp;&nbsp;
+    <b><%= link_to "View Merchant", merchant_path(promotion.merchant_id) %></b><br/>
 	<b>Promotion Title: </b><%= promotion.title %><br/>
 	<b>Promotion Banner Template: </b><%= promotion.banner_template %><br/>
 	<b>Promotion Banner: </b><%= promotion.banner %><br/>
@@ -109,6 +115,11 @@
 	<% else %>
 		This is not the current promotion for this merchant.  See promotion #<%= @current_promotion.id %><br/>
 	<% end %>	
+    <b><%= :serves_count %>: </b><%= @m %>&nbsp;&nbsp;&nbsp;
+    <% if @m > 0 %>
+    <b><%= link_to "View Serves", promotion_serves_path(promotion) %></b>
+    <% end %>
+    <br/>
 	<div class="row">
 		<div class="span2">
 				<b>Times Viewed?   :&nbsp;&nbsp;</b><%= @g %>

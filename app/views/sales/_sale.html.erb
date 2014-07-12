@@ -1,10 +1,21 @@
 <li>
+  <% if sale.donations.count == 0 %>
+    <% @a = 0 %>
+    <% else %>
+    <% @a = sale.donations.count %>
+  <% end %>
 	<% @editpath = edit_sale_path(sale) %>
   	<b><%= :id %>: </b><%= link_to sale.id, @editpath %><br/>
-  	<b><%= :share_id %>: </b><%= link_to sale.share_id, @editpath %><br/>
+  	<b><%= :share_id %>: </b><%= link_to sale.share_id, @editpath %>&nbsp;&nbsp;&nbsp;
+    <b><%= link_to "View Share", share_path(sale.share_id) %></b><br/>
     <b><%= :supporter_share_id %>: </b><%= link_to sale.supporter_share_id, @editpath %><br/>
   	<b><%= :amount %>: </b><%= link_to sale.amount, @editpath %><br/>
     <b><%= :transaction_id %>: </b><%= link_to sale.transaction_id, @editpath %><br/>
+    <b><%= :donations_count %>: </b><%= @a %>&nbsp;&nbsp;&nbsp;
+    <% if @a > 0 %>
+    <b><%= link_to "View Donations", sale_donations_path(sale) %></b>
+    <% end %>
+    <br/>
   	<b><%= :created_at %>: </b><%= link_to sale.created_at, @editpath %><br/>
   	<b><%= :updated_at %>: </b><%= link_to sale.updated_at, @editpath %><br/>
 	<br/>

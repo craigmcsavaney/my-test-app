@@ -46,6 +46,11 @@ class DonationsController < ApplicationController
     @donations = Donation.where("buyer_id = ? or supporter_id = ? or merchant_id in (?)",@user.id,@user.id,merchant_ids).order('created_at desc').paginate(page: params[:page])
   end
 
+  def for_sale
+    @donations = Donation.where(sale_id: params[:sale_id]).order('id asc').paginate(page: params[:page])
+    render 'index'
+  end
+
   def index_admin
     @donations = Donation.order('created_at desc').paginate(page: params[:page])
   end

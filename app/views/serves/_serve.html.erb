@@ -32,7 +32,11 @@
     <b><%= :serve_count %>: </b><%= serve.serve_count %>&nbsp;&nbsp;&nbsp;
     <b><%= :shares_count %>: </b><%= serve.shares_count %>&nbsp;&nbsp;&nbsp;
     <b><%= link_to "View Shares", serve_shares_path(serve) %></b><br/>
-    <b><%= :referring_share_id %>: </b><%= @f %><br/>
+    <b><%= :referring_share_id %>: </b><%= @f %>&nbsp;&nbsp;&nbsp;
+    <% if @f != "" %>
+      <b><%= link_to "View Referrer", share_path(@f) %></b>
+    <% end %>
+    <br/>
   	<b><%= :created_at %>: </b><%= serve.created_at %><br/>
   	<b><%= :updated_at %>: </b><%= serve.updated_at %><br/>
 

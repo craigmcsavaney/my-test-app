@@ -119,6 +119,11 @@ class PromotionsController < ApplicationController
     @promotions = Promotion.order('id asc').paginate(page: params[:page])
   end
 
+  def for_merchant
+    @promotions = Promotion.where(merchant_id: params[:merchant_id]).order('id asc').paginate(page: params[:page])
+    render 'index'
+  end
+
   def destroy
     @promotion = Promotion.find(params[:id])
     if @promotion.destroy

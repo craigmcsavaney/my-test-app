@@ -1,6 +1,7 @@
 <li>
 	<b><%= :id %>: </b><%= @donation.id %><br/>
-  	<b><%= :sale_id %>: </b><%= @donation.sale_id %><br/>
+  	<b><%= :sale_id %>: </b><%= @donation.sale_id %>&nbsp;&nbsp;&nbsp;
+    <b><%= link_to "View Sale", sale_path(@donation.sale_id) %></b><br/>
     <b><%= :merchant_id %>: </b><%= @donation.merchant_id %><br/>
     <b><%= :cause_id %>: </b><%= @donation.cause_id %><br/>
   	<b><%= :amount %>: </b><%= @donation.amount %><br/>

@@ -32,6 +32,10 @@ class SharesController < ApplicationController
     end
 	end
 
+  def show
+    @share = Share.find(params[:id])
+  end
+
   def index
   	@shares = Share.order('id asc').paginate(page: params[:page])
   end

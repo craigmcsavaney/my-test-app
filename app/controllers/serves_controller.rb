@@ -40,6 +40,16 @@ class ServesController < ApplicationController
   	@serves = Serve.order('id asc').paginate(page: params[:page])
   end
 
+  def for_share
+    @serves = Serve.where(referring_share_id: params[:share_id]).order('id asc').paginate(page: params[:page])
+    render 'index'
+  end
+
+  def for_promotion
+    @serves = Serve.where(promotion_id: params[:promotion_id]).order('id asc').paginate(page: params[:page])
+    render 'index'
+  end
+
   def destroy
     Serve.find(params[:id]).destroy
     flash[:success] = "Serve deleted"

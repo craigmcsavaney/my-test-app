@@ -1,0 +1,11 @@
+<% provide(:title, 'Show Sale') %>
+<h1>Show Sale</h1>
+
+<div class="container">
+	<ul class="class-index">
+      	<%= render @sale %>
+	</ul>
+	<br/>
+	<%= link_to 'Edit Sale', edit_sale_path %><br/>
+	<%= go_back %>
+</div>

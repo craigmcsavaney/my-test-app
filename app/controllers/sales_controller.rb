@@ -32,8 +32,17 @@ class SalesController < ApplicationController
     end
 	end
 
+  def show
+    @sale = Sale.find(params[:id])
+  end
+
   def index
   	@sales = Sale.order('id asc').paginate(page: params[:page])
+  end
+
+  def for_share
+    @sales = Sale.where(share_id: params[:share_id]).order('id asc').paginate(page: params[:page])
+    render 'index'
   end
 
   def destroy
