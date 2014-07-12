@@ -1,5 +1,5 @@
 class Cause < ActiveRecord::Base
-	include NotDeleteable
+	#include NotDeleteable
 	versioned
 	
 	attr_accessible :name, :user_ids, :deleted, :group_ids, :type, :uid, :fg_uuid, :fg_type_id, :alias, :abstract, :ein, :fg_parent_uuid, :address_line_1, :address_line_2, :address_line_3, :address_line_full, :city, :region, :postal_code, :county, :country, :address_full, :phone_number, :area_code, :url, :fg_category_code, :fg_category_title, :fg_category_description, :latitude, :longitude, :fg_revoked, :fg_locale_db_id

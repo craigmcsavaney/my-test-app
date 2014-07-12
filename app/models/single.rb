@@ -1,5 +1,5 @@
 class Single < Cause
-	include NotDeleteable
+	#include NotDeleteable
     versioned
 
 	attr_accessible :name, :user_ids, :group_ids, :uid
