@@ -8,21 +8,33 @@
 		      	<%= f.text_field :name %>
 
   				<% if ["new_admin","edit_admin"].include?params[:action] %>
-					<%= f.label :user_ids, "Users associated with this cause" %>
-					<% if @single.users.any? %>
-						<% for user in @single.users %>
-							<div>
-								<%= check_box_tag "single[user_ids][]", user.id, @single.users.include?(user) %>
+					<%= f.label :user_ids, "Associate Users with this cause" %>
+					<% causeusers = [] %>
+					<% Role.find_by_name("SuperAdmin").users.each do |g| %>
+					<% causeusers << g %>
+					<% end %>
+					<% Role.find_by_name("UserAdmin").users.each do |g| %>
+					<% causeusers << g %>
+					<% end %>
+					<% Role.find_by_name("CauseAdmin").users.each do |g| %>
+					<% causeusers << g %>
+					<% end %>
+					<% causeusers = causeusers.uniq.sort_by &:email %>
+					<% for user in causeusers %>
+						<div class="col-xs-12">
+							<div class="col-xs-4">
 								<%= user.email %>
 							</div>
-						<% end %>
-					<% else %>
-						There are no users associated with this Cause
-						<br/>
+							<div class="col-xs-2">
+								<%= check_box_tag "single[user_ids][]", user.id, @single.users.pluck(:id).include?(user.id) %>
+							</div>
+							<div class="col-xs-6">
+								<%= User.find(user.id).roles.pluck(:name) %>
+							</div>
+						</div>
 					<% end %>
 				<% end %>
-
-				<br/>
+				<br/><br/><br/><br/>
 
   				<% if ["new_admin","edit_admin"].include?params[:action] %>
 					<%= f.label :group_ids, "Groups that include this cause" %>
