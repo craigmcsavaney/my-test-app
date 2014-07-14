@@ -698,13 +698,13 @@ function CBSale(amount,transaction_id) {
 
                     //var modal_message = "<span style='font-size:24px;font-weight:bold;'>Big News!</span><br/>We're donating up to 20% of our sales to the {{placeholder}}, and you don't need to buy a thing!  Click <img id='cbw-modal-message-img1' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> or <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> on any page to learn more.";
 
-                    var modal_message1 = "<span style='font-size:24px;font-weight:bold;'>Welcome, friend of {{placeholder}}!</span><br/>We're donating up to 20% of our sales to the cause of your choice, and you don't need to buy a thing!  Click any <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> to learn more.";
+                    var modal_message1 = "<span style='font-size:24px;font-weight:bold;'>Welcome, friend of {{placeholder}}!</span><br/>We're donating 20% of your purchase to {{placeholder}}.  Plus, click any <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> tell your friends on Facebook and Twitter about us and we'll donate 20% of everything they buy!";
 
                     var modal_message2 = "<span style='font-size:24px;font-weight:bold;'>Big News!</span><br/>We're donating up to 20% of our sales to the charitable cause of your choice, and you don't need to buy a thing!  Click any <img id='cbw-modal-message-img2' class='cbw-modal-message-img cbw-main-btn cbw-close-modal'> to learn more.";
                     // now check to see if a cblink value was passed in and if so, use the default cause
                     // for this serve in the modal message
                     if (CBCauseID && CBCauseID != "") {
-                        modal_message = modal_message1.replace("{{placeholder}}", ServeData.default_cause_name);
+                        modal_message = modal_message1.replace(/{{placeholder}}/g, ServeData.default_cause_name);
                         // Fix duplicate "the"s, and the "the a"s
                         // FixCauseNames(modal_message);
                     } else {
