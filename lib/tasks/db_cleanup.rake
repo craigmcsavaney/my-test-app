@@ -15,10 +15,14 @@ namespace :cleanup do
 		# for serves that meet 1 - 4 above (no sales, not a referral, no referrals, >24 hours old)
 		# 5. serves that haven't been either viewed or shared can be destroyed
 		# 6. serves that have gone more than 30 days since an update can be destroyed
+		# UPDATE: #6 temporarily removed, so no serves that have been viewed or shared
+		# will be destroyed.  Need to capture summary data on views and shares at the promotion
+		# level before destroying viewed and / or shared serves and their shares.
 		a = 0
 		b = 0
 		Serve.all.each do |serve|
-			if serve.updated_at < Time.now-86400 && serve.sales.count == 0 && !Serve.referred?(serve) && serve.referral_count == 0 && ((!serve.viewed && !Serve.shared?(serve)) || serve.updated_at < Date.today-31)
+			#if serve.updated_at < Time.now-86400 && serve.sales.count == 0 && !Serve.referred?(serve) && serve.referral_count == 0 && ((!serve.viewed && !Serve.shared?(serve)) || serve.updated_at < Date.today-31)
+			if serve.updated_at < Time.now-86400 && serve.sales.count == 0 && !Serve.referred?(serve) && serve.referral_count == 0 && !serve.viewed && !Serve.shared?(serve)
 				a = a + 1
 				b = b + serve.shares.count
 			end
@@ -45,10 +49,14 @@ namespace :cleanup do
 		# for serves that meet 1 - 4 above (no sales, not a referral, no referrals, >24 hours old)
 		# 5. serves that haven't been either viewed or shared can be destroyed
 		# 6. serves that have gone more than 30 days since an update can be destroyed
+		# UPDATE: #6 temporarily removed, so no serves that have been viewed or shared
+		# will be destroyed.  Need to capture summary data on views and shares at the promotion
+		# level before destroying viewed and / or shared serves and their shares.
 		a = 0
 		b = 0
 		Serve.all.each do |serve|
-			if serve.updated_at < Time.now-86400 && serve.sales.count == 0 && !Serve.referred?(serve) && serve.referral_count == 0 && ((!serve.viewed && !Serve.shared?(serve)) || serve.updated_at < Date.today-31)
+			#if serve.updated_at < Time.now-86400 && serve.sales.count == 0 && !Serve.referred?(serve) && serve.referral_count == 0 && ((!serve.viewed && !Serve.shared?(serve)) || serve.updated_at < Date.today-31)
+			if serve.updated_at < Time.now-86400 && serve.sales.count == 0 && !Serve.referred?(serve) && serve.referral_count == 0 && !serve.viewed && !Serve.shared?(serve)
 				a = a + 1
 				b = b + serve.shares.count
 				serve.destroy
